@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ConstellationWebApp.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ConstellationWebApp.Data
 {
-    public class ConstellationWebAppContext : DbContext
+    public class ConstellationWebAppContext : IdentityDbContext
     {
             public ConstellationWebAppContext (DbContextOptions<ConstellationWebAppContext> options)
                 : base(options)
@@ -23,6 +24,8 @@ namespace ConstellationWebApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Project>().ToTable("Project");
 

@@ -133,7 +133,9 @@ namespace ConstellationWebApp.Controllers
                 StartDate = entityProjectModel.StartDate,
                 EndDate = entityProjectModel.EndDate,
                 CreationDate = entityProjectModel.CreationDate,
-                OldPhotoPath = entityProjectModel.PhotoPath
+                OldPhotoPath = entityProjectModel.PhotoPath,
+                PhotoPath = entityProjectModel.PhotoPath
+
             };
         }
 
