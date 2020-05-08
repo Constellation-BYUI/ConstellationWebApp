@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConstellationWebApp.Migrations
 {
     [DbContext(typeof(ConstellationWebAppContext))]
-    [Migration("20200508162249_Identity")]
-    partial class Identity
+    [Migration("20200508225859_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

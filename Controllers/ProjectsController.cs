@@ -306,7 +306,11 @@ namespace ConstellationWebApp.Controllers
                         }
                     }
 
+                    if (!(createdLinkLabels[0] == null))
+                    {
                     CreateProjectLinks(createdLinkLabels, createdLinkUrls, project);
+                    }
+
 
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));

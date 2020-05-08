@@ -223,8 +223,12 @@ namespace ConstellationWebApp.Controllers
                 user.PhotoPath = uniqueFileName;
                         _context.Update(user);
                         await _context.SaveChangesAsync();
-                        
-                CreateUserLinks(createdLinkLabels, createdLinkUrls, user);
+
+
+                if (!(createdLinkLabels[0] == null))
+                {
+                    CreateUserLinks(createdLinkLabels, createdLinkUrls, user);
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
