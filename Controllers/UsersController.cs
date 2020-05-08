@@ -222,7 +222,7 @@ namespace ConstellationWebApp.Controllers
                 user.Seeking = model.Seeking;
                 user.PhotoPath = uniqueFileName;
                         _context.Update(user);
-                        await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
 
 
                 if (!(createdLinkLabels[0] == null))
