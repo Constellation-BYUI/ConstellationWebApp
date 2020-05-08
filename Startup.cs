@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using ConstellationWebApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using ConstellationWebApp.Models;
 
 namespace ConstellationWebApp
 {
@@ -31,7 +32,7 @@ namespace ConstellationWebApp
             services.AddDbContext<ConstellationWebAppContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("ConstellationWebAppContext")));
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ConstellationWebAppContext>();
 
             // this set requirment for password: for now unsecure in development to increase workflow

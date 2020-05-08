@@ -18,11 +18,6 @@
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
                 <input asp-for="FirstName" class="form-control" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
@@ -89,10 +84,7 @@
     <script>
         function add_fields() {
             document.getElementById("demo").innerHTML += "<h2>Link Label</h2><input list='contact-link-label' name='createdLinkLabels'><h2>Link URL</h2> <input list='contact-link-url' name='createdLinkUrls'>";
-
         }
     </script>
-
-
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @*@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@
 }

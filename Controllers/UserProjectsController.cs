@@ -27,7 +27,7 @@ namespace ConstellationWebApp.Controllers
         }
 
         // GET: UserProjects/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string? id)
         {
             if (id == null)
             {
@@ -95,7 +95,7 @@ namespace ConstellationWebApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserID,ProjectID")] UserProject userProject)
+        public async Task<IActionResult> Edit(string id, [Bind("UserID,ProjectID")] UserProject userProject)
         {
             if (id != userProject.UserID)
             {
@@ -128,7 +128,8 @@ namespace ConstellationWebApp.Controllers
         }
 
         // GET: UserProjects/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        
+        public async Task<IActionResult> Delete(string? id)
         {
             if (id == null)
             {
@@ -158,7 +159,7 @@ namespace ConstellationWebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserProjectExists(int id)
+        private bool UserProjectExists(string id)
         {
             return _context.UserProjects.Any(e => e.UserID == id);
         }

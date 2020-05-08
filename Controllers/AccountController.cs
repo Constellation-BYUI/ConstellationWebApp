@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ConstellationWebApp.Models;
 using ConstellationWebApp.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +14,11 @@ namespace ConstellationWebApp.Controllers
    
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly SignInManager<IdentityUser> signInManager;
+        private readonly UserManager<User> userManager;
+        private readonly SignInManager<User> signInManager;
 
-        public AccountController(UserManager<IdentityUser> userManager, 
-                                 SignInManager<IdentityUser> signInManager)
+        public AccountController(UserManager<User> userManager, 
+                                 SignInManager<User> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
@@ -42,7 +43,7 @@ namespace ConstellationWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser{ UserName = model.Email, Email = model.Email};
+                var user = new User{ UserName = model.Email, Email = model.Email};
                 var result = await userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
@@ -67,7 +68,7 @@ namespace ConstellationWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -75,7 +76,15 @@ namespace ConstellationWebApp.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("index", "home");
+                    if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    else
+                    {
+                        return RedirectToAction("index", "home");
+
+                    }
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid Login Attempt");

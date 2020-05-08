@@ -9,7 +9,7 @@ namespace ConstellationWebApp.Models.ViewModels
 {
     public class UserEditViewModel : UserCreateViewModel
     {
-        public int UserID { get; set; }
+        public string UserID { get; set; }
         public string OldPhotoPath { get; set; }
     }
 }

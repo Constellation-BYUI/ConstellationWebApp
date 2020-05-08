@@ -12,10 +12,11 @@ using System.IO;
 using ConstellationWebApp.ViewModels;
 using System.Dynamic;
 using ConstellationWebApp.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ConstellationWebApp.Controllers
 {
-   
+   [Authorize]
     public class ProjectsController : Controller
     {
         private readonly ConstellationWebAppContext _context;
@@ -61,7 +62,8 @@ namespace ConstellationWebApp.Controllers
             return (uniqueFileName);
         }
 
-        // Get Projects
+        // GET: Projects/Index
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var viewModel = new ViewModel();
@@ -76,6 +78,7 @@ namespace ConstellationWebApp.Controllers
     }
 
         // GET: Projects/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -94,15 +97,15 @@ namespace ConstellationWebApp.Controllers
         private void PopulateAssignedProjectData(Project newProject)
         {
             var allUsers = _context.User;
-            var userProjects = new HashSet<int>(newProject.UserProjects.Select(c => c.UserID));
+            var userProjects = new HashSet<string>(newProject.UserProjects.Select(c => c.UserID));
             var viewModel = new List<AssignedProjectData>();
             foreach (var users in allUsers)
             {
                 viewModel.Add(new AssignedProjectData
                 {
-                    UserID = users.UserID,
+                    UserID = users.Id,
                     UserName = users.UserName,
-                    Assigned = userProjects.Contains(users.UserID)
+                    Assigned = userProjects.Contains(users.Id)
                 });
             }
             ViewData["UsersOfConstellation"] = viewModel;
@@ -198,7 +201,7 @@ namespace ConstellationWebApp.Controllers
                         {
                             var userid = (from a in _context.User
                                           where a.UserName == user
-                                          select a).First<User>().UserID;
+                                          select a).First<User>().Id;
 
                             UserProject userProjects = new UserProject
                             {
@@ -287,7 +290,7 @@ namespace ConstellationWebApp.Controllers
                         {
                             var userid = (from a in _context.User
                                           where a.UserName == user
-                                          select a).First<User>().UserID;
+                                          select a).First<User>().Id;
 
                             UserProject userProjects = new UserProject
                             {

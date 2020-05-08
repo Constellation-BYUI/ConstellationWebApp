@@ -12,9 +12,11 @@ using System.IO;
 using ConstellationWebApp.ViewModels;
 using System.Dynamic;
 using ConstellationWebApp.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ConstellationWebApp.Controllers
 {
+    [Authorize]
     public class UsersController : Controller
     {
         private readonly ConstellationWebAppContext _context;
@@ -65,9 +67,8 @@ namespace ConstellationWebApp.Controllers
         {
             UserEditViewModel viewModel = new UserEditViewModel
             {
-                UserID = entityProjectModel.UserID,
+                UserID = entityProjectModel.Id,
                 UserName = entityProjectModel.UserName,
-                Password = entityProjectModel.Password,
                 FirstName = entityProjectModel.FirstName,
                 LastName = entityProjectModel.LastName,
                 Bio = entityProjectModel.Bio,
@@ -83,7 +84,6 @@ namespace ConstellationWebApp.Controllers
             User newUser = new User
             {
                 UserName = model.UserName,
-                Password = model.Password,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Bio = model.Bio,
@@ -93,12 +93,12 @@ namespace ConstellationWebApp.Controllers
             return (newUser);
         }
 
-        private void RemoveAllContactLinks(int id)
+        private void RemoveAllContactLinks(string id)
         {
             var contactLinks = from m in _context.ContactLinks
                                select m;
 
-            var linksId = contactLinks.Where(s => s.Users.UserID == id);
+            var linksId = contactLinks.Where(s => s.Users.Id == id);
 
             foreach (var link in linksId)
             {
@@ -114,20 +114,21 @@ namespace ConstellationWebApp.Controllers
                 System.IO.File.Delete(filePath);
             }
         }
-        // GET: Users
+
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var viewModel = new ViewModel();
             viewModel.Users = await _context.User
                   .Include(i => i.ContactLinks)
                    .AsNoTracking()
-                   .OrderBy(i => i.UserID)
+                   .OrderBy(i => i.Id)
                    .ToListAsync();
             return View(viewModel);
         }
 
-        // GET: Users/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [AllowAnonymous]
+        public async Task<IActionResult> Details(string? id)
         {
             if (id == null)
             {
@@ -135,7 +136,7 @@ namespace ConstellationWebApp.Controllers
             }
 
             var user = await _context.User
-                .FirstOrDefaultAsync(m => m.UserID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
                 return NotFound();
@@ -170,7 +171,7 @@ namespace ConstellationWebApp.Controllers
         }
 
         // GET: Users/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string? id)
         {
             if (id == null)
             {
@@ -181,7 +182,7 @@ namespace ConstellationWebApp.Controllers
                 .ThenInclude(i => i.Project)
                 .Include(i => i.ContactLinks)
                 .AsNoTracking()
-            .FirstOrDefaultAsync(m => m.UserID == id);
+            .FirstOrDefaultAsync(m => m.Id == id);
 
             if (entityProjectModel == null)
             {
@@ -197,7 +198,7 @@ namespace ConstellationWebApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, string OldPhotoPath, string[] createdLinkLabels, string[] createdLinkUrls, UserEditViewModel model)
+        public async Task<IActionResult> Edit(string id, string OldPhotoPath, string[] createdLinkLabels, string[] createdLinkUrls, UserEditViewModel model)
         {
             var user = await _context.User.FindAsync(id);
 
@@ -215,7 +216,6 @@ namespace ConstellationWebApp.Controllers
                     DeletePhoto(model);
                 }
                 user.UserName = model.UserName;
-                user.Password = model.Password;
                 user.FirstName = model.FirstName;
                 user.LastName = model.LastName;
                 user.Bio = model.Bio;
@@ -232,7 +232,7 @@ namespace ConstellationWebApp.Controllers
         }
 
         // GET: Users/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string? id)
         {
             if (id == null)
             {
@@ -240,7 +240,7 @@ namespace ConstellationWebApp.Controllers
             }
 
             var user = await _context.User
-                .FirstOrDefaultAsync(m => m.UserID == id);
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
                 return NotFound();
@@ -252,7 +252,7 @@ namespace ConstellationWebApp.Controllers
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             RemoveAllContactLinks(id);
 
@@ -264,9 +264,9 @@ namespace ConstellationWebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserExists(int id)
+        private bool UserExists(string id)
         {
-            return _context.User.Any(e => e.UserID == id);
+            return _context.User.Any(e => e.Id == id);
         }
     }
 }

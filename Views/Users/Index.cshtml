@@ -6,9 +6,6 @@
 
 <h1>Users Index</h1>
 
-<p>
-    <a asp-action="Create">Create New User</a>
-</p>
 @foreach (var item in Model.Users)
 {
     var photoPath = "~/image/" + (item.PhotoPath);
@@ -52,9 +49,9 @@
     }
 
     <div>
-        <a asp-action="Edit" asp-route-id="@item.UserID">Edit</a> |
-        <a asp-action="Details" asp-route-id="@item.UserID">Details</a> |
-        <a asp-action="Delete" asp-route-id="@item.UserID">Delete</a>
+        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
     </div>
 </div>
 }

@@ -7,7 +7,7 @@ namespace ConstellationWebApp.Models
 {
     public class AssignedProjectData
     {
-        public int UserID { get; set; }
+        public string UserID { get; set; }
         public string UserName { get; set; }
         public bool Assigned { get; set; }
     }

@@ -26,7 +26,7 @@ namespace ConstellationWebApp.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<User>().ToTable("User");
+            //modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Project>().ToTable("Project");
 
             modelBuilder.Entity<UserProject>()
@@ -48,10 +48,6 @@ namespace ConstellationWebApp.Data
              .HasMany(c => c.ProjectLinks)
              .WithOne(e => e.Projects);
 
-            /*    modelBuilder.Entity<ProjecLink>()
-                 .HasOne<Project>(s => s.Project)
-                 .WithMany(g => g.Projects)
-                 .HasForeignKey(s => s.ProjectLinkID);*/
         }
     }
     
