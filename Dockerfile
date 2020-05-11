@@ -14,5 +14,7 @@ FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine AS runtime
 WORKDIR /app
 COPY --from=build /app/out ./
 
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT 0
+
 ENTRYPOINT ["dotnet", "ConstellationWebApp.dll"]
 EXPOSE 80
