@@ -1,6 +1,18 @@
 # this goes to Microsoft's own Docker Repository to get the runtime on some version of Linux (not sure which one!)
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
-COPY bin/Release/netcoreapp3.1/publish/ App/
-WORKDIR /App
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine AS build
+WORKDIR /app
+
+COPY *.csproj ./
+RUN dotnet restore
+
+COPY . ./
+WORKDIR /app
+
+RUN dotnet publish -c Release -o out
+
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine AS runtime
+WORKDIR /app
+COPY --from=build /app/out ./
+
 ENTRYPOINT ["dotnet", "ConstellationWebApp.dll"]
 EXPOSE 80
