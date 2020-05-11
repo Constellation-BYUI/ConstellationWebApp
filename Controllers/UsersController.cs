@@ -32,7 +32,7 @@ namespace ConstellationWebApp.Controllers
         private string ValidateImagePath(UserCreateViewModel model)
         {
             string uniqueFileName = null;
-            if (!(System.IO.Path.GetExtension(model.Photo.FileName) == ".png" || System.IO.Path.GetExtension(model.Photo.FileName) == ".jpg"))
+            if (!(model.Photo.ContentType.Contains("image")))
             {
                 model.Photo = null;
             }
@@ -63,18 +63,18 @@ namespace ConstellationWebApp.Controllers
             }
         }
 
-        private UserEditViewModel userToEditViewModel(User entityProjectModel)
+        private UserEditViewModel userToEditViewModel(User userModel)
         {
             UserEditViewModel viewModel = new UserEditViewModel
             {
-                UserID = entityProjectModel.Id,
-                UserName = entityProjectModel.UserName,
-                FirstName = entityProjectModel.FirstName,
-                LastName = entityProjectModel.LastName,
-                Bio = entityProjectModel.Bio,
-                Seeking = entityProjectModel.Seeking,
-                OldPhotoPath = entityProjectModel.PhotoPath,
-                PhotoPath = entityProjectModel.PhotoPath
+                UserID = userModel.Id,
+                UserName = userModel.UserName,
+                FirstName = userModel.FirstName,
+                LastName = userModel.LastName,
+                Bio = userModel.Bio,
+                Seeking = userModel.Seeking,
+                OldPhotoPath = userModel.PhotoPath,
+                PhotoPath = userModel.PhotoPath
             };
             return(viewModel);
         }
@@ -115,6 +115,24 @@ namespace ConstellationWebApp.Controllers
             }
         }
 
+        private void PopulateAssignedProjectData(Project newProject)
+        {
+            var allUsers = _context.User;
+            var userProjects = new HashSet<string>(newProject.UserProjects.Select(c => c.UserID));
+            var viewModel = new List<AssignedProjectData>();
+            foreach (var users in allUsers)
+            {
+                viewModel.Add(new AssignedProjectData
+                {
+                    UserID = users.Id,
+                    UserName = users.UserName,
+                    Assigned = userProjects.Contains(users.Id)
+                });
+            }
+            ViewData["UsersOfConstellation"] = viewModel;
+        }
+
+        // GET: Users/Index
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
@@ -127,6 +145,7 @@ namespace ConstellationWebApp.Controllers
             return View(viewModel);
         }
 
+        // GET: User/Details/5
         [AllowAnonymous]
         public async Task<IActionResult> Details(string? id)
         {
@@ -136,11 +155,20 @@ namespace ConstellationWebApp.Controllers
             }
 
             var user = await _context.User
-                .FirstOrDefaultAsync(m => m.Id == id);
+          .Include(s => s.ContactLinks)
+          .Include(s => s.UserProjects)
+          .ThenInclude(s => s.Project)
+          .ThenInclude(s => s.ProjectLinks)
+          .AsNoTracking()
+          .FirstOrDefaultAsync(m => m.Id == id);
+
             if (user == null)
             {
                 return NotFound();
             }
+            //var project = new Project();
+            //project.UserProjects = new List<UserProject>();
+            //PopulateAssignedProjectData(project);
 
             return View(user);
         }

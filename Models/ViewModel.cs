@@ -11,10 +11,9 @@ namespace ConstellationWebApp.Models
         public IEnumerable<Project> Projects { get; set; }
         public IEnumerable<UserProject> UserProjects { get; set; }
 
-        public IEnumerable<UserProject> ContactLinks { get; set; }
+        public IEnumerable<ContactLink> ContactLinks { get; set; }
 
-        public IEnumerable<UserProject> ProjectLinks { get; set; }
-
+        public IEnumerable<ProjectLink> ProjectLinks { get; set; }
 
     }
 }

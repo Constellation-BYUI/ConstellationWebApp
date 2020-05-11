@@ -2,53 +2,112 @@
 
 @{
     ViewData["Title"] = "Details";
+    var photoPath = "~/image/" + Model.PhotoPath;
 }
 
-<h1>Details</h1>
+<h1>@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Profile</h1>
 
 <div>
-    <h4>User</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
+    <div class="project-cards">
+        <div>
+            <img class="imageThumbnail" src="@photoPath" asp-append-version="true" />
+        </div>
+        <div>
             @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.UserName)
-        </dd>
-        <dt class = "col-sm-2">
+        </div>
+        <div>
             @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.FirstName)
-        </dd>
-        <dt class = "col-sm-2">
+        </div>
+        <div>
             @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.LastName)
-        </dd>
-        <dt class = "col-sm-2">
+        </div>
+        <div>
             @Html.DisplayNameFor(model => model.Bio)
-        </dt>
-        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Bio)
-        </dd>
-        <dt class = "col-sm-2">
+        </div>
+        <div>
             @Html.DisplayNameFor(model => model.Seeking)
-        </dt>
-        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Seeking)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PhotoPath)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PhotoPath)
-        </dd>
-    </dl>
+        </div>
+        <h4>Contact Links</h4>
+        @foreach (var contactLink in Model.ContactLinks)
+        {
+            <div>
+                @Html.DisplayFor(modelItem => contactLink.ContactLinkLabel) :
+                @Html.DisplayFor(modelItem => contactLink.ContactLinkUrl)
+            </div>
+            <br />
+        }
+
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
 </div>
+
+
+<h2>@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Projects</h2>
+
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @foreach (var userProject in Model.UserProjects)
+    {
+        var projectPhotoPath = "~/image/" + (userProject.Project.PhotoPath);
+        var projectPath = "https://localhost:44359/Projects/Details/" + (userProject.Project.ProjectID);
+
+    <div class="project-cards">
+        @*Note: We do not want to display the PhotoPath Path but the image itself*@
+        <div>
+            <a href="@projectPath"><img class="imageThumbnail" src=" @projectPhotoPath" alt="@Html.DisplayFor(modelItem => userProject.Project.Title)" asp-append-version="true" /></a>
 </div>
+        <div>
+            @Html.DisplayNameFor(modelItem => userProject.Project.Title) :
+            @Html.DisplayFor(modelItem => userProject.Project.Title)
+        </div>
+        <div>
+            @Html.DisplayNameFor(modelItem => userProject.Project.Description) :
+            @Html.DisplayFor(modelItem => userProject.Project.Description)
+        </div>
+        <div>
+            @Html.DisplayNameFor(modelItem => userProject.Project.StartDate) :
+            @Html.DisplayFor(modelItem => userProject.Project.StartDate)
+        </div>
+        <div>
+            @Html.DisplayNameFor(modelItem => userProject.Project.EndDate) :
+            @Html.DisplayFor(modelItem => userProject.Project.EndDate)
+        </div>
+        <div>
+            @Html.DisplayNameFor(modelItem => userProject.Project.CreationDate) :
+            @Html.DisplayFor(modelItem => userProject.Project.CreationDate)
+        </div>
+
+        <h4>Collaborators</h4>
+        @foreach (var collab in Model.UserProjects)
+        {
+            var collabPath = "~/image/" + (collab.User.PhotoPath);
+            var collabMemberPath = "https://localhost:44359/Users/Details/" + (collab.User.Id);
+
+            <a href="@collabMemberPath"><img class="smallThumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
+        }
+
+        <h4>Project Links</h4>
+        @foreach (var link in userProject.Project.ProjectLinks)
+        {
+            <a href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
+            <br />
+        }
+
+        <div>
+           | <a href="@projectPath">View Project</a> |
+        </div>
+
+    </div>
+    }
+</div>
+
+

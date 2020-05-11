@@ -73,7 +73,8 @@ body {
 
 .imageThumbnail {
     border-radius: 20%;
-    height: 150px;
+    max-height: 150px;
+    max-width: 200px;
     width: auto;
     text-align: center;
     display: block;
@@ -83,7 +84,8 @@ body {
 }
 
 .smallThumbnail {
-    height: 50px;
+    max-height: 50px;
+    max-width: 50px;
     width: auto;
     display: inline;
     border-radius: 20%;

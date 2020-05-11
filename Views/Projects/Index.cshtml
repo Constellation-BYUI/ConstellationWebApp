@@ -50,7 +50,6 @@
     @foreach (var collab in item.UserProjects)
     {
         var collabPath = "~/image/" + (collab.User.PhotoPath);
-        /*  var collabMemberPath = "https://Constellation/Users/" + (collab.User.UserID);            ~ Production Variable needs the domain name*/
         var collabMemberPath = "https://localhost:44359/Users/Details/" + (collab.User.Id);
 
         @*@collab.User.UserName<br />*@

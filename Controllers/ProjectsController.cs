@@ -48,7 +48,7 @@ namespace ConstellationWebApp.Controllers
         private string ValidateImagePath(ProjectCreateViewModel model)
         {
             string uniqueFileName = null;
-            if (!(System.IO.Path.GetExtension(model.Photo.FileName) == ".png" || System.IO.Path.GetExtension(model.Photo.FileName) == ".jpg"))
+            if (!(model.Photo.ContentType.Contains("image")))
             {
                 model.Photo = null;
             }
@@ -60,38 +60,6 @@ namespace ConstellationWebApp.Controllers
                 model.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
             }
             return (uniqueFileName);
-        }
-
-        // GET: Projects/Index
-        [AllowAnonymous]
-        public async Task<IActionResult> Index()
-        {
-            var viewModel = new ViewModel();
-            viewModel.Projects = await _context.Projects
-                   .Include(i => i.UserProjects)
-                     .ThenInclude(i => i.User)
-                      .Include(i => i.ProjectLinks)
-                   .AsNoTracking()
-                   .OrderBy(i => i.CreationDate)
-                   .ToListAsync();
-            return View(viewModel);
-    }
-
-        // GET: Projects/Details/5
-        [AllowAnonymous]
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            var project = await _context.Projects
-                .FirstOrDefaultAsync(m => m.ProjectID == id);
-            if (project == null)
-            {
-                return NotFound();
-            }
-            return View(project);
         }
 
         private void PopulateAssignedProjectData(Project newProject)
@@ -163,6 +131,40 @@ namespace ConstellationWebApp.Controllers
                 _context.ProjectLinks.Remove(link);
             }
         }
+
+        // GET: Projects/Index
+        [AllowAnonymous]
+        public async Task<IActionResult> Index()
+        {
+            var viewModel = new ViewModel();
+            viewModel.Projects = await _context.Projects
+                   .Include(i => i.UserProjects)
+                     .ThenInclude(i => i.User)
+                      .Include(i => i.ProjectLinks)
+                   .AsNoTracking()
+                   .OrderBy(i => i.CreationDate)
+                   .ToListAsync();
+            return View(viewModel);
+    }
+
+        // GET: Projects/Details/5
+        [AllowAnonymous]
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var project = await _context.Projects
+                .FirstOrDefaultAsync(m => m.ProjectID == id);
+            if (project == null)
+            {
+                return NotFound();
+            }
+            return View(project);
+        }
+
+       
 
         // GET: Projects/Create
         public IActionResult Create(string SearchString)
