@@ -38,7 +38,7 @@ namespace ConstellationWebApp.Controllers
             }
             if (model.Photo != null)
             {
-                uniqueFileName = System.IO.Path.GetFileName(model.Photo.FileName);
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + System.IO.Path.GetFileName(model.Photo.FileName);
                 string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath + "\\image\\");
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 model.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
