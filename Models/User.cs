@@ -31,7 +31,7 @@
 
         [Required]
         [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
-        [StringLength(30)]
+        [StringLength(150)]
         public string Seeking { get; set; }
 
 
