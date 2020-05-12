@@ -19,6 +19,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="UserID" />
             <input type="hidden" asp-for="OldPhotoPath" />
+            <input type="hidden" asp-for="OldResumePath" />
             <div class="form-group">
                 <label asp-for="UserName" class="control-label"></label>
                 <input asp-for="UserName" class="form-control" />
@@ -53,6 +54,17 @@
                     </div>
                 </div>
             </div>
+
+            <div class="form-group row">
+                <label asp-for="ResumeUpload" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10">
+                    <div class="custom-file">
+                        <input asp-for="ResumeUpload" class="form-control custom-file-input" />
+                        <label class="custom-file-label">Upload Resume (pdf)...</label>
+                    </div>
+                </div>
+            </div>
+
 
             @* Create the Contact Links for the User *@
             <div class="form-group">

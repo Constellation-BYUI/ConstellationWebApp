@@ -38,6 +38,7 @@
         /*[RegularExpression("([0-9a-zA-Z :\\-_!@$%^&*()])+(.jpg|.JPG|.jpeg|.JPEG|.bmp|.BMP|.gif|.GIF|.psd|.PSD)$")]*/
         public string PhotoPath { get; set; }
 
+        public string ResumePhotoPath { get; set; }
 
         // this REGEXP only ensure it is formated like and email; we must create an actual 
         // method to ensure that it is real

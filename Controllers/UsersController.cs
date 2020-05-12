@@ -28,22 +28,23 @@ namespace ConstellationWebApp.Controllers
             this.hostingEnvironment = hostingEnvironment;
 
         }
-  
-        private string ValidateImagePath(UserCreateViewModel model)
+
+
+        private string UploadResume(UserCreateViewModel model)
         {
-            string uniqueFileName = null;
-            if (!(model.Photo.ContentType.Contains("image")))
+            string resumeFileName = null;
+            if (!(Path.GetExtension(model.ResumeUpload.FileName) == ".pdf"))
+                {
+                model.ResumeUpload = null;
+                 }
+            if (model.ResumeUpload != null)
             {
-                model.Photo = null;
+                resumeFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(System.IO.Path.GetFileName(model.ResumeUpload.FileName));
+                string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath + "\\Resumes\\");
+                string filePath = Path.Combine(uploadsFolder, resumeFileName);
+                model.ResumeUpload.CopyTo(new FileStream(filePath, FileMode.Create));
             }
-            if (model.Photo != null)
-            {
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + System.IO.Path.GetFileName(model.Photo.FileName);
-                string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath + "\\image\\");
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                model.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
-            }
-            return(uniqueFileName);
+            return(resumeFileName);
         }
 
         private void CreateUserLinks(string[] createdLinkLabels, string[] createdLinkUrls, User newUser)
@@ -63,56 +64,21 @@ namespace ConstellationWebApp.Controllers
             }
         }
 
-        private UserEditViewModel userToEditViewModel(User userModel)
+        private string ValidateImagePath(UserCreateViewModel model)
         {
-            UserEditViewModel viewModel = new UserEditViewModel
+            string uniqueFileName = null;
+            if (!(model.Photo.ContentType.Contains("image")))
             {
-                UserID = userModel.Id,
-                UserName = userModel.UserName,
-                FirstName = userModel.FirstName,
-                LastName = userModel.LastName,
-                Bio = userModel.Bio,
-                Seeking = userModel.Seeking,
-                OldPhotoPath = userModel.PhotoPath,
-                PhotoPath = userModel.PhotoPath
-            };
-            return(viewModel);
-        }
-
-        private User ViewModeltoUser(UserCreateViewModel model, string uniqueFileName)
-        {
-            User newUser = new User
-            {
-                UserName = model.UserName,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Bio = model.Bio,
-                Seeking = model.Seeking,
-                PhotoPath = uniqueFileName
-            };
-            return (newUser);
-        }
-
-        private void RemoveAllContactLinks(string id)
-        {
-            var contactLinks = from m in _context.ContactLinks
-                               select m;
-
-            var linksId = contactLinks.Where(s => s.Users.Id == id);
-
-            foreach (var link in linksId)
-            {
-                _context.ContactLinks.Remove(link);
+                model.Photo = null;
             }
-        }
-
-        private void DeletePhoto(UserEditViewModel model)
-        {
-            if (model.OldPhotoPath != null)
+            if (model.Photo != null)
             {
-                string filePath = Path.Combine(hostingEnvironment.WebRootPath, "image", model.OldPhotoPath);
-                System.IO.File.Delete(filePath);
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + System.IO.Path.GetFileName(model.Photo.FileName);
+                string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath + "\\image\\");
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                model.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
             }
+            return(uniqueFileName);
         }
 
         private void PopulateAssignedProjectData(Project newProject)
@@ -131,6 +97,72 @@ namespace ConstellationWebApp.Controllers
             }
             ViewData["UsersOfConstellation"] = viewModel;
         }
+
+        private User ViewModeltoUser(UserCreateViewModel model, string uniqueFileName, string resumeFileName)
+        {
+            User newUser = new User
+            {
+                UserName = model.UserName,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Bio = model.Bio,
+                Seeking = model.Seeking,
+                PhotoPath = uniqueFileName,
+                ResumePhotoPath = resumeFileName
+            };
+            return (newUser);
+        }
+
+        private UserEditViewModel userToEditViewModel(User userModel)
+        {
+            UserEditViewModel viewModel = new UserEditViewModel
+            {
+                UserID = userModel.Id,
+                UserName = userModel.UserName,
+                FirstName = userModel.FirstName,
+                LastName = userModel.LastName,
+                Bio = userModel.Bio,
+                Seeking = userModel.Seeking,
+                OldPhotoPath = userModel.PhotoPath,
+                OldResumePath = userModel.ResumePhotoPath,
+                PhotoPath = userModel.PhotoPath,
+                ResumePhotoPath = userModel.ResumePhotoPath
+
+            };
+            return(viewModel);
+        }
+
+        private void DeleteResume(UserEditViewModel model)
+        {
+            if (model.OldResumePath != null)
+            {
+                string filePath = Path.Combine(hostingEnvironment.WebRootPath, "image", model.OldResumePath);
+                System.IO.File.Delete(filePath);
+            }
+        }
+
+        private void DeletePhoto(UserEditViewModel model)
+        {
+            if (model.OldPhotoPath != null)
+            {
+                string filePath = Path.Combine(hostingEnvironment.WebRootPath, "image", model.OldPhotoPath);
+                System.IO.File.Delete(filePath);
+            }
+        }
+
+        private void RemoveAllContactLinks(string id)
+        {
+            var contactLinks = from m in _context.ContactLinks
+                               select m;
+
+            var linksId = contactLinks.Where(s => s.Users.Id == id);
+
+            foreach (var link in linksId)
+            {
+                _context.ContactLinks.Remove(link);
+            }
+        }
+
 
         // GET: Users/Index
         [AllowAnonymous]
@@ -188,12 +220,13 @@ namespace ConstellationWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-             var uniqueFileName = ValidateImagePath(model);
-             User newUser = ViewModeltoUser(model, uniqueFileName);
-              CreateUserLinks(createdLinkLabels, createdLinkUrls, newUser);
-             _context.Add(newUser);
-             await _context.SaveChangesAsync();
-             return RedirectToAction(nameof(Index));
+                var resumeFileName = UploadResume(model);
+                var uniqueFileName = ValidateImagePath(model);
+                User newUser = ViewModeltoUser(model, uniqueFileName, resumeFileName);
+                CreateUserLinks(createdLinkLabels, createdLinkUrls, newUser);
+                _context.Add(newUser);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
             return View();
         }
@@ -226,7 +259,7 @@ namespace ConstellationWebApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, string OldPhotoPath, string[] createdLinkLabels, string[] createdLinkUrls, UserEditViewModel model)
+        public async Task<IActionResult> Edit(string id, string OldPhotoPath, string[] createdLinkLabels, string[] createdLinkUrls, UserEditViewModel model, string OldResumePath)
         {
             var user = await _context.User.FindAsync(id);
 
@@ -237,7 +270,14 @@ namespace ConstellationWebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                    string uniqueFileName = OldPhotoPath;
+                string uniqueResumePath = OldResumePath;
+                if (model.ResumeUpload != null)
+                {
+                    uniqueResumePath = UploadResume(model);
+                    DeleteResume(model);
+                }
+
+                string uniqueFileName = OldPhotoPath;
                     if (model.Photo != null)
                 {
                     uniqueFileName = ValidateImagePath(model);

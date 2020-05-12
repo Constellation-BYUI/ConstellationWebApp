@@ -11,5 +11,9 @@ namespace ConstellationWebApp.Models.ViewModels
     {
         public string UserID { get; set; }
         public string OldPhotoPath { get; set; }
+
+        public string OldResumePath { get; set; }
+
+
     }
 }

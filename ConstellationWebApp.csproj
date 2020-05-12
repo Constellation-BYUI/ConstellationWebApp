@@ -21,6 +21,7 @@
     <Folder Include="Controllers\NewFolder\" />
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\image\" />
+    <Folder Include="wwwroot\Resumes\" />
   </ItemGroup>
 
 

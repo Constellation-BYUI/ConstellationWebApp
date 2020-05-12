@@ -29,6 +29,9 @@ namespace ConstellationWebApp.ViewModels
         [StringLength(300)]
         public string Seeking { get; set; }
         public string PhotoPath { get; set; }
+        public string ResumePhotoPath { get; set; }
+
+        public IFormFile ResumeUpload { get; set; }
 
         public IFormFile Photo { get; set; }
 
