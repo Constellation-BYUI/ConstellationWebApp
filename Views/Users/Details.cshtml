@@ -100,7 +100,7 @@
             {
                 if ((userProject.UserID != collab.UserID) && (userProject.ProjectID == collab.ProjectID))
                 {
-                    var collabPath = "~/image/" + (collab.UserID);
+                    var collabPath = "~/image/" + (collab.User.PhotoPath);
                     var collabMemberPath = "https://localhost:44359/Users/Details/" + (collab.UserID);
 
                 <a href="@collabMemberPath"><img class="smallThumbnail" src=" @collabPath" asp-append-version="true" /></a>

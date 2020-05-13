@@ -187,7 +187,11 @@ namespace ConstellationWebApp.Controllers
             List<ConstellationWebApp.Models.UserProject> collaboratorsList = new List<UserProject>();
 
             List<UserProject> userProjectList = _context.UserProjects.ToList();
+            List<User> usersList = _context.User.ToList();
+
             ViewBag.collaborators = userProjectList;
+
+            ViewBag.allUsers = usersList;
 
             return View(user);
         }
