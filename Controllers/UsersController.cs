@@ -30,6 +30,7 @@ namespace ConstellationWebApp.Controllers
         }
 
 
+
         private string UploadResume(UserCreateViewModel model)
         {
             string resumeFileName = null;
@@ -40,7 +41,7 @@ namespace ConstellationWebApp.Controllers
             if (model.ResumeUpload != null)
             {
                 resumeFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(System.IO.Path.GetFileName(model.ResumeUpload.FileName));
-                string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath + "\\Resumes\\");
+                string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath + "/Resumes");
                 string filePath = Path.Combine(uploadsFolder, resumeFileName);
                 model.ResumeUpload.CopyTo(new FileStream(filePath, FileMode.Create));
             }
@@ -74,28 +75,11 @@ namespace ConstellationWebApp.Controllers
             if (model.Photo != null)
             {
                 uniqueFileName = Guid.NewGuid().ToString() + "_" + System.IO.Path.GetFileName(model.Photo.FileName);
-                string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath + "\\image\\");
+                string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath + "/image");
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 model.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
             }
             return(uniqueFileName);
-        }
-
-        private void PopulateAssignedProjectData(Project newProject)
-        {
-            var allUsers = _context.User;
-            var userProjects = new HashSet<string>(newProject.UserProjects.Select(c => c.UserID));
-            var viewModel = new List<AssignedProjectData>();
-            foreach (var users in allUsers)
-            {
-                viewModel.Add(new AssignedProjectData
-                {
-                    UserID = users.Id,
-                    UserName = users.UserName,
-                    Assigned = userProjects.Contains(users.Id)
-                });
-            }
-            ViewData["UsersOfConstellation"] = viewModel;
         }
 
         private User ViewModeltoUser(UserCreateViewModel model, string uniqueFileName, string resumeFileName)
@@ -186,6 +170,7 @@ namespace ConstellationWebApp.Controllers
                 return NotFound();
             }
 
+
             var user = await _context.User
           .Include(s => s.ContactLinks)
           .Include(s => s.UserProjects)
@@ -198,9 +183,11 @@ namespace ConstellationWebApp.Controllers
             {
                 return NotFound();
             }
-            //var project = new Project();
-            //project.UserProjects = new List<UserProject>();
-            //PopulateAssignedProjectData(project);
+
+            List<ConstellationWebApp.Models.UserProject> collaboratorsList = new List<UserProject>();
+
+            List<UserProject> userProjectList = _context.UserProjects.ToList();
+            ViewBag.collaborators = userProjectList;
 
             return View(user);
         }
@@ -289,7 +276,8 @@ namespace ConstellationWebApp.Controllers
                 user.Bio = model.Bio;
                 user.Seeking = model.Seeking;
                 user.PhotoPath = uniqueFileName;
-                        _context.Update(user);
+                user.ResumePhotoPath = uniqueResumePath;
+                 _context.Update(user);
                 await _context.SaveChangesAsync();
 
 

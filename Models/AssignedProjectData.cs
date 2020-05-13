@@ -10,5 +10,9 @@ namespace ConstellationWebApp.Models
         public string UserID { get; set; }
         public string UserName { get; set; }
         public bool Assigned { get; set; }
+        public int ProjectID { get; }
+        public ICollection<Project> Projects { get; set; }
+
+        public ICollection<User> Users { get; set; }
     }
 }
