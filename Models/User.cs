@@ -43,6 +43,9 @@
         // this REGEXP only ensure it is formated like and email; we must create an actual 
         // method to ensure that it is real
 
+        public bool displayMyProfile { get; set; }
+
+
         public virtual ICollection<ContactLink> ContactLinks { get; set; }
 
 
