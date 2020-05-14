@@ -1,4 +1,5 @@
 ﻿@inject SignInManager<User> signInManager;
+@model ConstellationWebApp.Models.ViewModel
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,22 +37,31 @@
                     <ul class="navbar-nav">
                         @if (signInManager.IsSignedIn(User))
                         {
-                        <li class="nav-item">
-                            <form method="post" asp-action="logout" asp-controller="account">
-                                <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">Logout</button>
-                            </form>
-                            <form method="get" asp-action="Edit" asp-controller="Users">
-                                <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">Edit Profile</button>
-                            </form>
-                        </li>
+
+                            <li class="nav-item">
+                                <form method="post" asp-action="logout" asp-controller="account">
+                                    <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">Logout</button>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+                            @* Edit profile button needs to get the userId as the asp-route-id : for now we will leave this as just the index *@
+                                    <form method="get" asp-action="Index" asp-controller="Users">
+                                        <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">Edit Profile</button>
+                                    </form>
+                               </li>
                         }
                         else
                         {
-                            <li class="nav-item">
-                                <a class="nav-item" asp-controller="account" asp-action="register">Register</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-item" asp-controller="account" asp-action="login">Login</a>
+                    <li class="nav-item">
+                        <form method="get" asp-controller="account" asp-action="register">
+                            <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">Register</button>
+                        </form>
+                    </li>
+                    <li class="nav-item">
+                        <form method="get" asp-controller="account" asp-action="login">
+                            <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">Login</button>
+
+                        </form>
                             </li>
                         }
                     </ul>
