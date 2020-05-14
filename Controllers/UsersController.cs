@@ -111,7 +111,6 @@ namespace ConstellationWebApp.Controllers
                 OldResumePath = userModel.ResumePhotoPath,
                 PhotoPath = userModel.PhotoPath,
                 ResumePhotoPath = userModel.ResumePhotoPath
-
             };
             return(viewModel);
         }
