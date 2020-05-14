@@ -18,9 +18,15 @@ namespace ConstellationWebApp.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string? id)
         {
-            return View();
+            if (id == null)
+            {
+                return View();
+
+            }
+            return View(id);
+
         }
 
         public IActionResult Privacy()

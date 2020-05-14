@@ -1,0 +1,17 @@
+﻿@inject SignInManager<User> signInManager;
+@model ConstellationWebApp.Models.ViewModel
+@{
+
+    @if (signInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <form method="post" asp-action="logout" asp-controller="account">
+                <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">Logout</button>
+            </form>
+            <form method="get" asp-action="Edit" asp-route-id="@User.Identity.Name" asp-controller="Users">
+                <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">Edit Profile</button>
+            </form>
+        </li>
+    }
+
+}
