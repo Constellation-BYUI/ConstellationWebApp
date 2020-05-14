@@ -1,5 +1,8 @@
 ﻿@inject SignInManager<User> signInManager;
-
+@using System.Security.Claims;
+@{ 
+    var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,25 +36,32 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
                         </li>
                     </ul>
+
                     <ul class="navbar-nav">
                         @if (signInManager.IsSignedIn(User))
                         {
-                        <li class="nav-item">
-                            <form method="post" asp-action="logout" asp-controller="account">
-                                <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">Logout</button>
-                            </form>
-                            <form method="get" asp-action="Edit" asp-controller="Users">
-                                <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">Edit Profile</button>
-                            </form>
-                        </li>
+                            <li class="nav-item">
+                                <form method="post" asp-action="logout" asp-controller="account">
+                                    <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">Logout</button>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+                                <form method="get" asp-action="Edit" asp-controller="Users" asp-route-id="@userId">
+                                    <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">Edit Profile</button>
+                                </form>
+                            </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-item" asp-controller="account" asp-action="register">Register</a>
+                                <form method="get" asp-action="register" asp-controller="account">
+                                    <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">Register</button>
+                                </form>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-item" asp-controller="account" asp-action="login">Login</a>
+                                <form method="get" asp-action="login" asp-controller="account">
+                                    <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">Login</button>
+                                </form>
                             </li>
                         }
                     </ul>
