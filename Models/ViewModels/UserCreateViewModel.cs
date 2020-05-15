@@ -31,6 +31,8 @@ namespace ConstellationWebApp.ViewModels
         public string PhotoPath { get; set; }
         public string ResumePhotoPath { get; set; }
 
+        public bool displayMyProfile { get; set; }
+
         public IFormFile ResumeUpload { get; set; }
 
         public IFormFile Photo { get; set; }

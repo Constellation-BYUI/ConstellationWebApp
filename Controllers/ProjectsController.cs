@@ -69,12 +69,15 @@ namespace ConstellationWebApp.Controllers
             var viewModel = new List<AssignedProjectData>();
             foreach (var users in allUsers)
             {
-                viewModel.Add(new AssignedProjectData
+                if (users.displayMyProfile = true)
                 {
-                    UserID = users.Id,
-                    UserName = users.UserName,
-                    Assigned = userProjects.Contains(users.Id)
-                });
+                    viewModel.Add(new AssignedProjectData
+                    {
+                        UserID = users.Id,
+                        UserName = users.UserName,
+                        Assigned = userProjects.Contains(users.Id)
+                    });
+                }
             }
             ViewData["UsersOfConstellation"] = viewModel;
         }

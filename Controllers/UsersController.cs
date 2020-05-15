@@ -92,7 +92,8 @@ namespace ConstellationWebApp.Controllers
                 Bio = model.Bio,
                 Seeking = model.Seeking,
                 PhotoPath = uniqueFileName,
-                ResumePhotoPath = resumeFileName
+                ResumePhotoPath = resumeFileName,
+                displayMyProfile = model.displayMyProfile
             };
             return (newUser);
         }
@@ -110,7 +111,8 @@ namespace ConstellationWebApp.Controllers
                 OldPhotoPath = userModel.PhotoPath,
                 OldResumePath = userModel.ResumePhotoPath,
                 PhotoPath = userModel.PhotoPath,
-                ResumePhotoPath = userModel.ResumePhotoPath
+                ResumePhotoPath = userModel.ResumePhotoPath,
+                displayMyProfile = userModel.displayMyProfile
             };
             return(viewModel);
         }
@@ -280,6 +282,7 @@ namespace ConstellationWebApp.Controllers
                 user.Seeking = model.Seeking;
                 user.PhotoPath = uniqueFileName;
                 user.ResumePhotoPath = uniqueResumePath;
+                user.displayMyProfile = model.displayMyProfile;
                  _context.Update(user);
                 await _context.SaveChangesAsync();
 
