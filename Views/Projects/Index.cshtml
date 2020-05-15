@@ -21,52 +21,58 @@
 {
     var photoPath = "~/image/" + (item.PhotoPath);
 
-<div class="project-cards">
-    @*Note: We do not want to display the PhotoPath Path but the image itself*@
-    <div>
-        <img class="imageThumbnail" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.Title)" asp-append-version="true" />
-    </div>
-    <div>
-        @Html.DisplayNameFor(modelItem => item.Title) :
-        @Html.DisplayFor(modelItem => item.Title)
-    </div>
-    <div>
-        @Html.DisplayNameFor(modelItem => item.Description) :
-        @Html.DisplayFor(modelItem => item.Description)
-    </div>
-    <div>
-        @Html.DisplayNameFor(modelItem => item.StartDate) :
-        @Html.DisplayFor(modelItem => item.StartDate)
-    </div>
-    <div>
-        @Html.DisplayNameFor(modelItem => item.EndDate) :
-        @Html.DisplayFor(modelItem => item.EndDate)
-    </div>
-    <div>
-        @Html.DisplayNameFor(modelItem => item.CreationDate) :
-        @Html.DisplayFor(modelItem => item.CreationDate)
-    </div>
-    <h4>Collaborators</h4>
-    @foreach (var collab in item.UserProjects)
-    {
-        var collabPath = "~/image/" + (collab.User.PhotoPath);
-        var collabMemberPath = "https://localhost:44359/Users/Details/" + (collab.User.Id);
+<div class="container-fluid padding">
+    <div class="row padding">
+        <div class="col-md-6">
+            <div class="card padding">
+                @*Note: We do not want to display the PhotoPath Path but the image itself*@
+                <div>
+                    <img class="img-thumbnail" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.Title)" asp-append-version="true" />
+                </div>
+                <div>
+                    @Html.DisplayNameFor(modelItem => item.Title) :
+                    @Html.DisplayFor(modelItem => item.Title)
+                </div>
+                <div>
+                    @Html.DisplayNameFor(modelItem => item.Description) :
+                    @Html.DisplayFor(modelItem => item.Description)
+                </div>
+                <div>
+                    @Html.DisplayNameFor(modelItem => item.StartDate) :
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </div>
+                <div>
+                    @Html.DisplayNameFor(modelItem => item.EndDate) :
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </div>
+                <div>
+                    @Html.DisplayNameFor(modelItem => item.CreationDate) :
+                    @Html.DisplayFor(modelItem => item.CreationDate)
+                </div>
+                <h4>Collaborators</h4>
+                @foreach (var collab in item.UserProjects)
+                {
+                    var collabPath = "~/image/" + (collab.User.PhotoPath);
+                    var collabMemberPath = "https://localhost:44359/Users/Details/" + (collab.User.Id);
 
-        @*@collab.User.UserName<br />*@
-        <a href="@collabMemberPath"><img class="smallThumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
-    }
+                    @*@collab.User.UserName<br />*@
+                    <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
+                }
 
-    <h4>Project Links</h4>
-    @foreach (var link in item.ProjectLinks)
-    {
-<a href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
-        <br />
-    }
+                <h4>Project Links</h4>
+                @foreach (var link in item.ProjectLinks)
+                {
+                    <a href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
+                    <br />
+                }
 
-    <div>
-        <a asp-action="Edit" asp-route-id="@item.ProjectID">Edit</a> |
-        <a asp-action="Details" asp-route-id="@item.ProjectID">Details</a> |
-        <a asp-action="Delete" asp-route-id="@item.ProjectID">Delete</a>
+                <div>
+                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@item.ProjectID">Edit</a>
+                    <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.ProjectID">Details</a>
+                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.ProjectID">Delete</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 }

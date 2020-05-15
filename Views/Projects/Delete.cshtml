@@ -12,7 +12,7 @@
 <div>
     <h4>Project</h4>
     <hr />
-    <img class="imageThumbnail" src=" @photoPath" alt="@Html.DisplayFor(model => model.Title)" asp-append-version="true" />
+    <img class="img-thumbnail" src=" @photoPath" alt="@Html.DisplayFor(model => model.Title)" asp-append-version="true" />
 
     <dl class="row">
         <dt class="col-sm-2">
@@ -50,6 +50,6 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="ProjectID" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
     </form>
 </div>

@@ -5,9 +5,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ConstellationWebApp</title>
+    <meta name="description" content="Share your skills and make your projects available to potential recruiters" />
+    <title>@ViewData["Title"] - Home</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" 
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="icon" href="~/image/favicon1.png" />
 </head>
 <body>
     <header>
@@ -20,7 +24,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="collapisbleNavbar">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
+                        <li class="nav-item active">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
@@ -37,21 +41,26 @@
                         @if (signInManager.IsSignedIn(User))
                         {
                         <li class="nav-item">
-                            <form method="post" asp-action="logout" asp-controller="account">
-                                <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">Logout</button>
-                            </form>
-                            <form method="get" asp-action="Edit" asp-controller="Users">
-                                <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">Edit Profile</button>
-                            </form>
+                            <input type="text" class="search-input" name="search" placeholder="search..." size="5" style="border-radius: 3px;"><i class="fas fa-search"></i>
                         </li>
+                            <li class="nav-item">
+                                <form method="post" asp-action="logout" asp-controller="account">
+                                    <button type="submit" class="nav-item btn btn-primary btn-sm py-0" style="width:auto">Logout</button>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+                                <form method="get" asp-action="Edit" asp-controller="Users">
+                                    <button type="submit" class="nav-item btn btn-secondary btn-sm py-0" style="width:auto">Edit Profile</button>
+                                </form>
+                            </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-item" asp-controller="account" asp-action="register">Register</a>
+                                <a class="nav-item btn btn-secondary btn-sm" asp-controller="account" asp-action="register">Register</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-item" asp-controller="account" asp-action="login">Login</a>
+                                <a class="nav-item btn btn-primary btn-sm" asp-controller="account" asp-action="login">Login</a>
                             </li>
                         }
                     </ul>
