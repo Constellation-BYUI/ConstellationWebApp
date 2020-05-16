@@ -6,12 +6,6 @@ for details on configuring this project to bundle and minify static web assets. 
  ****************************************/
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 
-html, body {
-    /*height: 100%;
-    width: 100%;*/
-    font-family: 'Poppins', sans-serif;
-    color: #222;
-}
 
 /*--- Bootstrap Padding Fix --*/
 /*[class*="col-"] {
@@ -22,15 +16,11 @@ html, body {
     font-size: 1.1em !important;
 }
 
-.btn-primary {
-    background-color: green;
-    margin-left: 1px;
+.btn-success {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
 }
 
-.btn-secondary {
-    background-color: #3b5998;
-    margin-left: 1px;
-}
 
 .padding {
     padding: 0.5rem;
