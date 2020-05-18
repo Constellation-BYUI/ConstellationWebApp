@@ -69,7 +69,7 @@ namespace ConstellationWebApp.Controllers
             var viewModel = new List<AssignedProjectData>();
             foreach (var users in allUsers)
             {
-                if (users.displayMyProfile = true)
+                if (users.displayMyProfile == true)
                 {
                     viewModel.Add(new AssignedProjectData
                     {
