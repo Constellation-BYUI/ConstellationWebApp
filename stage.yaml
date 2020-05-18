@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: constellationstage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: constellationstage
+  template:
+    metadata:
+      labels:
+        app: constellationstage
+    spec:
+      containers:
+      - name: constellationstage
+        image: gcr.io/constellation-275522/constellationweb
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: "1"
+            memory: "1000Mi"
+          requests:
+            cpu: ".25"
+            memory: "250Mi"
+        livenessProbe:
+          httpGet:
+            path: /account/login
+            port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: constellationstage
+spec:
+  selector:
+    app: constellationstage
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: constellationstage-loadbalancer
+spec:
+  selector:
+    app: constellationstage
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+   
