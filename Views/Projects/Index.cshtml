@@ -1,8 +1,11 @@
 ﻿@model ConstellationWebApp.Models.ViewModel
+@using System.Security.Claims;
 
 @{
     ViewData["Title"] = "Projects Index";
+    var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
+
 
 <h1>Constellation Projects</h1>
 
@@ -13,7 +16,7 @@
 @* Take this to an actual css later *@
 
 @*Note: We do not want to display when the data cell is empty. Only when populated*@
-@* Need to be solved: 
+@* Need to be solved:
 
 *@
 
@@ -21,59 +24,73 @@
 {
     var photoPath = "~/image/" + (item.PhotoPath);
 
-<div class="container padding">
-    <div class="row padding">
-        <div class="col-md-6">
-            <div class="card shadow text-black-50 text-white  bg-light mb-3 padding">
-                @*Note: We do not want to display the PhotoPath Path but the image itself*@
-                <div>
-                    <img style="height: 300px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.Title)" asp-append-version="true" />
-                </div>
-                <div>
-                    @Html.DisplayNameFor(modelItem => item.Title) :
-                    @Html.DisplayFor(modelItem => item.Title)
-                </div>
-                <div>
-                    @Html.DisplayNameFor(modelItem => item.Description) :
-                    @Html.DisplayFor(modelItem => item.Description)
-                </div>
-                <div>
-                    @Html.DisplayNameFor(modelItem => item.StartDate) :
-                    @Html.DisplayFor(modelItem => item.StartDate)
-                </div>
-                <div>
-                    @Html.DisplayNameFor(modelItem => item.EndDate) :
-                    @Html.DisplayFor(modelItem => item.EndDate)
-                </div>
-                <div>
-                    @Html.DisplayNameFor(modelItem => item.CreationDate) :
-                    @Html.DisplayFor(modelItem => item.CreationDate)
-                </div>
-                <h4>Collaborators</h4>
-                @foreach (var collab in item.UserProjects)
-                {
-                    var collabPath = "~/image/" + (collab.User.PhotoPath);
-                    var collabMemberPath = "https://localhost:44359/Users/Details/" + (collab.User.Id);
+    <div class="container padding">
+        <div class="row padding">
+            <div class="col-md-6">
+                <div class="card shadow text-black-50 text-white  bg-light mb-3 padding">
+                    @*Note: We do not want to display the PhotoPath Path but the image itself*@
+                    <div>
+                        <img style="height: 300px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.Title)" asp-append-version="true" />
+                    </div>
+                    <div>
+                        @Html.DisplayNameFor(modelItem => item.Title) :
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </div>
+                    <div>
+                        @Html.DisplayNameFor(modelItem => item.Description) :
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </div>
+                    <div>
+                        @Html.DisplayNameFor(modelItem => item.StartDate) :
+                        @Html.DisplayFor(modelItem => item.StartDate)
+                    </div>
+                    <div>
+                        @Html.DisplayNameFor(modelItem => item.EndDate) :
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </div>
+                    <div>
+                        @Html.DisplayNameFor(modelItem => item.CreationDate) :
+                        @Html.DisplayFor(modelItem => item.CreationDate)
+                    </div>
+                    <h4>Project Links</h4>
+                    @foreach (var link in item.ProjectLinks)
+                    {
+                        <a class="card-link" href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
+                        <br />
+                    }
+                    <h4>Collaborators</h4>
+                    @{
+                        bool isLoggedIn = false;
+                        foreach (var collab in item.UserProjects)
+                        {
+                            var collabPath = "~/image/" + (collab.User.PhotoPath);
+                            var collabMemberPath = "https://localhost:44359/Users/Details/" + (collab.User.Id);
 
-                    @*@collab.User.UserName<br />*@
-                    <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
-                }
-
-                <h4>Project Links</h4>
-                @foreach (var link in item.ProjectLinks)
-                {
-                    <a class="card-link" href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
-                    <br />
-                }
-
-                <div class="card-footer">
-                    <a class="btn btn-md btn-primary" asp-action="Edit" asp-route-id="@item.ProjectID">Edit</a>
-                    <a class="btn btn-md btn-secondary" asp-action="Details" asp-route-id="@item.ProjectID">Details</a>
-                    <a class="btn btn-md btn-danger" asp-action="Delete" asp-route-id="@item.ProjectID">Delete</a>
+                            @*@collab.User.UserName<br />*@
+                            <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
+                            if (collab.UserID == currentUser)
+                            {
+                                isLoggedIn = true;
+                            }
+                        }
+                        if (isLoggedIn == true)
+                        {
+                            <div class="card-footer">
+                                <a class="btn btn-md btn-primary" asp-action="Edit" asp-route-id="@item.ProjectID">Edit</a>
+                                <a class="btn btn-md btn-danger" asp-action="Delete" asp-route-id="@item.ProjectID">Delete</a>
+                                <a class="btn btn-md btn-secondary" asp-action="Details" asp-route-id="@item.ProjectID">Details</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="card-footer">
+                                <a class="btn btn-md btn-secondary" asp-action="Details" asp-route-id="@item.ProjectID">Details</a>
+                            </div>
+                        }
+                    }
                 </div>
             </div>
         </div>
     </div>
-</div>
 }
 

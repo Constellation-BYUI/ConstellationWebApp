@@ -1,5 +1,10 @@
 ﻿@inject SignInManager<User> signInManager;
 
+@using System.Security.Claims;
+@{
+    var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +13,7 @@
     <meta name="description" content="Share your skills and make your projects available to potential recruiters" />
     <title>@ViewData["Title"] - Home</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-flaty.min.css" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
           integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="icon" href="~/favicon.ico" />
@@ -41,16 +46,16 @@
                         @if (signInManager.IsSignedIn(User))
                         {
                             @*<li class="nav-item">
-                                    <input type="text" class="search-input" name="search" placeholder="search..." size="5" style="border-radius: 3px;"><i class="fas fa-search"></i>
-                                </li>*@
+                <input type="text" class="search-input" name="search" placeholder="search..." size="5" style="border-radius: 3px;"><i class="fas fa-search"></i>
+            </li>*@
                             <li class="nav-item">
                                 <form method="post" asp-action="logout" asp-controller="account">
-                                    <button type="submit" class="nav-item btn btn-success btn-md py-0" style="width:auto">Logout</button>
+                                    <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">Logout</button>
                                 </form>
                             </li>
                             <li class="nav-item">
-                                <form method="get" asp-action="Edit" asp-controller="Users">
-                                    <button type="submit" class="nav-item btn btn-primary btn-md py-0" style="width:auto">Edit Profile</button>
+                                <form method="get" asp-action="Edit" asp-controller="Users" asp-route-id="@userId">
+                                    <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">Edit Profile</button>
                                 </form>
                             </li>
                         }
@@ -75,15 +80,15 @@
 
         <button class="btn btn-primary btn-sm text-center" onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
     </div>
-          <footer class=" padding border-top footer text-muted bg-dark">
-              <div>
-                 
-              </div>
-              <div class="container-fluid text-white text-center">
-                  &copy; 2020 - ConstellationWebApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                </div>
-        </footer>
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <footer class=" padding border-top footer text-muted bg-dark">
+        <div>
+
+        </div>
+        <div class="container-fluid text-white text-center">
+            &copy; 2020 - ConstellationWebApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validate/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive//jquery.validate.unobtrusive.js"></script>
 
