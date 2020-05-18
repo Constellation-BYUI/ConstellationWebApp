@@ -176,5 +176,13 @@ body {
     padding: 1em;
 }*/
 
+/* demo styling css for testing: fix however you want*/
+.Demo-Types {
+    display: inline-block;
+    background-color: aquamarine;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
 
 

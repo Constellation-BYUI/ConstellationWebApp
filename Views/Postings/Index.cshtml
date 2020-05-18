@@ -1,0 +1,64 @@
+﻿@model ConstellationWebApp.Models.ViewModel
+@using System.Security.Claims;
+
+
+@{
+    ViewData["Title"] = "Index";
+    var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+}
+
+<h1>Postings</h1>
+<p>
+    <a asp-action="Create">Create New Project or Job Posting</a>
+</p>
+
+@foreach (var item in Model.Postings)
+{
+    var photoPath = "~/image/" + (item.PostingOwner.PhotoPath);
+    var collabMemberPath = "https://localhost:44359/Users/Details/" + (item.PostingOwner.Id);
+
+    <h2>
+        @Html.DisplayFor(modelItem => item.PostingFor)
+    </h2>
+    <div>
+        @Html.DisplayFor(modelItem => item.PostingTitle)
+    </div>
+    <div>
+        @Html.DisplayFor(modelItem => item.Description)
+    </div>
+    <div>
+        <a href="@collabMemberPath"><img class="small-thumbnail" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.PostingOwner.UserName)" asp-append-version="true" /></a>
+    </div>
+    <div>
+        @Html.DisplayFor(modelItem => item.PostingOwner.UserName)
+    </div>
+    <h4>Type of Posting</h4>
+    <div class="Demo-Types">
+        @foreach (var type in item.Posting_PostingTypes)
+        {
+            <div class="Demo-Types">
+                @type.PostingTypes.PostingTypeName
+            </div>
+            <br />
+        }
+    </div>
+
+    if ((currentUser == item.PostingOwner.Id) && (currentUser != null))
+    {
+        <div>
+            <a asp-action="Edit" asp-route-id="@item.PostingID">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.PostingID">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.PostingID">Delete</a>
+        </div>
+        <br />
+
+    }
+    else
+    {
+        <div>
+            <a asp-action="Details" asp-route-id="@item.PostingID">Details</a>
+        </div>
+        <br />
+    }
+}
+

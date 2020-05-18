@@ -45,6 +45,7 @@
 
         public bool displayMyProfile { get; set; }
 
+        public ICollection<Posting> Postings { get; set; }
 
         public virtual ICollection<ContactLink> ContactLinks { get; set; }
 
