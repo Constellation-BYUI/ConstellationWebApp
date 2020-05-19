@@ -33,7 +33,6 @@ steps:
   - --image=gcr.io/$PROJECT_ID/constellationweb:$SHORT_SHA
   - --location=us-east1-b
   - --cluster=cluster-1
-  - --output=gs://constellation-dev-build/output
 
 # This step deploys the dev application in Kubernetes
 - name: 'gcr.io/cloud-builders/gke-deploy'
@@ -43,7 +42,6 @@ steps:
   - --image=gcr.io/$PROJECT_ID/constellationweb:$SHORT_SHA
   - --location=us-east1-b
   - --cluster=cluster-1
-  - --output=gs://constellation-dev-build/output
 
 
 # This step deploys the stage application in Kubernetes
