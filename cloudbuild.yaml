@@ -40,8 +40,6 @@ steps:
   - --filename=dev.yaml
   - --location=us-east1-b
   - --cluster=cluster-1
-  - --output=gs://constellation-dev-build/output
-
 
 # This step deploys the stage application in Kubernetes
 - name: 'gcr.io/cloud-builders/gke-deploy'
