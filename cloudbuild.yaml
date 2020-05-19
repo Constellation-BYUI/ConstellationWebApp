@@ -23,7 +23,7 @@ steps:
   - 'build'
   - '-t'
   - 'gcr.io/$PROJECT_ID/constellationweb:latest'
-  - '.'  
+  - '.' 
 
 # This step pushes the image to Container Registry
 # The PROJECT_ID and SHORT_SHA variables are automatically
@@ -70,3 +70,4 @@ steps:
   - --cluster=cluster-1
   - --output=gs://constellation-prod-build/output
 
+images: ['gcr.io/$PROJECT_ID/constellationweb:$SHORT_SHA']
