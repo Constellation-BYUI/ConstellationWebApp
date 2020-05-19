@@ -20,6 +20,13 @@ namespace ConstellationWebApp.Data
         public DbSet<UserProject> UserProjects { get; set; }
         public DbSet<ContactLink> ContactLinks { get; set; }
         public DbSet<ProjectLink> ProjectLinks { get; set; }
+        public DbSet<Posting> Postings { get; set; }
+
+        public DbSet<PostingType> PostingTypes { get; set; }
+
+        public DbSet<Posting_PostingType> Posting_PostingTypes { get; set; }
+
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -48,6 +55,19 @@ namespace ConstellationWebApp.Data
              .HasMany(c => c.ProjectLinks)
              .WithOne(e => e.Projects);
 
+            modelBuilder.Entity<PostingType>().ToTable("PostingTypes");
+            modelBuilder.Entity<Posting_PostingType>().ToTable("Posting_PostingType");
+            modelBuilder.Entity<Posting>().ToTable("Posting");
+
+
+
+            //modelBuilder.Entity<Posting>()
+            //         .HasOne(p => p.PostingOwner)
+            //         .WithMany(b => b.Postings);
+
+            //modelBuilder.Entity<Posting>()
+            //      .HasOne(p => p.PostingOwner)
+            //      .WithMany(b => b.Postings);
         }
     }
     

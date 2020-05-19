@@ -1,11 +1,24 @@
 ﻿
 @model ConstellationWebApp.Models.ViewModels.ProjectEditViewModel
+@using System.Security.Claims;
+
 
 @{
     ViewData["Title"] = "Delete";
     var photoPath = "~/image/" + Model.PhotoPath;
+    var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+    bool canView = false;
+}
+@foreach (var collaborator in Model.currentProject.UserProjects)
+{
+    if (collaborator.UserID == currentUser)
+    {
+        canView = true;
+    }
 }
 
+@if (canView == true)
+{
     <div class="alert alert-dismissible alert-warning">
         <div class="container padding">
             <div class="row padding">
@@ -65,3 +78,22 @@
             </div>
         </div>
     </div>
+}
+else
+{
+    <h2>You are not part of this project and do not have permission to remove it.</h2>
+
+ @*   foreach (var collab in Model.currentProject.UserProjects)
+    {
+        var collabPath = "~/image/" + (collab.User.PhotoPath);
+        var collabMemberPath = "https://localhost:44359/Users/Details/" + (collab.User.Id);
+        <div>
+            <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
+            <a href="@collabMemberPath">@Html.DisplayFor(modelItem => collab.User.FirstName)  @Html.DisplayFor(modelItem => collab.User.LastName)  : @Html.DisplayFor(modelItem => collab.User.UserName)</a>
+        </div>
+    }
+*@
+    <div>
+        <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
+    </div>
+}

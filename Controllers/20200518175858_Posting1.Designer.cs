@@ -4,14 +4,16 @@ using ConstellationWebApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ConstellationWebApp.Migrations
 {
     [DbContext(typeof(ConstellationWebAppContext))]
-    partial class ConstellationWebAppContextModelSnapshot : ModelSnapshot
+    [Migration("20200518175858_Posting1")]
+    partial class Posting1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,9 +61,6 @@ namespace ConstellationWebApp.Migrations
                     b.Property<string>("PostingOwnerId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("PostingTitle")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("PostingID");
 
                     b.HasIndex("PostingOwnerId");
@@ -90,9 +89,6 @@ namespace ConstellationWebApp.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<bool>("Assigned")
-                        .HasColumnType("bit");
 
                     b.Property<int>("PostingID")
                         .HasColumnType("int");
