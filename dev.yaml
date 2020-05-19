@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: constellationweb
-        image: gcr.io/constellation-275522/constellationweb
+        image: gcr.io/constellation-275522/constellationweb:latest
         ports:
         - containerPort: 80
         resources:
