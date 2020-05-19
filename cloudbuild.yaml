@@ -28,15 +28,18 @@ steps:
 # This step deploys the dev application in Kubernetes
 - name: 'gcr.io/cloud-builders/gke-deploy'
   args:
-  - run
+  - prepare
   - --filename=dev.yaml
   - --image=gcr.io/$PROJECT_ID/constellationweb:$SHORT_SHA
+  - --output=gs://constellation-dev-build/output
+
+# This step deploys the dev application in Kubernetes
+- name: 'gcr.io/cloud-builders/gke-deploy'
+  args:
+  - apply
+  - --filename=dev.yaml
   - --location=us-east1-b
   - --cluster=cluster-1
-
-# Remove output directory before running stage deploy
-- name: 'ubuntu'
-  args: ['bash', 'rm -R /output']
 
 # This step deploys the stage application in Kubernetes
 - name: 'gcr.io/cloud-builders/gke-deploy'
@@ -46,10 +49,7 @@ steps:
   - --image=gcr.io/$PROJECT_ID/constellationweb:$SHORT_SHA
   - --location=us-east1-b
   - --cluster=cluster-1
-
-# Remove output directory before running production deploy
-- name: 'ubuntu'
-  args: ['bash', 'rm -R /output']
+  - --output=gs://constellation-stage-build/output
 
 # This step deploys the prod application in Kubernetes
 - name: 'gcr.io/cloud-builders/gke-deploy'
@@ -59,4 +59,5 @@ steps:
   - --image=gcr.io/$PROJECT_ID/constellationweb:$SHORT_SHA
   - --location=us-east1-b
   - --cluster=cluster-1
+  - --output=gs://constellation-prod-build/output
 
