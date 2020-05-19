@@ -34,6 +34,10 @@ steps:
   - --location=us-east1-b
   - --cluster=cluster-1
 
+# Remove output directory before running stage deploy
+- name: 'ubuntu'
+  args: ['bash', 'rm -R /output']
+
 # This step deploys the stage application in Kubernetes
 - name: 'gcr.io/cloud-builders/gke-deploy'
   args:
@@ -42,6 +46,10 @@ steps:
   - --image=gcr.io/$PROJECT_ID/constellationweb:$SHORT_SHA
   - --location=us-east1-b
   - --cluster=cluster-1
+
+# Remove output directory before running production deploy
+- name: 'ubuntu'
+  args: ['bash', 'rm -R /output']
 
 # This step deploys the prod application in Kubernetes
 - name: 'gcr.io/cloud-builders/gke-deploy'
