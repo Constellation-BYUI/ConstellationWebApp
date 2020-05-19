@@ -1,125 +1,161 @@
 ﻿@* Create Project Page should be accesible from each user page and should be itegrated into thenavigation bar - it should automatically create a collaborator from the current user ID *@
 @model ConstellationWebApp.Models.ViewModels.ProjectEditViewModel
+@using System.Security.Claims;
 
 @{
     ViewData["Title"] = "Edit Project";
 
-    List<ConstellationWebApp.Models.Project> project = ViewBag.ProjectViewBag;
     var photoPath = "~/image/" + Model.PhotoPath;
+    var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+    bool canView = false;
+    var thisProject = Model.ProjectID;
+
 }
 
-<h2>Edit Project</h2>
 
-<hr />
-<div class="container padding">
-    <div class="row padding">
-        <div class="col-md-10">
-            <div class="card shadow text-black-50 text-white  bg-light mb-3 padding">
-                <div>
-                    @{
-                        <img style="height: 500px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(model => model.Title)" asp-append-version="true" />
-                    }
-                </div>
-                <form asp-action="Edit" asp-controller="Projects" enctype="multipart/form-data">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="ProjectID" />
-                    <input type="hidden" asp-for="OldPhotoPath" />
-                    <div class="form-group">
-                        <label asp-for="Title" class="control-label"></label>
-                        <input asp-for="Title" class="form-control" />
-                        <span asp-validation-for="Title" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Description" class="control-label"></label>
-                        <input asp-for="Description" class="form-control" />
-                        <span asp-validation-for="Description" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="StartDate" class="control-label"></label>
-                        <input asp-for="StartDate" class="form-control" />
-                        <span asp-validation-for="StartDate" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="EndDate" class="control-label"></label>
-                        <input asp-for="EndDate" class="form-control" />
-                        <span asp-validation-for="EndDate" class="text-danger"></span>
-                    </div>
-                    <div class="form-group row">
-                        <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
-                        <div class="col-sm-10">
-                            <div class="custom-file">
-                                <input asp-for="Photo" class="form-control custom-file-input" />
-                                <label class="custom-file-label">Replace Project Photo ...</label>
-                            </div>
+@foreach (var collaborator in Model.currentProject.UserProjects)
+{
+    if (collaborator.UserID == currentUser)
+    {
+        canView = true;
+    }
+}
+
+
+@if (canView == true)
+{
+    <div>
+        <h2>Edit Project</h2>
+        <hr />
+        <div class="container padding">
+            <div class="row padding">
+                <div class="col-md-10">
+                    <div class="card shadow text-black-50 text-white  bg-light mb-3 padding">
+
+                        <div>
+                            <img style="height: 500px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(model => model.Title)" asp-append-version="true" />
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <datalist id="user-list">
-                                @{
-                                    List<ConstellationWebApp.Models.AssignedProjectData> usersCollab = ViewBag.UsersOfConstellation;
-
-                                    foreach (var user in usersCollab)
-                                    {
-                                        <option value="@user.UserName" data-id="@user.UserID"></option>
-                                    }
-                                @:</datalist>
-                            @:</div>
-                                }
-                            </div>
-
-                            <input list="user-list" name="selectedCollaborators">
-
-                            <div id="demo"></div>
-                            <input type="button" id="more_fields" onclick="add_collab();" value="Add Collaborator" />
-
+                        <form asp-action="Edit" asp-controller="Projects" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="ProjectID" />
+                            <input type="hidden" asp-for="OldPhotoPath" />
                             <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <h4>Link Label</h4>
-                                    <input list='contact-link-label' name='createdLinkLabels'>
-                                    <h4>Link URL</h4>
-                                    <input list='contact-link-url' name='createdLinkUrls'>
-
-                                    <div id="linkDemo"></div>
-                                    <input type="button" id="more_fields" onclick="add_fields();" value="Add Link" />
+                                <label asp-for="Title" class="control-label"></label>
+                                <input asp-for="Title" class="form-control" />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Description" class="control-label"></label>
+                                <input asp-for="Description" class="form-control" />
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="StartDate" class="control-label"></label>
+                                <input asp-for="StartDate" class="form-control" />
+                                <span asp-validation-for="StartDate" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="EndDate" class="control-label"></label>
+                                <input asp-for="EndDate" class="form-control" />
+                                <span asp-validation-for="EndDate" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    <div class="custom-file">
+                                        <input asp-for="Photo" class="form-control custom-file-input" />
+                                        <label class="custom-file-label">Replace Project Photo ...</label>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <button type="submit" value="Update" class="btn btn-md btn-primary">Update</button>
-                            </div>
-                        </form>
+                                <div class="col-md-offset-2 col-md-10">
+                                    <datalist id="user-list">
+                                        @{
+                                            List<ConstellationWebApp.Models.AssignedProjectData> usersCollab = ViewBag.UsersOfConstellation;
 
-                    </div>
-                    <div class="card">
-                        <div class="card-footer">
-                            <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
+                                            foreach (var user in usersCollab)
+                                            {
+                                                <option value="@user.UserName" data-id="@user.UserID"></option>
+                                            }
+                                        @:</datalist>
+                                    @:</div>
+                                        }
+                                    </div>
+
+                                    <input list="user-list" name="selectedCollaborators">
+
+                                    <div id="demo"></div>
+                                    <input type="button" id="more_fields" onclick="add_collab();" value="Add Collaborator" />
+
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <h4>Link Label</h4>
+                                            <input list='contact-link-label' name='createdLinkLabels'>
+                                            <h4>Link URL</h4>
+                                            <input list='contact-link-url' name='createdLinkUrls'>
+
+                                            <div id="linkDemo"></div>
+                                            <input type="button" id="more_fields" onclick="add_fields();" value="Add Link" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button type="submit" value="Update" class="btn btn-md btn-primary">Update</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="card">
+                                <div class="card-footer">
+                                    <a class="btn btn-md btn-primary" asp-action="Delete" asp-route-id="@Model.ProjectID">Delete</a>
+                                    <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        @section Scripts {
-            <script>
-                $(document).ready(function () {
-                    $('.custom-file-input').on("change", function () {
-                        var fileName = $(this).val().split("\\").pop();
-                        $(this).next('.custom-file-label').html(fileName);
-                    });
-                });
-            </script>
-            <script>
-                function add_collab() {
-                    document.getElementById("demo").innerHTML += "<input list='user-list'   name='selectedCollaborators'> ";
-                }
-            </script>
-            <script>
-                function add_fields() {
-                    document.getElementById("linkDemo").innerHTML += "<h2>Link Label</h2><input list='contact-link-label' name='createdLinkLabels'><h2>Link URL</h2> <input list='contact-link-url' name='createdLinkUrls'>";
-
-                }
-            </script>
-
-            @*@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@
         }
+        else
+        {
+            <h2>You are not part of this project and do not have permission to Edit it. Connect with the members of the project if you want to be part of it.</h2>
+
+            foreach (var collab in Model.currentProject.UserProjects)
+            {
+                var collabPath = "~/image/" + (collab.User.PhotoPath);
+                var collabMemberPath = "https://localhost:44359/Users/Details/" + (collab.User.Id);
+                <div>
+                    @*@collab.User.UserName<br />*@
+                    <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
+                    <a href="@collabMemberPath">@Html.DisplayFor(modelItem => collab.User.FirstName)  @Html.DisplayFor(modelItem => collab.User.LastName)  : @Html.DisplayFor(modelItem => collab.User.UserName)</a>
+                </div>
+            }
+            <div>
+            <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
+            </div>
+        }
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.custom-file-input').on("change", function () {
+                var fileName = $(this).val().split("\\").pop();
+                $(this).next('.custom-file-label').html(fileName);
+            });
+        });
+    </script>
+    <script>
+        function add_collab() {
+            document.getElementById("demo").innerHTML += "<input list='user-list'   name='selectedCollaborators'> ";
+        }
+    </script>
+    <script>
+        function add_fields() {
+            document.getElementById("linkDemo").innerHTML += "<h2>Link Label</h2><input list='contact-link-label' name='createdLinkLabels'><h2>Link URL</h2> <input list='contact-link-url' name='createdLinkUrls'>";
+
+        }
+    </script>
+
+    @*@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@
+}

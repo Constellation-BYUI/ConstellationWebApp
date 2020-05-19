@@ -106,7 +106,8 @@ namespace ConstellationWebApp.Controllers
                 EndDate = entityProjectModel.EndDate,
                 CreationDate = entityProjectModel.CreationDate,
                 OldPhotoPath = entityProjectModel.PhotoPath,
-                PhotoPath = entityProjectModel.PhotoPath
+                PhotoPath = entityProjectModel.PhotoPath,
+                currentProject = entityProjectModel
             };
         }
 
@@ -156,6 +157,7 @@ namespace ConstellationWebApp.Controllers
                 return NotFound();
             }
             var project = await _context.Projects
+                .Include( i => i.UserProjects).ThenInclude(i => i.User)
                 .FirstOrDefaultAsync(m => m.ProjectID == id);
             if (project == null)
             {
@@ -240,6 +242,7 @@ namespace ConstellationWebApp.Controllers
                 .Include(i => i.ProjectLinks)
                 .AsNoTracking()
             .FirstOrDefaultAsync(m => m.ProjectID == id);
+
             if (entityProjectModel == null)
             {
                 return NotFound();

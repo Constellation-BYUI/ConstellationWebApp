@@ -1,7 +1,9 @@
 ﻿@model ConstellationWebApp.Models.Posting
+@using System.Security.Claims;
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Create";
+    var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
 
 <h1>Details</h1>
@@ -10,21 +12,28 @@
     <h4>Posting</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Description)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Description)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.PostingFor)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PostingFor)
         </dd>
     </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.PostingID">Edit</a> |
+@if (currentUser == Model.PostingOwner.Id)
+{
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.PostingID">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>
+}
+else
+{
     <a asp-action="Index">Back to List</a>
-</div>
+}
