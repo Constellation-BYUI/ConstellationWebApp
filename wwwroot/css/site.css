@@ -13,7 +13,7 @@ for details on configuring this project to bundle and minify static web assets. 
 }*/
 
 .nav-link {
-    font-size: 1.1em !important;
+    font-size: 1.1em;
 }
 
 .btn-success {
@@ -45,16 +45,15 @@ for details on configuring this project to bundle and minify static web assets. 
 #myBtn {
     display: none;
     position: fixed;
-    bottom: 10px;
-    right: 30px;
+    bottom: 5px;
+    right: 20px;
     z-index: 99;
-    border: none;
+    border: 1px solid white;
     outline: none;
     color: white;
     cursor: pointer;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 16px;
+    border-radius: 3px;
+    font-size: 18px;
  }
 
 #myBtn:hover {
@@ -69,6 +68,7 @@ for details on configuring this project to bundle and minify static web assets. 
 }
 
 @media (max-width: 576px) {
+   
 }
 
 /****************************************
@@ -132,17 +132,19 @@ html {
   min-height: 100%;
 }
 
-body {
+body, html {
    /*Margin bottom by footer height*/ 
-  margin-bottom: 60px;
+  margin: auto;
 }
 
-.footer {
+footer {
     position: absolute;
     bottom: 0;
     width: 100%;
-    white-space: nowrap;
-    line-height: 60px; /* Vertically center the text there */
+    white-space: normal;
+    line-height: normal;
+    padding: 1rem 1rem;
+    margin: 0 auto;
 }
 
 /*.imageThumbnail {

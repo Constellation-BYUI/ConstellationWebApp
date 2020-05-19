@@ -20,56 +20,58 @@
 </head>
 <body class="container-fluid">
     <header class="sticky-top">
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow ">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow bg-primary ">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ConstellationWebApp</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="collapisbleNavbar">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item active">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Projects" asp-action="Index">Projects</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
-                        </li>
-                    </ul>
+                <div class="collapse navbar-collapse " id="collapisbleNavbar">
                     <ul class="navbar-nav">
-                        @if (signInManager.IsSignedIn(User))
-                        {
-                            @*<li class="nav-item">
-                <input type="text" class="search-input" name="search" placeholder="search..." size="5" style="border-radius: 3px;"><i class="fas fa-search"></i>
-            </li>*@
-                            <li class="nav-item">
-                                <form method="post" asp-action="logout" asp-controller="account">
-                                    <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">Logout</button>
-                                </form>
-                            </li>
-                            <li class="nav-item">
-                                <form method="get" asp-action="Edit" asp-controller="Users" asp-route-id="@userId">
-                                    <button type="submit" class="nav-link btn btn-link py-0" style="width:auto">Edit Profile</button>
-                                </form>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-item btn btn-primary btn-md" asp-controller="account" asp-action="register">Register</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-item btn btn-success btn-md" asp-controller="account" asp-action="login">Login</a>
-                            </li>
-                        }
+                        <li class="nav-item">
+                            <a class="nav-link text-white-50" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white-50" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white-50" asp-area="" asp-controller="Projects" asp-action="Index">Projects</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white-50" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
+                        </li>
                     </ul>
+
                 </div>
+
+                <ul class="navbar-nav navbar-expand ml-auto mt-1">
+                    @if (signInManager.IsSignedIn(User))
+                    {
+                        @*<li class="nav-item">
+                    <input type="text" class="search-input" name="search" placeholder="search..." size="5" style="border-radius: 3px;"><i class="fas fa-search"></i>
+                </li>*@
+                        <li class="nav-item">
+                            <form method="post" asp-action="logout" asp-controller="account">
+                                <button type="submit" class="nav-link btn btn-success " style="width:auto; font-size: 1em; padding: 0.2rem;">Logout</button>
+                            </form>
+                        </li>
+                        <li class="nav-item">
+                            <form method="get" asp-action="Edit" asp-controller="Users" asp-route-id="@userId">
+                                <button type="submit" class="nav-link btn btn-primary " style="width:auto; font-size: 1em; padding: 0.2rem;">Edit Profile</button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-primary" style="width:auto; font-size: 1em; padding: 0.2rem;" asp-controller="account" asp-action="register">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-success" style="width:auto; font-size: 1em; padding: 0.2rem;" asp-controller="account" asp-action="login">Login</a>
+                        </li>
+                    }
+                </ul>
             </div>
         </nav>
     </header>
@@ -78,22 +80,14 @@
             @RenderBody()
         </main>
 
-        <button class="btn btn-primary btn-sm text-center" onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+        <button class="btn btn-primary btn-sm" onclick="topFunction()" id="myBtn" title="Go to top"><i class="fas fa-arrow-alt-circle-up"></i></button>
     </div>
-    <footer class=" padding border-top footer text-muted bg-dark">
-        <div>
-
-        </div>
-        <div class="container-fluid text-white text-center">
-            &copy; 2020 - ConstellationWebApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+ <footer class="container border-top  text-white text-center bg-primary">
+     <p class="lead">&copy; 2020 - ConstellationWebApp - <a class="text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></p>
+ </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validate/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive//jquery.validate.unobtrusive.js"></script>
-
-
-
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
