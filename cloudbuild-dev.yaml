@@ -25,11 +25,26 @@ steps:
   - 'push'
   - 'gcr.io/$PROJECT_ID/constellationweb:$SHORT_SHA'
 
-# This step deploys the application in Kubernetes
+# This step deploys the dev application in Kubernetes
 - name: 'gcr.io/cloud-builders/gke-deploy'
   args:
   - run
-  - --filename=app.yaml
+  - --filename=dev.yaml
   - --image=gcr.io/$PROJECT_ID/constellationweb:$SHORT_SHA
   - --location=us-east1-b
-  - --cluster=cluster-1
+  - --output=/tmp/outputdev
+  - --location=us-east1-b
+  - --cluster=cluster-1  
+
+# This step deploys the stage application in Kubernetes
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - builds
+  - submit
+  - --config
+  - cloudbuild-stage.yaml
+  - --substitutions
+  - _SHORT_SHA=$SHORT_SHA
+  - .
+
+
