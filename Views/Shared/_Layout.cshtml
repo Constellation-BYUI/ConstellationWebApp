@@ -12,7 +12,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Share your skills and make your projects available to potential recruiters" />
     <title>@ViewData["Title"] - Home</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-flaty.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/w3css.css"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/w3css-theme.css"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-flaty.min.css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
           integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/site.css" />
@@ -52,8 +54,8 @@
                     @if (signInManager.IsSignedIn(User))
                     {
                         @*<li class="nav-item">
-                    <input type="text" class="search-input" name="search" placeholder="search..." size="5" style="border-radius: 3px;"><i class="fas fa-search"></i>
-                </li>*@
+                                <input type="text" class="search-input" name="search" placeholder="search..." size="5" style="border-radius: 3px;"><i class="fas fa-search"></i>
+                            </li>*@
                         <li class="nav-item">
                             <form method="post" asp-action="logout" asp-controller="account">
                                 <button type="submit" class="nav-link btn btn-success " style="width:auto; font-size: 1em; padding: 0.2rem;">Logout</button>
@@ -77,17 +79,17 @@
                 </ul>
             </div>
         </nav>
+
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="">
+        <main role="main" class="pb-3 container-fluid" style="padding: 0px;">
             @RenderBody()
         </main>
-
-        <button class="btn btn-primary btn-sm" onclick="topFunction()" id="myBtn" title="Go to top"><i class="fas fa-arrow-alt-circle-up"></i></button>
     </div>
- <footer class="container border-top  text-white text-center bg-primary">
-     <p class="lead">&copy; 2020 - ConstellationWebApp - <a class="text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></p>
- </footer>
+    <button class="btn btn-primary btn-sm" onclick="topFunction()" id="myBtn" title="Go to top"><i class="fas fa-arrow-alt-circle-up"></i></button>
+    <footer class="container-fluid border-top position-sticky text-white text-center bg-primary" style="padding: 1.5rem 1rem;">
+        <p class="mb-0">&copy; 2020 - ConstellationWebApp - <a class="text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></p>
+    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validate/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive//jquery.validate.unobtrusive.js"></script>

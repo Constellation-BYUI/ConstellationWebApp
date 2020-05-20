@@ -7,11 +7,10 @@
 }
 
 
-<h1>Constellation Projects</h1>
-
-<p>
-    <a class="btn btn-md btn-primary" asp-action="Create">Create A New Project</a>
-</p>
+    <div class="d-flex">
+        <h3 class="mr-auto">Constellation Projects</h3>
+        <a class="btn btn-md btn-primary" asp-action="Create">Create A New Project</a>
+    </div>
 
 @* Take this to an actual css later *@
 
@@ -24,9 +23,9 @@
 {
     var photoPath = "~/image/" + (item.PhotoPath);
 
-    <div class="container padding">
-        <div class="row padding">
-            <div class="col-md-6">
+    <div class="container-fluid padding">
+        <div class="row">
+            <div class="col-md-4">
                 <div class="card shadow text-black-50 text-white  bg-light mb-3 padding">
                     @*Note: We do not want to display the PhotoPath Path but the image itself*@
                     <div>
@@ -92,5 +91,9 @@
             </div>
         </div>
     </div>
+
 }
+
+
+
 

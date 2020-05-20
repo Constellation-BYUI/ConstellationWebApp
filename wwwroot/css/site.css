@@ -1,31 +1,84 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+﻿                                            
+                                         /*INSTRUCTIONS FROM MICROSOFT*/
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
-/*****************************************
-    ***Newly inserted csss****
- ****************************************/
+
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 
-
-/*--- Bootstrap Padding Fix --*/
-/*[class*="col-"] {
-    padding: rem;
-}*/
-
+/*NAVIGATION LINKS*/
 .nav-link {
-    font-size: 1.1em;
+    font-size: 1.1em !important;
+}
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
-.btn-success {
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
-}
 
+
+
+
+
+/*BODY*/
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
 
 .padding {
     padding: 0.5rem;
 }
 
+
+/*HEADER*/
+
+
+
+
+
+/*FOOTER*/
+
+
+
+
+/*BUTTONS*/
+.btn-success {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+/*CSS form Scroll-To-Top button*/
+#myBtn {
+    display: none;
+    position: fixed;
+    bottom: 10px;
+    right: 30px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#myBtn:hover {
+        background-color: #555; /* Add a dark-grey background on hover */
+    }
+
+/*PICTURES*/
 .small-thumbnail {
     padding: 3px;
     line-height: 0.7;
@@ -41,26 +94,10 @@ for details on configuring this project to bundle and minify static web assets. 
     height: 4rem;
 }
 
-/*CSS form Scroll-To-Top button*/
-#myBtn {
-    display: none;
-    position: fixed;
-    bottom: 5px;
-    right: 20px;
-    z-index: 99;
-    border: 1px solid white;
-    outline: none;
-    color: white;
-    cursor: pointer;
-    border-radius: 3px;
-    font-size: 18px;
- }
 
-#myBtn:hover {
-    background-color: #555; /* Add a dark-grey background on hover */
-}
 
-/*---Media Queries --*/
+
+/*MEDIA QUERIES*/
 @media (max-width: 992px) {
 }
 
@@ -68,22 +105,9 @@ for details on configuring this project to bundle and minify static web assets. 
 }
 
 @media (max-width: 576px) {
-   
+    
 }
 
-/****************************************
-    ****Ends here*****
-*****************************************/
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
-}
-
-/* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
-}
 
 .btn-primary {
   color: #fff;
@@ -188,3 +212,4 @@ footer {
 
 
 
+>>>>>>> master
