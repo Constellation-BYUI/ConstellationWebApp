@@ -5,21 +5,16 @@
 
     var photoPath = "~/image/" + (Model.OldPhotoPath);
 }
-<h1>Edit User</h1>
-
-<div class="row padding">
-    <div class="col-md-10">
-        @{
-            <img style="height: 500px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(model => model.UserName)" asp-append-version="true" />
-        }
-    </div>
-</div>
+<h3>Edit User</h3>
 
 <hr />
-<div class="container padding">
+<div class="container-fluid padding">
     <div class="row padding">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card text-black-50 text-white  bg-light mb-3 padding">
+                @{
+                    <img style="height: 500px; width: 100%; display: block; margin-bottom: 10px;" src=" @photoPath" alt="@Html.DisplayFor(model => model.UserName)" asp-append-version="true" />
+                }
                 <form enctype="multipart/form-data" asp-action="Edit">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="UserID" />
@@ -83,26 +78,17 @@
                             <h4>Link URL</h4>
                             <input list='contact-link-url' name='createdLinkUrls'>
 
-                            <div id="demo"></div>
-                            <input type="button" id="more_fields" onclick="add_fields();" value="Add Link" />
+                            <div id="demo"></div> <br />
+                            <input type="button" id="more_fields" onclick="add_fields();" value="Add Link" class="btn btn-md btn-secondary" />
                         </div>
                     </div>
 
                     <div class="card-footer">
-                        <button type="submit" value="Update" class="btn btn-primary">Update</button>
+                        <button type="submit" value="Update" class="btn btn-md btn-primary">Update</button>
+                        <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
+                        <a class="btn btn-md btn-danger" asp-action="Delete" asp-route-id="Model.Id">Delete</a>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row padding">
-    <div class="col-md-10">
-        <div class="card bg-light mb-3 padding">
-            <div class="card-footer">
-                <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
-                <a class="btn btn-md btn-danger" asp-action="Delete" asp-route-id="Model.Id">Delete</a>
             </div>
         </div>
     </div>

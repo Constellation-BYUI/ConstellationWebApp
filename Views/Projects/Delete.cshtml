@@ -6,8 +6,7 @@
     var photoPath = "~/image/" + Model.PhotoPath;
 }
 
-    <div class="alert alert-dismissible alert-warning">
-        <div class="container padding">
+        <div class="container-fluid padding">
             <div class="row padding">
                 <div class="col-md-12">
                     <div class="card shadow-lg text-black-50 text-white  bg-light mb-3 padding">
@@ -17,7 +16,7 @@
                         <div>
                             <h4>Project</h4>
                             <hr />
-                            <img style="height: 600px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(model => model.Title)" asp-append-version="true" />
+                            <img style="height: 600px; width: 100%; display: block; margin-bottom: 10px;" src=" @photoPath" alt="@Html.DisplayFor(model => model.Title)" asp-append-version="true" />
 
                             <dl class="row">
                                 <dt class="col-sm-2">
@@ -64,4 +63,4 @@
                 </div>
             </div>
         </div>
-    </div>
+

@@ -7,7 +7,7 @@
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
 
-<h2>Users of Constellation</h2>
+<h3>Users of Constellation</h3>
 
 @foreach (var item in Model.Users)
 {
@@ -15,9 +15,9 @@
     {
         var photoPath = "~/image/" + (item.PhotoPath);
 
-        <div class="container padding">
+        <div class="container-fluid padding">
             <div class="row padding">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="card text-black-50 text-white  bg-light mb-3 padding">
                         @*Note: We do not want to display the PhotoPath Path but the image itself*@
                         <div>
@@ -77,3 +77,5 @@
         </div>
     }
 }
+
+

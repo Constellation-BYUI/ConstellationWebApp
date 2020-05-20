@@ -11,9 +11,9 @@
 <h2>Edit Project</h2>
 
 <hr />
-<div class="container padding">
+<div class="container-fluid padding">
     <div class="row padding">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card shadow text-black-50 text-white  bg-light mb-3 padding">
                 <div>
                     @{
@@ -85,17 +85,13 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group card-footer">
                                 <button type="submit" value="Update" class="btn btn-md btn-primary">Update</button>
+                                <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
                             </div>
                         </form>
-
                     </div>
-                    <div class="card">
-                        <div class="card-footer">
-                            <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
