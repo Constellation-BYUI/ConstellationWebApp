@@ -1,13 +1,10 @@
 ﻿@model ConstellationWebApp.Models.ViewModels.UserEditViewModel
 @using System.Security.Claims;
 
-
 @{
     ViewData["Title"] = "Edit User";
-
     var photoPath = "~/image/" + (Model.OldPhotoPath);
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
 }
 
 @if (currentUser == Model.UserID)

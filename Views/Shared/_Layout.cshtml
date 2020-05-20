@@ -44,6 +44,10 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Postings" asp-action="Index">Postings</a>
                         </li>
+                        @* This will need to be a drop down list of the StarredPostings, StarredUsers, & StarredProjects *@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="StarredPostings" asp-action="Index">My Starred Postings</a>
+                        </li>
                     </ul>
                     <ul class="navbar-nav">
                         @if (signInManager.IsSignedIn(User))

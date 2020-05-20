@@ -9,9 +9,7 @@
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
     bool canView = false;
     var thisProject = Model.ProjectID;
-
 }
-
 
 @foreach (var collaborator in Model.currentProject.UserProjects)
 {
@@ -20,7 +18,6 @@
         canView = true;
     }
 }
-
 
 @if (canView == true)
 {

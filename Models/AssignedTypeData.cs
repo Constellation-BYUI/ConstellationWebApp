@@ -10,7 +10,6 @@ namespace ConstellationWebApp.Models
 
         public int PostingTypeID { get; set; }
         public string PostingTypeName { get; set; }
-
         public bool Assigned { get; set; }
     }
 }

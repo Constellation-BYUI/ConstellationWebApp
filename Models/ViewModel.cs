@@ -10,16 +10,11 @@ namespace ConstellationWebApp.Models
         public IEnumerable<User> Users { get; set; }
         public IEnumerable<Project> Projects { get; set; }
         public IEnumerable<UserProject> UserProjects { get; set; }
-
         public IEnumerable<ContactLink> ContactLinks { get; set; }
-
         public IEnumerable<ProjectLink> ProjectLinks { get; set; }
         public IEnumerable<Posting> Postings { get; set; }
         public IEnumerable<PostingType> PostingType { get; set; }
         public IEnumerable<Posting_PostingType> Posting_PostingType { get; set; }
-
-
-
-
+        public IEnumerable<StarredPosting> StarredPostings { get; set; }
     }
 }
