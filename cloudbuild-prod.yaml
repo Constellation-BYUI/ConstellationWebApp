@@ -6,6 +6,7 @@ steps:
   - run
   - --filename=prod.yaml
   - --image=gcr.io/$PROJECT_ID/constellationweb:$_SHORT_SHA
+  - --output=gs://constellation-prod-build/output
   - --location=us-east1-b
   - --cluster=cluster-1  
 
