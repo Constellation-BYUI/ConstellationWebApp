@@ -5,13 +5,12 @@ using System.Threading.Tasks;
 
 namespace ConstellationWebApp.Models
 {
-    public class PostingType
+    public class AssignedTypeData
     {
-        public int PostingTypeID { get; set; }
 
+        public int PostingTypeID { get; set; }
         public string PostingTypeName { get; set; }
 
-        public ICollection<Posting_PostingType> Posting_PostingTypes { get; set; }
-
+        public bool Assigned { get; set; }
     }
 }

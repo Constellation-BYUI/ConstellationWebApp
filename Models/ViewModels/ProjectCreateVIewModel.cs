@@ -40,6 +40,9 @@ namespace ConstellationWebApp.ViewModels
 
         public ICollection<UserProject> UserProjects { get; set; }
 
+        public Project currentProject { get; set; }
+
+
         public string SearchString { get; set; }
 
         // this REGEXP only ensure it is formated like and email; we must create an actual 

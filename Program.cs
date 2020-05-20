@@ -26,7 +26,8 @@ namespace ConstellationWebApp
 
                 try
                 {
-                    SeedData.Initialize(services);
+                    var context = services.GetRequiredService<ConstellationWebAppContext>();
+                    DbInitializer.Initialize(context);
                 }
                 catch (Exception ex)
                 {

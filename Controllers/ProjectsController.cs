@@ -1,22 +1,20 @@
-﻿using System;
+﻿using ConstellationWebApp.Data;
+using ConstellationWebApp.Models;
+using ConstellationWebApp.Models.ViewModels;
+using ConstellationWebApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ConstellationWebApp.Data;
-using ConstellationWebApp.Models;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
-using ConstellationWebApp.ViewModels;
-using System.Dynamic;
-using ConstellationWebApp.Models.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 
 namespace ConstellationWebApp.Controllers
 {
-   [Authorize]
+    [Authorize]
     public class ProjectsController : Controller
     {
         private readonly ConstellationWebAppContext _context;
@@ -108,8 +106,8 @@ namespace ConstellationWebApp.Controllers
                 EndDate = entityProjectModel.EndDate,
                 CreationDate = entityProjectModel.CreationDate,
                 OldPhotoPath = entityProjectModel.PhotoPath,
-                PhotoPath = entityProjectModel.PhotoPath
-
+                PhotoPath = entityProjectModel.PhotoPath,
+                currentProject = entityProjectModel
             };
         }
 
@@ -148,7 +146,7 @@ namespace ConstellationWebApp.Controllers
                    .OrderBy(i => i.CreationDate)
                    .ToListAsync();
             return View(viewModel);
-    }
+        }
 
         // GET: Projects/Details/5
         [AllowAnonymous]
@@ -159,6 +157,7 @@ namespace ConstellationWebApp.Controllers
                 return NotFound();
             }
             var project = await _context.Projects
+                .Include( i => i.UserProjects).ThenInclude(i => i.User)
                 .FirstOrDefaultAsync(m => m.ProjectID == id);
             if (project == null)
             {
@@ -166,8 +165,6 @@ namespace ConstellationWebApp.Controllers
             }
             return View(project);
         }
-
-       
 
         // GET: Projects/Create
         public IActionResult Create(string SearchString)
@@ -185,7 +182,7 @@ namespace ConstellationWebApp.Controllers
         }
 
         // POST: Projects/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         //implementing the View controller following this tutorial https://www.youtube.com/watch?v=aoxEJii70_I
         [HttpPost]
@@ -194,7 +191,7 @@ namespace ConstellationWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                string uniqueFileName = ValidateImagePath(model);    
+                string uniqueFileName = ValidateImagePath(model);
                 Project newProject = projectViewModelToUser(model, uniqueFileName);
                 await _context.SaveChangesAsync();
                 if (selectedCollaborators != null)
@@ -245,6 +242,7 @@ namespace ConstellationWebApp.Controllers
                 .Include(i => i.ProjectLinks)
                 .AsNoTracking()
             .FirstOrDefaultAsync(m => m.ProjectID == id);
+
             if (entityProjectModel == null)
             {
                 return NotFound();
@@ -252,11 +250,10 @@ namespace ConstellationWebApp.Controllers
             PopulateAssignedProjectData(entityProjectModel);
             ProjectCreateViewModel viewModel = projectToViewModel(entityProjectModel);
             return View(viewModel);
-        }   
+        }
 
-    
         // POST: Projects/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -313,9 +310,8 @@ namespace ConstellationWebApp.Controllers
 
                     if (!(createdLinkLabels[0] == null))
                     {
-                    CreateProjectLinks(createdLinkLabels, createdLinkUrls, project);
+                        CreateProjectLinks(createdLinkLabels, createdLinkUrls, project);
                     }
-
 
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
