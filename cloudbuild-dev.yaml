@@ -31,6 +31,8 @@ steps:
   - run
   - --filename=dev.yaml
   - --image=gcr.io/$PROJECT_ID/constellationweb:$SHORT_SHA
+  - --location=us-east1-b
+  - --cluster=cluster-1
 
 # This step deploys the stage application in Kubernetes
 - name: 'gcr.io/cloud-builders/gcloud'
