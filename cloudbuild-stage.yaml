@@ -6,6 +6,7 @@ steps:
   - run
   - --filename=stage.yaml
   - --image=gcr.io/$PROJECT_ID/constellationweb:$_SHORT_SHA
+  - --output=/tmp/outputstage
   - --location=us-east1-b
   - --cluster=cluster-1  
 
@@ -17,5 +18,3 @@ steps:
   - --config
   - cloudbuild-prod.yaml
   - .
-  env:
-  - KUBECONFIG=/tmp/kubeconfig  

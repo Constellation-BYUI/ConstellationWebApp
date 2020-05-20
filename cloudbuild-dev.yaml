@@ -32,9 +32,9 @@ steps:
   - --filename=dev.yaml
   - --image=gcr.io/$PROJECT_ID/constellationweb:$SHORT_SHA
   - --location=us-east1-b
-  - --cluster=cluster-1
-  env:
-  - KUBECONFIG=/tmp/kubeconfig
+  - --output=/tmp/outputdev
+  - --location=us-east1-b
+  - --cluster=cluster-1  
 
 # This step deploys the stage application in Kubernetes
 - name: 'gcr.io/cloud-builders/gcloud'
