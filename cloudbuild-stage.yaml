@@ -17,4 +17,6 @@ steps:
   - submit
   - --config
   - cloudbuild-prod.yaml
+  - --substitutions
+  - _SHORT_SHA=$SHORT_SHA
   - .
