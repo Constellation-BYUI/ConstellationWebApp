@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="icon" href="~/favicon.ico" />
 </head>
-<body class="container-fluid">
+<body>
     <header class="sticky-top">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow bg-primary ">
             <div class="container-fluid">
@@ -81,13 +81,11 @@
         </nav>
 
     </header>
-    <div class="">
-        <main role="main" class="pb-3 container-fluid" style="padding: 0px;">
+        <main role="main" class="py-2 container-fluid">
             @RenderBody()
         </main>
-    </div>
     <button class="btn btn-primary btn-sm" onclick="topFunction()" id="myBtn" title="Go to top"><i class="fas fa-arrow-alt-circle-up"></i></button>
-    <footer class="container-fluid border-top position-sticky text-white text-center bg-primary" style="padding: 1.5rem 1rem;">
+    <footer class="container-fluid border-top text-white text-center bg-primary" style="padding: 1.5rem 1rem;">
         <p class="mb-0">&copy; 2020 - ConstellationWebApp - <a class="text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></p>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
