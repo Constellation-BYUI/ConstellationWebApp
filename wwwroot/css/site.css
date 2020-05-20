@@ -41,7 +41,6 @@ a.navbar-brand {
 
 
 
-
 /*BUTTONS*/
 .btn-success {
     margin-left: 0.5rem;
@@ -98,109 +97,50 @@ button.accept-policy {
 
 
 /*MEDIA QUERIES*/
+@media (max-width: 1199px) {
+    #projectDisplay {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 3px;
+    }
+}
+
 @media (max-width: 992px) {
+    #projectDisplay {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 3px;
+    }
 }
 
 @media (max-width: 768px) {
+    #projectDisplay {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 3px;
+    }
+    html {
+        font-size: 16px;
+    }
 }
 
 @media (max-width: 576px) {
-    
+    #projectDisplay {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 3px;
+    } 
 }
 
-
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}
-
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.border-top {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
-}
-
-/*Navigation-bar Items*/
-
-
-
-/* Sticky footer styles
--------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
 }
 
 body, html {
-   /*Margin bottom by footer height*/ 
-  margin: auto;
+    /*Margin bottom by footer height*/
+    margin: auto;
 }
 
-footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    white-space: normal;
-    line-height: normal;
-    padding: 1rem 1rem;
-    margin: 0 auto;
-}
-
-/*.imageThumbnail {
-    border-radius: 20%;
-    max-height: 150px;
-    max-width: 200px;
-    width: auto;
-    text-align: center;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 2em;
-}
-
-.smallThumbnail {
-    max-height: 50px;
-    max-width: 50px;
-    width: auto;
-    display: inline;
-    border-radius: 20%;
-} */
-
-/*.project-cards {
-    border: groove;
-    border-radius: 10%;
-    padding: 2em;
-    display: inline-block;
-    background-color: aliceblue;
-    color: black;
-    width: 275px;
-    padding: 1em;
-}*/
 
 /* demo styling css for testing: fix however you want*/
 .Demo-Types {
@@ -209,7 +149,3 @@ footer {
     padding-left: 1em;
     padding-right: 1em;
 }
-
-
-
->>>>>>> master
