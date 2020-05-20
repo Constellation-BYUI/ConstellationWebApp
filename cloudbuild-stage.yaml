@@ -6,7 +6,9 @@ steps:
   - run
   - --filename=stage.yaml
   - --image=gcr.io/$PROJECT_ID/constellationweb:$_SHORT_SHA
-  
+  - --location=us-east1-b
+  - --cluster=cluster-1  
+
 
 
 
