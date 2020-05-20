@@ -26,14 +26,13 @@ namespace ConstellationWebApp.Data
 
         public DbSet<Posting_PostingType> Posting_PostingTypes { get; set; }
 
-
+        public DbSet<ConstellationWebApp.Models.StarredPosting> StarredPosting { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<Project>().ToTable("Project");
 
             modelBuilder.Entity<UserProject>()
@@ -58,17 +57,23 @@ namespace ConstellationWebApp.Data
             modelBuilder.Entity<PostingType>().ToTable("PostingTypes");
             modelBuilder.Entity<Posting_PostingType>().ToTable("Posting_PostingType");
             modelBuilder.Entity<Posting>().ToTable("Posting");
+            modelBuilder.Entity<StarredPosting>().ToTable("StarredPosting");
 
-
-
-            //modelBuilder.Entity<Posting>()
-            //         .HasOne(p => p.PostingOwner)
-            //         .WithMany(b => b.Postings);
-
-            //modelBuilder.Entity<Posting>()
-            //      .HasOne(p => p.PostingOwner)
-            //      .WithMany(b => b.Postings);
+            modelBuilder.Entity<StarredPosting>()
+                .HasKey(b => b.StarredPostingID);
+            modelBuilder.Entity<StarredPosting>()
+                .HasOne(bc => bc.User)
+                .WithMany(b => b.StarredPostings)
+                .HasForeignKey(bc => bc.UserID);
+            modelBuilder.Entity<StarredPosting>()
+                .HasOne(bc => bc.Posting)
+                .WithMany(c => c.StarredPostings)
+                .HasForeignKey(bc => bc.PostingID);
         }
+
+
+
+
     }
     
 }

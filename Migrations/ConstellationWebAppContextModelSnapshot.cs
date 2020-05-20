@@ -167,6 +167,28 @@ namespace ConstellationWebApp.Migrations
                     b.ToTable("ProjectLinks");
                 });
 
+            modelBuilder.Entity("ConstellationWebApp.Models.StarredPosting", b =>
+                {
+                    b.Property<int>("StarredPostingID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("PostingID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("StarredPostingID");
+
+                    b.HasIndex("PostingID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("StarredPosting");
+                });
+
             modelBuilder.Entity("ConstellationWebApp.Models.UserProject", b =>
                 {
                     b.Property<string>("UserID")
@@ -454,6 +476,19 @@ namespace ConstellationWebApp.Migrations
                     b.HasOne("ConstellationWebApp.Models.Project", "Projects")
                         .WithMany("ProjectLinks")
                         .HasForeignKey("ProjectsProjectID");
+                });
+
+            modelBuilder.Entity("ConstellationWebApp.Models.StarredPosting", b =>
+                {
+                    b.HasOne("ConstellationWebApp.Models.Posting", "Posting")
+                        .WithMany("StarredPostings")
+                        .HasForeignKey("PostingID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ConstellationWebApp.Models.User", "User")
+                        .WithMany("StarredPostings")
+                        .HasForeignKey("UserID");
                 });
 
             modelBuilder.Entity("ConstellationWebApp.Models.UserProject", b =>

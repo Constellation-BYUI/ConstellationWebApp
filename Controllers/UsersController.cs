@@ -29,8 +29,6 @@ namespace ConstellationWebApp.Controllers
 
         }
 
-
-
         private string UploadResume(UserCreateViewModel model)
         {
             string resumeFileName = null;
@@ -334,5 +332,19 @@ namespace ConstellationWebApp.Controllers
         {
             return _context.User.Any(e => e.Id == id);
         }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> StarredPostingIndex()
+        {
+            var viewModel = new ViewModel();
+            viewModel.StarredPostings = await _context.StarredPosting
+                  .Include(i => i.User)
+                  .Include(i => i.Posting)
+                   .AsNoTracking()
+                   .OrderBy(i => i.UserID)
+                   .ToListAsync();
+            return View(viewModel);
+        }
+
     }
 }

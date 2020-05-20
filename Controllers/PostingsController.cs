@@ -48,13 +48,36 @@ namespace ConstellationWebApp.Controllers
             }
 
             var posting = await _context.Postings
+                  .Include(i => i.PostingOwner)
+                  .Include(i => i.Posting_PostingTypes)
+                  .ThenInclude(i => i.PostingTypes)
+                  .Include(i => i.StarredPostings)
+                  .ThenInclude(i => i.User)
+                   .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.PostingID == id);
             if (posting == null)
             {
                 return NotFound();
             }
-
+            PopulateStarredPostingData(posting);
             return View(posting);
+        }
+
+        private void PopulateStarredPostingData(Posting postings)
+        {
+            var allUsers = _context.User;
+            var starredPostings = new HashSet<string>(postings.StarredPostings.Select(c => c.UserID));
+            var viewModel = new List<AssignedStarredPostingData>();
+            foreach (var users in allUsers)
+            {
+                    viewModel.Add(new AssignedStarredPostingData
+                    {
+                        UserID = users.Id,
+                        UserName = users.UserName,
+                        Owned = starredPostings.Contains(users.Id)
+                    });
+            }
+            ViewData["UsersStarredPostings"] = viewModel;
         }
 
         // GET: Postings/Create
@@ -71,9 +94,8 @@ namespace ConstellationWebApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PostingID,Description,PostingFor")] Posting posting, string[] selectedTypes)
+        public async Task<IActionResult> Create([Bind("PostingID,Description,PostingFor,PostingTitle")] Posting posting, string[] selectedTypes)
         {
-
             if (selectedTypes != null)
             {
                 posting.Posting_PostingTypes = new List<Posting_PostingType>();
@@ -251,5 +273,6 @@ namespace ConstellationWebApp.Controllers
         {
             return _context.Postings.Any(e => e.PostingID == id);
         }
+                     
     }
 }

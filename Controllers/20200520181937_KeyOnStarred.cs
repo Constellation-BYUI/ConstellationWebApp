@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ConstellationWebApp.Migrations
 {
-    public partial class Initial : Migration
+    public partial class KeyOnStarred : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,12 +44,27 @@ namespace ConstellationWebApp.Migrations
                     FirstName = table.Column<string>(maxLength: 50, nullable: true),
                     LastName = table.Column<string>(maxLength: 50, nullable: true),
                     Bio = table.Column<string>(maxLength: 2000, nullable: true),
-                    Seeking = table.Column<string>(maxLength: 30, nullable: true),
-                    PhotoPath = table.Column<string>(nullable: true)
+                    Seeking = table.Column<string>(maxLength: 150, nullable: true),
+                    PhotoPath = table.Column<string>(nullable: true),
+                    ResumePhotoPath = table.Column<string>(nullable: true),
+                    displayMyProfile = table.Column<bool>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PostingTypes",
+                columns: table => new
+                {
+                    PostingTypeID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PostingTypeName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostingTypes", x => x.PostingTypeID);
                 });
 
             migrationBuilder.CreateTable(
@@ -63,8 +78,7 @@ namespace ConstellationWebApp.Migrations
                     StartDate = table.Column<DateTime>(nullable: false),
                     EndDate = table.Column<DateTime>(nullable: false),
                     CreationDate = table.Column<DateTime>(nullable: false),
-                    PhotoPath = table.Column<string>(nullable: true),
-                    ProjectLinkID = table.Column<int>(nullable: false)
+                    PhotoPath = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -199,6 +213,28 @@ namespace ConstellationWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Posting",
+                columns: table => new
+                {
+                    PostingID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PostingTitle = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    PostingFor = table.Column<string>(nullable: true),
+                    PostingOwnerId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Posting", x => x.PostingID);
+                    table.ForeignKey(
+                        name: "FK_Posting_AspNetUsers_PostingOwnerId",
+                        column: x => x.PostingOwnerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ProjectLinks",
                 columns: table => new
                 {
@@ -241,6 +277,59 @@ namespace ConstellationWebApp.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Posting_PostingType",
+                columns: table => new
+                {
+                    Posting_PostingTypeID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PostingID = table.Column<int>(nullable: false),
+                    PostingTypeID = table.Column<int>(nullable: false),
+                    Assigned = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Posting_PostingType", x => x.Posting_PostingTypeID);
+                    table.ForeignKey(
+                        name: "FK_Posting_PostingType_Posting_PostingID",
+                        column: x => x.PostingID,
+                        principalTable: "Posting",
+                        principalColumn: "PostingID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Posting_PostingType_PostingTypes_PostingTypeID",
+                        column: x => x.PostingTypeID,
+                        principalTable: "PostingTypes",
+                        principalColumn: "PostingTypeID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StarredPosting",
+                columns: table => new
+                {
+                    StarredPostingID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserID = table.Column<string>(nullable: true),
+                    PostingID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StarredPosting", x => x.StarredPostingID);
+                    table.ForeignKey(
+                        name: "FK_StarredPosting_Posting_PostingID",
+                        column: x => x.PostingID,
+                        principalTable: "Posting",
+                        principalColumn: "PostingID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StarredPosting_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -288,9 +377,34 @@ namespace ConstellationWebApp.Migrations
                 column: "UsersId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Posting_PostingOwnerId",
+                table: "Posting",
+                column: "PostingOwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Posting_PostingType_PostingID",
+                table: "Posting_PostingType",
+                column: "PostingID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Posting_PostingType_PostingTypeID",
+                table: "Posting_PostingType",
+                column: "PostingTypeID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProjectLinks_ProjectsProjectID",
                 table: "ProjectLinks",
                 column: "ProjectsProjectID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StarredPosting_PostingID",
+                table: "StarredPosting",
+                column: "PostingID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StarredPosting_UserID",
+                table: "StarredPosting",
+                column: "UserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserProjects_ProjectID",
@@ -319,13 +433,25 @@ namespace ConstellationWebApp.Migrations
                 name: "ContactLinks");
 
             migrationBuilder.DropTable(
+                name: "Posting_PostingType");
+
+            migrationBuilder.DropTable(
                 name: "ProjectLinks");
+
+            migrationBuilder.DropTable(
+                name: "StarredPosting");
 
             migrationBuilder.DropTable(
                 name: "UserProjects");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "PostingTypes");
+
+            migrationBuilder.DropTable(
+                name: "Posting");
 
             migrationBuilder.DropTable(
                 name: "Project");

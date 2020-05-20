@@ -1,0 +1,77 @@
+﻿@model IEnumerable<ConstellationWebApp.Models.StarredPosting>
+@using System.Security.Claims;
+
+@{
+    ViewData["Title"] = "Index";
+    var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+}
+
+<h1>My Starred Postings</h1>
+
+@foreach (var item in Model.Where(i => i.UserID == currentUser))
+@*@for (int i = 0; i < Model.Count(); i++)*@
+
+{
+    var spID = item.StarredPostingID;
+    var photoPath = "~/image/" + (item.Posting.PostingOwner.PhotoPath);
+    var collabMemberPath = "https://localhost:44359/Users/Details/" + (item.Posting.PostingOwner.Id);
+
+<div>
+    <h4>Posting</h4>
+    <hr />
+    <h2>
+        @Html.DisplayFor(modelItem => item.Posting.PostingFor)
+    </h2>
+    <div>
+        @Html.DisplayFor(modelItem => item.Posting.PostingTitle)
+    </div>
+    <div>
+        @Html.DisplayFor(modelItem => item.Posting.Description)
+    </div>
+    <div>
+        <a href="@collabMemberPath"><img class="small-thumbnail" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.Posting.PostingOwner.UserName)" asp-append-version="true" /></a>
+    </div>
+    <div>
+        @Html.DisplayFor(modelItem => item.Posting.PostingOwner.UserName)
+    </div>
+
+    <h4>Type of Posting</h4>
+    <div class="Demo-Types">
+        @foreach (var type in item.Posting.Posting_PostingTypes)
+        {
+            <div class="Demo-Types">
+                @type.PostingTypes.PostingTypeName
+            </div>
+            <br />
+        }
+    </div>
+    @* This button did not work but should *@
+    @*<form asp-action="Delete" asp-controller="StarredPostings">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <input type="hidden" asp-for="@item.PostingID" class="form-control" value="@item.PostingID" />
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Remove from MyStarred Postings" class="btn btn-primary" />
+        </div>
+    </form>*@
+
+</div>
+
+    <a asp-action="Details" asp-controller="Postings" asp-route-id="@item.Posting.PostingID">Post Details</a> 
+
+        if(currentUser == item.Posting.PostingOwner.Id)
+        {
+        <div>
+            <a asp-action="Edit" asp-controller="Postings" asp-route-id="@item.Posting.PostingID">Edit</a> |
+            <a asp-action="Index" asp-controller="Postings">View All Postings</a>
+        </div>
+        }
+        else
+        {
+        <a asp-action="Index" asp-controller="Postings">View All Postings</a>
+        }
+
+        }
+
+
