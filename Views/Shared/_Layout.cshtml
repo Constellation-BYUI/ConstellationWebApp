@@ -1,4 +1,4 @@
-﻿@inject SignInManager<User> signInManager;
+@inject SignInManager<User> signInManager;
 
 @using System.Security.Claims;
 @{
@@ -46,6 +46,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Postings" asp-action="Index">Postings</a>
                         </li>
+
                         @* This will need to be a drop down list of the StarredPostings, StarredUsers, & StarredProjects *@
                         <li class="nav-item dropdown">
                             <a data-toggle="dropdown" class="nav-link text-light btn border-white btn-sm btn-primary bg-primary dropdown-toggle" asp-area="" asp-controller="StarredPostings" asp-action="Index">My Starred Postings</a>
@@ -56,6 +57,7 @@
                                 <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary">Link two</a>
                             </div>
                         </li>
+
                     </ul>
 
                 </div>
@@ -64,8 +66,8 @@
                     @if (signInManager.IsSignedIn(User))
                     {
                         @*<li class="nav-item">
-                                <input type="text" class="search-input" name="search" placeholder="search..." size="5" style="border-radius: 3px;"><i class="fas fa-search"></i>
-                            </li>*@
+                <input type="text" class="search-input" name="search" placeholder="search..." size="5" style="border-radius: 3px;"><i class="fas fa-search"></i>
+            </li>*@
                         <li class="nav-item">
                             <form method="post" asp-action="logout" asp-controller="account">
                                 <button type="submit" class="nav-link btn btn-success " style="width:auto; font-size: 1em; padding: 0.2rem;">Logout</button>
@@ -75,6 +77,16 @@
                             <form method="get" asp-action="Edit" asp-controller="Users" asp-route-id="@userId">
                                 <button type="submit" class="nav-link btn btn-primary " style="width:auto; font-size: 1em; padding: 0.2rem;">Edit Profile</button>
                             </form>
+                        </li>
+                        @* This will need to be a drop down list of the StarredPostings, StarredUsers, & StarredProjects *@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="StarredProjects" asp-action="Index">My Starred Projects</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="StarredPostings" asp-action="Index">My Starred Postings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="IntrestedCandidates" asp-action="Index">Intrest in My Postings</a>
                         </li>
                     }
                     else

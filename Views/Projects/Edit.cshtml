@@ -124,7 +124,6 @@
                 var collabPath = "~/image/" + (collab.User.PhotoPath);
                 var collabMemberPath = "https://localhost:44359/Users/Details/" + (collab.User.Id);
                 <div>
-                    @*@collab.User.UserName<br />*@
                     <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
                     <a href="@collabMemberPath">@Html.DisplayFor(modelItem => collab.User.FirstName)  @Html.DisplayFor(modelItem => collab.User.LastName)  : @Html.DisplayFor(modelItem => collab.User.UserName)</a>
                 </div>

@@ -21,7 +21,7 @@ namespace ConstellationWebApp.Models
         public User PostingOwner { get; set; }
 
         public ICollection<StarredPosting> StarredPostings { get; set; }
-
+        public ICollection<IntrestedCandidate> IntrestedCandidates { get; set; }
         public ICollection<Posting_PostingType> Posting_PostingTypes { get; set; }
 
 

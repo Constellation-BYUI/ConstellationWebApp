@@ -4,14 +4,16 @@ using ConstellationWebApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ConstellationWebApp.Migrations
 {
     [DbContext(typeof(ConstellationWebAppContext))]
-    partial class ConstellationWebAppContextModelSnapshot : ModelSnapshot
+    [Migration("20200521151443_ImIntrested")]
+    partial class ImIntrested
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,7 +64,7 @@ namespace ConstellationWebApp.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("IntrestedCandidate");
+                    b.ToTable("IntrestedCandidates");
                 });
 
             modelBuilder.Entity("ConstellationWebApp.Models.Posting", b =>
@@ -103,7 +105,7 @@ namespace ConstellationWebApp.Migrations
 
                     b.HasKey("PostingTypeID");
 
-                    b.ToTable("PostingType");
+                    b.ToTable("PostingTypes");
                 });
 
             modelBuilder.Entity("ConstellationWebApp.Models.Posting_PostingType", b =>
@@ -209,28 +211,6 @@ namespace ConstellationWebApp.Migrations
                     b.HasIndex("UserID");
 
                     b.ToTable("StarredPosting");
-                });
-
-            modelBuilder.Entity("ConstellationWebApp.Models.StarredProject", b =>
-                {
-                    b.Property<int>("StarredProjectID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ProjectID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserID")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("StarredProjectID");
-
-                    b.HasIndex("ProjectID");
-
-                    b.HasIndex("UserID");
-
-                    b.ToTable("StarredProject");
                 });
 
             modelBuilder.Entity("ConstellationWebApp.Models.UserProject", b =>
@@ -545,19 +525,6 @@ namespace ConstellationWebApp.Migrations
 
                     b.HasOne("ConstellationWebApp.Models.User", "User")
                         .WithMany("StarredPostings")
-                        .HasForeignKey("UserID");
-                });
-
-            modelBuilder.Entity("ConstellationWebApp.Models.StarredProject", b =>
-                {
-                    b.HasOne("ConstellationWebApp.Models.Project", "Project")
-                        .WithMany("StarredProjects")
-                        .HasForeignKey("ProjectID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ConstellationWebApp.Models.User", "User")
-                        .WithMany("StarredProjects")
                         .HasForeignKey("UserID");
                 });
 

@@ -38,7 +38,9 @@ namespace ConstellationWebApp.Models
         public string PhotoPath { get; set; }
         public virtual ICollection<ProjectLink> ProjectLinks { get; set; }
         public ICollection<UserProject> UserProjects { get; set; }
-    }
+        public ICollection<StarredProject> StarredProjects { get; set; }
 
     }
+
+}
 
