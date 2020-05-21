@@ -46,12 +46,13 @@
         </div>
 
         @* was not working and also quite of bit of data that does not truly need to be included ~ leaving it out for the time being *@
-        @*<h4>Project Links</h4>
+        <h4>Project Links</h4>
         @foreach (var link in item.Project.ProjectLinks)
         {
             <a class="card-link" href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
             <br />
         }
+        
         <h4>Collaborators</h4>
         @{
             bool isLoggedIn = false;
@@ -80,7 +81,7 @@
                     <a class="btn btn-md btn-secondary" asp-action="Details" asp-route-id="@item.Project.ProjectID">Details</a>
                 </div>
             }
-        }*@
+        }
     </div>
     }
 </div>
