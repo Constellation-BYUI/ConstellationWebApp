@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ConstellationWebApp.Models.StarredProject>
+﻿@model ConstellationWebApp.Models.ViewModel
 @using System.Security.Claims;
 
 
@@ -11,73 +11,77 @@
 <h1>My Starred Projects</h1>
 
 <div id="projectDisplay">
-    @foreach (var item in Model.Where(i => i.UserID == currentUser))
+    @foreach (var item in Model.StarredProjects.Where(i => i.UserID == currentUser))
     {
-        var photoPath = "~/image/" + (item.User.PhotoPath);
+        var photoPath = "~/image/" + (item.Project.PhotoPath);
 
 
-        <div class="col-md-12 card shadow text-black-50 bg-light m-2 padding">
-            @*Note: We do not want to display the PhotoPath Path but the image itself*@
-            <div>
-                <img style="height: 300px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.Project.Title)" asp-append-version="true" />
-            </div>
-            <div>
-                @Html.DisplayNameFor(modelItem => item.Project.Title) :
-                @Html.DisplayFor(modelItem => item.Project.Title)
-            </div>
-            <div>
-                @Html.DisplayNameFor(modelItem => item.Project.Description) :
-                @Html.DisplayFor(modelItem => item.Project.Description)
-            </div>
-            <div>
-                @Html.DisplayNameFor(modelItem => item.Project.StartDate) :
-                @Html.DisplayFor(modelItem => item.Project.StartDate)
-            </div>
-            <div>
-                @Html.DisplayNameFor(modelItem => item.Project.EndDate) :
-                @Html.DisplayFor(modelItem => item.Project.EndDate)
-            </div>
-            <div>
-                @Html.DisplayNameFor(modelItem => item.Project.CreationDate) :
-                @Html.DisplayFor(modelItem => item.Project.CreationDate)
-            </div>
-            <h4>Project Links</h4>
-            @foreach (var link in item.Project.ProjectLinks)
-            {
-                <a class="card-link" href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
-                <br />
-            }
-            <h4>Collaborators</h4>
-            @{
-                bool isLoggedIn = false;
-                foreach (var collab in item.Project.UserProjects)
-                {
-                    var collabPath = "~/image/" + (collab.User.PhotoPath);
-                    var collabMemberPath = "https://localhost:44359/Users/Details/" + (collab.User.Id);
-
-                    @*@collab.User.UserName<br />*@
-                    <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
-                    if (collab.UserID == currentUser)
-                    {
-                        isLoggedIn = true;
-                    }
-                }
-                if (isLoggedIn == true)
-                {
-                    <div class="card-footer">
-                        <a class="btn btn-md btn-primary" asp-action="Edit" asp-route-id="@item.Project.ProjectID">Edit</a>
-                        <a class="btn btn-md btn-danger" asp-action="Delete" asp-route-id="@item.Project.ProjectID">Delete</a>
-                        <a class="btn btn-md btn-secondary" asp-action="Details" asp-route-id="@item.Project.ProjectID">Details</a>
-                    </div>
-                }
-                else
-                {
-                    <div class="card-footer">
-                        <a class="btn btn-md btn-secondary" asp-action="Details" asp-route-id="@item.Project.ProjectID">Details</a>
-                    </div>
-                }
-            }
+    <div class="col-md-12 card shadow text-black-50 bg-light m-2 padding">
+        @*Note: We do not want to display the PhotoPath Path but the image itself*@
+        <div>
+            <img style="height: 300px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.Project.Title)" asp-append-version="true" />
         </div>
+        <div>
+            @Html.DisplayNameFor(modelItem => item.Project.Title) :
+            @Html.DisplayFor(modelItem => item.Project.Title)
+        </div>
+        <div>
+            @Html.DisplayNameFor(modelItem => item.Project.Description) :
+            @Html.DisplayFor(modelItem => item.Project.Description)
+        </div>
+        <div>
+            @Html.DisplayNameFor(modelItem => item.Project.StartDate) :
+            @Html.DisplayFor(modelItem => item.Project.StartDate)
+        </div>
+        <div>
+            @Html.DisplayNameFor(modelItem => item.Project.EndDate) :
+            @Html.DisplayFor(modelItem => item.Project.EndDate)
+        </div>
+        <div>
+            @Html.DisplayNameFor(modelItem => item.Project.CreationDate) :
+            @Html.DisplayFor(modelItem => item.Project.CreationDate)
+        </div>
+        <div class="card-footer">
+            <a class="btn btn-md btn-secondary" asp-action = "Details" asp-controller = "Projects" asp-route-id = "@item.Project.ProjectID">Details</a>
+        </div>
+
+        @* was not working and also quite of bit of data that does not truly need to be included ~ leaving it out for the time being *@
+        @*<h4>Project Links</h4>
+        @foreach (var link in item.Project.ProjectLinks)
+        {
+            <a class="card-link" href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
+            <br />
+        }
+        <h4>Collaborators</h4>
+        @{
+            bool isLoggedIn = false;
+            foreach (var collab in item.Project.UserProjects)
+            {
+                var collabPath = "~/image/" + (collab.User.PhotoPath);
+                var collabMemberPath = "https://localhost:44359/Users/Details/" + (collab.User.Id);
+
+                <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
+                if (collab.UserID == currentUser)
+                {
+                    isLoggedIn = true;
+                }
+            }
+            if (isLoggedIn == true)
+            {
+                <div class="card-footer">
+                    <a class="btn btn-md btn-primary" asp-action="Edit" asp-route-id="@item.Project.ProjectID">Edit</a>
+                    <a class="btn btn-md btn-danger" asp-action="Delete" asp-route-id="@item.Project.ProjectID">Delete</a>
+                    <a class="btn btn-md btn-secondary" asp-action="Details" asp-route-id="@item.Project.ProjectID">Details</a>
+                </div>
+            }
+            else
+            {
+                <div class="card-footer">
+                    <a class="btn btn-md btn-secondary" asp-action="Details" asp-route-id="@item.Project.ProjectID">Details</a>
+                </div>
+            }
+        }*@
+    </div>
     }
 </div>
 
