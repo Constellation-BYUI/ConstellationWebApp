@@ -1,4 +1,4 @@
-@inject SignInManager<User> signInManager;
+﻿@inject SignInManager<User> signInManager;
 
 @using System.Security.Claims;
 @{
@@ -48,15 +48,7 @@
                         </li>
 
                         @* This will need to be a drop down list of the StarredPostings, StarredUsers, & StarredProjects *@
-                        <li class="nav-item dropdown">
-                            <a data-toggle="dropdown" class="nav-link text-light btn border-white btn-sm btn-primary bg-primary dropdown-toggle" asp-area="" asp-controller="StarredPostings" asp-action="Index">My Starred Postings</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary">Link One</a>
-                                <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary">Link two</a>
-                                <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary">Link two</a>
-                                <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary">Link two</a>
-                            </div>
-                        </li>
+                     
 
                     </ul>
 
@@ -79,15 +71,15 @@
                             </form>
                         </li>
                         @* This will need to be a drop down list of the StarredPostings, StarredUsers, & StarredProjects *@
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="StarredProjects" asp-action="Index">My Starred Projects</a>
+                        <li class="nav-item dropdown">
+                            <a data-toggle="dropdown" class="nav-link text-light btn border-white btn-sm btn-primary bg-primary dropdown-toggle" asp-area="" asp-controller="StarredPostings" asp-action="Index">My Stuff</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary" asp-controller="StarredProjects" asp-action="Index">My Starred Projects</a>
+                                <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary"  asp-controller="StarredPostings" asp-action="Index">My Starred Postings</a>
+                                <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary" asp-controller="IntrestedCandidates" asp-action="Index">Intrest in My Postings</a>
+                            </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="StarredPostings" asp-action="Index">My Starred Postings</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="IntrestedCandidates" asp-action="Index">Intrest in My Postings</a>
-                        </li>
+
                     }
                     else
                     {
