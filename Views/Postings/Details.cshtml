@@ -6,6 +6,9 @@
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
     var photoPath = "~/image/" + (Model.PostingOwner.PhotoPath);
     var collabMemberPath = "https://localhost:44359/Users/Details/" + (Model.PostingOwner.Id);
+    var allReadyStarred = false;
+    var allReadyIntrested = false;
+
 }
 
 <h1>Details</h1>
@@ -26,18 +29,60 @@
                     <input type="submit" value="Remove from MyStarred Postings" class="btn btn-primary" />
                 </div>
             </form>
+            allReadyStarred = true;
         }
-        else
+    }
+
+    if (allReadyStarred == false)
+    {
+        <form asp-action="Create" asp-controller="StarredPostings">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" asp-for="PostingID" class="form-control" value="@Model.PostingID" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add to MyStarred Postings" class="btn btn-primary" />
+            </div>
+        </form>
+    }
+
+    //if the owner is looking at the post he/she only needs to see the link to possible candidates
+    if (currentUser == Model.PostingOwner.Id)
+    {
+        <a asp-action="Index" asp-controller="IntrestedCandidates">View your Intrested Candidates</a>
+    }
+    else
+    {
+        List<ConstellationWebApp.Models.AssignedIntrestData> intrestedData = ViewBag.intrestInPostings;
+        //Detemine if the current user has already marked if he/she is intrested
+        foreach (var candidate in intrestedData)
         {
-            <form asp-action="Create" asp-controller="StarredPostings">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <input type="hidden" asp-for="PostingID" class="form-control" value="@Model.PostingID" />
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Add to MyStarred Postings" class="btn btn-primary" />
-                </div>
-            </form>
+            if (candidate.UserID == currentUser && candidate.Intrested == true)
+            {
+                <form asp-action="Delete" asp-controller="IntrestedCandidates">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <input type="hidden" asp-for="PostingID" class="form-control" value="@Model.PostingID" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Remove me from Intrested Pool" class="btn btn-primary" />
+                    </div>
+                </form>
+                allReadyIntrested = true;
+            }
+        }
+        //if the user is already in the intrested pool show remove me from intrested
+        if (allReadyIntrested == false)
+        {
+        <form asp-action="Create" asp-controller="IntrestedCandidates">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" asp-for="PostingID" class="form-control" value="@Model.PostingID" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add me to Intrested Pool" class="btn btn-primary" />
+            </div>
+        </form>
         }
     }
 }
