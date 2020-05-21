@@ -45,6 +45,9 @@
 
         public bool displayMyProfile { get; set; }
 
+        public ICollection<IntrestedCandidate> IntrestedCandidates { get; set; }
+
+
         public ICollection<StarredPosting> StarredPostings { get; set; }
 
         public ICollection<Posting> Postings { get; set; }

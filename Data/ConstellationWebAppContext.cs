@@ -28,6 +28,7 @@ namespace ConstellationWebApp.Data
 
         public DbSet<ConstellationWebApp.Models.StarredPosting> StarredPosting { get; set; }
 
+        public DbSet<ConstellationWebApp.Models.IntrestedCandidate> IntrestedCandidate { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -69,7 +70,22 @@ namespace ConstellationWebApp.Data
                 .HasOne(bc => bc.Posting)
                 .WithMany(c => c.StarredPostings)
                 .HasForeignKey(bc => bc.PostingID);
+
+            modelBuilder.Entity<IntrestedCandidate>().ToTable("IntrestedCandidates");
+
+            modelBuilder.Entity<IntrestedCandidate>()
+                .HasKey(b => b.IntrestedCandidateID);
+            modelBuilder.Entity<IntrestedCandidate>()
+                .HasOne(bc => bc.User)
+                .WithMany(b => b.IntrestedCandidates)
+                .HasForeignKey(bc => bc.UserID);
+            modelBuilder.Entity<IntrestedCandidate>()
+                .HasOne(bc => bc.Posting)
+                .WithMany(c => c.IntrestedCandidates)
+                .HasForeignKey(bc => bc.PostingID);
         }
+
+
 
 
 

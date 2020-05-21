@@ -53,6 +53,7 @@ namespace ConstellationWebApp.Controllers
                   .ThenInclude(i => i.PostingTypes)
                   .Include(i => i.StarredPostings)
                   .ThenInclude(i => i.User)
+                  .Include(i => i.IntrestedCandidates)
                    .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.PostingID == id);
             if (posting == null)
@@ -60,13 +61,31 @@ namespace ConstellationWebApp.Controllers
                 return NotFound();
             }
             PopulateStarredPostingData(posting);
+            PopulateIntrestData(posting);
             return View(posting);
         }
 
-        private void PopulateStarredPostingData(Posting postings)
+        private void PopulateIntrestData(Posting posting)
         {
             var allUsers = _context.User;
-            var starredPostings = new HashSet<string>(postings.StarredPostings.Select(c => c.UserID));
+            var intrestPostings = new HashSet<string>(posting.IntrestedCandidates.Select(c => c.UserID));
+            var viewModel = new List<AssignedIntrestData>();
+            foreach (var users in allUsers)
+            {
+                viewModel.Add(new AssignedIntrestData
+                {
+                    UserID = users.Id,
+                    UserName = users.UserName,
+                    Intrested = intrestPostings.Contains(users.Id)
+                });
+            }
+            ViewData["intrestInPostings"] = viewModel;
+        }
+
+        private void PopulateStarredPostingData(Posting posting)
+        {
+            var allUsers = _context.User;
+            var starredPostings = new HashSet<string>(posting.StarredPostings.Select(c => c.UserID));
             var viewModel = new List<AssignedStarredPostingData>();
             foreach (var users in allUsers)
             {
