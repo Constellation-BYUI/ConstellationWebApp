@@ -4,13 +4,12 @@
     ViewData["Title"] = "Create a User";
 }
 
-<h2>Create</h2>
+<div class="d-flex shadow padding">
+    <h3>Create User</h3>
+</div>
 
-<h4>User</h4>
-<hr />
-<div class="container-fluid padding">
-    <div class="row padding">
-        <div class="col-md-12">
+<div class="container padding">
+        <div class="col-md-10">
             <div class="card shadow-lg text-black-50 text-white  bg-light mb-3 padding">
                 <form asp-action="Create" enctype="multipart/form-data">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -73,21 +72,17 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-primary" />
+                    <div class="card-footer">
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-md btn-primary" />
+                            <a style="text-decoration: none;" class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
+                        </div>
                     </div>
                 </form>
             </div>
         </div>
-    </div>
-    <div class="col-md-10">
-        <div class="card shadow text-black-50 text-white  bg-light mb-3 padding">
-            <div>
-                <a style="text-decoration: none;" class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
-            </div>
-        </div>
-    </div>
-   </div>
+  </div>
+
 
 @section Scripts {
     <script>

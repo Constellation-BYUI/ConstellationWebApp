@@ -18,57 +18,59 @@
 @* Need to be solved:
 
 *@
-    <div id="projectDisplay">
+    <div id="projectDisplay" class="overflow-auto">
         @foreach (var item in Model.Projects)
         {
             var photoPath = "~/image/" + (item.PhotoPath);
 
 
-            <div class="col-md-12 card shadow text-black-50 bg-light m-2 padding">
-                @*Note: We do not want to display the PhotoPath Path but the image itself*@
-                <div>
-                    <img style="height: 300px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.Title)" asp-append-version="true" />
-                </div>
-                <div>
-                    @Html.DisplayNameFor(modelItem => item.Title) :
-                    @Html.DisplayFor(modelItem => item.Title)
-                </div>
-                <div>
-                    @Html.DisplayNameFor(modelItem => item.Description) :
-                    @Html.DisplayFor(modelItem => item.Description)
-                </div>
-                <div>
-                    @Html.DisplayNameFor(modelItem => item.StartDate) :
-                    @Html.DisplayFor(modelItem => item.StartDate)
-                </div>
-                <div>
-                    @Html.DisplayNameFor(modelItem => item.EndDate) :
-                    @Html.DisplayFor(modelItem => item.EndDate)
-                </div>
-                <div>
-                    @Html.DisplayNameFor(modelItem => item.CreationDate) :
-                    @Html.DisplayFor(modelItem => item.CreationDate)
-                </div>
-                <h4>Project Links</h4>
-                @foreach (var link in item.ProjectLinks)
-                {
-                    <a class="card-link" href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
-                    <br />
-                }
-                <h4>Collaborators</h4>
+        <div class="col-md-12 card shadow text-black-50 bg-light m-2 padding">
+            @*Note: We do not want to display the PhotoPath Path but the image itself*@
+                <img style="height: 300px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.Title)" asp-append-version="true" />
+            <div>
+                @Html.DisplayNameFor(modelItem => item.Title) :
+                @Html.DisplayFor(modelItem => item.Title)
+            </div>
+            <div>
+                @Html.DisplayNameFor(modelItem => item.Description) :
+                @Html.DisplayFor(modelItem => item.Description)
+            </div>
+            <div>
+                @Html.DisplayNameFor(modelItem => item.StartDate) :
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </div>
+            <div>
+                @Html.DisplayNameFor(modelItem => item.EndDate) :
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </div>
+            <div>
+                @Html.DisplayNameFor(modelItem => item.CreationDate) :
+                @Html.DisplayFor(modelItem => item.CreationDate)
+            </div>
+            <h4>Project Links</h4>
+            @foreach (var link in item.ProjectLinks)
+            {
+                <a class="card-link" href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
+                <br />
+            }
+            <h4>Collaborators</h4>
+            
                 @{
                     bool isLoggedIn = false;
                     foreach (var collab in item.UserProjects)
+
                     {
                         var collabPath = "~/image/" + (collab.User.PhotoPath);
                         var collabMemberPath = "https://localhost:44359/Users/Details/" + (collab.User.Id);
 
                         <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
+
                         if (collab.UserID == currentUser)
                         {
                             isLoggedIn = true;
                         }
                     }
+
                     if (isLoggedIn == true)
                     {
                         <div class="card-footer">
@@ -84,7 +86,8 @@
                         </div>
                     }
                 }
-            </div>
+           
+        </div>
         }
     </div>
 
