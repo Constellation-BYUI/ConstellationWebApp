@@ -42,7 +42,7 @@
             @Html.DisplayFor(modelItem => item.Project.CreationDate)
         </div>
         <div class="card-footer">
-            <a class="btn btn-md btn-secondary" asp-action = "Details" asp-controller = "Projects" asp-route-id = "@item.Project.ProjectID">Details</a>
+            <a class="btn btn-md btn-secondary" asp-action="Details" asp-controller="Projects" asp-route-id="@item.Project.ProjectID">Details</a>
         </div>
 
         @* was not working and also quite of bit of data that does not truly need to be included ~ leaving it out for the time being *@
@@ -52,8 +52,11 @@
             <a class="card-link" href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
             <br />
         }
-        
-        <h4>Collaborators</h4>
+        <div class="card-footer">
+            <a class="btn btn-md btn-secondary" asp-action="Details" asp-route-id="@item.Project.ProjectID">Details</a>
+        </div>
+
+        @*<h4>Collaborators</h4>
         @{
             bool isLoggedIn = false;
             foreach (var collab in item.Project.UserProjects)
@@ -80,7 +83,7 @@
                 <div class="card-footer">
                     <a class="btn btn-md btn-secondary" asp-action="Details" asp-route-id="@item.Project.ProjectID">Details</a>
                 </div>
-            }
+            }*@
         }
     </div>
     }

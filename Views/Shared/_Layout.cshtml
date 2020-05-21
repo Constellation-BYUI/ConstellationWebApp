@@ -60,6 +60,15 @@
                         @*<li class="nav-item">
                 <input type="text" class="search-input" name="search" placeholder="search..." size="5" style="border-radius: 3px;"><i class="fas fa-search"></i>
             </li>*@
+                        <li class="nav-item dropdown">
+                            <a data-toggle="dropdown" class="nav-link text-light btn border-white btn-sm btn-primary bg-primary dropdown-toggle" asp-area="" asp-controller="StarredPostings" asp-action="Index">My Stuff</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary" asp-controller="StarredProjects" asp-action="Index">My Starred Projects</a>
+                                <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary" asp-controller="StarredPostings" asp-action="Index">My Starred Postings</a>
+                                <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary" asp-controller="IntrestedCandidates" asp-action="Index">Intrest in My Postings</a>
+                            </div>
+                        </li>
+
                         <li class="nav-item">
                             <form method="post" asp-action="logout" asp-controller="account">
                                 <button type="submit" class="nav-link btn btn-success " style="width:auto; font-size: 1em; padding: 0.2rem;">Logout</button>
@@ -71,14 +80,7 @@
                             </form>
                         </li>
                         @* This will need to be a drop down list of the StarredPostings, StarredUsers, & StarredProjects *@
-                        <li class="nav-item dropdown">
-                            <a data-toggle="dropdown" class="nav-link text-light btn border-white btn-sm btn-primary bg-primary dropdown-toggle" asp-area="" asp-controller="StarredPostings" asp-action="Index">My Stuff</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary" asp-controller="StarredProjects" asp-action="Index">My Starred Projects</a>
-                                <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary"  asp-controller="StarredPostings" asp-action="Index">My Starred Postings</a>
-                                <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary" asp-controller="IntrestedCandidates" asp-action="Index">Intrest in My Postings</a>
-                            </div>
-                        </li>
+
 
                     }
                     else
