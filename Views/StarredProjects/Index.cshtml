@@ -42,8 +42,18 @@
             @Html.DisplayFor(modelItem => item.Project.CreationDate)
         </div>
         <div class="card-footer">
-            <a class="btn btn-md btn-secondary" asp-action = "Details" asp-controller = "Projects" asp-route-id = "@item.Project.ProjectID">Details</a>
+            <a class="btn btn-md btn-secondary" asp-action="Details" asp-controller="Projects" asp-route-id="@item.Project.ProjectID">Details</a>
         </div>
+
+        <form asp-action="Delete" asp-controller="StarredProjects">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" class="form-control" value="@item.ProjectID" name="projectID" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Remove from MyStarred Postings" class="btn btn-primary" />
+            </div>
+        </form>
 
         @* was not working and also quite of bit of data that does not truly need to be included ~ leaving it out for the time being *@
         <h4>Project Links</h4>
@@ -52,8 +62,8 @@
             <a class="card-link" href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
             <br />
         }
-        
-        <h4>Collaborators</h4>
+
+        @*<h4>Collaborators</h4>
         @{
             bool isLoggedIn = false;
             foreach (var collab in item.Project.UserProjects)
@@ -81,7 +91,7 @@
                     <a class="btn btn-md btn-secondary" asp-action="Details" asp-route-id="@item.Project.ProjectID">Details</a>
                 </div>
             }
-        }
+        }*@
     </div>
     }
 </div>

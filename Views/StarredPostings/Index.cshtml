@@ -9,7 +9,6 @@
 <h1>My Starred Postings</h1>
 
 @foreach (var item in Model.Where(i => i.UserID == currentUser))
-@*@for (int i = 0; i < Model.Count(); i++)*@
 
 {
     var spID = item.StarredPostingID;
@@ -45,17 +44,16 @@
             <br />
         }
     </div>
-    @* This button did not work but should *@
-    @*<form asp-action="Delete" asp-controller="StarredPostings">
+    <form asp-action="Delete" asp-controller="StarredPostings">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
-            <input type="hidden" asp-for="@item.PostingID" class="form-control" value="@item.PostingID" />
+            <input type="hidden" asp-for="@item.PostingID" class="form-control" value="@item.PostingID" name="" />
+            <input type="hidden" class="form-control" value="@item.PostingID" name="postingID" />
         </div>
         <div class="form-group">
             <input type="submit" value="Remove from MyStarred Postings" class="btn btn-primary" />
         </div>
-    </form>*@
-
+    </form>
 </div>
 
     <a asp-action="Details" asp-controller="Postings" asp-route-id="@item.Posting.PostingID">Post Details</a> 
@@ -72,6 +70,6 @@
         <a asp-action="Index" asp-controller="Postings">View All Postings</a>
         }
 
-        }
+ }
 
 
