@@ -16,5 +16,9 @@ namespace ConstellationWebApp.Models
         public IEnumerable<PostingType> PostingType { get; set; }
         public IEnumerable<Posting_PostingType> Posting_PostingType { get; set; }
         public IEnumerable<StarredPosting> StarredPostings { get; set; }
+        public IEnumerable<StarredProject> StarredProjects { get; set; }
+        public IEnumerable<IntrestedCandidate> intrestedCandidates { get; set; }
+
+
     }
 }

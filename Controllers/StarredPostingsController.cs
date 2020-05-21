@@ -24,7 +24,10 @@ namespace ConstellationWebApp.Controllers
         // GET: StarredPostings
         public async Task<IActionResult> Index()
         {
-            var constellationWebAppContext = _context.StarredPosting.Include(s => s.Posting).ThenInclude(s => s.Posting_PostingTypes).ThenInclude(s => s.PostingTypes).Include(s => s.User);
+            var constellationWebAppContext = _context.StarredPosting.Include(s => s.Posting)
+                .ThenInclude(s => s.Posting_PostingTypes)
+                .ThenInclude(s => s.PostingTypes)
+                .Include(s => s.User);
             return View(await constellationWebAppContext.ToListAsync());
         }
 

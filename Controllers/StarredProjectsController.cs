@@ -24,12 +24,17 @@ namespace ConstellationWebApp.Controllers
         // GET: StarredProjects
         public async Task<IActionResult> Index()
         {
-            var constellationWebAppContext = _context.StarredProjects
-                .Include(s => s.Project)
-                .ThenInclude(s => s.ProjectLinks)
-                .Include(s => s.User)
-                .ThenInclude(s => s.UserProjects);
-            return View(await constellationWebAppContext.ToListAsync());
+            var viewModel = new ViewModel();
+            viewModel.StarredProjects = await _context.StarredProjects
+                .Include( i => i.User)
+                .Include(i => i.Project)
+                      .ThenInclude(i => i.ProjectLinks)
+                 .Include(i => i.User)
+                      .ThenInclude(i => i.UserProjects)
+                   .AsNoTracking()
+                   .OrderBy(i => i.StarredProjectID)
+                   .ToListAsync();
+            return View(viewModel);
         }
 
         // POST: StarredProjects/Create
