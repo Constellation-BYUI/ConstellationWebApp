@@ -9,19 +9,22 @@
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
 }
+    <div class="container padding">
+        <div class="container-fluid">
+            <div class="d-flex shadow padding">
+                <h3>@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Profile</h3>
+            </div>
+        </div>
 
 
-<h2>@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Profile</h2>
+        <aside>
 
-<aside>
-    <div>
-        <hr />
-        <div class="container-fluid padding">
-            <div class="row padding">
-                <div class="col-md-12">
+
+            <div class="container-fluid padding">
+                <div class="col-md-10">
                     <div class="card text-black-50 text-white  bg-light mb-3 padding">
                         <div>
-                            <img style="height: 500px; width: 100%; display: block;" src="@photoPath" asp-append-version="true" />
+                            <img style="height: 400px; width: 100%; display: block;" src="@photoPath" asp-append-version="true" />
                         </div>
                         <div>
                             <a href="@resumePath">  @Html.DisplayFor(model => model.UserName)'s Resume</a>
@@ -71,80 +74,85 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</aside>
-
-<h2>@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Projects</h2>
 
 
-<div>
-    @foreach (var userProject in Model.UserProjects)
-    {
-        var projectPhotoPath = "~/image/" + (userProject.Project.PhotoPath);
-        var projectPath = "https://localhost:44359/Projects/Details/" + (userProject.Project.ProjectID);
-        var projectId = (userProject.Project.ProjectID);
+        </aside>
 
-        <div class="container padding">
-            <div class="row padding">
-                <div class="col-md-10">
-                    <div class="card text-black-50 text-white  bg-light mb-3 padding">
-                        @*Note: We do not want to display the PhotoPath Path but the image itself*@
-                        <div>
-                            <a href="@projectPath"><img style="height: 400px; width: 100%; display: block;" src=" @projectPhotoPath" alt="@Html.DisplayFor(modelItem => userProject.Project.Title)" asp-append-version="true" /></a>
-                        </div>
-                        <div>
-                            @Html.DisplayNameFor(modelItem => userProject.Project.Title) :
-                            @Html.DisplayFor(modelItem => userProject.Project.Title)
-                        </div>
-                        <div>
-                            @Html.DisplayNameFor(modelItem => userProject.Project.Description) :
-                            @Html.DisplayFor(modelItem => userProject.Project.Description)
-                        </div>
-                        <div>
-                            @Html.DisplayNameFor(modelItem => userProject.Project.StartDate) :
-                            @Html.DisplayFor(modelItem => userProject.Project.StartDate)
-                        </div>
-                        <div>
-                            @Html.DisplayNameFor(modelItem => userProject.Project.EndDate) :
-                            @Html.DisplayFor(modelItem => userProject.Project.EndDate)
-                        </div>
-                        <div>
-                            @Html.DisplayNameFor(modelItem => userProject.Project.CreationDate) :
-                            @Html.DisplayFor(modelItem => userProject.Project.CreationDate)
-                        </div>
-
-                        <h4>Collaborators</h4>
-
-                        @foreach (var collab in ViewBag.collaborators)
-                        {
-                            if ((userProject.UserID != collab.UserID) && (userProject.ProjectID == collab.ProjectID))
-                            {
-                                var collabPath = "~/image/" + (collab.User.PhotoPath);
-                                var collabMemberPath = "https://localhost:44359/Users/Details/" + (collab.UserID);
-
-                                <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" asp-append-version="true" /></a>
-                            }
-
-                        }
-
-
-
-                        <h4>Project Links</h4>
-                        @foreach (var link in userProject.Project.ProjectLinks)
-                        {
-                            <a class="card-link" href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
-                            <br />
-                        }
-
-                        <div class="card-footer">
-                            <a class="btn btn-md btn-primary" href="@projectPath">View Project</a>
-                        </div>
-                    </div>
-                </div>
+        <div class="container-fluid padding">
+            <div class="d-flex shadow padding">
+                <h3>@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Projects</h3>
             </div>
         </div>
-    }
-</div>
+
+
+        <div>
+            @foreach (var userProject in Model.UserProjects)
+            {
+                var projectPhotoPath = "~/image/" + (userProject.Project.PhotoPath);
+                var projectPath = "https://localhost:44359/Projects/Details/" + (userProject.Project.ProjectID);
+                var projectId = (userProject.Project.ProjectID);
+
+                <div class="container-fluid padding">
+                    
+                        <div class="col-md-10">
+                            <div class="card text-black-50 text-white  bg-light mb-3 padding">
+                                @*Note: We do not want to display the PhotoPath Path but the image itself*@
+                                <div>
+                                    <a href="@projectPath"><img style="height: 400px; width: 100%; display: block;" src=" @projectPhotoPath" alt="@Html.DisplayFor(modelItem => userProject.Project.Title)" asp-append-version="true" /></a>
+                                </div>
+                                <div>
+                                    @Html.DisplayNameFor(modelItem => userProject.Project.Title) :
+                                    @Html.DisplayFor(modelItem => userProject.Project.Title)
+                                </div>
+                                <div>
+                                    @Html.DisplayNameFor(modelItem => userProject.Project.Description) :
+                                    @Html.DisplayFor(modelItem => userProject.Project.Description)
+                                </div>
+                                <div>
+                                    @Html.DisplayNameFor(modelItem => userProject.Project.StartDate) :
+                                    @Html.DisplayFor(modelItem => userProject.Project.StartDate)
+                                </div>
+                                <div>
+                                    @Html.DisplayNameFor(modelItem => userProject.Project.EndDate) :
+                                    @Html.DisplayFor(modelItem => userProject.Project.EndDate)
+                                </div>
+                                <div>
+                                    @Html.DisplayNameFor(modelItem => userProject.Project.CreationDate) :
+                                    @Html.DisplayFor(modelItem => userProject.Project.CreationDate)
+                                </div>
+
+                                <h4>Collaborators</h4>
+
+                                @foreach (var collab in ViewBag.collaborators)
+                                {
+                                    if ((userProject.UserID != collab.UserID) && (userProject.ProjectID == collab.ProjectID))
+                                    {
+                                        var collabPath = "~/image/" + (collab.User.PhotoPath);
+                                        var collabMemberPath = "https://localhost:44359/Users/Details/" + (collab.UserID);
+
+                                        <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" asp-append-version="true" /></a>
+                                    }
+
+                                }
+
+
+
+                                <h4>Project Links</h4>
+                                @foreach (var link in userProject.Project.ProjectLinks)
+                                {
+                                    <a class="card-link" href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
+                                    <br />
+                                }
+
+                                <div class="card-footer">
+                                    <a class="btn btn-md btn-primary" href="@projectPath">View Project</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+               
+            }
+        </div>
+    </div>
 
 

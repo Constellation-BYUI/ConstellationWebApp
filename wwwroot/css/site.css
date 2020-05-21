@@ -31,6 +31,7 @@ a.navbar-brand {
 }
 
 
+
 /*HEADER*/
 
 
@@ -100,7 +101,7 @@ button.accept-policy {
 @media (min-width: 1199px) {
     #projectDisplay {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
         grid-gap: 3px;
     }
 }

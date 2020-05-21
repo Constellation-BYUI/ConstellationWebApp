@@ -12,11 +12,10 @@
 
 @if (currentUser == Model.Id)
 {
-    <div class="container-fluid padding">
-        <div class="alert alert-dismissible alert-warning">
+    
             <div class="container padding">
                 <div class="row padding">
-                    <div class="col-md-12">
+                    <div class="col-md-10">
                         <div class="card text-black-50 text-white  bg-light mb-3 padding">
                             <h1>Delete</h1>
 
@@ -69,13 +68,13 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
- }
-        else
-        {
+      
+}
+else
+{
+    <div class="d-flex shadow padding text-center">
         <h2>You do not own this account, Log In as this User to Delete.</h2>
         <a style="text-decoration: none;" class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
-
+        </div>
         }
-       
+

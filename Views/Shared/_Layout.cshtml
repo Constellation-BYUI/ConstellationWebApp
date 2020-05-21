@@ -22,7 +22,7 @@
 </head>
 <body>
     <header class="sticky-top">
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow bg-primary ">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-md navbar-dark border-bottom box-shadow bg-primary ">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ConstellationWebApp</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -32,23 +32,29 @@
                 <div class="collapse navbar-collapse " id="collapisbleNavbar">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-white-50" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white-50" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white-50" asp-area="" asp-controller="Projects" asp-action="Index">Projects</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Projects" asp-action="Index">Projects</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white-50" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Postings" asp-action="Index">Postings</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Postings" asp-action="Index">Postings</a>
                         </li>
                         @* This will need to be a drop down list of the StarredPostings, StarredUsers, & StarredProjects *@
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="StarredPostings" asp-action="Index">My Starred Postings</a>
+                        <li class="nav-item dropdown">
+                            <a data-toggle="dropdown" class="nav-link text-light btn border-white btn-sm btn-primary bg-primary dropdown-toggle" asp-area="" asp-controller="StarredPostings" asp-action="Index">My Starred Postings</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary">Link One</a>
+                                <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary">Link two</a>
+                                <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary">Link two</a>
+                                <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary">Link two</a>
+                            </div>
                         </li>
                     </ul>
 

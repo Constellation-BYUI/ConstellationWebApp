@@ -5,14 +5,13 @@
     var photoPath = "~/image/" + Model.PhotoPath;
 }
 
-<h2>Project Details</h2>
+    <div class="container d-flex shadow padding justify-content-center">
+        <h3>Project Details</h3>
+    </div>
 
-    <hr />
-    <div class="container-fluid padding">
-        <div class="row padding">
-            <div class="col-md-12">
-                <div class="card shadow text-black-50 text-white  bg-light mb-3 padding">
-                    <img style="height: 500px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(model => model.Title)" asp-append-version="true" />
+       <div class="container d-flex justify-content-center padding">
+                        <div class="col-md-8 card shadow text-black-50 text-white  bg-light mb-3 padding">
+                    <img style="height: 300px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(model => model.Title)" asp-append-version="true" />
                     <dl class="row">
                         <dt class="col-sm-2">
                             @Html.DisplayNameFor(model => model.Title)
@@ -63,10 +62,6 @@
                         <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
-                </div>
-            </div>
-        </div>
-    </div>
+              </div>
+      
 
