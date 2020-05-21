@@ -60,10 +60,10 @@ namespace ConstellationWebApp.Controllers
             return (uniqueFileName);
         }
 
-        private void PopulateAssignedProjectData(Project newProject)
+        private void PopulateAssignedProjectData(Project project)
         {
             var allUsers = _context.User;
-            var userProjects = new HashSet<string>(newProject.UserProjects.Select(c => c.UserID));
+            var userProjects = new HashSet<string>(project.UserProjects.Select(c => c.UserID));
             var viewModel = new List<AssignedProjectData>();
             foreach (var users in allUsers)
             {
@@ -78,6 +78,26 @@ namespace ConstellationWebApp.Controllers
                 }
             }
             ViewData["UsersOfConstellation"] = viewModel;
+        }
+
+        private void PopulateStarredProjectData(Project newProject)
+        {
+            var allUsers = _context.User;
+            var starredProjects = new HashSet<string>(newProject.StarredProjects.Select(c => c.UserID));
+            var viewModel = new List<AssignedProjectData>();
+            foreach (var users in allUsers)
+            {
+                if (users.displayMyProfile == true)
+                {
+                    viewModel.Add(new AssignedProjectData
+                    {
+                        UserID = users.Id,
+                        UserName = users.UserName,
+                        Assigned = starredProjects.Contains(users.Id)
+                    });
+                }
+            }
+            ViewData["StarredProjects"] = viewModel;
         }
 
         private Project projectViewModelToUser(ProjectCreateViewModel model, string uniqueFileName)
@@ -157,12 +177,16 @@ namespace ConstellationWebApp.Controllers
                 return NotFound();
             }
             var project = await _context.Projects
-                .Include( i => i.UserProjects).ThenInclude(i => i.User)
+                .Include(i => i.StarredProjects)
+                .Include( i => i.UserProjects)
+                .ThenInclude(i => i.User)
                 .FirstOrDefaultAsync(m => m.ProjectID == id);
             if (project == null)
             {
                 return NotFound();
             }
+
+            PopulateStarredProjectData(project);
             return View(project);
         }
 

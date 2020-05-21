@@ -50,6 +50,9 @@
 
         public ICollection<StarredPosting> StarredPostings { get; set; }
 
+        public ICollection<StarredProject> StarredProjects { get; set; }
+
+
         public ICollection<Posting> Postings { get; set; }
 
         public virtual ICollection<ContactLink> ContactLinks { get; set; }

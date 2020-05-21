@@ -30,6 +30,9 @@ namespace ConstellationWebApp.Data
 
         public DbSet<ConstellationWebApp.Models.IntrestedCandidate> IntrestedCandidate { get; set; }
 
+        public DbSet<ConstellationWebApp.Models.StarredProject> StarredProjects { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -55,11 +58,10 @@ namespace ConstellationWebApp.Data
              .HasMany(c => c.ProjectLinks)
              .WithOne(e => e.Projects);
 
-            modelBuilder.Entity<PostingType>().ToTable("PostingTypes");
+            modelBuilder.Entity<PostingType>().ToTable("PostingType");
             modelBuilder.Entity<Posting_PostingType>().ToTable("Posting_PostingType");
             modelBuilder.Entity<Posting>().ToTable("Posting");
             modelBuilder.Entity<StarredPosting>().ToTable("StarredPosting");
-
             modelBuilder.Entity<StarredPosting>()
                 .HasKey(b => b.StarredPostingID);
             modelBuilder.Entity<StarredPosting>()
@@ -71,8 +73,7 @@ namespace ConstellationWebApp.Data
                 .WithMany(c => c.StarredPostings)
                 .HasForeignKey(bc => bc.PostingID);
 
-            modelBuilder.Entity<IntrestedCandidate>().ToTable("IntrestedCandidates");
-
+            modelBuilder.Entity<IntrestedCandidate>().ToTable("IntrestedCandidate");
             modelBuilder.Entity<IntrestedCandidate>()
                 .HasKey(b => b.IntrestedCandidateID);
             modelBuilder.Entity<IntrestedCandidate>()
@@ -83,13 +84,20 @@ namespace ConstellationWebApp.Data
                 .HasOne(bc => bc.Posting)
                 .WithMany(c => c.IntrestedCandidates)
                 .HasForeignKey(bc => bc.PostingID);
+
+            modelBuilder.Entity<StarredProject>().ToTable("StarredProject");
+            modelBuilder.Entity<StarredProject>()
+                .HasKey(b => b.StarredProjectID);
+            modelBuilder.Entity<StarredProject>()
+                .HasOne(bc => bc.User)
+                .WithMany(b => b.StarredProjects)
+                .HasForeignKey(bc => bc.UserID);
+            modelBuilder.Entity<StarredProject>()
+                .HasOne(bc => bc.Project)
+                .WithMany(c => c.StarredProjects)
+                .HasForeignKey(bc => bc.ProjectID);
         }
-
-
-
-
-
-
+                                 
     }
     
 }
