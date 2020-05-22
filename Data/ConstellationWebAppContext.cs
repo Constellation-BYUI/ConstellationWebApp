@@ -32,6 +32,7 @@ namespace ConstellationWebApp.Data
 
         public DbSet<ConstellationWebApp.Models.StarredProject> StarredProjects { get; set; }
 
+        public DbSet<ConstellationWebApp.Models.StarredUser> StarredUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -96,6 +97,23 @@ namespace ConstellationWebApp.Data
                 .HasOne(bc => bc.Project)
                 .WithMany(c => c.StarredProjects)
                 .HasForeignKey(bc => bc.ProjectID);
+
+            modelBuilder.Entity<StarredUser>().ToTable("StarredUser");
+            //Primary Key
+            modelBuilder.Entity<StarredUser>()
+                .HasKey(b => b.StarredUserID);
+
+            //User who is starring the other person
+            modelBuilder.Entity<StarredUser>()
+                .HasOne(bc => bc.StarOwner)
+                .WithMany(b => b.StarredOwner)
+                .HasForeignKey(bc => bc.StarredOwnerID);
+
+            //the other User who is being starred
+            modelBuilder.Entity<StarredUser>()
+                .HasOne(bc => bc.StarredPerson)
+                .WithMany(c => c.StarredUsers)
+                .HasForeignKey(bc => bc.UserStarredID);
         }
                                  
     }

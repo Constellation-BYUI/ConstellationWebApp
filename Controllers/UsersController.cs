@@ -13,6 +13,8 @@ using ConstellationWebApp.ViewModels;
 using System.Dynamic;
 using ConstellationWebApp.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+
 
 namespace ConstellationWebApp.Controllers
 {
@@ -172,6 +174,8 @@ namespace ConstellationWebApp.Controllers
 
             var user = await _context.User
           .Include(s => s.ContactLinks)
+          .Include(s => s.StarredUsers)
+          .Include(s => s.StarredOwner)
           .Include(s => s.UserProjects)
           .ThenInclude(s => s.Project)
           .ThenInclude(s => s.ProjectLinks)
@@ -183,16 +187,40 @@ namespace ConstellationWebApp.Controllers
                 return NotFound();
             }
 
+
+
             List<ConstellationWebApp.Models.UserProject> collaboratorsList = new List<UserProject>();
 
             List<UserProject> userProjectList = _context.UserProjects.ToList();
             List<User> usersList = _context.User.ToList();
 
             ViewBag.collaborators = userProjectList;
-
             ViewBag.allUsers = usersList;
 
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            List<StarredUser> thisSU = _context.StarredUsers.ToList();
+            ViewBag.StarredUsers = thisSU;
             return View(user);
+        }
+
+        private void PopulateAssignedStarredUserData(User user)
+        {
+            var allUsers = _context.User;
+            var starredUsers = new HashSet<string>(user.StarredOwner.Select(c => c.StarredOwnerID));
+            var viewModel = new List<AssignedStarredUserData>();
+            foreach (var users in allUsers)
+            {
+                if (users.displayMyProfile == true)
+                {
+                    viewModel.Add(new AssignedStarredUserData
+                    {
+                        StarredOwnerID = users.Id,
+                        UserName = users.UserName,
+                        Assigned = starredUsers.Contains(users.Id)
+                    });
+                }
+            }
+            ViewData["StarredUsers"] = viewModel;
         }
 
         // GET: Users/Create
