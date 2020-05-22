@@ -23,30 +23,32 @@
                             <div>
                                 <img style="height: 300px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.UserName)" asp-append-version="true" />
                             </div>
-                            <div>
-                                @Html.DisplayNameFor(modelItem => item.UserName) :
-                                @Html.DisplayFor(modelItem => item.UserName)
-                            </div>
-                            <div>
-                                @Html.DisplayNameFor(modelItem => item.FirstName) :
-                                @Html.DisplayFor(modelItem => item.FirstName)
-                            </div>
-                            <div>
-                                @Html.DisplayNameFor(modelItem => item.LastName) :
-                                @Html.DisplayFor(modelItem => item.LastName)
+                            <div class="card-body">
+                                <div>
+                                    @Html.DisplayNameFor(modelItem => item.UserName) :
+                                    @Html.DisplayFor(modelItem => item.UserName)
+                                </div>
+                                <div>
+                                    @Html.DisplayNameFor(modelItem => item.FirstName) :
+                                    @Html.DisplayFor(modelItem => item.FirstName)
+                                </div>
+                                <div>
+                                    @Html.DisplayNameFor(modelItem => item.LastName) :
+                                    @Html.DisplayFor(modelItem => item.LastName)
 
-                            </div>
-                            <div>
-                                @Html.DisplayNameFor(modelItem => item.Bio) :
-                                @Html.DisplayFor(modelItem => item.Bio)
+                                </div>
+                                <div>
+                                    @Html.DisplayNameFor(modelItem => item.Bio) :
+                                    @Html.DisplayFor(modelItem => item.Bio)
 
-                            </div>
-                            <div>
-                                @Html.DisplayNameFor(modelItem => item.Seeking) :
-                                @Html.DisplayFor(modelItem => item.Seeking)
+                                </div>
+                                <div>
+                                    @Html.DisplayNameFor(modelItem => item.Seeking) :
+                                    @Html.DisplayFor(modelItem => item.Seeking)
 
+                                </div>
                             </div>
-                            <h4>Contact Links</h4>
+                            <h4 class="card-title">Contact Links</h4>
                             @foreach (var link in item.ContactLinks)
                             {
                                 <div class="card-link">
