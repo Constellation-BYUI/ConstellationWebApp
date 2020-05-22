@@ -50,6 +50,9 @@
 
         public ICollection<StarredPosting> StarredPostings { get; set; }
 
+        public ICollection<StarredUser> StarredOwner { get; set; }
+        public ICollection<StarredUser> StarredUsers { get; set; }
+               
         public ICollection<StarredProject> StarredProjects { get; set; }
 
 

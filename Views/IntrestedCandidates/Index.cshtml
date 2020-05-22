@@ -12,7 +12,8 @@
 
 @try
 {
-    foreach (var item in Model.Where(i => i.Posting.PostingOwner.Id == currentUser))
+    List<int> shown = new List<int>();
+    foreach (var item in Model.Where((i => i.Posting.PostingOwner.Id == currentUser && !(shown.Contains(i.Posting.PostingID)))))
     {
       
             var spID = item.IntrestedCandidateID;
@@ -72,19 +73,11 @@
             else
             {
             <a asp-action="Index" asp-controller="Postings">View All Postings</a>
-            }
-
-            if(item.PostingID == lastPostingID)
-            {
-                hasBeenShown = true;
-            }
-            else { 
-                hasBeenShown = false;
-           }
-            
-            lastPostingID = item.PostingID;
-
         }
+
+          shown.Add(@item.PostingID);
+
+    }
 
 }
 catch

@@ -28,11 +28,10 @@ namespace ConstellationWebApp.Controllers
         {
             var viewModel = new ViewModel();
             viewModel.Postings = await _context.Postings
-                  .Include(i => i.PostingOwner)
                   .Include(i => i.Posting_PostingTypes)
                   .ThenInclude(i => i.PostingTypes)
+                  .Include(i => i.PostingOwner)
                    .AsNoTracking()
-                   .OrderBy(i => i.PostingTitle)
                    .ToListAsync();
 
             return View(viewModel);
