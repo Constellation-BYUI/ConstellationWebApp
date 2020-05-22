@@ -10,12 +10,6 @@
     var loggedOn = false;
 }
 
-    <div class="container d-flex shadow padding justify-content-center">
-        <h3>Project Details</h3>
-    </div>
-
-    
-                   
 
 @if (currentUser != null)
 {
@@ -51,41 +45,51 @@
     }
 
 }
-<hr />
-   <div class="container d-flex justify-content-center padding">
-      <div class="col-md-8 card shadow text-black-50 text-white  bg-light mb-3 padding">
-        <div class="col-md-12">
+
+@*Profile Heading Display*@
+<div class="container">
+    <div class="col-md-10 px-0">
+        <div class="card bg-primary text-center text-white shadow padding">
+            <h3>Project Details</h3>
+        </div>
+    </div>
+</div>
+
+<div class="container padding">
+        <div class="col-md-10">
             <div class="card shadow text-black-50 text-white  bg-light mb-3 padding">
-                <img style="height: 500px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(model => model.Title)" asp-append-version="true" />
-                <div class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Title)
-                </div>
-                <div class="col-sm-10">
-                    @Html.DisplayFor(model => model.Title)
-                </div>
-                <div class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.Description)
-                </div>      
-                <div class="col-sm-10">
-                    @Html.DisplayFor(model => model.Description)
-                </div>
-                <div class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.StartDate)
-                </div>
-                <div class="col-sm-10">
-                    @Html.DisplayFor(model => model.StartDate)
-                </div>
-                <div class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.EndDate)
-                </div>
-                <div class="col-sm-10">
-                    @Html.DisplayFor(model => model.EndDate)
-                </div>
-                <div class="col-sm-2">
-                    @Html.DisplayNameFor(model => model.CreationDate)
-                </div>
-                <div class="col-sm-10">
-                    @Html.DisplayFor(model => model.CreationDate)
+                <img class="img-thumbnail mx-auto d-block" src=" @photoPath" alt="@Html.DisplayFor(model => model.Title)" asp-append-version="true" />
+                <div class="card-body">
+                    <div class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Title)
+                    </div>
+                    <div class="col-sm-10">
+                        @Html.DisplayFor(model => model.Title)
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Description)
+                    </div>
+                    <div class="col-sm-10">
+                        @Html.DisplayFor(model => model.Description)
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.StartDate)
+                    </div>
+                    <div class="col-sm-10">
+                        @Html.DisplayFor(model => model.StartDate)
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.EndDate)
+                    </div>
+                    <div class="col-sm-10">
+                        @Html.DisplayFor(model => model.EndDate)
+                    </div>
+                    <div class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.CreationDate)
+                    </div>
+                    <div class="col-sm-10">
+                        @Html.DisplayFor(model => model.CreationDate)
+                    </div>
                 </div>
                 @{
                     if (Model.UserProjects != null)
@@ -117,9 +121,8 @@
                     }
                 }
             </div>
-         
+
         </div>
-    </div>
 </div>
 
 

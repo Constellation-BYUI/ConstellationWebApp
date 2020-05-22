@@ -12,16 +12,18 @@
 
 @if (currentUser == Model.UserID)
 {
-    <div class="container padding">
-        <div class="d-flex justify-content-center shadow padding">
-            <h3 class="mr-auto">Edit User</h3>
+    <div class="container">
+        <div class="col-md-10 px-0">
+            <div class="card bg-primary text-center text-white shadow padding sticky-top">
+                <h3>Edit User</h3>
+            </div>
         </div>
     </div>
 
 
 
-<div class="container padding">
-    <div class="col-md-8">
+<div class="container padding ">
+    <div class="col-md-10">
         <div class="card text-black-50 text-white  bg-light mb-3 padding">
 
             @*Note: We do not want to display the PhotoPath Path but the image itself*@
@@ -88,16 +90,13 @@
 
                 @* Create the Contact Links for the User *@
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <h4>Link Label</h4>
-                        <input list='contact-link-label' name='createdLinkLabels'>
-                        <h4>Link URL</h4>
-                        <input list='contact-link-url' name='createdLinkUrls'>
-
-
-
+                    <div class="col-md-6">
+                        <p class="mb-0 mt-1">Add Link Label</p>
+                        <input class="input-group rounded border-light" list='contact-link-label' name='createdLinkLabels'>
+                        <p class="mb-0 mt-1">Add Url Link</p>
+                        <input  class="input-group rounded border-light" list='contact-link-url' name='createdLinkUrls'>
                         <div id="demo"></div>
-                        <input type="button" id="more_fields" onclick="add_fields();" value="Add Link" />
+                        <input class="text-light bg-secondary border-white rounded mt-1" type="button" id="more_fields" onclick="add_fields();" value="Add Link" />
                     </div>
                 </div>
 
@@ -116,7 +115,7 @@
 else
 {
     <h2>You do not own this account, Log In as this User to Edit.</h2>
-    <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
+    <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
 }
 
 
@@ -135,7 +134,7 @@ else
 
     <script>
         function add_fields() {
-            document.getElementById("demo").innerHTML += "<h2>Link Label</h2><input list='contact-link-label' name='createdLinkLabels'><h2>Link URL</h2> <input list='contact-link-url' name='createdLinkUrls'>";
+            document.getElementById("demo").innerHTML += "<p class='mb-0 mt-1 rounded border-light'>Add Link Label</p><input class='input-group' list='contact-link-label' name='createdLinkLabels'><p class='mb-0 mt-1 rounded border-light'>Add Url Link</p><input class='input-group' list='contact-link-url' name='createdLinkUrls'>";
         }
     </script>
     @*@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@

@@ -18,7 +18,7 @@
 @* Need to be solved:
 
 *@
-    <div id="projectDisplay" class="overflow-auto">
+    <div id="projectDisplay" >
         @foreach (var item in Model.Projects)
         {
             var photoPath = "~/image/" + (item.PhotoPath);
@@ -73,11 +73,11 @@
 
                     if (isLoggedIn == true)
                     {
-                        <div class="card-footer">
-                            <a class="btn btn-md btn-primary" asp-action="Edit" asp-route-id="@item.ProjectID">Edit</a>
-                            <a class="btn btn-md btn-danger" asp-action="Delete" asp-route-id="@item.ProjectID">Delete</a>
-                            <a class="btn btn-md btn-secondary" asp-action="Details" asp-route-id="@item.ProjectID">Details</a>
-                        </div>
+        <div class="card-footer">
+            <a class="btn btn-md btn-primary" asp-action="Edit" asp-route-id="@item.ProjectID">Edit</a>
+            <a class="btn btn-md btn-secondary" asp-action="Details" asp-route-id="@item.ProjectID">Details</a>
+            <a class="btn btn-md btn-danger" asp-action="Delete" asp-route-id="@item.ProjectID">Delete</a>
+        </div>
                     }
                     else
                     {

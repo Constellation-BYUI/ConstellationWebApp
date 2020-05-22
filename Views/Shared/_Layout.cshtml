@@ -61,7 +61,7 @@
                 <input type="text" class="search-input" name="search" placeholder="search..." size="5" style="border-radius: 3px;"><i class="fas fa-search"></i>
             </li>*@
                         <li class="nav-item dropdown">
-                            <a data-toggle="dropdown" class="nav-link text-light btn border-white btn-sm btn-primary bg-primary dropdown-toggle" asp-area="" asp-controller="StarredPostings" asp-action="Index">My Stuff</a>
+                            <a data-toggle="dropdown" class="text-light btn border-white btn-sm btn-primary bg-primary dropdown-toggle" asp-area="" asp-controller="StarredPostings" asp-action="Index">My Stuff</a>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary" asp-controller="StarredProjects" asp-action="Index">My Starred Projects</a>
                                 <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary" asp-controller="StarredPostings" asp-action="Index">My Starred Postings</a>
@@ -70,13 +70,13 @@
                         </li>
 
                         <li class="nav-item">
-                            <form method="post" asp-action="logout" asp-controller="account">
-                                <button type="submit" class="nav-link btn btn-success " style="width:auto; font-size: 1em; padding: 0.2rem;">Logout</button>
+                            <form method="get" asp-action="Edit" asp-controller="Users" asp-route-id="@userId">
+                                <button type="submit" class="btn btn-sm mx-2 btn-primary" style="width:auto; font-size: 1em; padding: 0.2rem;">Edit Profile</button>
                             </form>
                         </li>
                         <li class="nav-item">
-                            <form method="get" asp-action="Edit" asp-controller="Users" asp-route-id="@userId">
-                                <button type="submit" class="nav-link btn btn-primary " style="width:auto; font-size: 1em; padding: 0.2rem;">Edit Profile</button>
+                            <form method="post" asp-action="logout" asp-controller="account">
+                                <button type="submit" class="btn-sm btn btn-success" style="width:auto; font-size: 1em; padding: 0.2rem;">Logout</button>
                             </form>
                         </li>
                         @* This will need to be a drop down list of the StarredPostings, StarredUsers, & StarredProjects *@
