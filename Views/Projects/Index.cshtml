@@ -24,7 +24,7 @@
             var photoPath = "~/image/" + (item.PhotoPath);
 
 
-        <div class="col-md-12 card shadow text-black-50 bg-light m-2 padding">
+        <div class="col-md-12 card h-100 shadow text-black-50 bg-light m-2 padding">
             @*Note: We do not want to display the PhotoPath Path but the image itself*@
                 <img style="height: 300px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.Title)" asp-append-version="true" />
             <div>
@@ -54,8 +54,9 @@
                 <br />
             }
             <h4>Collaborators</h4>
-            
+            <section class="d-flex flex-wrap">
                 @{
+
                     bool isLoggedIn = false;
                     foreach (var collab in item.UserProjects)
 
@@ -70,23 +71,25 @@
                             isLoggedIn = true;
                         }
                     }
+                }
+            </section>
+            @{ 
 
                     if (isLoggedIn == true)
                     {
-        <div class="card-footer">
-            <a class="btn btn-md btn-primary" asp-action="Edit" asp-route-id="@item.ProjectID">Edit</a>
-            <a class="btn btn-md btn-secondary" asp-action="Details" asp-route-id="@item.ProjectID">Details</a>
-            <a class="btn btn-md btn-danger" asp-action="Delete" asp-route-id="@item.ProjectID">Delete</a>
-        </div>
+                        <div class="card-footer align-bottom">
+                            <a class="btn btn-md btn-primary" asp-action="Edit" asp-route-id="@item.ProjectID">Edit</a>
+                            <a class="btn btn-md btn-secondary" asp-action="Details" asp-route-id="@item.ProjectID">Details</a>
+                            <a class="btn btn-md btn-danger" asp-action="Delete" asp-route-id="@item.ProjectID">Delete</a>
+                        </div>
                     }
                     else
                     {
-                        <div class="card-footer">
+                        <div class="card-footer align-bottom">
                             <a class="btn btn-md btn-secondary" asp-action="Details" asp-route-id="@item.ProjectID">Details</a>
                         </div>
                     }
                 }
-           
         </div>
         }
     </div>
