@@ -121,7 +121,9 @@ namespace ConstellationWebApp.Controllers
                 OldResumePath = userModel.ResumePhotoPath,
                 PhotoPath = userModel.PhotoPath,
                 ResumePhotoPath = userModel.ResumePhotoPath,
-                displayMyProfile = userModel.displayMyProfile
+                displayMyProfile = userModel.displayMyProfile,
+                thisUser = userModel,
+                ContactLinks = userModel.ContactLinks
             };
             return(viewModel);
         }
@@ -354,6 +356,17 @@ namespace ConstellationWebApp.Controllers
                    .OrderBy(i => i.UserID)
                    .ToListAsync();
             return View(viewModel);
+        }
+
+        // POST: UserProjects/Delete/5
+        [HttpPost, ActionName("DeleteLink")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteLink(string userID, int contactLinkID)
+        {
+            ContactLink thisCL = ((_context.ContactLinks.Where(i => (i.Users.Id == userID) && (i.ContactLinkID == contactLinkID)).FirstOrDefault()));
+            _context.ContactLinks.Remove(thisCL);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Projects");
         }
 
     }

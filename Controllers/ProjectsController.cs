@@ -84,16 +84,16 @@ namespace ConstellationWebApp.Controllers
         {
             var allUsers = _context.User;
             var starredProjects = new HashSet<string>(newProject.StarredProjects.Select(c => c.UserID));
-            var viewModel = new List<AssignedProjectData>();
+            var viewModel = new List<AssignedStarredProjectsData>();
             foreach (var users in allUsers)
             {
                 if (users.displayMyProfile == true)
                 {
-                    viewModel.Add(new AssignedProjectData
+                    viewModel.Add(new AssignedStarredProjectsData
                     {
                         UserID = users.Id,
                         UserName = users.UserName,
-                        Assigned = starredProjects.Contains(users.Id)
+                        Starred = starredProjects.Contains(users.Id)
                     });
                 }
             }
@@ -177,6 +177,7 @@ namespace ConstellationWebApp.Controllers
                 return NotFound();
             }
             var project = await _context.Projects
+                .Include(i => i.ProjectLinks)
                 .Include(i => i.StarredProjects)
                 .Include( i => i.UserProjects)
                 .ThenInclude(i => i.User)
@@ -380,6 +381,20 @@ namespace ConstellationWebApp.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+
+
+        // POST: UserProjects/Delete/5
+        [HttpPost, ActionName("DeleteLink")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteLink(int projectID, int projectLinkID)
+        {
+            ProjectLink thisPL = ((_context.ProjectLinks.Where(i => (i.Projects.ProjectID == projectID) && (i.ProjectLinkID == projectLinkID)).FirstOrDefault()));
+            _context.ProjectLinks.Remove(thisPL);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Projects");
+        }
+
 
         private bool ProjectExists(int id)
         {
