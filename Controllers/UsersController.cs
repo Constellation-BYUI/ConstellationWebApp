@@ -48,6 +48,15 @@ namespace ConstellationWebApp.Controllers
             return(resumeFileName);
         }
 
+        private void DeleteResume(UserEditViewModel model)
+        {
+            if (model.OldResumePath != null)
+            {
+                string filePath = Path.Combine(hostingEnvironment.WebRootPath, "image", model.OldResumePath);
+                System.IO.File.Delete(filePath);
+            }
+        }
+
         private void CreateUserLinks(string[] createdLinkLabels, string[] createdLinkUrls, User newUser)
         {
             if (createdLinkLabels != null)
@@ -117,14 +126,7 @@ namespace ConstellationWebApp.Controllers
             return(viewModel);
         }
 
-        private void DeleteResume(UserEditViewModel model)
-        {
-            if (model.OldResumePath != null)
-            {
-                string filePath = Path.Combine(hostingEnvironment.WebRootPath, "image", model.OldResumePath);
-                System.IO.File.Delete(filePath);
-            }
-        }
+      
 
         private void DeletePhoto(UserEditViewModel model)
         {
@@ -201,26 +203,6 @@ namespace ConstellationWebApp.Controllers
             List<StarredUser> thisSU = _context.StarredUsers.ToList();
             ViewBag.StarredUsers = thisSU;
             return View(user);
-        }
-
-        private void PopulateAssignedStarredUserData(User user)
-        {
-            var allUsers = _context.User;
-            var starredUsers = new HashSet<string>(user.StarredOwner.Select(c => c.StarredOwnerID));
-            var viewModel = new List<AssignedStarredUserData>();
-            foreach (var users in allUsers)
-            {
-                if (users.displayMyProfile == true)
-                {
-                    viewModel.Add(new AssignedStarredUserData
-                    {
-                        StarredOwnerID = users.Id,
-                        UserName = users.UserName,
-                        Assigned = starredUsers.Contains(users.Id)
-                    });
-                }
-            }
-            ViewData["StarredUsers"] = viewModel;
         }
 
         // GET: Users/Create

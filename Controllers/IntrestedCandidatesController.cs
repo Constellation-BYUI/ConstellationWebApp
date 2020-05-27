@@ -34,27 +34,6 @@ namespace ConstellationWebApp.Controllers
             return View(await constellationWebAppContext.ToListAsync());
         }
 
-        // GET: IntrestedCandidates/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var intrestedCandidate = await _context.IntrestedCandidate
-                .Include(i => i.Posting)
-                .Include(i => i.User)
-
-                .FirstOrDefaultAsync(m => m.IntrestedCandidateID == id);
-            if (intrestedCandidate == null)
-            {
-                return NotFound();
-            }
-
-            return View(intrestedCandidate);
-        }
-
 
         // POST: IntrestedCandidate/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 

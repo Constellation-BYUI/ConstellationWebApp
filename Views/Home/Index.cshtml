@@ -34,8 +34,9 @@
                 <div class="carousel-caption">
                     <h1>WELCOME</h1>
                     <h4>Share your Projects with the right audience.</h4>
-                    <a class="btn btn-md btn-primary border-light" href="#">View Projects</a>
-                    <a class="btn btn-md btn-success border-light" href="#">SignUp</a>
+                    <a class="btn btn-md btn-primary border-light" asp-controller="Projects" asp-action="Index">View Projects</a>
+                    <a class="btn btn-md btn-success border-light" asp-controller="account" asp-action="register">Register</a>
+
                 </div>
             </div>
 
@@ -57,7 +58,7 @@
 <div class="container-fluid m-1">
     <div class="container-fluid shadow-lg bg-light col-md-12 jumbotron m-2 p-1 text-center">
         <h3>Bring exposure to your ideas and make them available to people that matter.</h3>
-        <a href="#" class="btn btn-primary btn-md">Post Projects</a>
+        <a class="btn btn-primary btn-md" asp-controller="Projects" asp-action="Create">Post Projects</a>
     </div>
 </div>
 
