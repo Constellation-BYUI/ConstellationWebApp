@@ -38,6 +38,12 @@ namespace ConstellationWebApp.ViewModels
         public IFormFile Photo { get; set; }
 
         public ICollection<UserProject> UserProjects { get; set; }
+
+        public User thisUser { get; set; }
+
+        public ICollection<ContactLink> ContactLinks { get; set; }
+
+
     }
 
 }

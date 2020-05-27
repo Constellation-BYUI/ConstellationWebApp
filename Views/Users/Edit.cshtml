@@ -1,14 +1,11 @@
 ﻿@model ConstellationWebApp.Models.ViewModels.UserEditViewModel
 @using System.Security.Claims;
 
-
 @{
     ViewData["Title"] = "Edit User";
     var photoPath = "~/image/" + (Model.OldPhotoPath);
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
-
-
 
 @if (currentUser == Model.UserID)
 {
@@ -19,8 +16,6 @@
             </div>
         </div>
     </div>
-
-
 
 <div class="container padding ">
     <div class="col-md-10">
@@ -94,7 +89,7 @@
                         <p class="mb-0 mt-1">Add Link Label</p>
                         <input class="input-group rounded border-light" list='contact-link-label' name='createdLinkLabels'>
                         <p class="mb-0 mt-1">Add Url Link</p>
-                        <input  class="input-group rounded border-light" list='contact-link-url' name='createdLinkUrls'>
+                        <input class="input-group rounded border-light" list='contact-link-url' name='createdLinkUrls'>
                         <div id="demo"></div>
                         <input class="text-light bg-secondary border-white rounded mt-1" type="button" id="more_fields" onclick="add_fields();" value="Add Link" />
                     </div>
@@ -109,6 +104,34 @@
                 </div>
             </form>
         </div>
+        @foreach (var item in Model.thisUser.ContactLinks.Where((i => i.Users.Id == Model.thisUser.Id)))
+        {
+        <div class="col-sm-2">
+            @Html.DisplayFor(model => item.ContactLinkLabel)
+        </div>
+        <div class="col-sm-10">
+            @Html.DisplayFor(model => item.ContactLinkUrl)
+        </div>
+
+        if (currentUser != null)
+        {
+        <form asp-action="DeleteLink" asp-controller="Projects">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" asp-for="UserID" class="form-control" value="@Model.UserID" name="userID" />
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="@item.ContactLinkID" class="form-control" value="@item.ContactLinkID" name="contactLinkID" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Remove this Link" class="btn btn-md btn-danger" />
+            </div>
+        </form>
+
+        }
+
+        }
+
     </div>
 </div>
 }
