@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="icon" href="~/favicon.ico" />
 </head>
-<body>
+<body style="position: relative;">
     <header class="sticky-top">
         <nav class="navbar navbar-expand-sm navbar-toggleable-md navbar-dark border-bottom box-shadow bg-primary ">
             <div class="container-fluid">
@@ -104,7 +104,7 @@
             @RenderBody()
         </main>
     <button class="btn btn-primary btn-sm" onclick="topFunction()" id="myBtn" title="Go to top"><i class="fas fa-arrow-alt-circle-up"></i></button>
-    <footer class="container-fluid border-top text-white text-center bg-primary" style="padding: 1.5rem 1rem;">
+    <footer class="container-fluid border-top text-white text-center bg-primary" style="padding: 1.5rem 1rem; position:absolute; bottom: -10rem;">
         <p class="mb-0">&copy; 2020 - ConstellationWebApp - <a class="text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></p>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

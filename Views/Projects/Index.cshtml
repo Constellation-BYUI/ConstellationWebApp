@@ -18,7 +18,7 @@
 @* Need to be solved:
 
 *@
-    <div id="projectDisplay" >
+    <div id="projectDisplay" style="margin-bottom: 4rem;" >
         @foreach (var item in Model.Projects)
         {
             var photoPath = "~/image/" + (item.PhotoPath);
@@ -31,7 +31,7 @@
                 @Html.DisplayNameFor(modelItem => item.Title) :
                 @Html.DisplayFor(modelItem => item.Title)
             </div>
-            <div>
+            <div class="card-text text-truncate">
                 @Html.DisplayNameFor(modelItem => item.Description) :
                 @Html.DisplayFor(modelItem => item.Description)
             </div>
