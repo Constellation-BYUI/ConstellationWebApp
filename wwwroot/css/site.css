@@ -201,6 +201,9 @@ button.accept-policy {
         font-size: 14px;
         margin: auto !important;
     }
+    #userTitle {
+        font-size: 1em;
+    }
 
     .card-columns {
         -webkit-column-count: 1;

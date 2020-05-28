@@ -4,10 +4,7 @@
 @{
     ViewData["Title"] = "Index";
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-    var hasBeenShown = false;
-    var lastPostingID = 0;
 }
-
 <h1>My Postings</h1>
 
 @try
