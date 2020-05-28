@@ -44,7 +44,12 @@ body, html {
 
 
 /*FOOTER*/
-
+.card-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
 
 
 /*BUTTONS*/
@@ -110,6 +115,17 @@ button.accept-policy {
         grid-template-columns: 1fr 1fr 1fr 1fr;
         grid-gap: 3px;
     }
+    .card-columns {
+        -webkit-column-count: 4;
+        column-count: 4;
+        -webkit-column-gap: 1.25rem;
+        column-gap: 1.25rem;
+        orphans: 1;
+        widows: 1
+    }
+    .card article {
+        font-size: 1.2rem;
+    }
 }
 
 /* Lare Screen size */
@@ -120,7 +136,18 @@ button.accept-policy {
         grid-gap: 3px;
     }
     .carousel-caption h4, h1 {
-        text-shadow: 1px 1px 15px blue;
+  
+    }
+    .card-columns {
+        -webkit-column-count: 3;
+        column-count: 3;
+        -webkit-column-gap: 1.25rem;
+        column-gap: 1.25rem;
+        orphans: 1;
+        widows: 1
+    }
+    .card article {
+        font-size: 1.2rem;
     }
 }
 
@@ -135,6 +162,15 @@ button.accept-policy {
         font-size: 16px !important;
     }
 
+    .card-columns {
+        -webkit-column-count: 2;
+        column-count: 2;
+        -webkit-column-gap: 1.25rem;
+        column-gap: 1.25rem;
+        orphans: 1;
+        widows: 1
+    }
+
     /*css form carousel*/
     .carousel-caption {
         top: 40%;
@@ -143,13 +179,12 @@ button.accept-policy {
         .carousel-caption h1 {
             font-size: 350%;
             text-transform: uppercase;
-            text-shadow: 1px 1px 15px blue;
+          
         }
 
         .carousel-caption h4 {
             font-size: 140%;
             font-weight: 400;
-            text-shadow: 1px 1px 10px blue;
             padding-bottom: .2rem;
         }
 
@@ -162,12 +197,19 @@ button.accept-policy {
 
 /* Small Screen Size */
 @media (max-width: 576px) {
-    #projectDisplay {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-gap: 3px;
-    } 
+    #newPLink {
+        font-size: 14px;
+        margin: auto !important;
+    }
 
+    .card-columns {
+        -webkit-column-count: 1;
+        column-count: 1;
+        -webkit-column-gap: 1.25rem;
+        column-gap: 1.25rem;
+        orphans: 1;
+        widows: 1
+    }
     /*css form carousel*/
     .carousel-caption {
         top: 10%;
@@ -177,13 +219,11 @@ button.accept-policy {
         .carousel-caption h1 {
             font-size: 200%;
             text-transform: uppercase;
-            text-shadow: 1px 1px 15px blue;
         }
 
         .carousel-caption h4 {
             font-size: 110%;
             font-weight: 400;
-            text-shadow: 1px 1px 10px blue;
             padding-bottom: .2rem;
         }
 
