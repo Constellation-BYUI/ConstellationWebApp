@@ -56,7 +56,7 @@
                 <h5 class="card-title bg-light container py-1 shadow text-primary rounded">Project Links</h5>
                 @foreach (var link in item.ProjectLinks)
                 {
-                    <a class="card-link" href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
+                    <a class="card-link" href=" @link.ProjectLinkUrl" target="_blank">@link.ProjectLinkLabel</a>
                     <br />
                 }
                 <h4 class="card-title bg-light container-fluid py-1 shadow text-success rounded">COLLABORATORS</h4>

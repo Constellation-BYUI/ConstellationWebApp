@@ -34,6 +34,9 @@ namespace ConstellationWebApp.Data
 
         public DbSet<ConstellationWebApp.Models.StarredUser> StarredUsers { get; set; }
 
+        public DbSet<ConstellationWebApp.Models.RecruiterPicks> RecruiterPicks { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -114,6 +117,28 @@ namespace ConstellationWebApp.Data
                 .HasOne(bc => bc.StarredPerson)
                 .WithMany(c => c.StarredUsers)
                 .HasForeignKey(bc => bc.UserStarredID);
+
+            modelBuilder.Entity<RecruiterPicks>().ToTable("RecruiterPicks");
+            //Primary Key
+            modelBuilder.Entity<RecruiterPicks>()
+                .HasKey(b => b.RecuiterPicksID);
+
+            //User who is starring the other person
+            modelBuilder.Entity<RecruiterPicks>()
+                .HasOne(bc => bc.Recuiter)
+                .WithMany(b => b.Recuiter)
+                .HasForeignKey(bc => bc.RecuiterID);
+
+            //the other User who is being starred
+            modelBuilder.Entity<RecruiterPicks>()
+                .HasOne(bc => bc.Candidate)
+                .WithMany(c => c.Candidates)
+                .HasForeignKey(bc => bc.CandidateID);
+
+            modelBuilder.Entity<RecruiterPicks>()
+             .HasOne(bc => bc.Posting)
+             .WithMany(c => c.RecruiterPicks)
+             .HasForeignKey(bc => bc.PostingID);
         }
                                  
     }
