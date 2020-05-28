@@ -31,11 +31,10 @@ namespace ConstellationWebApp.Controllers
                 .Include(i => i.Posting)
                   .ThenInclude(i => i.PostingOwner)
                 .Include(i => i.User)
-                .ThenInclude(i => i.Candidates)
-                .ThenInclude(i => i.Recuiter);
-            
+                  .Include(i => i.Posting)
+                  .ThenInclude(i => i.RecruiterPicks);
 
-            List<ConstellationWebApp.Models.RecruiterPicks> recuiterPicks = new List<RecruiterPicks>();
+            List<RecruiterPicks> recuiterPicks = _context.RecruiterPicks.ToList();
             ViewBag.picks = recuiterPicks;
 
             return View(await constellationWebAppContext.ToListAsync());
@@ -74,6 +73,21 @@ namespace ConstellationWebApp.Controllers
                 recruiterPicks.PostingID = postingID;
 
                 _context.Add(recruiterPicks);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Index", "IntrestedCandidates");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeletePick(int recuiterPicksID)
+        {
+            RecruiterPicks thisRP = (_context.RecruiterPicks.Where(i => i.RecuiterPicksID == recuiterPicksID).FirstOrDefault());
+
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (thisRP.RecuiterID == currentUser)
+            {
+                _context.RecruiterPicks.Remove(thisRP);
                 await _context.SaveChangesAsync();
             }
             return RedirectToAction("Index", "IntrestedCandidates");

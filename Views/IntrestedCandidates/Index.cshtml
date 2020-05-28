@@ -14,11 +14,22 @@
     {
         List<ConstellationWebApp.Models.RecruiterPicks> picks = ViewBag.picks;
         <h2> Your Picks for this Posting</h2>
-        foreach (var pick in picks)
+        foreach (var pick in picks.Where(i => i.RecuiterID == currentUser && i.PostingID == item.PostingID))
         {
             var candidatePath = "~/image/" + (pick.Candidate.PhotoPath);
             var candidateMemberPath = "https://localhost:44359/Users/Details/" + (pick.Candidate.Id);
             <a href="@candidateMemberPath"><img class="small-thumbnail" src=" @candidatePath" alt="@Html.DisplayFor(modelItem => pick.Candidate.UserName)" asp-append-version="true" /></a>
+          
+            <form asp-action="DeletePick" asp-controller="IntrestedCandidates">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <input type="hidden" class="form-control" value="@pick.RecuiterPicksID" name="recuiterPicksID" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Remove from your Picks Pool" class="btn btn-primary" />
+                </div>
+            </form>
+
         }
 
         var spID = item.IntrestedCandidateID;
@@ -62,12 +73,12 @@
             var candidateMemberPath = "https://localhost:44359/Users/Details/" + (candidate.User.Id);
 
             <a href="@candidateMemberPath"><img class="small-thumbnail" src=" @candidatePath" alt="@Html.DisplayFor(modelItem => candidate.User.UserName)" asp-append-version="true" /></a>
-            
+
             <form asp-action="CreatePick" asp-controller="IntrestedCandidates">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <input type="hidden" class="form-control" value="@item.PostingID" name="postingID" />
-                    <input type="hidden" class="form-control" value="@item.UserID" name="candidateID" />
+                    <input type="hidden" class="form-control" value="@candidate.UserID" name="candidateID" />
                     <input type="hidden" class="form-control" value="@item.Posting.PostingOwner.Id" name="recruiterID" />
                 </div>
                 <div class="form-group">
