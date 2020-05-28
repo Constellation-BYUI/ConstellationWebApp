@@ -47,6 +47,9 @@
 
         public ICollection<IntrestedCandidate> IntrestedCandidates { get; set; }
 
+        public ICollection<RecruiterPicks> Candidates { get; set; }
+
+        public ICollection<RecruiterPicks> Recuiter { get; set; }
 
         public ICollection<StarredPosting> StarredPostings { get; set; }
 

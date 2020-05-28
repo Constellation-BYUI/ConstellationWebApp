@@ -4,8 +4,6 @@
 @{
     ViewData["Title"] = "Index";
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-    var hasBeenShown = false;
-    var lastPostingID = 0;
 }
 
 <h1>My Postings</h1>
@@ -15,11 +13,18 @@
     List<int> shown = new List<int>();
     foreach (var item in Model.Where((i => i.Posting.PostingOwner.Id == currentUser && !(shown.Contains(i.Posting.PostingID)))))
     {
-      
-            var spID = item.IntrestedCandidateID;
-            var photoPath = "~/image/" + (item.Posting.PostingOwner.PhotoPath);
-            var collabMemberPath = "https://localhost:44359/Users/Details/" + (item.Posting.PostingOwner.Id);
+        List<ConstellationWebApp.Models.RecruiterPicks> picks = ViewBag.picks;
+        <h2> Your Picks for this Posting</h2>
+        foreach (var pick in picks)
+        {
+            var candidatePath = "~/image/" + (pick.Candidate.PhotoPath);
+            var candidateMemberPath = "https://localhost:44359/Users/Details/" + (pick.Candidate.Id);
+            <a href="@candidateMemberPath"><img class="small-thumbnail" src=" @candidatePath" alt="@Html.DisplayFor(modelItem => pick.Candidate.UserName)" asp-append-version="true" /></a>
+        }
 
+        var spID = item.IntrestedCandidateID;
+        var photoPath = "~/image/" + (item.Posting.PostingOwner.PhotoPath);
+        var collabMemberPath = "https://localhost:44359/Users/Details/" + (item.Posting.PostingOwner.Id);
 
         <div>
             <h4>Posting</h4>
@@ -50,39 +55,48 @@
                     <br />
                 }
             </div>
-
         </div>
         <h4>Those Intrested</h4>
-            foreach (var candidate in Model.Where(i => i.PostingID == item.PostingID))
-            {
-                var candidatePath = "~/image/" + (candidate.User.PhotoPath);
-                var candidateMemberPath = "https://localhost:44359/Users/Details/" + (candidate.User.Id);
+        foreach (var candidate in Model.Where(i => i.PostingID == item.PostingID))
+        {
+            var candidatePath = "~/image/" + (candidate.User.PhotoPath);
+            var candidateMemberPath = "https://localhost:44359/Users/Details/" + (candidate.User.Id);
 
-                <a href="@candidateMemberPath"><img class="small-thumbnail" src=" @candidatePath" alt="@Html.DisplayFor(modelItem => candidate.User.UserName)" asp-append-version="true" /></a>
-            }
+            <a href="@candidateMemberPath"><img class="small-thumbnail" src=" @candidatePath" alt="@Html.DisplayFor(modelItem => candidate.User.UserName)" asp-append-version="true" /></a>
+            
+            <form asp-action="CreatePick" asp-controller="IntrestedCandidates">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <input type="hidden" class="form-control" value="@item.PostingID" name="postingID" />
+                    <input type="hidden" class="form-control" value="@item.UserID" name="candidateID" />
+                    <input type="hidden" class="form-control" value="@item.Posting.PostingOwner.Id" name="recruiterID" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Add to your Picks Pool" class="btn btn-primary" />
+                </div>
+            </form>
+        }
 
         <a asp-action="Details" asp-controller="Postings" asp-route-id="@item.Posting.PostingID">Post Details</a>
 
-            if (currentUser == item.Posting.PostingOwner.Id)
-            {
+        if (currentUser == item.Posting.PostingOwner.Id)
+        {
             <div>
                 <a asp-action="Edit" asp-controller="Postings" asp-route-id="@item.Posting.PostingID">Edit</a> |
                 <a asp-action="Index" asp-controller="Postings">View All Postings</a>
             </div>
-            }
-            else
-            {
+        }
+        else
+        {
             <a asp-action="Index" asp-controller="Postings">View All Postings</a>
         }
 
-          shown.Add(@item.PostingID);
-
+        shown.Add(@item.PostingID);
     }
+
 
 }
 catch
 {
     <p>It does not look like you have any postings with intrested Candidates</p>
 }
-
-
