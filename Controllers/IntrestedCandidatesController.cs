@@ -110,6 +110,21 @@ namespace ConstellationWebApp.Controllers
             return RedirectToAction("Index", "Postings");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeletePick(int recuiterPicksID)
+        {
+            RecruiterPicks thisRP = (_context.RecruiterPicks.Where(i => i.RecuiterPicksID == recuiterPicksID).FirstOrDefault());
+
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (thisRP.RecuiterID == currentUser)
+            {
+                _context.RecruiterPicks.Remove(thisRP);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Index", "IntrestedCandidates");
+        }
+
         private bool IntrestedCandidateExists(int id)
         {
             return _context.IntrestedCandidate.Any(e => e.IntrestedCandidateID == id);

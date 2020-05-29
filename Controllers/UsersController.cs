@@ -177,6 +177,7 @@ namespace ConstellationWebApp.Controllers
 
 
             var user = await _context.User
+          .Include( s => s.Recuiter)
           .Include(s => s.ContactLinks)
           .Include(s => s.StarredUsers)
           .Include(s => s.StarredOwner)
@@ -192,16 +193,19 @@ namespace ConstellationWebApp.Controllers
             }
 
 
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             List<ConstellationWebApp.Models.UserProject> collaboratorsList = new List<UserProject>();
-
             List<UserProject> userProjectList = _context.UserProjects.ToList();
             List<User> usersList = _context.User.ToList();
+            List<Posting> currentUserPostings = _context.Postings.Where(i => i.PostingOwner.Id == currentUser).ToList();
+            List<RecruiterPicks> recruitersData = _context.RecruiterPicks.Where(i => i.RecuiterID == currentUser).ToList();
 
             ViewBag.collaborators = userProjectList;
             ViewBag.allUsers = usersList;
+            ViewBag.currentUserPostings = currentUserPostings;
+            ViewBag.recruitersData = recruitersData;
 
-            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             List<StarredUser> thisSU = _context.StarredUsers.ToList();
             ViewBag.StarredUsers = thisSU;
             return View(user);

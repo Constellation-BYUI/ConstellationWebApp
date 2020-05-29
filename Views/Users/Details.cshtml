@@ -18,42 +18,87 @@
         </div>
     </div>
 
-<section style="margin-left: 65%;" id="newPLink">
-    @if (currentUser != null)
-    {
-        List<ConstellationWebApp.Models.StarredUser> starredData = ViewBag.StarredUsers;
-        foreach (var starred in starredData)
+    <section style="margin-left: 65%;" id="newPLink">
+        @if (currentUser != null)
         {
-            if (starred.StarredOwnerID == currentUser && starred.UserStarredID == @Model.Id)
+            List<ConstellationWebApp.Models.StarredUser> starredData = ViewBag.StarredUsers;
+            foreach (var starred in starredData)
             {
-                <form asp-action="Delete" asp-controller="StarredUsers">
+                if (starred.StarredOwnerID == currentUser && starred.UserStarredID == @Model.Id)
+                {
+                    <form asp-action="Delete" asp-controller="StarredUsers">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group mb-0">
+                            <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id" />
+                        </div>
+                        <div class="form-group mx-auto mb-0">
+                            <input class="btn btn-md btn-primary mb-1 mx-auto" type="submit" value="Remove from MyStarred Users" />
+                        </div>
+                    </form>
+                    allReadyStarred = true;
+                }
+            }
+
+            if (allReadyStarred == false)
+            {
+                <form asp-action="Create" asp-controller="StarredUsers">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group mb-0">
                         <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id" />
                     </div>
-                    <div class="form-group mx-auto mb-0">
-                        <input class="btn btn-md btn-primary mb-1 mx-auto" type="submit" value="Remove from MyStarred Users" />
+                    <div class="form-group mb-0 mx-auto">
+                        <input class="btn btn-md btn-primary mb-1 mx-auto" type="submit" value="Add to MyStarred Users" />
                     </div>
                 </form>
-                allReadyStarred = true;
             }
-        }
 
-        if (allReadyStarred == false)
-        {
-            <form asp-action="Create" asp-controller="StarredUsers">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            List<ConstellationWebApp.Models.RecruiterPicks> postings = ViewBag.recruitersData;
+            if (postings != null)
+            {
+                <h4>Add this User to your picks</h4>
+            <form asp-action="CreatePick" asp-controller="IntrestedCandidate">
+        @{
+            int cnt = 0;
+            List<int> shown = new List<int>();
+            foreach (var posting in postings.Where(i => !(shown.Contains(i.PostingID))))
+            {
+                if (cnt++ % 3 == 0)
+                {
+                    @:<div>
+                }
+                
+                @:<div>
+                    <input type="checkbox"
+                           name="postingId"
+                           value="@posting.PostingID"
+                           @(Html.Raw((posting.CandidateID == Model.Id) ? "checked=\"checked\"" : "")) />
+                    @:  @posting.Posting.PostingTitle
+                @:</div>
                 <div class="form-group mb-0">
-                    <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id" />
+                    <input type="hidden" class="form-control" value="@posting.RecuiterID" name="recruiterID" />
                 </div>
-                <div class="form-group mb-0 mx-auto">
-                    <input class="btn btn-md btn-primary mb-1 mx-auto" type="submit" value="Add to MyStarred Users" />
+                <div class="form-group mb-0">
+                    <input type="hidden" class="form-control" value="@Model.Id" name="candidateID" />
                 </div>
-            </form>
-        }
 
-    }
-</section>
+               shown.Add(posting.PostingID);
+
+                }
+
+                @:</div>
+        }
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </form>
+            }
+
+
+
+
+
+        }
+    </section>
 
 @*User Profile Card Display*@
 <aside>
