@@ -65,7 +65,9 @@ namespace ConstellationWebApp.Controllers
         public async Task<IActionResult> CreatePick(int postingID, string recruiterID, string candidateID)
         {
             var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (currentUser != null && currentUser == recruiterID)
+            RecruiterPicks thisRP = (_context.RecruiterPicks.Where(i => i.RecuiterID == recruiterID && i.CandidateID == candidateID && i.PostingID == postingID).FirstOrDefault());
+
+            if (thisRP == null && currentUser == recruiterID)
             {
                 RecruiterPicks recruiterPicks = new RecruiterPicks();
                 recruiterPicks.RecuiterID = recruiterID;
@@ -74,6 +76,29 @@ namespace ConstellationWebApp.Controllers
 
                 _context.Add(recruiterPicks);
                 await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Index", "IntrestedCandidates");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateManyPicks(int[] postings, string recruiterID, string candidateID)
+        {
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            foreach (var postingID in postings)
+            {
+                RecruiterPicks thisRP = (_context.RecruiterPicks.Where(i => i.RecuiterID == recruiterID && i.CandidateID == candidateID && i.PostingID == postingID).FirstOrDefault());
+                if (thisRP == null && currentUser == recruiterID)
+                {
+                    RecruiterPicks recruiterPicks = new RecruiterPicks();
+                    recruiterPicks.RecuiterID = recruiterID;
+                    recruiterPicks.CandidateID = candidateID;
+                    recruiterPicks.PostingID = postingID;
+
+                    _context.Add(recruiterPicks);
+                    await _context.SaveChangesAsync();
+                }
             }
             return RedirectToAction("Index", "IntrestedCandidates");
         }
@@ -89,6 +114,24 @@ namespace ConstellationWebApp.Controllers
             {
                 _context.RecruiterPicks.Remove(thisRP);
                 await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("Index", "IntrestedCandidates");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteManyPick(int[] recuiterPicks)
+        {
+            foreach (var recuiterPicksID in recuiterPicks)
+            {
+                RecruiterPicks thisRP = (_context.RecruiterPicks.Where(i => i.RecuiterPicksID == recuiterPicksID).FirstOrDefault());
+
+                var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (thisRP.RecuiterID == currentUser)
+                {
+                    _context.RecruiterPicks.Remove(thisRP);
+                    await _context.SaveChangesAsync();
+                }
             }
             return RedirectToAction("Index", "IntrestedCandidates");
         }
@@ -108,21 +151,6 @@ namespace ConstellationWebApp.Controllers
 
             }
             return RedirectToAction("Index", "Postings");
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeletePick(int recuiterPicksID)
-        {
-            RecruiterPicks thisRP = (_context.RecruiterPicks.Where(i => i.RecuiterPicksID == recuiterPicksID).FirstOrDefault());
-
-            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (thisRP.RecuiterID == currentUser)
-            {
-                _context.RecruiterPicks.Remove(thisRP);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction("Index", "IntrestedCandidates");
         }
 
         private bool IntrestedCandidateExists(int id)
