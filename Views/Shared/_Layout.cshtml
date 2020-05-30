@@ -12,25 +12,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Share your skills and make your projects available to potential recruiters" />
     <title>@ViewData["Title"] - Home</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/w3css.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/w3css-theme.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-flaty.min.css" />
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
           integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-    <link rel="stylesheet" href="~/css/site.css" />
     <link rel="icon" href="~/favicon.ico" />
 </head>
-<body style="position: relative;">
+<body>
+    @*Navigatin*@
     <header class="sticky-top">
-        <nav class="navbar navbar-expand-md navbar-toggleable navbar-dark border-bottom box-shadow bg-primary ">
+        <nav class="navbar navbar-expand-md navbar-toggleable navbar-light border-bottom box-shadow bg-primary ">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ConstellationWebApp</a>
+                <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">ConstellationWebApp</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse " id="collapisbleNavbar">
+                <div class="collapse navbar-collapse" id="collapisbleNavbar">
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -47,44 +47,34 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Postings" asp-action="Index">Postings</a>
                         </li>
-
-                        @* This will need to be a drop down list of the StarredPostings, StarredUsers, & StarredProjects *@
-                     
-
                     </ul>
-
                 </div>
 
+            @*Conditions for showing MyStuff dropDown*@
                 <ul class="navbar-nav navbar-expand ml-auto mt-1">
                     @if (signInManager.IsSignedIn(User))
                     {
-                        @*<li class="nav-item">
-                <input type="text" class="search-input" name="search" placeholder="search..." size="5" style="border-radius: 3px;"><i class="fas fa-search"></i>
-            </li>*@
                         <li class="nav-item dropdown">
-                            <a data-toggle="dropdown" class="text-light btn border-white btn-sm btn-primary bg-primary dropdown-toggle" asp-area="" asp-controller="StarredPostings" asp-action="Index">My Stuff</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary" asp-controller="StarredProjects" asp-action="Index">My Starred Projects</a>
-                                <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary" asp-controller="StarredPostings" asp-action="Index">My Starred Postings</a>
-                                <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary" asp-controller="StarredUsers" asp-action="Index">My Starred Users</a>
-                                <a class="dropdown-item w3-hover-text-light-blue text-light bg-primary" asp-controller="IntrestedCandidates" asp-action="Index">Intrest in My Postings</a>
+                            <a data-toggle="dropdown" class="text-white border-white btn btn-sm btn-secondary bg-info dropdown-toggle" asp-area="" asp-controller="StarredPostings" asp-action="Index">My Stuff</a>
+                            <div class="dropdown-menu border-dark">
+                                <a class="dropdown-item text-secondary" asp-controller="StarredProjects" asp-action="Index">My Starred Projects</a>
+                                <a class="dropdown-item text-secondary" asp-controller="StarredPostings" asp-action="Index">My Starred Postings</a>
+                                <a class="dropdown-item text-secondary" asp-controller="StarredUsers" asp-action="Index">My Starred Users</a>
+                                <a class="dropdown-item text-primary" asp-controller="IntrestedCandidates" asp-action="Index">Intrest in My Postings</a>
 
                             </div>
                         </li>
 
                         <li class="nav-item">
                             <form method="get" asp-action="Edit" asp-controller="Users" asp-route-id="@userId">
-                                <button type="submit" class="btn btn-sm mx-2 btn-primary" style="width:auto; font-size: 1em; padding: 0.2rem;">Edit&nbsp;Profile</button>
+                                <button type="submit" class="btn btn-sm mx-2 btn-primary border-white" style="width:auto; font-size: 1em; padding: 0.2rem;">Edit&nbsp;Profile</button>
                             </form>
                         </li>
                         <li class="nav-item">
                             <form method="post" asp-action="logout" asp-controller="account">
-                                <button type="submit" class="btn-sm btn btn-success" style="width:auto; font-size: 1em; padding: 0.2rem;">Logout</button>
+                                <button type="submit" class="btn-sm btn btn-success border-white" style="width:auto; font-size: 1em; padding: 0.2rem;">Logout</button>
                             </form>
                         </li>
-                        @* This will need to be a drop down list of the StarredPostings, StarredUsers, & StarredProjects *@
-
-
                     }
                     else
                     {
@@ -98,20 +88,29 @@
                 </ul>
             </div>
         </nav>
-
     </header>
-        <main role="main" class="py-2 container-fluid">
+
+    @*Main section Starts Here*@
+        <main role="main" class="container-fluid">
             @RenderBody()
         </main>
-    <button class="btn btn-primary btn-sm" onclick="topFunction()" id="myBtn" title="Go to top"><i class="fas fa-arrow-alt-circle-up"></i></button>
-    <footer class="container-fluid border-top text-white text-center bg-primary" style="padding: 1.5rem 1rem; position:absolute; bottom: -10rem;">
+
+    @*Move To Top Button*@
+    <button class="btn btn-success btn-sm" onclick="topFunction()" id="myBtn" title="Go to top"><i class="fas fa-arrow-alt-circle-up"></i></button>
+
+    @*Footer Section*@
+    <footer class="border-top text-white text-center bg-primary py-3">
         <p class="mb-0">&copy; 2020 - ConstellationWebApp - <a class="text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></p>
     </footer>
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validate/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive//jquery.validate.unobtrusive.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
+
+
 </body>
 </html>
