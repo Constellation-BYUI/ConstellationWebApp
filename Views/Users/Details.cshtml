@@ -13,11 +13,7 @@
 }
 
 @*User Profile Heading Card*@
-    <div class="container padding" >
-        <div class="mx-auto col-md-10 rounded shadow-lg">
-            <h3 id="userTitle" class="text-black text-center text-primary mt-2 py-3 py-sm-2">@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Profile</h3>
-        </div>
-    </div>
+    
 
     <section style="margin-left: 65%;" id="newPLink">
         @if (currentUser != null)
@@ -126,11 +122,15 @@
         }
     </section>
 
+<section class="container col-md-">
+ 
+        <h3 id="userTitle" class="titleCard">@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Profile</h3>
+   
+</section>
+
 @*User Profile Card Display*@
-<aside>
-    <div class="container padding">
         <div class="col-md-10 mx-auto">
-            <div class="card text-black shadow-lg mb-2 padding">
+            <div class="card text-black shadow-lg mb-2 pt-0 padding">
                 <img style="height: 400px; width: 80%;" class="mx-auto d-block" src="@photoPath" asp-append-version="true" />
                 <div class="card-body">
                     <div>
@@ -197,8 +197,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</aside>
 
 @*User Projects Heading Card*@
 <div class="container padding">

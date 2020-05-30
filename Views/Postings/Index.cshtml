@@ -7,68 +7,79 @@
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
 
-    <div class="container col-md-6 rounded shadow-lg">
-        <h3 class="text-black-50 text-center mt-2 py-3 py-sm-2">Postings</h3>
-    </div>
-    <a class="btn btn-md btn-primary mb-1" style="margin-left: 80%;" id="newPLink" asp-action="Create">Create New Project or Job Posting</a>
+<h2 id="userTitle" class="titleBorder shadow mx-auto">Job Postings</h2>
+<section style="margin-left: 80%;" id="newPLink">
+    <a class="btn btn-md btn-primary mb-1" asp-action="Create">Create&nbsp;a&nbsp;Job&nbsp;Posting</a>
+</section>
 
-    <div class="card-columns">
-        @{
-            foreach (var item in Model.Postings)
-            {
-                var photoPath = "~/image/" + (item.PostingOwner.PhotoPath);
 
-                var collabMemberPath = "https://localhost:44359/Users/Details/" + (item.PostingOwner.Id);
+<div id="projectDisplay">
+    @{
+        foreach (var item in Model.Postings)
+        {
+            var photoPath = "~/image/" + (item.PostingOwner.PhotoPath);
 
-                <div class="card shadow-lg text-black text-center m-2 padding">
-                            <div class="card-body">
-                                <h2>
-                                    @Html.DisplayFor(modelItem => item.PostingFor)
-                                </h2>
-                                <div class="card-title bg-light container-fluid py-1 shadow text-success rounded">
-                                    @Html.DisplayFor(modelItem => item.PostingTitle)
-                                </div>
-                                <article class="text-justify text-truncate">
-                                    @Html.DisplayFor(modelItem => item.Description)
-                                </article>
-                                <div>
-                                    <a href="@collabMemberPath"><img style="height: 300px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.PostingOwner.UserName)" asp-append-version="true" /></a>
-                                </div>
-                                <div>
-                                    @Html.DisplayFor(modelItem => item.PostingOwner.UserName)
-                                </div>
-                                <h4 class="card-title bg-light container-fluid py-1 shadow text-success rounded">Type of Posting</h4>
+            var collabMemberPath = "https://localhost:44359/Users/Details/" + (item.PostingOwner.Id);
 
-                                <section style="margin-bottom: 3em;">
+        <div class="card shadow-lg text-black text-center m-2 padding">
+            @*Name of Company*@
+            <h3 class="card-header bg-primary py-1 text-white text-center m-0">
+                @Html.DisplayFor(modelItem => item.PostingFor)
+            </h3>
+            @*Position*@
+            <h5 class="text-center m-0 bg-light p-2 border-bottom">
+                <strong class="text-success">Position : </strong><span class="mb-0 p-1 text-black">@Html.DisplayFor(modelItem => item.PostingTitle)</span>
+            </h5>
 
-                                    @foreach (var type in item.Posting_PostingTypes)
-                                    {
-                                        <div class="badge-info">
-                                            @type.PostingTypes.PostingTypeName
-                                        </div>
-                               
-                                    }
-                                </section>
+
+
+
+            @*<div class="card-title bg-light container-fluid py-1 shadow text-success rounded">
+
+        </div>*@
+           
+            <section class="bg-light text-wrap text-justify">
+                <div class="col-6 text-left float-left">
+                   <div class="bg-light text-wrap p-2 py-0 border-bottom"><strong class="text-black">Recruiter's Name : </strong><span class="text-black-50">@Html.DisplayFor(modelItem => item.PostingOwner.UserName)</span></div>
+                                <a  class="m-1 border-success" href="@collabMemberPath"><img style="height: 300px; width: 100%; display: block; box-shadow: 5px 5px 15px #343a40;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.PostingOwner.UserName)" asp-append-version="true" /></a>
                             </div>
+                <div class="col-6 float-right text-center">
+                    @*Type of Posting*@
+                    <h5 class="card-title bg-info container-fluid float-right py-2 text-white rounded mt-2">Type of Posting</h5>
+                    @foreach (var type in item.Posting_PostingTypes)
+                    {
+                        <h6 class="text-black">
+                            @type.PostingTypes.PostingTypeName
+                        </h6>
 
-                    <section class="card-footer text-left">
-                        @if ((currentUser == item.PostingOwner.Id) && (currentUser != null))
-                        {
-                        
-                                <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@item.PostingID">Edit</a>
-                                <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.PostingID">Details</a>
-                                <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.PostingID">Delete</a>
-                       
-                        }
-                        else
-                        {
-                         
-                                <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.PostingID">Details</a>
-                    
-                        }
-                    </section>
+                    }
+                    @*Description of Posting*@
+                    <h5 class="card-title bg-info container-fluid float-right py-2 text-white rounded">Description</h5>
+                    <p class="text-black-50 p-2">@Html.DisplayFor(modelItem => item.Description)</p>
                 </div>
-                }
+            </section>
 
-            }
+            <section class="card-footer text-left">
+                @if ((currentUser == item.PostingOwner.Id) && (currentUser != null))
+                {
+
+                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@item.PostingID">Edit</a>
+                    <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.PostingID">Details</a>
+                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.PostingID">Delete</a>
+
+                }
+                else
+                {
+
+                    <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.PostingID">Details</a>
+
+                }
+            </section>
         </div>
+
+            
+       
+        }
+
+    }
+</div>
