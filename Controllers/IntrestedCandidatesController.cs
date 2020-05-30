@@ -24,20 +24,28 @@ namespace ConstellationWebApp.Controllers
         // GET: IntrestedCandidates
         public async Task<IActionResult> Index()
         {
-            var constellationWebAppContext = _context.IntrestedCandidate
-                .Include(i => i.Posting)
-                 .ThenInclude(i => i.Posting_PostingTypes)
-                  .ThenInclude(i => i.PostingTypes)
-                .Include(i => i.Posting)
-                  .ThenInclude(i => i.PostingOwner)
-                .Include(i => i.User)
-                  .Include(i => i.Posting)
-                  .ThenInclude(i => i.RecruiterPicks);
+            var viewModel = new ViewModel();
+            viewModel.RecruiterPicks = _context.RecruiterPicks
+                .Include(i => i.Recuiter)
+                .Include(i => i.Candidate)
+               .Include(i => i.Posting);
+               
 
-            List<RecruiterPicks> recuiterPicks = _context.RecruiterPicks.ToList();
-            ViewBag.picks = recuiterPicks;
+            viewModel.Postings = _context.Postings
+                 .Include(i => i.PostingOwner)
+                  .Include(i => i.Posting_PostingTypes)
+                 .ThenInclude(i => i.PostingTypes); 
 
-            return View(await constellationWebAppContext.ToListAsync());
+            viewModel.intrestedCandidates = _context.IntrestedCandidate
+               .Include(i => i.User)
+               .Include(i => i.Posting);
+
+            List<IntrestedCandidate> intrestData = _context.IntrestedCandidate.ToList();
+            ViewBag.intrestData = intrestData;
+
+            return View(viewModel);
+
+
         }
 
 

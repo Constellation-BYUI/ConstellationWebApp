@@ -15,7 +15,8 @@ WORKDIR /app
 COPY --from=build /app/out ./
 
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT 0
-RUN sudo mount -v nfsshare:/ /wwwroot/image
+RUN  mount -v 34.75.156.77:/image /app/wwwroot/image
+RUN  mount -v 34.75.156.77:/resumes /app/wwwroot/Resumes
 
 ENTRYPOINT ["dotnet", "ConstellationWebApp.dll"]
 EXPOSE 80

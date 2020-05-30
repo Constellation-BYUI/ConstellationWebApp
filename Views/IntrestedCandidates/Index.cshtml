@@ -1,112 +1,127 @@
-﻿@model IEnumerable<ConstellationWebApp.Models.IntrestedCandidate>
+﻿@model ConstellationWebApp.Models.ViewModel
+
 @using System.Security.Claims;
 
 @{
     ViewData["Title"] = "Index";
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-}
-<h1>My Postings</h1>
-
-@try
-{
     List<int> shown = new List<int>();
-    foreach (var item in Model.Where((i => i.Posting.PostingOwner.Id == currentUser && !(shown.Contains(i.Posting.PostingID)))))
-    {
-        List<ConstellationWebApp.Models.RecruiterPicks> picks = ViewBag.picks;
-        <h2> Your Picks for this Posting</h2>
-        foreach (var pick in picks.Where(i => i.RecuiterID == currentUser && i.PostingID == item.PostingID))
+    List<ConstellationWebApp.Models.IntrestedCandidate> data = ViewBag.intrestData;
+
+}
+<div class="container col-md-6 rounded shadow-lg">
+    <h3 class="text-black-50 text-center mt-2 py-3 py-sm-2">Posted Roles</h3>
+</div>
+
+<div class="card-columns">
+    @*The user must be logged in that should ensure that only the right user is seeign this data*@
+    @{
+        if (Model.Postings != null && currentUser != null)
         {
-            var candidatePath = "~/image/" + (pick.Candidate.PhotoPath);
-            var candidateMemberPath = "https://localhost:44359/Users/Details/" + (pick.Candidate.Id);
-            <a href="@candidateMemberPath"><img class="small-thumbnail" src=" @candidatePath" alt="@Html.DisplayFor(modelItem => pick.Candidate.UserName)" asp-append-version="true" /></a>
-          
-            <form asp-action="DeletePick" asp-controller="IntrestedCandidates">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <input type="hidden" class="form-control" value="@pick.RecuiterPicksID" name="recuiterPicksID" />
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Remove from your Picks Pool" class="btn btn-primary" />
-                </div>
-            </form>
+            @*Display all "Role/Postings"*@
+            @foreach (var item in Model.Postings.Where(i => i.PostingOwner.Id == currentUser))
+            {
+                <div class="card-body">
+                    <div class="card shadow-lg text-black text-center m-2 padding">
 
-        }
+                        @*Display all the user picks with requires the pick to relate to a "Role/Posting"*@
+                        @foreach (var pick in Model.RecruiterPicks.Where((i => i.PostingID == item.PostingID)))
+                        {
+                            <h2> Your Picks for @pick.Posting.PostingTitle Posting</h2>
+                                var candidatePath = "~/image/" + (pick.Candidate.PhotoPath);
+                                var candidateMemberPath = "https://localhost:44359/Users/Details/" + (pick.Candidate.Id);
+                                <a href="@candidateMemberPath"><img class="small-thumbnail" src=" @candidatePath" alt="@Html.DisplayFor(modelItem => pick.Candidate.UserName)" asp-append-version="true" /></a>
+                                <p>@pick.Candidate.UserName</p>
 
-        var spID = item.IntrestedCandidateID;
-        var photoPath = "~/image/" + (item.Posting.PostingOwner.PhotoPath);
-        var collabMemberPath = "https://localhost:44359/Users/Details/" + (item.Posting.PostingOwner.Id);
+                                <form asp-action="DeletePick" asp-controller="IntrestedCandidates">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="form-group">
+                                        <input type="hidden" class="form-control" value="@pick.RecuiterPicksID" name="recuiterPicksID" />
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Remove from your Picks Pool" class="btn btn-primary" />
+                                    </div>
+                                </form>
+                       }
 
-        <div>
-            <h4>Posting</h4>
-            <hr />
-            <h2>
-                @Html.DisplayFor(modelItem => item.Posting.PostingFor)
-            </h2>
-            <div>
-                @Html.DisplayFor(modelItem => item.Posting.PostingTitle)
-            </div>
-            <div>
-                @Html.DisplayFor(modelItem => item.Posting.Description)
-            </div>
-            <div>
-                <a href="@collabMemberPath"><img class="small-thumbnail" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.Posting.PostingOwner.UserName)" asp-append-version="true" /></a>
-            </div>
-            <div>
-                @Html.DisplayFor(modelItem => item.Posting.PostingOwner.UserName)
-            </div>
+                        @* Display the Posting/Role itself *@
+                        @{
+                            var spID = item.PostingID;
+                            var photoPath = "~/image/" + (item.PostingOwner.PhotoPath);
+                            var collabMemberPath = "https://localhost:44359/Users/Details/" + (item.PostingOwner.Id);
+                        }
+                        <div>
+                            <h4>Posting</h4>
+                            <hr />
+                            <h2>
+                                @Html.DisplayFor(modelItem => item.PostingFor)
+                            </h2>
+                            <div>
+                                @Html.DisplayFor(modelItem => item.PostingTitle)
+                            </div>
+                            <div>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </div>
+                            <div>
+                                <a href="@collabMemberPath"><img class="small-thumbnail" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.PostingOwner.UserName)" asp-append-version="true" /></a>
+                            </div>
+                            <div>
+                                @Html.DisplayFor(modelItem => item.PostingOwner.UserName)
+                            </div>
 
-            <h4>Type of Posting</h4>
-            <div class="Demo-Types">
-                @foreach (var type in item.Posting.Posting_PostingTypes)
-                {
-                    <div class="Demo-Types">
-                        @type.PostingTypes.PostingTypeName
+
+                            @*Display the Posting types of the Posting itself *@
+                            <div>
+                                <h4>Type of Posting</h4>
+                                @foreach (var type in item.Posting_PostingTypes)
+                                {
+                                    <div class="Demo-Types">
+                                        @type.PostingTypes.PostingTypeName
+                                    </div>
+                                    <br />
+                                }
+                            </div>
+                        </div>
+
+                        @if (Model.intrestedCandidates != null)
+                        {
+                            @*Display the intrested candidates *@
+                            <h4>Those Intrested</h4>
+                            foreach (var candidate in Model.intrestedCandidates.Where(i => i.PostingID == item.PostingID))
+                            {
+                                var candidatePath = "~/image/" + (candidate.User.PhotoPath);
+                                var candidateMemberPath = "https://localhost:44359/Users/Details/" + (candidate.UserID);
+
+                                <a href="@candidateMemberPath"><img class="small-thumbnail" src=" @candidatePath" alt="@Html.DisplayFor(modelItem => candidate.User.UserName)" asp-append-version="true" /></a>
+
+                                @*easily add an intrested user to the recuiters picks *@
+                                <form asp-action="CreatePick" asp-controller="IntrestedCandidates">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="form-group">
+                                        <input type="hidden" class="form-control" value="@item.PostingID" name="postingID" />
+                                        <input type="hidden" class="form-control" value="@candidate.UserID" name="candidateID" />
+                                        <input type="hidden" class="form-control" value="@item.PostingOwner.Id" name="recruiterID" />
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Add to your Picks Pool" class="btn btn-primary" />
+                                    </div>
+                                </form>
+                            }
+                            <div>
+                                <a asp-action="Details" asp-controller="Postings" asp-route-id="@item.PostingID">Post Details</a>
+                                <a asp-action="Edit" asp-controller="Postings" asp-route-id="@item.PostingID">Edit</a> |
+                                <a asp-action="Index" asp-controller="Postings">View All Postings</a>
+                            </div>
+
+                        }
                     </div>
-                    <br />
-                }
-            </div>
-        </div>
-        <h4>Those Intrested</h4>
-        foreach (var candidate in Model.Where(i => i.PostingID == item.PostingID))
-        {
-            var candidatePath = "~/image/" + (candidate.User.PhotoPath);
-            var candidateMemberPath = "https://localhost:44359/Users/Details/" + (candidate.User.Id);
-
-            <a href="@candidateMemberPath"><img class="small-thumbnail" src=" @candidatePath" alt="@Html.DisplayFor(modelItem => candidate.User.UserName)" asp-append-version="true" /></a>
-
-            <form asp-action="CreatePick" asp-controller="IntrestedCandidates">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <input type="hidden" class="form-control" value="@item.PostingID" name="postingID" />
-                    <input type="hidden" class="form-control" value="@candidate.UserID" name="candidateID" />
-                    <input type="hidden" class="form-control" value="@item.Posting.PostingOwner.Id" name="recruiterID" />
                 </div>
-                <div class="form-group">
-                    <input type="submit" value="Add to your Picks Pool" class="btn btn-primary" />
-                </div>
-            </form>
-        }
+                            }
+                            }
 
-        <a asp-action="Details" asp-controller="Postings" asp-route-id="@item.Posting.PostingID">Post Details</a>
-
-        if (currentUser == item.Posting.PostingOwner.Id)
-        {
-            <div>
-                <a asp-action="Edit" asp-controller="Postings" asp-route-id="@item.Posting.PostingID">Edit</a> |
-                <a asp-action="Index" asp-controller="Postings">View All Postings</a>
-            </div>
-        }
-        else
-        {
-            <a asp-action="Index" asp-controller="Postings">View All Postings</a>
-        }
-
-        shown.Add(@item.PostingID);
-    }
-
-
-}
-catch
-{
-    <p>It does not look like you have any postings with intrested Candidates</p>
-}
+                            else
+                            {
+    <p>You do not have postings</p>
+                                }
+                            }
+</div>
