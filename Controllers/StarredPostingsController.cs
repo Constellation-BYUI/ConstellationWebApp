@@ -26,7 +26,7 @@ namespace ConstellationWebApp.Controllers
         {
 
             var viewModel = new ViewModel();
-             viewModel.StarredPostings = _context.StarredPosting
+             viewModel.StarredPostings =  _context.StarredPosting
                 .Include(s => s.Posting)
                 .ThenInclude(s => s.Posting_PostingTypes)
                 .ThenInclude(s => s.PostingTypes)
