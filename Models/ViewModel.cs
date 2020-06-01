@@ -23,9 +23,5 @@ namespace ConstellationWebApp.Models
         public IEnumerable<RecruiterPicks> RecruiterPicks { get; set; }
 
 
-        public IEnumerable<RecruiterPicks> RecruiterPicks { get; set; }
-
-
-
     }
 }
