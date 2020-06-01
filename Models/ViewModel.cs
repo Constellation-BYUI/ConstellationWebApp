@@ -20,6 +20,8 @@ namespace ConstellationWebApp.Models
 
         public IEnumerable<StarredProject> StarredProjects { get; set; }
         public IEnumerable<IntrestedCandidate> intrestedCandidates { get; set; }
+        public IEnumerable<RecruiterPicks> RecruiterPicks { get; set; }
+
 
         public IEnumerable<RecruiterPicks> RecruiterPicks { get; set; }
 
