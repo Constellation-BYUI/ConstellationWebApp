@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConstellationWebApp.Migrations
 {
     [DbContext(typeof(ConstellationWebAppContext))]
-    [Migration("20200521180908_StarredProjects1")]
-    partial class StarredProjects1
+    [Migration("20200601163529_SqlSeverExpressStart")]
+    partial class SqlSeverExpressStart
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -191,6 +191,36 @@ namespace ConstellationWebApp.Migrations
                     b.ToTable("ProjectLinks");
                 });
 
+            modelBuilder.Entity("ConstellationWebApp.Models.RecruiterPicks", b =>
+                {
+                    b.Property<int>("RecuiterPicksID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CandidateID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ListTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PostingID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RecuiterID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("RecuiterPicksID");
+
+                    b.HasIndex("CandidateID");
+
+                    b.HasIndex("PostingID");
+
+                    b.HasIndex("RecuiterID");
+
+                    b.ToTable("RecruiterPicks");
+                });
+
             modelBuilder.Entity("ConstellationWebApp.Models.StarredPosting", b =>
                 {
                     b.Property<int>("StarredPostingID")
@@ -233,6 +263,28 @@ namespace ConstellationWebApp.Migrations
                     b.HasIndex("UserID");
 
                     b.ToTable("StarredProject");
+                });
+
+            modelBuilder.Entity("ConstellationWebApp.Models.StarredUser", b =>
+                {
+                    b.Property<int>("StarredUserID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("StarredOwnerID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserStarredID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("StarredUserID");
+
+                    b.HasIndex("StarredOwnerID");
+
+                    b.HasIndex("UserStarredID");
+
+                    b.ToTable("StarredUser");
                 });
 
             modelBuilder.Entity("ConstellationWebApp.Models.UserProject", b =>
@@ -537,6 +589,23 @@ namespace ConstellationWebApp.Migrations
                         .HasForeignKey("ProjectsProjectID");
                 });
 
+            modelBuilder.Entity("ConstellationWebApp.Models.RecruiterPicks", b =>
+                {
+                    b.HasOne("ConstellationWebApp.Models.User", "Candidate")
+                        .WithMany("Candidates")
+                        .HasForeignKey("CandidateID");
+
+                    b.HasOne("ConstellationWebApp.Models.Posting", "Posting")
+                        .WithMany("RecruiterPicks")
+                        .HasForeignKey("PostingID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ConstellationWebApp.Models.User", "Recuiter")
+                        .WithMany("Recuiter")
+                        .HasForeignKey("RecuiterID");
+                });
+
             modelBuilder.Entity("ConstellationWebApp.Models.StarredPosting", b =>
                 {
                     b.HasOne("ConstellationWebApp.Models.Posting", "Posting")
@@ -561,6 +630,17 @@ namespace ConstellationWebApp.Migrations
                     b.HasOne("ConstellationWebApp.Models.User", "User")
                         .WithMany("StarredProjects")
                         .HasForeignKey("UserID");
+                });
+
+            modelBuilder.Entity("ConstellationWebApp.Models.StarredUser", b =>
+                {
+                    b.HasOne("ConstellationWebApp.Models.User", "StarOwner")
+                        .WithMany("StarredOwner")
+                        .HasForeignKey("StarredOwnerID");
+
+                    b.HasOne("ConstellationWebApp.Models.User", "StarredPerson")
+                        .WithMany("StarredUsers")
+                        .HasForeignKey("UserStarredID");
                 });
 
             modelBuilder.Entity("ConstellationWebApp.Models.UserProject", b =>

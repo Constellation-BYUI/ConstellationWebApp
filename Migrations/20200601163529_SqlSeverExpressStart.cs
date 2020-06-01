@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ConstellationWebApp.Migrations
 {
-    public partial class KeyOnStarred : Migration
+    public partial class SqlSeverExpressStart : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,7 +55,7 @@ namespace ConstellationWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PostingTypes",
+                name: "PostingType",
                 columns: table => new
                 {
                     PostingTypeID = table.Column<int>(nullable: false)
@@ -64,7 +64,7 @@ namespace ConstellationWebApp.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PostingTypes", x => x.PostingTypeID);
+                    table.PrimaryKey("PK_PostingType", x => x.PostingTypeID);
                 });
 
             migrationBuilder.CreateTable(
@@ -235,6 +235,32 @@ namespace ConstellationWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "StarredUser",
+                columns: table => new
+                {
+                    StarredUserID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserStarredID = table.Column<string>(nullable: true),
+                    StarredOwnerID = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StarredUser", x => x.StarredUserID);
+                    table.ForeignKey(
+                        name: "FK_StarredUser_AspNetUsers_StarredOwnerID",
+                        column: x => x.StarredOwnerID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_StarredUser_AspNetUsers_UserStarredID",
+                        column: x => x.UserStarredID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ProjectLinks",
                 columns: table => new
                 {
@@ -252,6 +278,32 @@ namespace ConstellationWebApp.Migrations
                         column: x => x.ProjectsProjectID,
                         principalTable: "Project",
                         principalColumn: "ProjectID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StarredProject",
+                columns: table => new
+                {
+                    StarredProjectID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserID = table.Column<string>(nullable: true),
+                    ProjectID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StarredProject", x => x.StarredProjectID);
+                    table.ForeignKey(
+                        name: "FK_StarredProject_Project_ProjectID",
+                        column: x => x.ProjectID,
+                        principalTable: "Project",
+                        principalColumn: "ProjectID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StarredProject_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -280,6 +332,32 @@ namespace ConstellationWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "IntrestedCandidate",
+                columns: table => new
+                {
+                    IntrestedCandidateID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserID = table.Column<string>(nullable: true),
+                    PostingID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IntrestedCandidate", x => x.IntrestedCandidateID);
+                    table.ForeignKey(
+                        name: "FK_IntrestedCandidate_Posting_PostingID",
+                        column: x => x.PostingID,
+                        principalTable: "Posting",
+                        principalColumn: "PostingID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_IntrestedCandidate_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Posting_PostingType",
                 columns: table => new
                 {
@@ -299,11 +377,45 @@ namespace ConstellationWebApp.Migrations
                         principalColumn: "PostingID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Posting_PostingType_PostingTypes_PostingTypeID",
+                        name: "FK_Posting_PostingType_PostingType_PostingTypeID",
                         column: x => x.PostingTypeID,
-                        principalTable: "PostingTypes",
+                        principalTable: "PostingType",
                         principalColumn: "PostingTypeID",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RecruiterPicks",
+                columns: table => new
+                {
+                    RecuiterPicksID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ListTitle = table.Column<string>(nullable: true),
+                    RecuiterID = table.Column<string>(nullable: true),
+                    CandidateID = table.Column<string>(nullable: true),
+                    PostingID = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RecruiterPicks", x => x.RecuiterPicksID);
+                    table.ForeignKey(
+                        name: "FK_RecruiterPicks_AspNetUsers_CandidateID",
+                        column: x => x.CandidateID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_RecruiterPicks_Posting_PostingID",
+                        column: x => x.PostingID,
+                        principalTable: "Posting",
+                        principalColumn: "PostingID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RecruiterPicks_AspNetUsers_RecuiterID",
+                        column: x => x.RecuiterID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -377,6 +489,16 @@ namespace ConstellationWebApp.Migrations
                 column: "UsersId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_IntrestedCandidate_PostingID",
+                table: "IntrestedCandidate",
+                column: "PostingID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IntrestedCandidate_UserID",
+                table: "IntrestedCandidate",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Posting_PostingOwnerId",
                 table: "Posting",
                 column: "PostingOwnerId");
@@ -397,6 +519,21 @@ namespace ConstellationWebApp.Migrations
                 column: "ProjectsProjectID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RecruiterPicks_CandidateID",
+                table: "RecruiterPicks",
+                column: "CandidateID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RecruiterPicks_PostingID",
+                table: "RecruiterPicks",
+                column: "PostingID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RecruiterPicks_RecuiterID",
+                table: "RecruiterPicks",
+                column: "RecuiterID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_StarredPosting_PostingID",
                 table: "StarredPosting",
                 column: "PostingID");
@@ -405,6 +542,26 @@ namespace ConstellationWebApp.Migrations
                 name: "IX_StarredPosting_UserID",
                 table: "StarredPosting",
                 column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StarredProject_ProjectID",
+                table: "StarredProject",
+                column: "ProjectID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StarredProject_UserID",
+                table: "StarredProject",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StarredUser_StarredOwnerID",
+                table: "StarredUser",
+                column: "StarredOwnerID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StarredUser_UserStarredID",
+                table: "StarredUser",
+                column: "UserStarredID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserProjects_ProjectID",
@@ -433,13 +590,25 @@ namespace ConstellationWebApp.Migrations
                 name: "ContactLinks");
 
             migrationBuilder.DropTable(
+                name: "IntrestedCandidate");
+
+            migrationBuilder.DropTable(
                 name: "Posting_PostingType");
 
             migrationBuilder.DropTable(
                 name: "ProjectLinks");
 
             migrationBuilder.DropTable(
+                name: "RecruiterPicks");
+
+            migrationBuilder.DropTable(
                 name: "StarredPosting");
+
+            migrationBuilder.DropTable(
+                name: "StarredProject");
+
+            migrationBuilder.DropTable(
+                name: "StarredUser");
 
             migrationBuilder.DropTable(
                 name: "UserProjects");
@@ -448,7 +617,7 @@ namespace ConstellationWebApp.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "PostingTypes");
+                name: "PostingType");
 
             migrationBuilder.DropTable(
                 name: "Posting");
