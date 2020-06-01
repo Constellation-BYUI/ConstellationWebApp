@@ -8,15 +8,16 @@
     var resumePath = "https://localhost:44359/Resumes/" + (Model.ResumePhotoPath);
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
     var allReadyStarred = false;
-
+    List<ConstellationWebApp.Models.RecruiterPicks> picks = ViewBag.recruitersData;
+    List<ConstellationWebApp.Models.Posting> postings = ViewBag.currentUserPostings;
 }
 
 @*User Profile Heading Card*@
-    <div class="container padding" >
-        <div class="mx-auto col-md-10 rounded shadow-lg">
-            <h3 id="userTitle" class="text-black text-center text-primary mt-2 py-3 py-sm-2">@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Profile</h3>
-        </div>
+<div class="container padding">
+    <div class="mx-auto col-md-10 rounded shadow-lg">
+        <h3 id="userTitle" class="text-black text-center text-primary mt-2 py-3 py-sm-2">@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Profile</h3>
     </div>
+</div>
 
 <section style="margin-left: 65%;" id="newPLink">
     @if (currentUser != null)
@@ -52,6 +53,76 @@
             </form>
         }
 
+        @*Recuiter can add user to many "Picks" that the user is not already part of *@
+        if (postings != null && @Model.Id != currentUser)
+        {
+            <h4>Add this User to your picks</h4>
+            <form asp-action="CreateManyPicks" asp-controller="IntrestedCandidates">
+                @{
+                    int cnt = 0;
+                    List<int> shown = new List<int>();
+                    foreach (var posting in postings.Where(i => !(shown.Contains(i.PostingID))))
+                    {
+                        var assigned = false;
+                        foreach (var pick in picks.Where(i => i.CandidateID == Model.Id && i.RecuiterID == currentUser && i.PostingID == posting.PostingID))
+                        {
+                            assigned = true;
+                        }
+                        if (assigned == false)
+                        {
+                            if (cnt++ % 3 == 0)
+                            {
+                                @:<div>
+                                }
+
+                                @:<div>
+                                    <input type="checkbox" name="postings" value="@posting.PostingID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @:  @posting.PostingTitle
+                                @:</div>
+                                shown.Add(posting.PostingID);
+                            }
+                        }
+                    @:</div>
+                }
+                <div class="form-group mb-0">
+                    <input type="hidden" class="form-control" value="@currentUser" name="recruiterID" />
+                </div>
+                <div class="form-group mb-0">
+                    <input type="hidden" class="form-control" value="@Model.Id" name="candidateID" />
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Add to Picks" class="btn btn-primary" />
+                </div>
+            </form>
+
+            @*Remove a user from many picks that the user is already part of*@
+            <h4>Remove this User to your picks</h4>
+            <form asp-action="DeleteManyPick" asp-controller="IntrestedCandidates">
+                @{
+                    int count = 0;
+                    List<int> showndeleted = new List<int>();
+                    foreach (var posting in postings.Where(i => !(showndeleted.Contains(i.PostingID))))
+                    {
+                        var assigned = false;
+                        foreach (var pick in picks.Where(i => i.CandidateID == Model.Id && i.RecuiterID == currentUser && i.PostingID == posting.PostingID))
+                        {
+                            if (count++ % 3 == 0)
+                            {
+                                @:<div>
+                                }
+                                @:<div>
+                                    <input type="checkbox" name="recuiterPicks" value="@pick.RecuiterPicksID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @:  @posting.PostingTitle
+                                @:</div>
+                                showndeleted.Add(posting.PostingID);
+                            }
+                        }
+                    @:</div>
+                }
+                <div class="form-group">
+                    <input type="submit" value="Remove from picks" class="btn btn-primary" />
+                </div>
+            </form>
+        }
     }
 </section>
 

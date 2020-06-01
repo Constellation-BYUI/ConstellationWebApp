@@ -35,9 +35,9 @@ namespace ConstellationWebApp.Controllers
         {
             string resumeFileName = null;
             if (!(Path.GetExtension(model.ResumeUpload.FileName) == ".pdf"))
-                {
+            {
                 model.ResumeUpload = null;
-                 }
+            }
             if (model.ResumeUpload != null)
             {
                 resumeFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(System.IO.Path.GetFileName(model.ResumeUpload.FileName));
@@ -45,7 +45,7 @@ namespace ConstellationWebApp.Controllers
                 string filePath = Path.Combine(uploadsFolder, resumeFileName);
                 model.ResumeUpload.CopyTo(new FileStream(filePath, FileMode.Create));
             }
-            return(resumeFileName);
+            return (resumeFileName);
         }
 
         private void DeleteResume(UserEditViewModel model)
@@ -88,7 +88,7 @@ namespace ConstellationWebApp.Controllers
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 model.Photo.CopyTo(new FileStream(filePath, FileMode.Create));
             }
-            return(uniqueFileName);
+            return (uniqueFileName);
         }
 
         private User ViewModeltoUser(UserCreateViewModel model, string uniqueFileName, string resumeFileName)
@@ -125,10 +125,10 @@ namespace ConstellationWebApp.Controllers
                 thisUser = userModel,
                 ContactLinks = userModel.ContactLinks
             };
-            return(viewModel);
+            return (viewModel);
         }
 
-      
+
 
         private void DeletePhoto(UserEditViewModel model)
         {
@@ -177,6 +177,7 @@ namespace ConstellationWebApp.Controllers
 
 
             var user = await _context.User
+          .Include(s => s.Recuiter)
           .Include(s => s.ContactLinks)
           .Include(s => s.StarredUsers)
           .Include(s => s.StarredOwner)
@@ -192,16 +193,19 @@ namespace ConstellationWebApp.Controllers
             }
 
 
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             List<ConstellationWebApp.Models.UserProject> collaboratorsList = new List<UserProject>();
-
             List<UserProject> userProjectList = _context.UserProjects.ToList();
             List<User> usersList = _context.User.ToList();
+            List<Posting> currentUserPostings = _context.Postings.Where(i => i.PostingOwner.Id == currentUser).ToList();
+            List<RecruiterPicks> recruitersData = _context.RecruiterPicks.Where(i => i.RecuiterID == currentUser).ToList();
 
             ViewBag.collaborators = userProjectList;
             ViewBag.allUsers = usersList;
+            ViewBag.currentUserPostings = currentUserPostings;
+            ViewBag.recruitersData = recruitersData;
 
-            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             List<StarredUser> thisSU = _context.StarredUsers.ToList();
             ViewBag.StarredUsers = thisSU;
             return View(user);
@@ -280,7 +284,7 @@ namespace ConstellationWebApp.Controllers
                 }
 
                 string uniqueFileName = OldPhotoPath;
-                    if (model.Photo != null)
+                if (model.Photo != null)
                 {
                     uniqueFileName = ValidateImagePath(model);
                     DeletePhoto(model);
@@ -293,7 +297,7 @@ namespace ConstellationWebApp.Controllers
                 user.PhotoPath = uniqueFileName;
                 user.ResumePhotoPath = uniqueResumePath;
                 user.displayMyProfile = model.displayMyProfile;
-                 _context.Update(user);
+                _context.Update(user);
                 await _context.SaveChangesAsync();
 
 
