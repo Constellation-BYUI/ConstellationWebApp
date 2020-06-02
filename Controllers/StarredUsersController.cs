@@ -8,10 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using ConstellationWebApp.Data;
 using ConstellationWebApp.Models;
 using System.Security.Claims;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace ConstellationWebApp.Controllers
 {
+    [Authorize]
     public class StarredUsersController : Controller
     {
         private readonly ConstellationWebAppContext _context;
@@ -21,6 +22,12 @@ namespace ConstellationWebApp.Controllers
             _context = context;
         }
 
+        //The StarredUser entity gets the ID of the Starring user and the user being starred to easily 
+        //display the listed starred users to the owner of this list. This user can add to this list 
+        //from the details of the user page and can remove the user from the details or the starred list view itself.  
+        //This only uses the Create Post, Delete Post, and Index Get from the StarredUsersController. 
+
+        #region StarredUsersGets&PostsFunctions
         // GET: StarredUsers
         public async Task<IActionResult> Index()
         {
@@ -56,7 +63,7 @@ namespace ConstellationWebApp.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> Delete(string id)
         {
             var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -75,5 +82,7 @@ namespace ConstellationWebApp.Controllers
         {
             return _context.StarredUsers.Any(e => e.StarredUserID == id);
         }
+
+        #endregion
     }
 }

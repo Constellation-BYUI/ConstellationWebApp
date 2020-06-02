@@ -31,6 +31,8 @@ namespace ConstellationWebApp.Controllers
 
         }
 
+        //Region of all Methods that perform a simple function
+        #region SimpleUserFunctions
         private string UploadResume(UserCreateViewModel model)
         {
             string resumeFileName = null;
@@ -152,7 +154,22 @@ namespace ConstellationWebApp.Controllers
             }
         }
 
+        // POST: UserProjects/Delete/5
+        [HttpPost, ActionName("DeleteLink")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteLink(string userID, int contactLinkID)
+        {
+            ContactLink thisCL = ((_context.ContactLinks.Where(i => (i.Users.Id == userID) && (i.ContactLinkID == contactLinkID)).FirstOrDefault()));
+            _context.ContactLinks.Remove(thisCL);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Projects");
+        }
 
+        #endregion
+
+
+        // Post & Get Functions (includeing the starredUsers index Get)
+        #region UserGets&PostsFunctions
         // GET: Users/Index
         [AllowAnonymous]
         public async Task<IActionResult> Index()
@@ -174,7 +191,6 @@ namespace ConstellationWebApp.Controllers
             {
                 return NotFound();
             }
-
 
             var user = await _context.User
           .Include(s => s.Recuiter)
@@ -348,8 +364,8 @@ namespace ConstellationWebApp.Controllers
         {
             return _context.User.Any(e => e.Id == id);
         }
-
-        [AllowAnonymous]
+        
+        //Get of Starred User Index
         public async Task<IActionResult> StarredPostingIndex()
         {
             var viewModel = new ViewModel();
@@ -362,16 +378,7 @@ namespace ConstellationWebApp.Controllers
             return View(viewModel);
         }
 
-        // POST: UserProjects/Delete/5
-        [HttpPost, ActionName("DeleteLink")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteLink(string userID, int contactLinkID)
-        {
-            ContactLink thisCL = ((_context.ContactLinks.Where(i => (i.Users.Id == userID) && (i.ContactLinkID == contactLinkID)).FirstOrDefault()));
-            _context.ContactLinks.Remove(thisCL);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Projects");
-        }
+        #endregion
 
     }
 }
