@@ -26,6 +26,7 @@ namespace ConstellationWebApp.Controllers
             this.hostingEnvironment = hostingEnvironment;
         }
 
+        #region SimpleProjectFuncitons
         private void CreateProjectLinks(string[] createdLinkLabels, string[] createdLinkUrls, Project newProject)
         {
             if (createdLinkLabels != null)
@@ -100,7 +101,7 @@ namespace ConstellationWebApp.Controllers
             ViewData["StarredProjects"] = viewModel;
         }
 
-        private Project projectViewModelToUser(ProjectCreateViewModel model, string uniqueFileName)
+        private Project projectViewModelToProject(ProjectCreateViewModel model, string uniqueFileName)
         {
             Project newProject = new Project
             {
@@ -153,6 +154,21 @@ namespace ConstellationWebApp.Controllers
             }
         }
 
+
+        // POST: UserProjects/Delete/5
+        [HttpPost, ActionName("DeleteLink")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteLink(int projectID, int projectLinkID)
+        {
+            ProjectLink thisPL = ((_context.ProjectLinks.Where(i => (i.Projects.ProjectID == projectID) && (i.ProjectLinkID == projectLinkID)).FirstOrDefault()));
+            _context.ProjectLinks.Remove(thisPL);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Projects");
+        }
+
+        #endregion
+
+        #region ProjectGets&PostsFunctions
         // GET: Projects/Index
         [AllowAnonymous]
         public async Task<IActionResult> Index()
@@ -217,7 +233,7 @@ namespace ConstellationWebApp.Controllers
             if (ModelState.IsValid)
             {
                 string uniqueFileName = ValidateImagePath(model);
-                Project newProject = projectViewModelToUser(model, uniqueFileName);
+                Project newProject = projectViewModelToProject(model, uniqueFileName);
                 await _context.SaveChangesAsync();
                 if (selectedCollaborators != null)
                 {
@@ -384,21 +400,10 @@ namespace ConstellationWebApp.Controllers
 
 
 
-        // POST: UserProjects/Delete/5
-        [HttpPost, ActionName("DeleteLink")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteLink(int projectID, int projectLinkID)
-        {
-            ProjectLink thisPL = ((_context.ProjectLinks.Where(i => (i.Projects.ProjectID == projectID) && (i.ProjectLinkID == projectLinkID)).FirstOrDefault()));
-            _context.ProjectLinks.Remove(thisPL);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Projects");
-        }
-
-
         private bool ProjectExists(int id)
         {
             return _context.Projects.Any(e => e.ProjectID == id);
         }
+        #endregion
     }
 }

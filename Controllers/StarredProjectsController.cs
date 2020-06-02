@@ -8,10 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using ConstellationWebApp.Data;
 using ConstellationWebApp.Models;
 using System.Security.Claims;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace ConstellationWebApp.Controllers
 {
+    [Authorize]
     public class StarredProjectsController : Controller
     {
         private readonly ConstellationWebAppContext _context;
@@ -21,6 +22,7 @@ namespace ConstellationWebApp.Controllers
             _context = context;
         }
 
+        #region StarredProjectsGets&PostsFunctions
         // GET: StarredProjects
         public async Task<IActionResult> Index()
         {
@@ -77,5 +79,6 @@ namespace ConstellationWebApp.Controllers
         {
             return _context.StarredProjects.Any(e => e.StarredProjectID == id);
         }
+        #endregion
     }
 }

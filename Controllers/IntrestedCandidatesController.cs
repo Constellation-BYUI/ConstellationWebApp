@@ -8,10 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using ConstellationWebApp.Data;
 using ConstellationWebApp.Models;
 using System.Security.Claims;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace ConstellationWebApp.Controllers
 {
+    [Authorize]
     public class IntrestedCandidatesController : Controller
     {
         private readonly ConstellationWebAppContext _context;
@@ -21,6 +22,7 @@ namespace ConstellationWebApp.Controllers
             _context = context;
         }
 
+        #region IntrestedCandidatesGets&PostsFunctions
         // GET: IntrestedCandidates
         public async Task<IActionResult> Index()
         {
@@ -165,5 +167,6 @@ namespace ConstellationWebApp.Controllers
         {
             return _context.IntrestedCandidate.Any(e => e.IntrestedCandidateID == id);
         }
+        #endregion
     }
 }

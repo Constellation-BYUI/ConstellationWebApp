@@ -22,7 +22,99 @@ namespace ConstellationWebApp.Controllers
             _context = context;
         }
 
-        // GET: Postings
+        #region SimplePostingFunctions
+        //Finds all users who have marked interest in the posting to show in the details page to mark themselves as interested or not. 
+        //* could optimize this later by doing a single linq on the IntrestedCandidate table to select current user & posting to see if it has intrest*
+        private void PopulateIntrestData(Posting posting)
+        {
+            var allUsers = _context.User;
+            var intrestPostings = new HashSet<string>(posting.IntrestedCandidates.Select(c => c.UserID));
+            var viewModel = new List<AssignedIntrestData>();
+            foreach (var users in allUsers)
+            {
+                viewModel.Add(new AssignedIntrestData
+                {
+                    UserID = users.Id,
+                    UserName = users.UserName,
+                    Intrested = intrestPostings.Contains(users.Id)
+                });
+            }
+            ViewData["intrestInPostings"] = viewModel;
+        }
+
+        //Finds all users who have starred posting to show in the details page to mark project as starred or not.  
+        //* could optimize this later by just a single linq on the StarredPosting table to select current user & posting to see if it is starred*
+        private void PopulateStarredPostingData(Posting posting)
+        {
+            var allUsers = _context.User;
+            var starredPostings = new HashSet<string>(posting.StarredPostings.Select(c => c.UserID));
+            var viewModel = new List<AssignedStarredPostingData>();
+            foreach (var users in allUsers)
+            {
+                viewModel.Add(new AssignedStarredPostingData
+                {
+                    UserID = users.Id,
+                    UserName = users.UserName,
+                    Owned = starredPostings.Contains(users.Id)
+                });
+            }
+            ViewData["UsersStarredPostings"] = viewModel;
+        }
+
+        //Gets the types that the Posting is part of  (i.e. Hourly, Internship, Remote)
+        private void PopulateAssignedTypeData(Posting posting)
+        {
+            var allTypes = _context.PostingTypes;
+            var PostingTypes = new HashSet<int>(posting.Posting_PostingTypes.Select(c => c.PostingTypeID));
+            var viewModel = new List<AssignedTypeData>();
+            foreach (var type in allTypes)
+            {
+                viewModel.Add(new AssignedTypeData
+                {
+                    PostingTypeID = type.PostingTypeID,
+                    PostingTypeName = type.PostingTypeName,
+                    Assigned = PostingTypes.Contains(type.PostingTypeID)
+                });
+            }
+            ViewData["PostingTypes"] = viewModel;
+        }
+
+        //Updates the Posting types on edit
+        private void UpdatePostingTypes(string[] selectedTypes, Posting postingToUpdate)
+        {
+            if (selectedTypes == null)
+            {
+                postingToUpdate.Posting_PostingTypes = new List<Posting_PostingType>();
+                return;
+            }
+
+            var selectedTypesHS = new HashSet<string>(selectedTypes);
+            var postingTypes = new HashSet<int>
+                (postingToUpdate.Posting_PostingTypes.Select(c => c.PostingTypes.PostingTypeID));
+            foreach (var type in _context.PostingTypes)
+            {
+                if (selectedTypesHS.Contains(type.PostingTypeID.ToString()))
+                {
+                    if (!postingTypes.Contains(type.PostingTypeID))
+                    {
+                        postingToUpdate.Posting_PostingTypes.Add(new Posting_PostingType { PostingID = postingToUpdate.PostingID, PostingTypeID = type.PostingTypeID });
+                    }
+                }
+                else
+                {
+                    if (postingTypes.Contains(type.PostingTypeID))
+                    {
+                        Posting_PostingType typeToRemove = postingToUpdate.Posting_PostingTypes.FirstOrDefault(i => i.PostingTypeID == type.PostingTypeID);
+                        _context.Remove(typeToRemove);
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region PostingsGets&PostsFunctions 
+        // GET: Postings INDEX
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
@@ -62,40 +154,6 @@ namespace ConstellationWebApp.Controllers
             PopulateStarredPostingData(posting);
             PopulateIntrestData(posting);
             return View(posting);
-        }
-
-        private void PopulateIntrestData(Posting posting)
-        {
-            var allUsers = _context.User;
-            var intrestPostings = new HashSet<string>(posting.IntrestedCandidates.Select(c => c.UserID));
-            var viewModel = new List<AssignedIntrestData>();
-            foreach (var users in allUsers)
-            {
-                viewModel.Add(new AssignedIntrestData
-                {
-                    UserID = users.Id,
-                    UserName = users.UserName,
-                    Intrested = intrestPostings.Contains(users.Id)
-                });
-            }
-            ViewData["intrestInPostings"] = viewModel;
-        }
-
-        private void PopulateStarredPostingData(Posting posting)
-        {
-            var allUsers = _context.User;
-            var starredPostings = new HashSet<string>(posting.StarredPostings.Select(c => c.UserID));
-            var viewModel = new List<AssignedStarredPostingData>();
-            foreach (var users in allUsers)
-            {
-                    viewModel.Add(new AssignedStarredPostingData
-                    {
-                        UserID = users.Id,
-                        UserName = users.UserName,
-                        Owned = starredPostings.Contains(users.Id)
-                    });
-            }
-            ViewData["UsersStarredPostings"] = viewModel;
         }
 
         // GET: Postings/Create
@@ -140,24 +198,7 @@ namespace ConstellationWebApp.Controllers
             PopulateAssignedTypeData(posting);
             return View(posting);
         }
-        private void PopulateAssignedTypeData(Posting posting)
-        {
-            var allTypes = _context.PostingTypes;
-            var PostingTypes = new HashSet<int>(posting.Posting_PostingTypes.Select(c => c.PostingTypeID));
-            var viewModel = new List<AssignedTypeData>();
-            foreach (var type in allTypes)
-            {
-                viewModel.Add(new AssignedTypeData
-                {
-                    PostingTypeID = type.PostingTypeID,
-                    PostingTypeName = type.PostingTypeName,
-                    Assigned = PostingTypes.Contains(type.PostingTypeID)
-                });
-            }
-            ViewData["PostingTypes"] = viewModel;
-        }
-
-
+        
         // GET: Postings/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -223,40 +264,6 @@ namespace ConstellationWebApp.Controllers
             PopulateAssignedTypeData(posting);
             return View(posting);
         }
-
-
-
-        private void UpdatePostingTypes(string[] selectedTypes, Posting postingToUpdate)
-        {
-            if (selectedTypes == null)
-            {
-                postingToUpdate.Posting_PostingTypes = new List<Posting_PostingType>();
-                return;
-            }
-
-            var selectedTypesHS = new HashSet<string>(selectedTypes);
-            var postingTypes = new HashSet<int>
-                (postingToUpdate.Posting_PostingTypes.Select(c => c.PostingTypes.PostingTypeID));
-            foreach( var type in _context.PostingTypes)
-            {
-                if (selectedTypesHS.Contains(type.PostingTypeID.ToString()))
-                {
-                    if(!postingTypes.Contains(type.PostingTypeID))
-                    {
-                        postingToUpdate.Posting_PostingTypes.Add(new Posting_PostingType { PostingID = postingToUpdate.PostingID, PostingTypeID = type.PostingTypeID });
-                    }
-                }
-                else
-                {
-                    if (postingTypes.Contains(type.PostingTypeID))
-                    {
-                        Posting_PostingType typeToRemove = postingToUpdate.Posting_PostingTypes.FirstOrDefault(i => i.PostingTypeID == type.PostingTypeID);
-                        _context.Remove(typeToRemove);
-                    }
-                }
-            }
-        }
-
    
         // GET: Postings/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -291,6 +298,6 @@ namespace ConstellationWebApp.Controllers
         {
             return _context.Postings.Any(e => e.PostingID == id);
         }
-                     
+        #endregion
     }
 }
