@@ -389,19 +389,22 @@ for details on configuring this project to bundle and minify static web assets. 
         padding: 1.5em 2em !important;
         margin: .5em auto;
         border-radius: 0;
-    }
-
-    #box2 {
-        height: 100px;
         box-shadow: none;
     }
 
+    #box2 {
+        height: 100px;  
+    }
+    #box1 {
+        height: 220px;
+    }
+
     #section1 {
-        padding: 2px;
+        padding: 15px;
         display: flex !important;
         justify-content: space-around;
-        margin-top: 4.2em !important;
         background: #f8f9fa;
+        margin-top: 1.5em;
         box-shadow: lightgray;
     }
     .social {
