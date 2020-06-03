@@ -37,28 +37,114 @@ for details on configuring this project to bundle and minify static web assets. 
     -webkit-transition: all 0.3s ease-in;
     -moz-transition: all 0.3s ease-in;
 }
-    /*#usersCard .card:hover {
+
+.gradient {
+    height: 40vh;
+    min-height: 400px;
+    max-height: 1000px;
+    width: 100%;
+    background-color: #1fc8db;
+    background-image: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+    color: white;
+    opacity: 0.95;
+}
+
+.gradient-content {
+    display: flex;
+    justify-content: space-evenly;
+    max-width: ;
+    padding-top: 60px;
+}
+
+#section1 {
+    padding: 20px;
+}
+
+.bigClick {
+    height: 7em;
+    width: 7em;
+    border: 0 solid white;
+    border-radius: 90%;
+    color: white;
+    text-align: center;
+    line-height: 0;
+}
+
+    #boxLink1, #boxLink2, #boxLink3 {
+        text-decoration: none !important;
+    }
+
+    .bigClick:hover {
+        background: #6c757d !important;
+        color: #fff;
+        border: none;
+        box-shadow: 5px 5px 15px #343a40;
+    }
+
+.social a {
+    font-size: 2em;
+    margin: 0 15px;
+}
+
+.fa-facebook {
+    color: #3b5998;
+}
+
+.fa-twitter {
+    color: #00aced;
+}
+
+.fa-github {
+    color: #0e76a8;
+}
+
+.fa-youtube {
+    color: #bb0000;
+}
+
+    .fa-facebook:hover,
+    .fa-twitter:hover,
+    .fa-github:hover,
+    .fa-youtube:hover {
+        color: #6c757d;
+    }
+
+#box1 {
+    /*border: 1px solid white;*/
+    background: gray;
+    height: 20em;
+    padding: 3em 5em;
+    box-shadow: 5px 5px 15px #343a40;
+    border-radius: 10px;
+}
+
+#box2 {
+    /* border: 1px solid white; */
+    padding: 3em 5em;
+    background: #6f42c1;
+    box-shadow: 5px 5px 15px #343a40;
+    border-radius: 10px;
+}
+
+    #box1:hover, #box2:hover {
+        background: #dc3545 !important;
+        color: #fff;
+        border: none;
+        box-shadow: 5px 5px 15px #343a40;
+    }
+
+
+
+/*#usersCard .card:hover {
         background: #e74c3c;
         color: #fff;
         border-radius: 5px;
         border: none;
         box-shadow: 5px 5px 15px #343a40;
     }*/
-
-  
-   
-
 /*HEADER*/
-
-
 /*FOOTER*/
-
-
 /*BUTTONS*/
-
-
-
-
 /*CSS form Scroll-To-Top button*/
 #myBtn {
     display: none;
@@ -155,11 +241,34 @@ for details on configuring this project to bundle and minify static web assets. 
 
 /* Midium Screen Size */
 @media (max-width: 768px) {
-    #projectDisplay {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: 3px;
+    .gradient-content {
+        display: flex;
+        padding-top: 2em;
+        text-align: left;
     }
+    #box1 {
+        text-align: left;
+        padding: 0 1em !important;
+        margin: .5em auto;
+        border-radius: 10px;
+    }
+       
+    #box2 {
+         text-align: center !important;
+         padding: 1.5em 1em !important;
+         margin: .5em auto;
+         height: 200px;
+         border-radius: 10px;
+     }
+        #box2 h3 {
+            font-size: 1.2em;
+            margin-bottom: .4em;
+        }
+        #projectDisplay {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 3px;
+        }
 
     #usersDisplay {
         display: grid;
@@ -201,6 +310,22 @@ for details on configuring this project to bundle and minify static web assets. 
 
 /* Small Screen Size */
 @media (max-width: 576px) {
+    html {
+        font-size: 12px;
+    }
+    header {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 1020;
+        background-color: #1b6ec2;
+    }
+    header nav a {
+        color: white !important;
+    }
+    #mystuff a {
+        color: black !important;
+    }
     #projectDisplay {
         display: grid;
         grid-template-columns: 1fr;
@@ -228,11 +353,90 @@ for details on configuring this project to bundle and minify static web assets. 
         orphans: 1;
         widows: 1
     }
-    /*css form carousel*/
-    .carousel-caption {
-        top: 10%;
-        font-size: 80%;
+
+
+    .smallSearch {
+        margin-top: .5em;
+        display: flex !important;
+        justify-content: end !important;
     }
+
+        .smallSearch form {
+            width: 50% !important;
+            margin-left: 50% !important;
+            margin-bottom: 3px;
+        }
+
+    .gradient {
+        height: 40vh;
+        min-height: 300px;
+        max-height: 1000px;
+        width: 100%;
+        background-color: transparent;
+        background-image: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+        color: white;
+        opacity: 0.98;
+    }
+
+  .gradient-content {
+        display: block;
+        padding-top: 0;
+        text-align: center;
+    }
+
+    #box1, #box2 {
+        text-align: left;
+        padding: 1.5em 2em !important;
+        margin: .5em auto;
+        border-radius: 0;
+    }
+
+    #box2 {
+        height: 100px;
+        box-shadow: none;
+    }
+
+    #section1 {
+        padding: 2px;
+        display: flex !important;
+        justify-content: space-around;
+        margin-top: 4.2em !important;
+        background: #f8f9fa;
+        box-shadow: lightgray;
+    }
+    .social {
+        margin-top: .5em !important;
+    }
+    .bigClick {
+        height: 5em !important;
+        width: 5em !important;
+        background: #1b6ec2;
+        border: 0 solid black !important;
+        border-radius: 20%;
+        color: white !important;
+        text-align: center;
+        line-height: 1px;
+        box-shadow: 5px 5px 15px #343a40;
+        margin-bottom: 5px;
+    }
+    #slider {
+        padding: 0;
+    }
+    #boxLink2 {
+        color: white;
+        background: #28a745;
+    }
+   
+    footer {
+        color: white;
+        background: #343a40;
+        padding: 1rem .5rem;
+    }
+        /*css form carousel*/
+        .carousel-caption {
+            top: 10%;
+            font-size: 80%;
+        }
 
         .carousel-caption h1 {
             font-size: 200%;
