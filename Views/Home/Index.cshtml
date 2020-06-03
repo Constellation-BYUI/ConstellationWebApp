@@ -6,65 +6,92 @@
 
 <input type="hidden" asp-for="Id" />
 
-<!-- Search field -->
-@*<form class="example" action="#" style="margin-left:60%;max-width:40%">
-        <input type="text" placeholder="Search.." name="search">
-        <button type="submit"><i class="fas fa-search"></i></button>
-    </form>*@
-
-
-<div class="container-fluid padding">
-    <!--- Image Slider -->
-    <div class="col-md-12 carousel slide" data-ride="carousel" id="slider">
-        <!-- Indicators -->
-        <ul class="carousel-indicators">
-            <li data-target="#slider" data-slide-to="0"></li>
-            <li data-target="#slider" data-slide-to="1" class="active"></li>
-            <li data-target="#slider" data-slide-to="2"></li>
-        </ul>
-        <!-- The slideshow -->
-        <div class="carousel-inner">
-            <div class="carousel-item ">
-                <img class="img-thumbnail" src="~/image/cit2.jpg" alt="webImage" />
-
-            </div>
-
-            <div class="carousel-item active">
-                <img class="img-thumbnail" src="~/image/cit3.jpg" alt="webImage" />
-                <div class="carousel-caption">
-                    <h1>WELCOME</h1>
-                    <h4>Share your Projects with the right audience.</h4>
-                    <a class="btn btn-md btn-primary border-light" asp-controller="Projects" asp-action="Index">View Projects</a>
-                    <a class="btn btn-md btn-success border-light" asp-controller="account" asp-action="register">Register</a>
-
+<div class="container-fluid">
+    <!-- search bar -->
+    <section class="smallSearch d-flex mt-1 justify-content-end">
+        <form action="" class="" style="width: 20%;">
+            <div class="input-group mb-2">
+                <input type="search" placeholder="search.." aria-describedby="button-addon5" class="form-control">
+                <div class="input-group-append">
+                    <button id="button-addon5" type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
                 </div>
             </div>
+        </form>
+    </section>
 
-            <div class="carousel-item">
-                <img class="img-thumbnail" src="~/image/cit.jpg" alt="webImage" />
+    <!-- Big Background with write-ups -->
+    <section class="gradient border-bottom">
+        <div class="gradient-content">
+            <div id="box1" class="col-sm-12 col-md-5 pl-4">
+                <h3 class="py-2">Constellation Platform: Share Your Passion</h3>
+                <h6 class="">
+                   Do you have projects, competencies, achievements and qualities <br /> you would love to share in much effects ways than in a resume?<br />
+                    Get ready to wow your potential employers.
+                </h6>
+                <a class="btn btn-md btn-success mt-2 border-white">SignUp Now</a>
             </div>
-
-            <!-- Left and right controls -->
-            <a class="carousel-control-prev" href="#slider" data-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </a>
-            <a class="carousel-control-next" href="#slider" data-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </a>
+            <div id="box2" class="text-center col-sm-12 col-md-3 px-1">
+                <h3>Share that job offer with some of the very best students.</h3>
+                <a href="" class="btn btn-md btn-primary mt-4 border-white">Post A Job</a>
+            </div>
         </div>
-    </div>
-</div>
-<!--- Jumbotron -->
-<div class="container-fluid m-1">
-    <div class="container-fluid shadow-lg bg-light col-md-12 jumbotron m-2 p-1 text-center">
-        <h3>Bring exposure to your ideas and make them available to people that matter.</h3>
-        <a class="btn btn-primary btn-md" asp-controller="Projects" asp-action="Create">Post Projects</a>
-    </div>
-</div>
+    </section>
 
-<!--- Fixed background -->
-<figure>
-    <div class="fixed-wrap">
-        <div id="fixed"></div>
-    </div>
-</figure>
+    <!-- links to Users, projects and job postings -->
+    <section id="section1" class="d-flex justify-content-around bg-light shadow">
+
+        <a href="#"><div class="bigClick shadow-lg bg-primary" id="boxLink1"><p style="padding: 50% 0;">Users</p></div></a>
+        <a href="#"><div class="bigClick shadow-lg bg-success" id="boxLink2"><p style="padding: 50% 0;">Jobs</p></div></a>
+        <a href="#"><div class="bigClick shadow-lg bg-primary" id="boxLink3"><p style="padding: 50% 0;">Projects</p></div></a>
+
+    </section>
+
+    <!-- Testimonials -->
+         <!--- Image Slider -->
+        <div class="col-md-12 carousel px-0 slide" data-ride="carousel" id="slider">
+            <!-- Indicators -->
+            @*<ul class="carousel-indicators">
+                <li data-target="#slider" data-slide-to="0"></li>
+                <li data-target="#slider" data-slide-to="1" class="active"></li>
+                <li data-target="#slider" data-slide-to="2"></li>
+            </ul>*@
+            <!-- The slideshow -->
+            <div class="carousel-inner shadow-lg">
+                <div class="carousel-item ">
+                    <img class="img-thumbnail" src="~/image/placeholder-landscape.png" alt="webImage" />
+
+                </div>
+
+                <div class="carousel-item active">
+                    <img class="img-thumbnail" src="~/image/placeholder-landscape.png" alt="webImage" />
+                    @*<div class="carousel-caption">
+                        <h1>WELCOME</h1>
+                        <h4>Share your Projects with the right audience.</h4>
+                        <a class="btn btn-md btn-primary border-light" asp-controller="Projects" asp-action="Index">View Projects</a>
+                        <a class="btn btn-md btn-success border-light" asp-controller="account" asp-action="register">Register</a>
+
+                    </div>*@
+                </div>
+
+                <div class="carousel-item">
+                    <img class="img-thumbnail" src="~/image/placeholder-landscape.png" alt="webImage" />
+                </div>
+
+                <!-- Left and right controls -->
+                <a class="carousel-control-prev" href="#slider" data-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </a>
+                <a class="carousel-control-next" href="#slider" data-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </a>
+            </div>
+        </div>
+   
+    <!-- Contact Us section -->
+    <section id="section2" class="social d-flex justify-content-end bg-light shadow border-bottom">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-github"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+    </section>
+</div>

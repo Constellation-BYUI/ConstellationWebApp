@@ -1910,8 +1910,9 @@ pre code {
 }
 
 .form-control::placeholder {
-  color: #6c757d;
-  opacity: 1;
+    font-size: 0.95rem;
+    color: #aaa;
+    font-style: italic;
 }
 
 .form-control:disabled, .form-control[readonly] {
