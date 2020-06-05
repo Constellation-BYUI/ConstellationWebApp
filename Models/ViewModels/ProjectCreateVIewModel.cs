@@ -42,6 +42,9 @@ namespace ConstellationWebApp.ViewModels
 
         public ICollection<ProjectLink> ProjectLinks { get; set; }
 
+        public ICollection<ProjectPosting> ProjectPostings { get; set; }
+
+        public ICollection<Posting> Postings { get; set; }
 
         public Project currentProject { get; set; }
 

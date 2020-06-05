@@ -129,7 +129,7 @@ namespace ConstellationWebApp.Controllers
                 OldPhotoPath = entityProjectModel.PhotoPath,
                 PhotoPath = entityProjectModel.PhotoPath,
                 currentProject = entityProjectModel
-            };
+        };
         }
 
         private void DeletePhoto(ProjectEditViewModel model)
@@ -202,7 +202,6 @@ namespace ConstellationWebApp.Controllers
             {
                 return NotFound();
             }
-
             PopulateStarredProjectData(project);
             return View(project);
         }
@@ -290,6 +289,9 @@ namespace ConstellationWebApp.Controllers
             }
             PopulateAssignedProjectData(entityProjectModel);
             ProjectCreateViewModel viewModel = projectToViewModel(entityProjectModel);
+            viewModel.Postings = _context.Postings.Where(i => i.SharableToTeam == true).ToList();
+            viewModel.ProjectPostings = _context.ProjectPosting.Where(i => i.ProjectID == id).ToList();
+
             return View(viewModel);
         }
 

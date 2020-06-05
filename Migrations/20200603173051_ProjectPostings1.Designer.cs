@@ -4,14 +4,16 @@ using ConstellationWebApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ConstellationWebApp.Migrations
 {
     [DbContext(typeof(ConstellationWebAppContext))]
-    partial class ConstellationWebAppContextModelSnapshot : ModelSnapshot
+    [Migration("20200603173051_ProjectPostings1")]
+    partial class ProjectPostings1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,9 +77,6 @@ namespace ConstellationWebApp.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("HidePosting")
-                        .HasColumnType("bit");
-
                     b.Property<string>("PostingFor")
                         .HasColumnType("nvarchar(max)");
 
@@ -86,9 +85,6 @@ namespace ConstellationWebApp.Migrations
 
                     b.Property<string>("PostingTitle")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("SharableToTeam")
-                        .HasColumnType("bit");
 
                     b.HasKey("PostingID");
 

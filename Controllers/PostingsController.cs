@@ -170,7 +170,7 @@ namespace ConstellationWebApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PostingID,Description,PostingFor,PostingTitle")] Posting posting, string[] selectedTypes)
+        public async Task<IActionResult> Create([Bind("PostingID,Description,PostingFor,PostingTitle, HidePosting, SharableToTeam")] Posting posting, string[] selectedTypes)
         {
             if (selectedTypes != null)
             {
@@ -224,7 +224,7 @@ namespace ConstellationWebApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("PostingID,Description,PostingFor")] Posting posting, string[] selectedTypes)
+        public async Task<IActionResult> Edit(int? id, [Bind("PostingID,Description,PostingFor,PostingTitle, HidePosting, SharableToTeam")] Posting posting, string[] selectedTypes)
         {
             if (id != posting.PostingID)
             {
@@ -239,7 +239,7 @@ namespace ConstellationWebApp.Controllers
             if (await TryUpdateModelAsync<Posting>(
                 postingToUpdate,
                 "",
-                i => i.PostingTitle, i => i.PostingFor, i => i.Description))
+                i => i.PostingTitle, i => i.PostingFor, i => i.Description, i => i.HidePosting, i => i.SharableToTeam))
             {
                 UpdatePostingTypes(selectedTypes, postingToUpdate);
 

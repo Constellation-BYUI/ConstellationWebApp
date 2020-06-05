@@ -20,11 +20,22 @@ namespace ConstellationWebApp.Models
 
         public User PostingOwner { get; set; }
 
+        [Display(Name = "Allow your Teams on Costellation to Use this Posting")]
+        public bool SharableToTeam { get; set; }
+
+        [Display(Name = "Hide this Posting")]
+        //A recuiter may want to recuiter privately or may want to turn off the posting for a tim
+        //but want to have it for later
+        public bool  HidePosting { get; set; }
+
         public ICollection<StarredPosting> StarredPostings { get; set; }
         public ICollection<IntrestedCandidate> IntrestedCandidates { get; set; }
         public ICollection<Posting_PostingType> Posting_PostingTypes { get; set; }
 
         public ICollection<RecruiterPicks> RecruiterPicks { get; set; }
+
+        public ICollection<ProjectPosting> ProjectPostings { get; set; }
+
 
     }
 }

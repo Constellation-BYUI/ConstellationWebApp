@@ -2,7 +2,7 @@
 @using System.Security.Claims;
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Eidt Posting";
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
 
@@ -31,6 +31,15 @@
                     <label asp-for="PostingFor" class="control-label"></label>
                     <input asp-for="PostingFor" class="form-control" />
                     <span asp-validation-for="PostingFor" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SharableToTeam" class="control-label">Do you want your Posting avialable for Projects to Link to?</label>
+                    @Html.CheckBoxFor(m => m.SharableToTeam)
+                </div>
+                @* Need to say reasoning: Hold off on showing all people this posting, save it for later, or maybe reuse it next time you recuit for a similar posiiton*@
+                <div class="form-group">
+                    <label asp-for="HidePosting" class="control-label">Do you want your Posting visible to others?</label>
+                    @Html.CheckBoxFor(m => m.HidePosting)
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
