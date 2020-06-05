@@ -28,7 +28,7 @@ namespace ConstellationWebApp.Controllers
             return View(id);
 
         }
-
+        // Comment
         public IActionResult Privacy()
         {
             return View();
