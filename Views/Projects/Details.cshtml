@@ -9,138 +9,136 @@
     var allReadyStarred = false;
     var loggedOn = false;
 }
-
-
-@if (currentUser != null)
-{
-    List<ConstellationWebApp.Models.AssignedStarredProjectsData> starredData = ViewBag.StarredProjects;
-    foreach (var starred in starredData)
-    {
-        if (starred.UserID == currentUser && starred.Starred == true)
+    <div class="container padding">
+        @*Button for adding projects to stardProject*@
+        @if (currentUser != null)
         {
-            <form asp-action="Delete" asp-controller="StarredProjects">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <input type="hidden" asp-for="ProjectID" class="form-control" value="@Model.ProjectID" />
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Remove from MyStarred Projects" class="btn btn-primary" />
-                </div>
-            </form>
-            allReadyStarred = true;
+            List<ConstellationWebApp.Models.AssignedStarredProjectsData> starredData = ViewBag.StarredProjects;
+            foreach (var starred in starredData)
+            {
+                if (starred.UserID == currentUser && starred.Starred == true)
+                {
+                    <form asp-action="Delete" asp-controller="StarredProjects">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <input type="hidden" asp-for="ProjectID" class="form-control" value="@Model.ProjectID" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Remove from MyStarred Projects" class="btn btn-primary" />
+                        </div>
+                    </form>
+                    allReadyStarred = true;
+                }
+            }
+
+            if (allReadyStarred == false)
+            {
+                <form asp-action="Create" asp-controller="StarredProjects">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <input type="hidden" asp-for="ProjectID" class="form-control" value="@Model.ProjectID" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Add to MyStarred Projects" class="btn btn-primary" />
+                    </div>
+                </form>
+            }
+
         }
-    }
 
-    if (allReadyStarred == false)
-    {
-        <form asp-action="Create" asp-controller="StarredProjects">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <input type="hidden" asp-for="ProjectID" class="form-control" value="@Model.ProjectID" />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Add to MyStarred Projects" class="btn btn-primary" />
-            </div>
-        </form>
-    }
+        @*Project Heading Display*@
+        <h2 class="titleBorder shadow mb-0">Project Details</h2>
 
-}
-
-@*Profile Heading Display*@
-<div class="container">
-    <div class="col-md-10 px-0">
-        <div class="card bg-primary text-center text-white shadow padding">
-            <h3>Project Details</h3>
-        </div>
-    </div>
-</div>
-
-<div class="container padding">
-        <div class="col-md-10">
-            <div class="card shadow text-black-50 text-white  bg-light mb-3 padding">
-                <img class="img-thumbnail mx-auto d-block" src=" @photoPath" alt="@Html.DisplayFor(model => model.Title)" asp-append-version="true" />
-                <div class="card-body">
-                    <div class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Title)
-                    </div>
-                    <div class="col-sm-10">
-                        @Html.DisplayFor(model => model.Title)
-                    </div>
-                    <div class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Description)
-                    </div>
-                    <div class="col-sm-10">
-                        @Html.DisplayFor(model => model.Description)
-                    </div>
-                    <div class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.StartDate)
-                    </div>
-                    <div class="col-sm-10">
-                        @Html.DisplayFor(model => model.StartDate)
-                    </div>
-                    <div class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.EndDate)
-                    </div>
-                    <div class="col-sm-10">
-                        @Html.DisplayFor(model => model.EndDate)
-                    </div>
-                    <div class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.CreationDate)
-                    </div>
-                    <div class="col-sm-10">
-                        @Html.DisplayFor(model => model.CreationDate)
-                    </div>
+        @*Project Details*@
+        <div class="card bg-light border-bottom">
+            <div class="">
+                @*Project Owner Picture here*@
+                <div class="col-sm-12 col-md-4 border float-left">
+                    <img style="width: 100%; height: 300px; margin: auto" src=" @photoPath" alt="@Html.DisplayFor(model => model.Title)" asp-append-version="true" />
+                    <h5>Project Owner's Name Goes Here</h5>
                 </div>
-                @{
-                    if (Model.UserProjects != null)
-                    {
-                        foreach (var person in Model.UserProjects)
+                @*Project Title and Collaborators Here*@
+            <div class="col-sm-12 col-md-8 pr-0 float-right">
+                @*Title Section*@
+                <div class="float-left border col-md-8">
+                    @*Project Title*@
+                    <h3 class="card mb-0">
+                        <strong class="text-center text-primary">@Html.DisplayNameFor(model => model.Title) : <span>@Html.DisplayFor(model => model.Title)</span></strong>
+                    </h3>
+
+                    @*Description*@
+                    <h4 class="card mb-0 text-center text-primary">
+                        @Html.DisplayNameFor(model => model.Description)
+                    </h4>
+                    <p class="text-justify">
+                        @Html.DisplayFor(model => model.Description)
+                    </p>
+                    @*Creation, Start and End Dates*@
+                    <h6 class="">
+                        <strong> @Html.DisplayNameFor(model => model.CreationDate) : </strong><span>@Html.DisplayFor(model => model.CreationDate)</span>
+                    </h6>
+                    <h6 class="">
+                        <strong> @Html.DisplayNameFor(model => model.StartDate) : </strong><span>@Html.DisplayFor(model => model.StartDate)</span>
+                    </h6>
+                    <h6 class="">
+                        <strong>  @Html.DisplayNameFor(model => model.EndDate) : </strong><span>@Html.DisplayFor(model => model.EndDate)</span>
+                    </h6>
+
+                    @*Project Links*@
+                    <h5 class="card text-center text-primary">Project Links</h5>
+                    @{
+                        if (Model.UserProjects != null)
                         {
-                            if (person.UserID == currentUser)
+                            foreach (var person in Model.UserProjects)
                             {
-                                loggedOn = true;
+                                if (person.UserID == currentUser)
+                                {
+                                    loggedOn = true;
+                                }
+                            }
+
+                            foreach (var item in Model.ProjectLinks.Where((i => i.Projects.ProjectID == Model.ProjectID)))
+                            {
+                                <p class="card-subtitle">
+                                    <strong>@Html.DisplayFor(model => item.ProjectLinkLabel) : </strong><span class="card-link">@Html.DisplayFor(model => item.ProjectLinkUrl)</span>
+                                </p>
+
                             }
                         }
-
-                        foreach (var item in Model.ProjectLinks.Where((i => i.Projects.ProjectID == Model.ProjectID)))
-                        {
-                            <div class="col-sm-2">
-                                @Html.DisplayFor(model => item.ProjectLinkLabel)
-                            </div>
-                            <div class="col-sm-10">
-                                @Html.DisplayFor(model => item.ProjectLinkUrl)
-                            </div>
-                        }
-
+                    }
+                </div>
+                @*Collaborators*@
+                <h4 class="card text-center text-primary">Collaborator</h4>
+                <div class="float-right d-flex flex-wrap col-md-4 pr-0">
+                    @{
                         foreach (var collab in Model.UserProjects)
                         {
                             var collabPath = "~/image/" + (collab.User.PhotoPath);
                             var collabMemberPath = "https://localhost:44359/Users/Details/" + (collab.User.Id);
+                            <a href="@collabMemberPath"><img class="small-thumbnail my-1" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
 
-                            @*@collab.User.UserName<br />*@
-                            <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
-     
                         }
                     }
-
-                    if (loggedOn == false)
+                </div>
+            </div>
+            </div>
+            @*Project Picture Card Footer Bottons*@
+            <div class="col-12">
+                <img style="width: 80%; height: 300px; margin: auto" src=" @photoPath" alt="@Html.DisplayFor(model => model.Title)" asp-append-version="true" />
+                @*Card footer section*@
+                <div class="card-footer">
+                    @if (loggedOn == false)
                     {
-                        <div class="card-footer">
-                            <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
-                        </div>
+                        <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
                     }
                     else
                     {
-
-                        <div class="card-footer">
-                            <a class="btn btn-md btn-primary" asp-action="Edit" asp-route-id="@Model.ProjectID">Edit</a>
-                            <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
-                        </div>
+                        <a class="btn btn-md btn-primary" asp-action="Edit" asp-route-id="@Model.ProjectID">Edit</a>
+                        <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
                     }
-                }
+                </div>
+
             </div>
-
         </div>
-</div>
-
+    </div>
 
