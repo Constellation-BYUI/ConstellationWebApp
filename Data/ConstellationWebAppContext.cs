@@ -139,7 +139,21 @@ namespace ConstellationWebApp.Data
              .HasOne(bc => bc.Posting)
              .WithMany(c => c.RecruiterPicks)
              .HasForeignKey(bc => bc.PostingID);
+
+            modelBuilder.Entity<ProjectPosting>()
+               .HasKey(b => b.ProjectPostingID);
+            modelBuilder.Entity<ProjectPosting>()
+                .HasOne(bc => bc.Project)
+                .WithMany(b => b.ProjectPostings)
+                .HasForeignKey(bc => bc.ProjectID);
+            modelBuilder.Entity<ProjectPosting>()
+                .HasOne(bc => bc.Posting)
+                .WithMany(c => c.ProjectPostings)
+                .HasForeignKey(bc => bc.PostingID);
         }
+
+
+        public DbSet<ConstellationWebApp.Models.ProjectPosting> ProjectPosting { get; set; }
                                  
     }
     

@@ -40,6 +40,9 @@ namespace ConstellationWebApp.Models
         public ICollection<UserProject> UserProjects { get; set; }
         public ICollection<StarredProject> StarredProjects { get; set; }
 
+        public ICollection<ProjectPosting> ProjectPostings { get; set; }
+
+
     }
 
 }

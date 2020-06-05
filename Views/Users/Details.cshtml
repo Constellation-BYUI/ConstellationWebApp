@@ -59,12 +59,12 @@
                         var assigned = false;
                         foreach (var pick in picks.Where(i => i.CandidateID == Model.Id && i.RecuiterID == currentUser && i.PostingID == posting.PostingID))
                         {
-                            assigned = true;
+                        assigned = true;
                         }
                         if (assigned == false)
                         {
-                            if (cnt++ % 3 == 0)
-                            {
+                        if (cnt++ % 3 == 0)
+                        {
                                 @:<div>
                                 }
 
