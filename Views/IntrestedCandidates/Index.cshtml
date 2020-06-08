@@ -34,7 +34,7 @@
                             <h2> Your Picks for @pick.Posting.PostingTitle</h2>
                             }
                             var candidatePath = "~/image/" + (pick.Candidate.PhotoPath);
-                            var candidateMemberPath = "https://localhost:44359/Users/Details/" + (pick.Candidate.Id);
+                            var candidateMemberPath = "../Users/Details/" + (pick.Candidate.Id);
                             <a href="@candidateMemberPath"><img class="small-thumbnail" src=" @candidatePath" alt="@Html.DisplayFor(modelItem => pick.Candidate.UserName)" asp-append-version="true" /></a>
                             <p>@pick.Candidate.UserName</p>
 
@@ -54,7 +54,7 @@
                         @{
                             var spID = item.PostingID;
                             var photoPath = "~/image/" + (item.PostingOwner.PhotoPath);
-                            var collabMemberPath = "https://localhost:44359/Users/Details/" + (item.PostingOwner.Id);
+                            var collabMemberPath = "../Users/Details/" + (item.PostingOwner.Id);
                         }
                
                         <hr />
@@ -110,7 +110,7 @@
                             foreach (var candidate in Model.intrestedCandidates.Where(i => i.PostingID == item.PostingID))
                             {
                                 var candidatePath = "~/image/" + (candidate.User.PhotoPath);
-                                var candidateMemberPath = "https://localhost:44359/Users/Details/" + (candidate.UserID);
+                                var candidateMemberPath = "../Users/Details/" + (candidate.UserID);
 
                                 <a href="@candidateMemberPath"><img class="small-thumbnail" src=" @candidatePath" alt="@Html.DisplayFor(modelItem => candidate.User.UserName)" asp-append-version="true" /></a>
 

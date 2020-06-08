@@ -2,14 +2,13 @@
 @using System.Security.Claims;
 
 @{
-    ViewData["Title"] = "Eidt Posting";
+    ViewData["Title"] = "Edit Posting";
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
 
-@*@if (currentUser == Model.PostingOwner.Id)
-{*@
+@if (currentUser == Model.PostingOwner.Id)
+{
     <h1>Edit</h1>
-
     <h4>Posting</h4>
     <hr />
     <div class="row">
@@ -72,13 +71,21 @@
                         <input type="submit" value="Update" class="btn btn-primary" />
                     </div>
                 </form>
+                <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@Model.PostingID">Delete</a>
             </div>
         </div>
-    @*}*@
+    <div>
+        <a asp-action="Index">Back to List</a>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    </div>
+    }
+    else
+    {
+        <h2>You do not own this job posting, Log In as this User to Edit.</h2>
+        <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
+    }
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

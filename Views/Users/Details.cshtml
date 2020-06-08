@@ -5,7 +5,7 @@
 @{
     ViewData["Title"] = "Details";
     var photoPath = "~/image/" + Model.PhotoPath;
-    var resumePath = "https://localhost:44359/Resumes/" + (Model.ResumePhotoPath);
+    var resumePath = "~/Resumes/" + (Model.ResumePhotoPath);
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
     var allReadyStarred = false;
     List<ConstellationWebApp.Models.RecruiterPicks> picks = ViewBag.recruitersData;
@@ -206,7 +206,7 @@
             @foreach (var userProject in Model.UserProjects)
             {
                 var projectPhotoPath = "~/image/" + (userProject.Project.PhotoPath);
-                var projectPath = "https://localhost:44359/Projects/Details/" + (userProject.Project.ProjectID);
+                var projectPath = "../../Projects/Details/" + (userProject.Project.ProjectID);
                 var projectId = (userProject.Project.ProjectID);
 
                 <div class="">
@@ -244,7 +244,7 @@
                                     if ((userProject.UserID != collab.UserID) && (userProject.ProjectID == collab.ProjectID))
                                     {
                                         var collabPath = "~/image/" + (collab.User.PhotoPath);
-                                        var collabMemberPath = "https://localhost:44359/Users/Details/" + (collab.UserID);
+                                        var collabMemberPath = "../../Users/Details/" + (collab.UserID);
 
                                         <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" asp-append-version="true" /></a>
                                     }

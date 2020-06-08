@@ -5,7 +5,7 @@
     ViewData["Title"] = "Create";
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
     var photoPath = "~/image/" + (Model.PostingOwner.PhotoPath);
-    var collabMemberPath = "https://localhost:44359/Users/Details/" + (Model.PostingOwner.Id);
+    var collabMemberPath = "../../Users/Details/" + (Model.PostingOwner.Id);
     var allReadyStarred = false;
     var allReadyIntrested = false;
 
