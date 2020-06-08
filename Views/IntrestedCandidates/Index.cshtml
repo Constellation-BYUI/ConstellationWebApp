@@ -7,7 +7,7 @@
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
     List<int> shown = new List<int>();
     List<ConstellationWebApp.Models.IntrestedCandidate> data = ViewBag.intrestData;
-
+    var count = 0;
 }
 <div class="container col-md-6 rounded shadow-lg">
     <h3 class="text-black-50 text-center mt-2 py-3 py-sm-2">Posted Roles</h3>
@@ -23,11 +23,16 @@
             @foreach (var item in Model.Postings.Where(i => i.PostingOwner.Id == currentUser))
             {
                     <div class="card shadow-lg text-black text-center m-2 padding">
-
+                        @{ 
+                            count = 0;
+                        }
                         @*Display all the user picks with requires the pick to relate to a "Role/Posting"*@
                         @foreach (var pick in Model.RecruiterPicks.Where((i => i.PostingID == item.PostingID)))
                         {
-                            <h2> Your Picks for @pick.Posting.PostingTitle Posting</h2>
+                            if (count == 0)
+                            {
+                            <h2> Your Picks for @pick.Posting.PostingTitle</h2>
+                            }
                             var candidatePath = "~/image/" + (pick.Candidate.PhotoPath);
                             var candidateMemberPath = "https://localhost:44359/Users/Details/" + (pick.Candidate.Id);
                             <a href="@candidateMemberPath"><img class="small-thumbnail" src=" @candidatePath" alt="@Html.DisplayFor(modelItem => pick.Candidate.UserName)" asp-append-version="true" /></a>
@@ -42,6 +47,7 @@
                                     <input type="submit" value="Remove from your Picks Pool" class="btn btn-primary" />
                                 </div>
                             </form>
+                            count++;
                         }
 
                         @* Display the Posting/Role itself *@

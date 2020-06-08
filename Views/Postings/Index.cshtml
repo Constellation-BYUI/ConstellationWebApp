@@ -2,7 +2,7 @@
 @using System.Security.Claims;
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Job and Postings Index";
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
 
@@ -66,9 +66,7 @@
                 }
                 else
                 {
-
                     <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.PostingID">Details</a>
-
                 }
             </section>
         </div>
