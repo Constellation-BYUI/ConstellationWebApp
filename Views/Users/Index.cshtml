@@ -27,7 +27,7 @@
                               @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
                             </h4>
                                      @*card Image*@
-                            <img style="height: 300px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.UserName)" asp-append-version="true" />
+                        <a href="./Users/Details/@item.Id"><img style="height: 300px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.UserName)" asp-append-version="true" /></a>
                             @*User name*@
                             <small class="text-center py-1 m-0">@Html.DisplayFor(modelItem => item.UserName)</small>
 
