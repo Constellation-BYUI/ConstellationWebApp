@@ -346,7 +346,7 @@ namespace ConstellationWebApp.Controllers
             DeletePhoto(viewModel);
             _context.User.Remove(user);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Account", "Register");
         }
 
         // POST: UserProjects/Delete/5

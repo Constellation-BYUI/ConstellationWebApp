@@ -12,115 +12,116 @@
     List<ConstellationWebApp.Models.Posting> postings = ViewBag.currentUserPostings;
 }
 
-<section id="newPLink">
-    @if (currentUser != null)
-    {
-        List<ConstellationWebApp.Models.StarredUser> starredData = ViewBag.StarredUsers;
-        foreach (var starred in starredData)
+    <section id="newPLink">
+        @* Add a user to the my starred users list *@
+        @if (currentUser != null && currentUser != Model.Id)
         {
-            if (starred.StarredOwnerID == currentUser && starred.UserStarredID == @Model.Id)
+            List<ConstellationWebApp.Models.StarredUser> starredData = ViewBag.StarredUsers;
+            foreach (var starred in starredData)
             {
-                <form asp-action="Delete" asp-controller="StarredUsers">
+                if (starred.StarredOwnerID == currentUser && starred.UserStarredID == @Model.Id)
+                {
+                    <form asp-action="Delete" asp-controller="StarredUsers">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group mb-0">
+                            <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id" />
+                        </div>
+                        <div class="form-group mx-auto mb-0">
+                            <input class="btn btn-md btn-primary mb-1 mx-auto" type="submit" value="Remove from MyStarred Users" />
+                        </div>
+                    </form>
+                    allReadyStarred = true;
+                }
+            }
+            @* Remove a user to the my starred users list *@
+            if (allReadyStarred == false)
+            {
+                <form asp-action="Create" asp-controller="StarredUsers">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group mb-0">
                         <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id" />
                     </div>
-                    <div class="form-group mx-auto mb-0">
-                        <input class="btn btn-md btn-primary mb-1 mx-auto" type="submit" value="Remove from MyStarred Users" />
+                    <div class="form-group mb-0 mx-auto">
+                        <input class="btn btn-md btn-primary mb-1 mx-auto" type="submit" value="Add to MyStarred Users" />
                     </div>
                 </form>
-                allReadyStarred = true;
+            }
+
+            @*Recuiter can add user to many "Picks" that the user is not already part of *@
+            if (postings != null && @Model.Id != currentUser)
+            {
+                <h4>Add this User to your picks</h4>
+                <form asp-action="CreateManyPicks" asp-controller="IntrestedCandidates">
+                    @{
+                        int cnt = 0;
+                        List<int> shown = new List<int>();
+                        foreach (var posting in postings.Where(i => !(shown.Contains(i.PostingID))))
+                        {
+                            var assigned = false;
+                            foreach (var pick in picks.Where(i => i.CandidateID == Model.Id && i.RecuiterID == currentUser && i.PostingID == posting.PostingID))
+                            {
+                                assigned = true;
+                            }
+                            if (assigned == false)
+                            {
+                                if (cnt++ % 3 == 0)
+                                {
+                                    @:<div>
+                                    }
+
+                                    @:<div>
+                                        <input type="checkbox" name="postings" value="@posting.PostingID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @:  @posting.PostingTitle
+                                    @:</div>
+                                    shown.Add(posting.PostingID);
+                                }
+                            }
+                        @:</div>
+                    }
+                    <div class="form-group mb-0">
+                        <input type="hidden" class="form-control" value="@currentUser" name="recruiterID" />
+                    </div>
+                    <div class="form-group mb-0">
+                        <input type="hidden" class="form-control" value="@Model.Id" name="candidateID" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Add to Picks" class="btn btn-primary" />
+                    </div>
+                </form>
+
+                @*Remove a user from many picks that the user is already part of*@
+                <h4>Remove this User to your picks</h4>
+                <form asp-action="DeleteManyPick" asp-controller="IntrestedCandidates">
+                    @{
+                        int count = 0;
+                        List<int> showndeleted = new List<int>();
+                        foreach (var posting in postings.Where(i => !(showndeleted.Contains(i.PostingID))))
+                        {
+                            var assigned = false;
+                            foreach (var pick in picks.Where(i => i.CandidateID == Model.Id && i.RecuiterID == currentUser && i.PostingID == posting.PostingID))
+                            {
+                                if (count++ % 3 == 0)
+                                {
+                                    @:<div>
+                                    }
+                                    @:<div>
+                                        <input type="checkbox" name="recuiterPicks" value="@pick.RecuiterPicksID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @:  @posting.PostingTitle
+                                    @:</div>
+                                    showndeleted.Add(posting.PostingID);
+                                }
+                            }
+                        @:</div>
+                    }
+                    <div class="form-group">
+                        <input type="submit" value="Remove from picks" class="btn btn-primary" />
+                    </div>
+                </form>
             }
         }
-
-        if (allReadyStarred == false)
-        {
-            <form asp-action="Create" asp-controller="StarredUsers">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group mb-0">
-                    <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id" />
-                </div>
-                <div class="form-group mb-0 mx-auto">
-                    <input class="btn btn-md btn-primary mb-1 mx-auto" type="submit" value="Add to MyStarred Users" />
-                </div>
-            </form>
-        }
-
-        @*Recuiter can add user to many "Picks" that the user is not already part of *@
-        if (postings != null && @Model.Id != currentUser)
-        {
-            <h4>Add this User to your picks</h4>
-            <form asp-action="CreateManyPicks" asp-controller="IntrestedCandidates">
-                @{
-                    int cnt = 0;
-                    List<int> shown = new List<int>();
-                    foreach (var posting in postings.Where(i => !(shown.Contains(i.PostingID))))
-                    {
-                        var assigned = false;
-                        foreach (var pick in picks.Where(i => i.CandidateID == Model.Id && i.RecuiterID == currentUser && i.PostingID == posting.PostingID))
-                        {
-                        assigned = true;
-                        }
-                        if (assigned == false)
-                        {
-                        if (cnt++ % 3 == 0)
-                        {
-                                @:<div>
-                                }
-
-                                @:<div>
-                                    <input type="checkbox" name="postings" value="@posting.PostingID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @:  @posting.PostingTitle
-                                @:</div>
-                                shown.Add(posting.PostingID);
-                            }
-                        }
-                    @:</div>
-                }
-                <div class="form-group mb-0">
-                    <input type="hidden" class="form-control" value="@currentUser" name="recruiterID" />
-                </div>
-                <div class="form-group mb-0">
-                    <input type="hidden" class="form-control" value="@Model.Id" name="candidateID" />
-                </div>
-
-                <div class="form-group">
-                    <input type="submit" value="Add to Picks" class="btn btn-primary" />
-                </div>
-            </form>
-
-            @*Remove a user from many picks that the user is already part of*@
-            <h4>Remove this User to your picks</h4>
-            <form asp-action="DeleteManyPick" asp-controller="IntrestedCandidates">
-                @{
-                    int count = 0;
-                    List<int> showndeleted = new List<int>();
-                    foreach (var posting in postings.Where(i => !(showndeleted.Contains(i.PostingID))))
-                    {
-                        var assigned = false;
-                        foreach (var pick in picks.Where(i => i.CandidateID == Model.Id && i.RecuiterID == currentUser && i.PostingID == posting.PostingID))
-                        {
-                            if (count++ % 3 == 0)
-                            {
-                                @:<div>
-                                }
-                                @:<div>
-                                    <input type="checkbox" name="recuiterPicks" value="@pick.RecuiterPicksID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @:  @posting.PostingTitle
-                                @:</div>
-                                showndeleted.Add(posting.PostingID);
-                            }
-                        }
-                    @:</div>
-                }
-                <div class="form-group">
-                    <input type="submit" value="Remove from picks" class="btn btn-primary" />
-                </div>
-            </form>
-        }
-    }
-</section>
+    </section>
 
 <div class="d-flex flex-row">
-    @*User Profile Card Display*@
+@*User Profile Card Display*@
     <div class="col-sm-12 col-md-5">
         <div class="">
             <div class="col-md-10 p-0 m-0">
@@ -244,7 +245,9 @@
                                     if ((userProject.UserID != collab.UserID) && (userProject.ProjectID == collab.ProjectID))
                                     {
                                         var collabPath = "~/image/" + (collab.User.PhotoPath);
+
                                         var collabMemberPath = "../../Users/Details/" + (collab.UserID);
+
 
                                         <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" asp-append-version="true" /></a>
                                     }
