@@ -17,6 +17,9 @@ spec:
         image: gcr.io/constellation-275522/constellationweb
         ports:
         - containerPort: 80
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: staging
         resources:
           limits:
             cpu: "1"
