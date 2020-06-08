@@ -115,7 +115,7 @@
                         foreach (var collab in Model.currentProject.UserProjects)
                         {
                             var collabPath = "~/image/" + (collab.User.PhotoPath);
-                            var collabMemberPath = "https://localhost:44359/Users/Details/" + (collab.User.Id);
+                            var collabMemberPath = "../../Users/Details/" + (collab.User.Id);
                             <a href="@collabMemberPath"><img class="small-thumbnail my-1" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
 
                         }
@@ -171,7 +171,7 @@
                         }
 
                         photoPath = "~/image/" + (posting.PostingOwner.PhotoPath);
-                        var collabMemberPath = "https://localhost:44359/Users/Details/" + (posting.PostingOwner.Id);
+                        var collabMemberPath = "../../Users/Details/" + (posting.PostingOwner.Id);
 
                         <div class="card shadow-lg text-black text-center m-2 padding">
                             @*Name of Company*@

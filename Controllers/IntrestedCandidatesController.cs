@@ -157,7 +157,7 @@ namespace ConstellationWebApp.Controllers
             {
                 _context.IntrestedCandidate.Remove(thisIC);
                 await _context.SaveChangesAsync();
-                var returnPath = "https://localhost:44359/Postings/Details/" + postingID;
+                var returnPath = "../Postings/Details/" + postingID;
 
             }
             return RedirectToAction("Index", "Postings");

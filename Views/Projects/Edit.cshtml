@@ -160,7 +160,7 @@
                                     @foreach (var collab in Model.currentProject.UserProjects)
                                     {
                                         var collabPath = "~/image/" + (collab.User.PhotoPath);
-                                        var collabMemberPath = "https://localhost:44359/Users/Details/" + (collab.User.Id);
+                                        var collabMemberPath = "../../Users/Details/" + (collab.User.Id);
 
                                         @*@collab.User.UserName<br />*@
                                         
@@ -303,7 +303,7 @@
                         @foreach (var collab in Model.currentProject.UserProjects)
                         {
                             var collabPath = "~/image/" + (collab.User.PhotoPath);
-                            var collabMemberPath = "https://localhost:44359/Users/Details/" + (collab.User.Id);
+                            var collabMemberPath = "../../Users/Details/" + (collab.User.Id);
                             <div>
                                 <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
                                 <a href="@collabMemberPath">@Html.DisplayFor(modelItem => collab.User.FirstName)  @Html.DisplayFor(modelItem => collab.User.LastName)  : @Html.DisplayFor(modelItem => collab.User.UserName)</a>

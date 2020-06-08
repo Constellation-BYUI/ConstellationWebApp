@@ -209,6 +209,7 @@ namespace ConstellationWebApp.Controllers
                 return NotFound();
             }
             var posting = await _context.Postings
+                .Include(i=> i.PostingOwner)
                 .Include(i => i.Posting_PostingTypes)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.PostingID == id);
@@ -276,6 +277,7 @@ namespace ConstellationWebApp.Controllers
             }
 
             var posting = await _context.Postings
+                .Include(i => i.PostingOwner)
                 .FirstOrDefaultAsync(m => m.PostingID == id);
             if (posting == null)
             {
