@@ -71,8 +71,6 @@
                                 </div>
                             </div>
                         </div>
-
-
                         @* Create the Contact Links for the User *@
                         <div class="form-group">
                             <div class="col-md-8 p-0 small_lable">
@@ -84,6 +82,14 @@
                                 <input class="text-light bg-secondary border-white rounded mt-1" type="button" id="more_fields" onclick="add_fields();" value="Add Link" />
                             </div>
                         </div>
+                        <section class="card-footer">
+                            <button type="submit" value="Update" class="btn btn-sm btn-primary">Update</button>
+                            <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
+                            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="Model.Id">Delete</a>
+                        </section>
+                    </form>
+
+
                         @*Delete Links*@
                         <section style="margin-bottom: 3em;">
                             @foreach (var item in Model.thisUser.ContactLinks.Where((i => i.Users.Id == Model.thisUser.Id)))
@@ -97,7 +103,7 @@
 
                                 if (currentUser != null)
                                 {
-                                    <div asp-action="DeleteLink" asp-controller="Projects">
+                                    <form asp-action="DeleteLink" asp-controller="Users">
                                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                         <div class="form-group">
                                             <input type="hidden" asp-for="UserID" class="form-control" value="@Model.UserID" name="userID" />
@@ -108,18 +114,11 @@
                                         <div class="form-group">
                                             <input type="submit" value="Remove this Link" class="btn btn-sm btn-danger" />
                                         </div>
-                                    </div>
-
+                                    </form>
                                 }
-
                             }
-                        </section>
-                        <section class="card-footer">
-                            <button type="submit" value="Update" class="btn btn-sm btn-primary">Update</button>
-                            <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
-                            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="Model.Id">Delete</a>
-                        </section>
-                    </form>
+                         </section>
+                     
                 </div>
 
             </div>

@@ -152,18 +152,7 @@ namespace ConstellationWebApp.Controllers
             {
                 _context.ContactLinks.Remove(link);
             }
-        }
-
-        // POST: UserProjects/Delete/5
-        [HttpPost, ActionName("DeleteLink")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteLink(string userID, int contactLinkID)
-        {
-            ContactLink thisCL = ((_context.ContactLinks.Where(i => (i.Users.Id == userID) && (i.ContactLinkID == contactLinkID)).FirstOrDefault()));
-            _context.ContactLinks.Remove(thisCL);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Projects");
-        }
+        } 
 
         #endregion
 
@@ -358,6 +347,17 @@ namespace ConstellationWebApp.Controllers
             _context.User.Remove(user);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        // POST: UserProjects/Delete/5
+        [HttpPost, ActionName("DeleteLink")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteLink(string userID, int contactLinkID)
+        {
+            ContactLink thisCL = ((_context.ContactLinks.Where(i => (i.Users.Id == userID) && (i.ContactLinkID == contactLinkID)).FirstOrDefault()));
+            _context.ContactLinks.Remove(thisCL);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Users");
         }
 
         private bool UserExists(string id)
