@@ -36,9 +36,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
+                        @*<li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        </li>*@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Projects" asp-action="Index">Projects</a>
                         </li>
@@ -46,7 +46,7 @@
                             <a class="nav-link text-light" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Postings" asp-action="Index">Postings</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Postings" asp-action="Index">Job Postings</a>
                         </li>
                     </ul>
                 </div>
@@ -61,8 +61,7 @@
                                 <a class="dropdown-item text-secondary" asp-controller="StarredProjects" asp-action="Index">My Starred Projects</a>
                                 <a class="dropdown-item text-secondary" asp-controller="StarredPostings" asp-action="Index">My Starred Postings</a>
                                 <a class="dropdown-item text-secondary" asp-controller="StarredUsers" asp-action="Index">My Starred Users</a>
-                                <a class="dropdown-item text-primary" asp-controller="IntrestedCandidates" asp-action="Index">Intrest in My Postings</a>
-
+                                <a class="dropdown-item text-primary" asp-controller="IntrestedCandidates" asp-action="Index">Posting Candidates</a>
                             </div>
                         </li>
 

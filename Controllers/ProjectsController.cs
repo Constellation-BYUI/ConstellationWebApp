@@ -192,18 +192,26 @@ namespace ConstellationWebApp.Controllers
             {
                 return NotFound();
             }
-            var project = await _context.Projects
+            var entityProjectModel = await _context.Projects
                 .Include(i => i.ProjectLinks)
                 .Include(i => i.StarredProjects)
-                .Include( i => i.UserProjects)
+                .Include(i => i.UserProjects)
                 .ThenInclude(i => i.User)
-                .FirstOrDefaultAsync(m => m.ProjectID == id);
-            if (project == null)
+                .AsNoTracking()
+            .FirstOrDefaultAsync(m => m.ProjectID == id);
+
+            if (entityProjectModel == null)
             {
                 return NotFound();
             }
-            PopulateStarredProjectData(project);
-            return View(project);
+            PopulateStarredProjectData(entityProjectModel);
+            PopulateAssignedProjectData(entityProjectModel);
+            ProjectCreateViewModel viewModel = projectToViewModel(entityProjectModel);
+            viewModel.Postings = _context.Postings.Where(i => i.SharableToTeam == true).ToList();
+            viewModel.Posting_PostingType = _context.Posting_PostingTypes.ToList();
+            viewModel.PostingTypes = _context.PostingTypes.ToList();            
+            viewModel.ProjectPostings = _context.ProjectPosting.Where(i => i.ProjectID == id).ToList();
+            return View(viewModel);
         }
 
         // GET: Projects/Create

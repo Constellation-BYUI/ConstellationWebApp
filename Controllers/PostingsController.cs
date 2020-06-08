@@ -144,6 +144,8 @@ namespace ConstellationWebApp.Controllers
                   .ThenInclude(i => i.PostingTypes)
                   .Include(i => i.StarredPostings)
                   .ThenInclude(i => i.User)
+                  .ThenInclude( i => i.Postings)
+                  .ThenInclude( i =>i.ProjectPostings)
                   .Include(i => i.IntrestedCandidates)
                    .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.PostingID == id);
