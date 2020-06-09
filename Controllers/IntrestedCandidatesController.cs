@@ -67,7 +67,8 @@ namespace ConstellationWebApp.Controllers
                 _context.Add(intrestedCandidate);
                 await _context.SaveChangesAsync();
             }
-            return RedirectToAction("Index", "Postings");
+            var returnPath = "../Postings/Details/" + postingID.ToString();
+            return Redirect(returnPath);
         }
 
         [HttpPost]
@@ -87,7 +88,8 @@ namespace ConstellationWebApp.Controllers
                 _context.Add(recruiterPicks);
                 await _context.SaveChangesAsync();
             }
-            return RedirectToAction("Index", "IntrestedCandidates");
+            var returnPath = "../Postings/Details/" + postingID.ToString();
+            return Redirect(returnPath);
         }
 
         [HttpPost]
@@ -110,7 +112,8 @@ namespace ConstellationWebApp.Controllers
                     await _context.SaveChangesAsync();
                 }
             }
-            return RedirectToAction("Index", "IntrestedCandidates");
+            var returnPath = "../Users/Details/" + candidateID.ToString();
+            return Redirect(returnPath);
         }
 
         [HttpPost]
@@ -125,13 +128,16 @@ namespace ConstellationWebApp.Controllers
                 _context.RecruiterPicks.Remove(thisRP);
                 await _context.SaveChangesAsync();
             }
-            return RedirectToAction("Index", "IntrestedCandidates");
+            var returnPath = "../Postings/Details/" + thisRP.CandidateID.ToString();
+            return Redirect(returnPath);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteManyPick(int[] recuiterPicks)
         {
+            var returnPath = "";
+
             foreach (var recuiterPicksID in recuiterPicks)
             {
                 RecruiterPicks thisRP = (_context.RecruiterPicks.Where(i => i.RecuiterPicksID == recuiterPicksID).FirstOrDefault());
@@ -142,8 +148,10 @@ namespace ConstellationWebApp.Controllers
                     _context.RecruiterPicks.Remove(thisRP);
                     await _context.SaveChangesAsync();
                 }
+                 returnPath = "../Users/Details/" + thisRP.CandidateID.ToString();
             }
-            return RedirectToAction("Index", "IntrestedCandidates");
+
+            return Redirect(returnPath);
         }
 
         // POST: IntrestedCandidates/Delete/5
@@ -157,10 +165,9 @@ namespace ConstellationWebApp.Controllers
             {
                 _context.IntrestedCandidate.Remove(thisIC);
                 await _context.SaveChangesAsync();
-                var returnPath = "../Postings/Details/" + postingID;
-
             }
-            return RedirectToAction("Index", "Postings");
+            var returnPath = "../Postings/Details/" + postingID.ToString();
+            return Redirect(returnPath);
         }
 
         private bool IntrestedCandidateExists(int id)
