@@ -40,7 +40,8 @@ namespace ConstellationWebApp.Controllers
                 _context.Add(projectPosting);
                 await _context.SaveChangesAsync();
             }
-            return RedirectToAction("Index", "Projects");
+            var returnPath = "../Projects/Details/" + projectID.ToString();
+            return Redirect(returnPath);
         }
 
         [HttpPost]
@@ -65,7 +66,8 @@ namespace ConstellationWebApp.Controllers
                     }
                 }
             }
-            return RedirectToAction("Index", "Projects");
+            var returnPath = "../Projects/Edit/" + projectID.ToString();
+            return Redirect(returnPath);
         }
 
         // POST: ProjectPostings/Delete/5
@@ -76,7 +78,8 @@ namespace ConstellationWebApp.Controllers
             var projectPosting = await _context.ProjectPosting.FindAsync(projectPostingID);
             _context.ProjectPosting.Remove(projectPosting);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Projects");
+            var returnPath = "../Projects/Details/" + projectPosting.ProjectID.ToString();
+            return Redirect(returnPath);
         }
 
         [HttpPost]
@@ -97,7 +100,8 @@ namespace ConstellationWebApp.Controllers
                     }
                 }
             }
-            return RedirectToAction("Index", "Projects");
+            var returnPath = "../Projects/Edit/" + projectID.ToString();
+            return Redirect(returnPath);
         }
 
         private bool ProjectPostingExists(int id)

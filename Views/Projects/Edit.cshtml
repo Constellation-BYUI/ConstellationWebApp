@@ -14,6 +14,7 @@
     var addShown = false;
     var deleteShown = false;
     bool kickOut = false;
+    var checker = 0;
 }
 
 @*Detemines if curretn user is a collaborator of Project*@
@@ -114,7 +115,7 @@
                             </form>
                             <!-- #endregion -->
                             @*Edit Relation Data: ProjectLinks, Collaborators(UserProjects), ProjectPostings*@
-                            <!-- #region Relation Project Link Add/Remove Buttons -->
+ <!-- #region Relation Project Link Add/Remove Buttons -->
                 <section class="">
                     <h5 class="bg-info text-white mx-0 p-2 mb-0">Project Links</h5>
                     @{
@@ -151,7 +152,7 @@
                         }
                     }
                 </section>
-                            <!-- #endregion -->
+ <!-- #endregion -->
 
  <!-- #region Relation Collaborators: UserProjecct Add/Remove Buttons-->
                             <section class="mb-2">
@@ -192,7 +193,7 @@
                                     {
                                         //if user has no postings do not create an empty form
                                         var postingListholder = Model.Postings.Where(i => i.PostingOwner.Id == collaborator.UserID);
-                                        if (!(postingListholder.Any()) || addShown == true)
+                                        if (!(postingListholder.Any()))
                                         {
                                             continue;
                                         }
@@ -200,10 +201,6 @@
                                         <form asp-action="CreateManyProjectPostings" asp-controller="ProjectPostings">
                                             @foreach (var posting in postingListholder)
                                             {
-                                                if (addShown == true)
-                                                {
-                                                    continue;
-                                                }
                                                 //If the posting is already in the Project Posting it will not display for checkbox choices
                                                 kickOut = false;
                                                 foreach (var projPost in Model.ProjectPostings.Where(i => i.PostingID == posting.PostingID && i.ProjectID == Model.ProjectID))
@@ -227,52 +224,45 @@
                                                 <input type="submit" value="Link selected Posting" class="btn btn-sm btn-info" />
                                             </div>
                                         </form>
-                                        addShown = true;
                                     }
                                 }
 
-                                @{
+                                @{ //if the collaborator has postings and others want to add that posting to the project
                                     @foreach (var collaborator in Model.currentProject.UserProjects)
                                     {
-                                        var postingListholder = Model.Postings.Where(i => i.PostingOwner.Id == collaborator.UserID);
-                                        var projectPostingHolder = Model.ProjectPostings;
                                         //if user has no postings do not create an empty form
-                                        if (!(postingListholder.Any()) || deleteShown == true)
+                                        var postingListholder = Model.Postings.Where(i => i.PostingOwner.Id == collaborator.UserID);
+                                        if (!(postingListholder.Any()))
                                         {
                                             continue;
                                         }
-                                        //postings linked to the project
-                                        @foreach (var posting in postingListholder)
-                                        {
-                                            kickOut = true;
-                                            foreach (var projPost in projectPostingHolder.Where(i => i.PostingID == posting.PostingID && i.ProjectID == Model.ProjectID))
+                                        <p class="mb-0">Select postings owned by Collaborator <strong>@collaborator.User.UserName</strong> to be added to this Project</p>
+                                        <form asp-action="RemoveManyPostings" asp-controller="ProjectPostings">
+                                            @foreach (var posting in postingListholder)
                                             {
-                                                kickOut = false;
-                                            }
-                                            if (kickOut == true || deleteShown == true)
-                                            {
-                                                continue;
-                                            }
-                                            <p>Collaborator <strong>@collaborator.User.UserName</strong> owns these postings which are connected to the Project</p>
-                                            <p class="mb-0">Select from the postings list below to remove them from this project.</p>
-                                            <form asp-action="RemoveManyPostings" asp-controller="ProjectPostings">
-                                                @{
-                                                    foreach (var projPost in projectPostingHolder.Where(i => i.ProjectID == Model.ProjectID))
-                                                    {
-                                                        @:<div>
-                                                            <input type="checkbox" name="postings" value="@posting.PostingID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @posting.PostingTitle @posting.PostingFor
-                                                        @:</div>
-                                                    }
+                                                //If the posting is already in the Project Posting it will not display for checkbox choices
+                                                kickOut = true;
+                                                foreach (var projPost in Model.ProjectPostings.Where(i => i.PostingID == posting.PostingID && i.ProjectID == Model.ProjectID))
+                                                {
+                                                    kickOut = false;
                                                 }
-                                                <div class="form-group mb-0">
-                                                    <input type="hidden" value="@Model.ProjectID" class="form-control" name="projectID" />
-                                                </div>
-                                                <div class="form-group">
-                                                    <input type="submit" value="Remove selected postings" class="btn btn-sm btn-danger" />
-                                                </div>
-                                            </form>
-                                            deleteShown = true;
-                                        }
+                                                if (kickOut == true)
+                                                {
+                                                    continue;
+                                                }
+                                                @*Shows all postings that a collaborator has which are not added to the Project and displays checkboxes so that many postings can be added to a project at once*@
+                                                assigned = false;
+                                                @:<div>
+                                                    <input type="checkbox" name="postings" value="@posting.PostingID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @posting.PostingTitle
+                                                @:</div>
+                                            }
+                                            <div class="form-group mb-0">
+                                                <input type="hidden" value="@Model.ProjectID" class="form-control" name="projectID" />
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="submit" value="Remove selected Posting" class="btn btn-sm btn-danger" />
+                                            </div>
+                                        </form>
                                     }
                                 }
                             </section>
