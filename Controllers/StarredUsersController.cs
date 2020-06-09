@@ -55,10 +55,10 @@ namespace ConstellationWebApp.Controllers
                     starredUser.UserStarredID = id;
                     _context.Add(starredUser);
                     await _context.SaveChangesAsync();
-                }
-                return RedirectToAction("Index", "StarredUsers");
+                }               
             }
-            return RedirectToAction("Index", "User");
+            var returnPath = "../Users/Details/" + id.ToString();
+            return Redirect(returnPath);
         }
 
         [HttpPost, ActionName("Delete")]
@@ -73,9 +73,9 @@ namespace ConstellationWebApp.Controllers
             {
                 _context.StarredUsers.Remove(thisSU);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
-            return RedirectToAction(nameof(Index));
+            var returnPath = "../Users/Details/" + id.ToString();
+            return Redirect(returnPath);
         }
 
         private bool StarredUserExists(int id)
