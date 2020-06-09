@@ -54,7 +54,8 @@ namespace ConstellationWebApp.Controllers
                 _context.Add(starredPosting);
                 await _context.SaveChangesAsync();
             }
-            return RedirectToAction("Index", "Postings");
+            var returnPath = "../Postings/Details/" + postingID.ToString();
+            return Redirect(returnPath);
         }
 
         // POST: StarredPostings/Delete/5
@@ -70,9 +71,9 @@ namespace ConstellationWebApp.Controllers
             {
                 _context.StarredPosting.Remove(thisSP);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
-            return RedirectToAction(nameof(Index));
+            var returnPath = "../Postings/Details/" + postingID.ToString();
+            return Redirect(returnPath);
         }
 
         private bool StarredPostingExists(string id)

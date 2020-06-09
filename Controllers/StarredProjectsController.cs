@@ -55,7 +55,8 @@ namespace ConstellationWebApp.Controllers
                 _context.Add(starredProject);
                 await _context.SaveChangesAsync();
             }
-            return RedirectToAction("Index", "Projects");
+            var returnPath = "../Projects/Details/" + projectID.ToString();
+            return Redirect(returnPath);
         }
 
         // POST: StarredPostings/Delete/5
@@ -66,14 +67,13 @@ namespace ConstellationWebApp.Controllers
             var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             StarredProject thisSP = ((_context.StarredProjects.Where(i => (i.ProjectID == projectID) && (i.UserID == currentUser)).FirstOrDefault()));
-
             if (currentUser == thisSP.UserID)
             {
                 _context.StarredProjects.Remove(thisSP);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
-            return RedirectToAction(nameof(Index));
+            var returnPath = "../Projects/Details/" + projectID.ToString();
+            return Redirect(returnPath);
         }
         private bool StarredProjectExists(int id)
         {
