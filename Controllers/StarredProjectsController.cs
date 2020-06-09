@@ -27,16 +27,19 @@ namespace ConstellationWebApp.Controllers
         public async Task<IActionResult> Index()
         {
             var viewModel = new ViewModel();
-            viewModel.StarredProjects = await _context.StarredProjects
-                .Include( i => i.User)
-                .ThenInclude(i => i.UserProjects)
-                .Include(i => i.Project)
-                  .ThenInclude(i => i.ProjectLinks)
+            viewModel.Projects = await _context.Projects
+                   .Include(i => i.UserProjects)
+                     .ThenInclude(i => i.User)
+                      .Include(i => i.ProjectLinks)
                    .AsNoTracking()
-                   .OrderBy(i => i.StarredProjectID)
+                   .OrderBy(i => i.CreationDate)
                    .ToListAsync();
 
+            viewModel.StarredProjects = await _context.StarredProjects.ToListAsync();
+
+
             return View(viewModel);
+
         }
 
         // POST: StarredProjects/Create
@@ -72,7 +75,7 @@ namespace ConstellationWebApp.Controllers
                 _context.StarredProjects.Remove(thisSP);
                 await _context.SaveChangesAsync();
             }
-            var returnPath = "../Projects/Details/" + projectID.ToString();
+            var returnPath = "../StarredProjects/";
             return Redirect(returnPath);
         }
         private bool StarredProjectExists(int id)

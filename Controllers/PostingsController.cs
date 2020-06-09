@@ -119,7 +119,7 @@ namespace ConstellationWebApp.Controllers
         public async Task<IActionResult> Index()
         {
             var viewModel = new ViewModel();
-            viewModel.Postings = await _context.Postings
+            viewModel.Postings = await _context.Postings.Where(i => i.HidePosting == false)
                   .Include(i => i.Posting_PostingTypes)
                   .ThenInclude(i => i.PostingTypes)
                   .Include(i => i.PostingOwner)

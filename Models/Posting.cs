@@ -10,11 +10,15 @@ namespace ConstellationWebApp.Models
     {
         public int PostingID { get; set; }
 
+        [Required]
         [Display(Name = "Posting Title")]
         public string PostingTitle { get; set; }
 
+        [Required]
+
         public string Description { get; set; }
 
+        [Required]
         [Display(Name = "Posting for Project / Company")]
         public string PostingFor { get; set; }
 
