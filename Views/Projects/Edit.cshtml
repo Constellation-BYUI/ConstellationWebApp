@@ -129,26 +129,23 @@
 
                         foreach (var item in Model.currentProject.ProjectLinks.Where((i => i.Projects.ProjectID == Model.ProjectID)))
                         {
-                            <p class="mb-0">
-                              <strong>@Html.DisplayFor(model => item.ProjectLinkLabel) : </strong> <span>@Html.DisplayFor(model => item.ProjectLinkUrl)</span>
-                              <div class="form-group"><input type="submit" value="Remove Link" class="btn btn-sm btn-danger" /></div>
-                            </p>
-
                             if (loggedOn == true)
                             {
-                                <form class="mt-0" asp-action="DeleteLink" asp-controller="Projects">
-                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                    <div class="form-group">
-                                        <input type="hidden" asp-for="ProjectID" class="form-control" value="@Model.ProjectID" name="projectID" />
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="hidden" asp-for="@item.ProjectLinkID" class="form-control" value="@item.ProjectLinkID" name="projectLinkID" />
-                                    </div>
-                                    
-                                </form>
-
+                             <form class="mt-0" asp-action="DeleteLink" asp-controller="Projects">
+                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                 <div class="form-group">
+                                     <input type="hidden" asp-for="ProjectID" class="form-control" value="@Model.ProjectID" name="projectID" />
+                                 </div>
+                                 <div class="form-group">
+                                     <input type="hidden" asp-for="@item.ProjectLinkID" class="form-control" value="@item.ProjectLinkID" name="projectLinkID" />
+                                 </div>
+                                 <p class="mb-0">
+                                     <strong>@Html.DisplayFor(model => item.ProjectLinkLabel) : </strong> <span>@Html.DisplayFor(model => item.ProjectLinkUrl)</span>
+                                     <div class="form-group"><input type="submit" value="Remove Link" class="btn btn-sm btn-danger" /></div>
+                                 </p>
+                             </form>
                             }
-
+                           
                         }
                     }
                 </section>

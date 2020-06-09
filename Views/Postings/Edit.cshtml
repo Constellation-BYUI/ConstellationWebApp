@@ -32,14 +32,18 @@
                     <span asp-validation-for="PostingFor" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="SharableToTeam" class="control-label">Do you want your Posting avialable for Projects to Link to?</label>
-                    @Html.CheckBoxFor(m => m.SharableToTeam)
+                    <label asp-for="SharableToTeam" class="control-label">Allow projects, where you're a collaborator, to Link to this posting?</label>
+                    <div>
+                        @Html.CheckBoxFor(m => m.SharableToTeam) Yes
+                    </div>
                 </div>
                 @* Need to say reasoning: Hold off on showing all people this posting, save it for later, or maybe reuse it next time you recuit for a similar posiiton*@
-                <div class="form-group">
-                    <label asp-for="HidePosting" class="control-label">Do you want your Posting visible to others?</label>
-                    @Html.CheckBoxFor(m => m.HidePosting)
+            <div class="form-group">
+                <label asp-for="HidePosting" class="control-label">Do you want your Posting hidden to others?</label>
+                <div>
+                    @Html.CheckBoxFor(m => m.HidePosting) Yes
                 </div>
+            </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <table>

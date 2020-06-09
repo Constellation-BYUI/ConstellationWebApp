@@ -11,59 +11,84 @@
 <h1>My Starred Projects</h1>
 
 <div id="projectDisplay">
-    @foreach (var item in Model.StarredProjects.Where(i => i.UserID == currentUser))
+    @foreach (var starredProject in Model.StarredProjects.Where(i => i.UserID == currentUser))
     {
-        var photoPath = "~/image/" + (item.Project.PhotoPath);
-
-
-    <div class="col-md-12 card shadow text-black-50 bg-light m-2 padding">
-        @*Note: We do not want to display the PhotoPath Path but the image itself*@
-        <div>
-            <img style="height: 300px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.Project.Title)" asp-append-version="true" />
-        </div>
-        <div>
-            @Html.DisplayNameFor(modelItem => item.Project.Title) :
-            @Html.DisplayFor(modelItem => item.Project.Title)
-        </div>
-        <div>
-            @Html.DisplayNameFor(modelItem => item.Project.Description) :
-            @Html.DisplayFor(modelItem => item.Project.Description)
-        </div>
-        <div>
-            @Html.DisplayNameFor(modelItem => item.Project.StartDate) :
-            @Html.DisplayFor(modelItem => item.Project.StartDate)
-        </div>
-        <div>
-            @Html.DisplayNameFor(modelItem => item.Project.EndDate) :
-            @Html.DisplayFor(modelItem => item.Project.EndDate)
-        </div>
-        <div>
-            @Html.DisplayNameFor(modelItem => item.Project.CreationDate) :
-            @Html.DisplayFor(modelItem => item.Project.CreationDate)
-        </div>
-          @* was not working and also quite of bit of data that does not truly need to be included ~ leaving it out for the time being *@
-        <h4>Project Links</h4>
-        @foreach (var link in item.Project.ProjectLinks)
+        @foreach (var item in Model.Projects.Where(i => i.ProjectID == starredProject.ProjectID))
         {
-            <a class="card-link" href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
-            <br />
-        }
+            @*CSS RULES FOR INDIVIDUAL CARDS*@
+            <div class="card shadow-lg border-primary mt-1 mb-3 ml-2 mr-2">
 
-        <form asp-action="Delete" asp-controller="StarredProjects">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <input type="hidden" asp-for="@item.ProjectID" class="form-control" value="@item.ProjectID" name="projectID" />
+                @*Project Title*@
+                <h4 class="card-header bg-primary py-1 text-white text-center m-0">
+                    @*@Html.DisplayNameFor(modelItem => item.Title) :*@
+                    @Html.DisplayFor(modelItem => item.Title)
+                </h4>
+                @*<img style="height: 300px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.Title)" asp-append-version="true" />*@
+
+                @*COLLABORATORS*@
+                <h5 class="card-header bg-light py-1 text-black text-center m-0">Collaborators</h5>
+                <section class="d-flex flex-wrap justify-content-center">
+                    @{
+                        bool isLoggedIn = false;
+                        foreach (var collab in item.UserProjects)
+
+                        {
+                            var collabPath = "~/image/" + (collab.User.PhotoPath);
+                            var collabMemberPath = "../Users/Details/" + (collab.User.Id);
+
+                            <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
+
+                            if (collab.UserID == currentUser)
+                            {
+                                isLoggedIn = true;
+                            }
+                        }
+                    }
+                </section>
+                @*Project Desccription*@
+                <div class="bg-light border-dark">
+                    <h6 class="card-header bg-light py-1 text-black text-center m-0">@Html.DisplayNameFor(modelItem => item.Description)</h6>
+                    <p class="text-black text-justify mb-1 text-truncate px-2">@Html.DisplayFor(modelItem => item.Description)</p>
+                </div>
+
+                @*Project Dates*@
+                <div class="px-2">
+                    <p class="m-0">
+                        <strong class="text-black">@Html.DisplayNameFor(modelItem => item.StartDate) : </strong>
+                        @Html.DisplayFor(modelItem => item.StartDate)
+                    </p>
+                    <p class="m-0">
+                        <strong class="text-black">@Html.DisplayNameFor(modelItem => item.EndDate) : </strong>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </p>
+                    <p class="m-0">
+                        <strong class="text-black">@Html.DisplayNameFor(modelItem => item.CreationDate) : </strong>
+                        @Html.DisplayFor(modelItem => item.CreationDate)
+                    </p>
+                </div>
+
+                <h4>Project Links</h4>
+                @foreach (var link in item.ProjectLinks)
+                {
+                    <a class="card-link" href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
+                    <br />
+                }
+
+                <form asp-action="Delete" asp-controller="StarredProjects">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <input type="hidden" asp-for="@item.ProjectID" class="form-control" value="@item.ProjectID" name="projectID" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Remove from MyStarred Projects" class="btn btn-primary" />
+                    </div>
+                </form>
+
+                <div class="card-footer">
+                    <a class="btn btn-md btn-secondary" asp-controller="Projects" asp-action="Details" asp-route-id="@item.ProjectID">Details</a>
+                </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Remove from MyStarred Projects" class="btn btn-primary" />
-            </div>
-        </form>
-
-
-        <div class="card-footer">
-            <a class="btn btn-md btn-secondary" asp-action="Details" asp-route-id="@item.Project.ProjectID">Details</a>
-        </div>
+         }
+      }
     </div>
-    }
-</div>
 
