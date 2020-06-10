@@ -41,10 +41,10 @@ spec:
       volumes:
       - name: image
         persistentVolumeClaim:
-          claimName: constellationweb-image
+          claimName: constellationweb-image-claim
       - name: resumes
         persistentVolumeClaim:
-          claimName: constellationweb-resumes
+          claimName: constellationweb-resumes-claim
 ---
 apiVersion: v1
 kind: Service
@@ -107,3 +107,36 @@ spec:
   nfs:
     path: /resumes
     server: nfs-local
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: constellationweb-resumes-claim
+spec:
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: slow
+  selector:
+    matchLabels:
+      name: "constellationweb-resumes"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: constellationweb-image-claim
+spec:
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: slow
+  selector:
+    matchLabels:
+      name: "constellationweb-image"
