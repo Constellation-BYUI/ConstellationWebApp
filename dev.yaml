@@ -27,12 +27,24 @@ spec:
           requests:
             cpu: ".25"
             memory: "250Mi"
+        volumeMounts:
+        - name: image
+          mountPath: /wwwroot/image
+        - name: resumes
+          mountPath: /wwwroot/Resumes
         livenessProbe:
           httpGet:
             path: /account/login
             port: 80
           initialDelaySeconds: 3
           periodSeconds: 3
+      volumes:
+      - name: image
+        persistentVolumeClaim:
+          claimName: constellationweb-image
+      - name: resumes
+        persistentVolumeClaim:
+          claimName: constellationweb-resumes
 ---
 apiVersion: v1
 kind: Service
@@ -57,4 +69,41 @@ spec:
   ports:
   - port: 80
     targetPort: 80
-   
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: constellationweb-image
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: slow
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    path: /images
+    server: nfs-local
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: constellationweb-resumes
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: slow
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    path: /resumes
+    server: nfs-local
