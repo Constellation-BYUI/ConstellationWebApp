@@ -117,8 +117,6 @@ spec:
    selector:
     matchLabels:
       name: "constellationweb-resumes"
-    matchExpressions:
-      - {key: environment, operator: In, values: [dev]}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -134,5 +132,4 @@ spec:
    selector:
     matchLabels:
       name: "constellationweb-image"
-    matchExpressions:
-      - {key: environment, operator: In, values: [dev]}
+      
