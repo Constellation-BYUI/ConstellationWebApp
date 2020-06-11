@@ -75,6 +75,8 @@ kind: PersistentVolume
 metadata:
   name: constellationweb-image
 spec:
+  accessModes:
+   - ReadWriteMany
   capacity:
     storage: 5Gi
   nfs:
@@ -86,6 +88,8 @@ kind: PersistentVolume
 metadata:
   name: constellationweb-resumes
 spec:
+  accessModes:
+    - ReadWriteMany
   capacity:
     storage: 5Gi
   nfs:
