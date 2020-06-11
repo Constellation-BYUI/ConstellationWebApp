@@ -77,14 +77,6 @@ metadata:
 spec:
   capacity:
     storage: 5Gi
-  #volumeMode: Filesystem
-  #accessModes:
-  #  - ReadWriteMany
-  #persistentVolumeReclaimPolicy: Recycle
-  #storageClassName: slow
-  #mountOptions:
-  #  - hard
-  #  - nfsvers=4.1
   nfs:
     path: /images
     server: nfs-local.default.svc.cluster.local
@@ -96,16 +88,8 @@ metadata:
 spec:
   capacity:
     storage: 5Gi
-  #volumeMode: Filesystem
-  #accessModes:
-  #  - ReadWriteMany
-  #persistentVolumeReclaimPolicy: Recycle
-  #storageClassName: slow
-  #mountOptions:
-  # - hard
-  # - nfsvers=4.1
   nfs:
-    server:nfs-local.default.svc.cluster.local
+    server: nfs-local.default.svc.cluster.local
     path: /resumes
 ---
 
@@ -116,14 +100,10 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany
-  #volumeMode: Filesystem
   resources:
     requests:
       storage: 5Gi
   storageClassName: ""
-  #selector:
-  #  matchLabels:
-  #    name: "constellationweb-resumes"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -132,11 +112,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany
-  #volumeMode: Filesystem
   resources:
     requests:
       storage: 5Gi
   storageClassName: ""
-  #selector:
-  #  matchLabels:
-  #    name: "constellationweb-image"
