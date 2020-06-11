@@ -115,8 +115,8 @@ spec:
       storage: 5Gi
   storageClassName: ""
    selector:
-    matchLabels:
-      name: "constellationweb-resumes"
+     matchLabels:
+       name: "constellationweb-resumes"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -130,6 +130,6 @@ spec:
       storage: 5Gi
   storageClassName: ""
    selector:
-    matchLabels:
-      name: "constellationweb-image"
+     matchLabels:
+       name: "constellationweb-image"
       
