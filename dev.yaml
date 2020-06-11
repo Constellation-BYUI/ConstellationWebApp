@@ -29,9 +29,9 @@ spec:
             memory: "250Mi"
         volumeMounts:
         - name: image
-          mountPath: /wwwroot/image
+          mountPath: /app/wwwroot/image
         - name: resumes
-          mountPath: /wwwroot/Resumes
+          mountPath: /app/wwwroot/Resumes
         livenessProbe:
           httpGet:
             path: /account/login
