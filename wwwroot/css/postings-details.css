@@ -1,0 +1,55 @@
+﻿body {
+    
+}
+
+h2 {
+    text-align: center;
+    margin: 0;
+}
+
+header img {
+    max-width: 100%;
+}
+
+#details-recruiter-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#details-job-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.back-button {
+    padding: 10px;
+}
+
+@media (min-width: 800px) {
+    #details-recruiter-info {
+        flex-direction: row;
+    }
+
+    #recruiter-flex-spacer {
+        margin-right: auto;
+        padding: 10px;
+    }
+
+    #details-job-description {
+        position: relative;
+    }
+
+    .back-button {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+
+    .form-group .btn {
+        margin: 0 10px;
+    }
+}
