@@ -81,7 +81,7 @@ spec:
     storage: 5Gi
   nfs:
     path: /images
-    server: nfs-local.default.svc.cluster.local
+    server: 34.75.156.77
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -93,7 +93,7 @@ spec:
   capacity:
     storage: 5Gi
   nfs:
-    server: nfs-local.default.svc.cluster.local
+    server: 34.75.156.77
     path: /resumes
 ---
 
