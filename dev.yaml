@@ -79,6 +79,9 @@ spec:
    - ReadWriteMany
   capacity:
     storage: 5Gi
+  mountOptions:
+   - hard
+   - nfsvers=4.1
   nfs:
     path: /images
     server: 34.75.156.77
@@ -92,6 +95,9 @@ spec:
     - ReadWriteMany
   capacity:
     storage: 5Gi
+  mountOptions:
+   - hard
+   - nfsvers=4.1
   nfs:
     server: 34.75.156.77
     path: /resumes
