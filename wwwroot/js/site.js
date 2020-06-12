@@ -68,3 +68,13 @@ function openNav() {
         x.className = x.className.replace(" w3-show", "");
     }
 }
+
+
+function openUser() {
+    var x = document.getElementById("navSetting");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
