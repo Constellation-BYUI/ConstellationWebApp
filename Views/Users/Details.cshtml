@@ -5,7 +5,7 @@
 @{
     ViewData["Title"] = "Details";
     var photoPath = "~/image/" + Model.PhotoPath;
-    var resumePath = "~/Resumes/" + (Model.ResumePhotoPath);
+    var resumePath = "../../../../Resumes/" + Model.ResumePhotoPath;
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
     var allReadyStarred = false;
     List<ConstellationWebApp.Models.RecruiterPicks> picks = ViewBag.recruitersData;
