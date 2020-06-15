@@ -27,12 +27,24 @@ spec:
           requests:
             cpu: ".25"
             memory: "250Mi"
+        volumeMounts:
+        - name: image
+          mountPath: /app/wwwroot/image
+        - name: resumes
+          mountPath: /app/wwwroot/Resumes
         livenessProbe:
           httpGet:
             path: /account/login
             port: 80
           initialDelaySeconds: 3
           periodSeconds: 3
+      volumes:
+      - name: image
+        persistentVolumeClaim:
+          claimName: constellationweb-image-claim
+      - name: resumes
+        persistentVolumeClaim:
+          claimName: constellationweb-resumes-claim
 ---
 apiVersion: v1
 kind: Service
@@ -61,18 +73,66 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: constellationweb
+  name: constellationprod-image
+  labels:
+    name: constellationprod-image
 spec:
+  accessModes:
+   - ReadWriteMany
   capacity:
     storage: 5Gi
-  volumeMode: Filesystem
+  mountOptions:
+   - hard
+   - nfsvers=4.1
+  nfs:
+    path: /images
+    server: 10.12.15.212
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: constellationprod-resumes
+  labels:
+    name: constellationprod-resumes
+spec:
   accessModes:
     - ReadWriteMany
-  persistentVolumeReclaimPolicy: Recycle
-  storageClassName: slow
+  capacity:
+    storage: 5Gi
   mountOptions:
     - hard
     - nfsvers=4.1
   nfs:
-    path: /
-    server: nfs-local
+    server: 10.12.15.212
+    path: /resumes
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: constellationprod-resumes-claim
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: ""
+  selector:
+    matchLabels:
+      name: "constellationprod-resumes"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: constellationprod-image-claim
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: ""
+  selector:
+    matchLabels:
+      name: "constellationprod-image"
+
