@@ -13,6 +13,50 @@
     <h3 class="text-black-50 text-center mt-2 py-3 py-sm-2">Posted Roles</h3>
 </div>
 
+<!-- #region Info button:
+    Note from Ryan: I could not figure out how to keep this working
+    when i put the css and javascript in seperate files.
+    I am going to leave this as it is for now so we can place these info blips in all locations needed-->
+<style>
+    .show-info {
+        opacity: 1;
+    }
+
+    p {
+        padding: 1em;
+        opacity: 0;
+        transition: opacity 0.5s linear;
+        background-color: lightgoldenrodyellow;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+
+    #hidden-info-blip {
+        width: 600px;
+        z-index: 4;
+        position: absolute;
+    }
+
+    #btn1 {
+        border-radius: 100%;
+    }
+</style>
+
+<button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
+<p id="hidden-info-blip">
+    Here you can see those who are intrested in your posting. You 
+</p>
+@* Scripts and resources for info button *@
+<script type="text/javascript">
+    var btn = document.getElementById('btn1')
+    var p = document.getElementById('hidden-info-blip')
+    btn.addEventListener('click', evt => {
+        p.classList.toggle('show-info')
+    })
+</script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="/scripts/snippet-javascript-console.min.js?v=1"></script>
+<!-- #endregion -->
 
 <div id="projectDisplay">
     @*The user must be logged in that should ensure that only the right user is seeign this data*@
@@ -22,119 +66,119 @@
             @*Display all "Role/Postings"*@
             @foreach (var item in Model.Postings.Where(i => i.PostingOwner.Id == currentUser))
             {
-                    <div class="card shadow-lg text-black text-center m-2 padding">
-                        @{ 
-                            count = 0;
-                        }
-                        @*Display all the user picks with requires the pick to relate to a "Role/Posting"*@
-                        @foreach (var pick in Model.RecruiterPicks.Where((i => i.PostingID == item.PostingID)))
+                <div class="card shadow-lg text-black text-center m-2 padding">
+                    @{
+                        count = 0;
+                    }
+                    @*Display all the user picks with requires the pick to relate to a "Role/Posting"*@
+                    @foreach (var pick in Model.RecruiterPicks.Where((i => i.PostingID == item.PostingID)))
+                    {
+                        if (count == 0)
                         {
-                            if (count == 0)
-                            {
                             <h2> Your Picks for @pick.Posting.PostingTitle</h2>
-                            }
-                            var candidatePath = "~/image/" + (pick.Candidate.PhotoPath);
-                            var candidateMemberPath = "../Users/Details/" + (pick.Candidate.Id);
-                            <a href="@candidateMemberPath"><img class="small-thumbnail" src=" @candidatePath" alt="@Html.DisplayFor(modelItem => pick.Candidate.UserName)" asp-append-version="true" /></a>
-                            <p>@pick.Candidate.UserName</p>
-
-                            <form asp-action="DeletePick" asp-controller="IntrestedCandidates">
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <div class="form-group">
-                                    <input type="hidden" class="form-control" value="@pick.RecuiterPicksID" name="recuiterPicksID" />
-                                </div>
-                                <div class="form-group">
-                                    <input type="submit" value="Remove from your Picks Pool" class="btn btn-primary" />
-                                </div>
-                            </form>
-                            count++;
                         }
+                        var candidatePath = "~/image/" + (pick.Candidate.PhotoPath);
+                        var candidateMemberPath = "../Users/Details/" + (pick.Candidate.Id);
+                        <a href="@candidateMemberPath"><img class="small-thumbnail" src=" @candidatePath" alt="@Html.DisplayFor(modelItem => pick.Candidate.UserName)" asp-append-version="true" /></a>
+                        <p>@pick.Candidate.UserName</p>
 
-                        @* Display the Posting/Role itself *@
-                        @{
-                            var spID = item.PostingID;
-                            var photoPath = "~/image/" + (item.PostingOwner.PhotoPath);
-                            var collabMemberPath = "../Users/Details/" + (item.PostingOwner.Id);
-                        }
-               
-                        <hr />
-                        <div class="card shadow-lg text-black text-center m-2 padding">
-                            @*Name of Company*@
-                            <h3 class="card-header bg-primary py-1 text-white text-center m-0">
-                                @Html.DisplayFor(modelItem => item.PostingFor)
-                            </h3>
-                            @*Position*@
-                            <h5 class="text-center m-0 bg-light p-2 border-bottom">
-                                <strong class="text-success">Position : </strong><span class="mb-0 p-1 text-black">@Html.DisplayFor(modelItem => item.PostingTitle)</span>
-                            </h5>
+                        <form asp-action="DeletePick" asp-controller="IntrestedCandidates">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" value="@pick.RecuiterPicksID" name="recuiterPicksID" />
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Remove from your Picks Pool" class="btn btn-primary" />
+                            </div>
+                        </form>
+                        count++;
+                    }
 
-                            <section class="bg-light text-wrap text-justify">
-                                <div class="col-6 text-left float-left">
-                                    <div class="bg-light text-wrap p-2 py-0 border-bottom"><strong class="text-black">Recruiter's Name : </strong><span class="text-black-50">@Html.DisplayFor(modelItem => item.PostingOwner.UserName)</span></div>
-                                    <a class="m-1 border-success" href="@collabMemberPath"><img style="height: 300px; width: 100%; display: block; box-shadow: 5px 5px 15px #343a40;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.PostingOwner.UserName)" asp-append-version="true" /></a>
-                                </div>
-                                <div class="col-6 float-right text-center">
-                                    @*Type of Posting*@
-                                    <h5 class="card-title bg-info container-fluid float-right py-2 text-white rounded mt-2">Type of Posting</h5>
-                                    @foreach (var type in item.Posting_PostingTypes)
-                                    {
-                                        <h6 class="text-black">
-                                            @type.PostingTypes.PostingTypeName
-                                        </h6>
+                    @* Display the Posting/Role itself *@
+                    @{
+                        var spID = item.PostingID;
+                        var photoPath = "~/image/" + (item.PostingOwner.PhotoPath);
+                        var collabMemberPath = "../Users/Details/" + (item.PostingOwner.Id);
+                    }
 
-                                    }
-                                    @*Description of Posting*@
-                                    <h5 class="card-title bg-info container-fluid float-right py-2 text-white rounded">Description</h5>
-                                    <p class="text-black-50 p-2">@Html.DisplayFor(modelItem => item.Description)</p>
-                                </div>
-                            </section>
+                    <hr />
+                    <div class="card shadow-lg text-black text-center m-2 padding">
+                        @*Name of Company*@
+                        <h3 class="card-header bg-primary py-1 text-white text-center m-0">
+                            @Html.DisplayFor(modelItem => item.PostingFor)
+                        </h3>
+                        @*Position*@
+                        <h5 class="text-center m-0 bg-light p-2 border-bottom">
+                            <strong class="text-success">Position : </strong><span class="mb-0 p-1 text-black">@Html.DisplayFor(modelItem => item.PostingTitle)</span>
+                        </h5>
 
-
-                            @*Display the Posting types of the Posting itself *@
-                            <div>
-                                <h4>Type of Posting</h4>
+                        <section class="bg-light text-wrap text-justify">
+                            <div class="col-6 text-left float-left">
+                                <div class="bg-light text-wrap p-2 py-0 border-bottom"><strong class="text-black">Recruiter's Name : </strong><span class="text-black-50">@Html.DisplayFor(modelItem => item.PostingOwner.UserName)</span></div>
+                                <a class="m-1 border-success" href="@collabMemberPath"><img style="height: 300px; width: 100%; display: block; box-shadow: 5px 5px 15px #343a40;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.PostingOwner.UserName)" asp-append-version="true" /></a>
+                            </div>
+                            <div class="col-6 float-right text-center">
+                                @*Type of Posting*@
+                                <h5 class="card-title bg-info container-fluid float-right py-2 text-white rounded mt-2">Type of Posting</h5>
                                 @foreach (var type in item.Posting_PostingTypes)
                                 {
-                                    <div class="Demo-Types">
+                                    <h6 class="text-black">
                                         @type.PostingTypes.PostingTypeName
-                                    </div>
-                                    <br />
+                                    </h6>
+
                                 }
+                                @*Description of Posting*@
+                                <h5 class="card-title bg-info container-fluid float-right py-2 text-white rounded">Description</h5>
+                                <p class="text-black-50 p-2">@Html.DisplayFor(modelItem => item.Description)</p>
                             </div>
+                        </section>
+
+
+                        @*Display the Posting types of the Posting itself *@
+                        <div>
+                            <h4>Type of Posting</h4>
+                            @foreach (var type in item.Posting_PostingTypes)
+                            {
+                                <div class="Demo-Types">
+                                    @type.PostingTypes.PostingTypeName
+                                </div>
+                                <br />
+                            }
+                        </div>
+                    </div>
+
+                    @if (Model.intrestedCandidates != null)
+                    {
+                        @*Display the intrested candidates *@
+                        <h4>Those Intrested</h4>
+                        foreach (var candidate in Model.intrestedCandidates.Where(i => i.PostingID == item.PostingID))
+                        {
+                            var candidatePath = "~/image/" + (candidate.User.PhotoPath);
+                            var candidateMemberPath = "../Users/Details/" + (candidate.UserID);
+
+                            <a href="@candidateMemberPath"><img class="small-thumbnail" src=" @candidatePath" alt="@Html.DisplayFor(modelItem => candidate.User.UserName)" asp-append-version="true" /></a>
+
+                            @*easily add an intrested user to the recuiters picks *@
+                            <form asp-action="CreatePick" asp-controller="IntrestedCandidates">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <div class="form-group">
+                                    <input type="hidden" class="form-control" value="@item.PostingID" name="postingID" />
+                                    <input type="hidden" class="form-control" value="@candidate.UserID" name="candidateID" />
+                                    <input type="hidden" class="form-control" value="@item.PostingOwner.Id" name="recruiterID" />
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Add to your Picks Pool" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        }
+                        <div>
+                            <a asp-action="Details" asp-controller="Postings" asp-route-id="@item.PostingID">Post Details</a>
+                            <a asp-action="Edit" asp-controller="Postings" asp-route-id="@item.PostingID">Edit</a> |
+                            <a asp-action="Index" asp-controller="Postings">View All Postings</a>
                         </div>
 
-                        @if (Model.intrestedCandidates != null)
-                        {
-                            @*Display the intrested candidates *@
-                            <h4>Those Intrested</h4>
-                            foreach (var candidate in Model.intrestedCandidates.Where(i => i.PostingID == item.PostingID))
-                            {
-                                var candidatePath = "~/image/" + (candidate.User.PhotoPath);
-                                var candidateMemberPath = "../Users/Details/" + (candidate.UserID);
-
-                                <a href="@candidateMemberPath"><img class="small-thumbnail" src=" @candidatePath" alt="@Html.DisplayFor(modelItem => candidate.User.UserName)" asp-append-version="true" /></a>
-
-                                @*easily add an intrested user to the recuiters picks *@
-                                <form asp-action="CreatePick" asp-controller="IntrestedCandidates">
-                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                    <div class="form-group">
-                                        <input type="hidden" class="form-control" value="@item.PostingID" name="postingID" />
-                                        <input type="hidden" class="form-control" value="@candidate.UserID" name="candidateID" />
-                                        <input type="hidden" class="form-control" value="@item.PostingOwner.Id" name="recruiterID" />
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="submit" value="Add to your Picks Pool" class="btn btn-primary" />
-                                    </div>
-                                </form>
-                            }
-                            <div>
-                                <a asp-action="Details" asp-controller="Postings" asp-route-id="@item.PostingID">Post Details</a>
-                                <a asp-action="Edit" asp-controller="Postings" asp-route-id="@item.PostingID">Edit</a> |
-                                <a asp-action="Index" asp-controller="Postings">View All Postings</a>
-                            </div>
-
-                        }
-                    </div>
+                    }
+                </div>
             }
         }
 

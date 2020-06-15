@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
     <Folder Include="wwwroot\image\" />
     <Folder Include="wwwroot\Resumes\" />
   </ItemGroup>

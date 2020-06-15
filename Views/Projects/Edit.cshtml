@@ -11,10 +11,7 @@
     var thisProject = Model.ProjectID;
     var loggedOn = false;
     var assigned = false;
-    var addShown = false;
-    var deleteShown = false;
     bool kickOut = false;
-    var checker = 0;
 }
 
 @*Detemines if curretn user is a collaborator of Project*@
@@ -114,7 +111,10 @@
                                 </section>
                             </form>
                             <!-- #endregion -->
-                            @*Edit Relation Data: ProjectLinks, Collaborators(UserProjects), ProjectPostings*@
+
+
+
+ @*Edit Relation Data: ProjectLinks, Collaborators(UserProjects), ProjectPostings*@
  <!-- #region Relation Project Link Add/Remove Buttons -->
                 <section class="">
                     <h5 class="bg-info text-white mx-0 p-2 mb-0">Project Links</h5>

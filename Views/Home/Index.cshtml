@@ -13,13 +13,16 @@
             <div id="box1" class="col-sm-12 col-md-5 pl-4">
                 <h3 class="py-2">Constellation Platform: Share Your Passion</h3>
                 <h6 class="">
-                   Do you have projects, competencies, achievements and qualities <br /> you would love to share in much effects ways than in a resume?<br />
-                    Get ready to wow your potential employers.
+                   @* potential switch @Nwokolo in phrasing and structure what do you think *@
+                    Have projects, skills, and achievements <br /> 
+                    that a resume just does not capture?<br /> 
+                    It is time to prove what you are capable of.<br />
+                    Get ready to wow your potential employer!
                 </h6>
                 <a asp-controller="Account" asp-action="Register" class="btn btn-md btn-success mt-2 border-white">SignUp Now</a>
             </div>
             <div id="box2" class="text-center col-sm-12 col-md-3 px-1">
-                <h3>Share that job offer with some of the very best students.</h3>
+                <h3>Share your job offers with some of the very best students.</h3>
                 <a asp-controller="Postings" asp-action="Create" class="btn btn-md btn-primary mt-4 border-white">Post A Job</a>
             </div>
         </div>
@@ -27,9 +30,34 @@
 
     <!-- links to Users, projects and job postings -->
     <section id="section1" class="d-flex justify-content-around bg-light shadow">
+        @*
+            #blips&info - 
+            These statements and information can all be found in the one note document and are under construction 
+            to get the best/clearest explination but we are including what is likely to be said and the size of 
+            the statements. Feel free to use the paragraphs to style the page with them or turn them into the hidden
+            info sections that appear when a button is pressed, you can also figure out other cool ways to incorporate 
+            them but the info does need to be present*@
 
-        <a asp-controller="Users" asp-action="Index" ><div class="bigClick shadow-lg bg-primary" id="boxLink1"><p style="padding: 50% 0;">Users</p></div></a>
+        <!--
+           #blip&info
+       User Info Blip: See the current people using this platform. Check out their projects, resume, see who they work with, and get their contact information by visiting their profiles.
+        -->
+        <a asp-controller="Users" asp-action="Index"><div class="bigClick shadow-lg bg-primary" id="boxLink1"><p style="padding: 50% 0;">Users</p></div></a>
+
+
+        <!--
+        #blip&info
+        Job Postings Blip: The roles and positions needing to be filled are available in the job postings section. Create your own posting if you are a recruiter or looking for someone to
+        join your project. Specify what kind of job, a short description, the position or role available, and the company or project that it is made for. Those who are interested and those
+        who you think are a good fit can be saved, so they can be easily viewed later.
+        -->
         <a asp-controller="Postings" asp-action="Index"><div class="bigClick shadow-lg bg-success" id="boxLink2"><p style="padding: 50% 0;">Jobs</p></div></a>
+       
+
+        <!-- #blip&info
+        Projects: Whether users are working in teams or learning independently, the Projects page allows you to view the projects that others are currently working on or have completed.
+        They can include all they did to complete the project and showcase what they gained from the experience. Create your own projects to increase your marketability.
+         -->
         <a asp-controller="Projects" asp-action="Index"><div class="bigClick shadow-lg bg-primary" id="boxLink3"><p style="padding: 50% 0;">Projects</p></div></a>
 
     </section>
