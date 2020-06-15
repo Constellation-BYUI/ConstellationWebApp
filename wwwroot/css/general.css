@@ -1,7 +1,30 @@
 ﻿@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 
+<<<<<<< HEAD
 html, body, h1, h2, h3, h4, h5 {
     font-family: "Open Sans", sans-serif
+=======
+/* Israel's Note */
+
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+
+/*NAVIGATION LINKS*/
+
+
+/*BODY*/
+main {
+    margin-top: 50px;
+}
+
+.titleCard {
+    border: 1px solid white;
+    border-bottom: 0;
+    border-radius: 5px 5px 0 0;
+    color: white;
+    text-align: center;
+    background-color: #1b6ec2;
+    padding: 0.5rem 0.5rem;
+>>>>>>> c34075ee5164cd33e50b6d3918d98956beee7e89
 }
 main {
     margin-top: 50px;
@@ -21,6 +44,15 @@ main {
     color: white;
 }
 
+<<<<<<< HEAD
+=======
+.gradient-content {
+    display: flex;
+    justify-content: space-evenly;
+    /* max-width: ; */
+    padding-top: 60px;
+}
+>>>>>>> c34075ee5164cd33e50b6d3918d98956beee7e89
 
 .signUp-button {
     position: absolute;
