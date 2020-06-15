@@ -22,11 +22,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="icon" href="~/favicon.ico" />
-    <style>
-        html, body, h1, h2, h3, h4, h5 {
-            font-family: "Open Sans", sans-serif
-        }
-    </style>
 </head>
 <body>
     <!-- Navbar -->
@@ -39,7 +34,7 @@
             <a class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" asp-area="" asp-controller="Postings" asp-action="Index">Job Postings</a>
             <div class="w3-bar-item w3-hide-small w3-right" style="padding: 5px">
                 <form action="" class="float-left m-auto w3-text-grey">
-                    <div class="input-group mb-2">
+                    <div class="input-group">
                         <input type="search" placeholder="search.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
                         <div class="input-group-append">
                             <button id="button-addon5" type="submit" class="btn btn-secondary w3-hover-green"><i class="fa fa-search"></i></button>
@@ -51,15 +46,15 @@
                     @if (signInManager.IsSignedIn(User))
                     {
                         <li class="">
-                            <a class="w3-bar-item w3-large w3-padding-small w3-hover-gray ml-2" href="javascript:void(0);" onclick="openUser()"><img src="/image/panther2.jpg" class="w3-circle" style="height:26px;width:26px" alt="Avatar" title="My Account"></a>
-                            <div id="navSetting" class="w3-bar-item w3-bar-block w3-theme-l4 w3-hide w3-hide-small">
-                                <div class="w3-bar-item dropdown">
-                                    <a data-toggle="dropdown" class="w3-bar-item w3-padding-small w3-hover-white bg-primary text-white dropdown-toggle" asp-area="" asp-controller="StarredPostings" asp-action="Index">My Stuff</a>
-                                    <div id="mystuff" class="dropdown-menu w3-theme-l5">
-                                        <a class="dropdown-item text-secondary" asp-controller="StarredProjects" asp-action="Index">My Starred Projects</a>
-                                        <a class="dropdown-item text-secondary" asp-controller="StarredPostings" asp-action="Index">My Starred Postings</a>
-                                        <a class="dropdown-item text-secondary" asp-controller="StarredUsers" asp-action="Index">My Starred Users</a>
-                                        <a class="dropdown-item text-primary" asp-controller="IntrestedCandidates" asp-action="Index">Posting Candidates</a>
+                            <a class="w3-bar-item w3-large w3-padding-small w3-hover-green ml-2" href="javascript:void(0);" onclick="openUser()"><img src="/image/panther2.jpg" class="w3-circle" style="height:30px;width:30px" alt="Avatar" title="My Account"></a>
+                            <div id="navSetting" class="w3-bar-block w3-theme-l4 w3-hide w3-hide-small w3-dropdown-click">
+                                <div class="">
+                                    <a onclick="myFunction()"class="w3-bar-item w3-padding-small w3-hover-white dropdown-toggle">My Stuff</a>
+                                    <div id="stuffDrop" class="w3-dropdown-content w3-bar-block w3-card-4 w3-animate-zoom w3-theme-l5">
+                                        <a class="w3-bar-item w3-button" asp-controller="StarredProjects" asp-action="Index">My Starred Projects</a>
+                                        <a class="w3-bar-item w3-button" asp-controller="StarredPostings" asp-action="Index">My Starred Postings</a>
+                                        <a class="w3-bar-item w3-button" asp-controller="StarredUsers" asp-action="Index">My Starred Users</a>
+                                        <a class="w3-bar-item w3-button" asp-controller="IntrestedCandidates" asp-action="Index">Posting Candidates</a>
                                     </div>
                                 </div>
                                 <a href="#" class="w3-bar-item w3-padding-small w3-hover-white">Edit Account</a>
@@ -99,12 +94,12 @@
             @if (signInManager.IsSignedIn(User))
             {
                 <li class="w3-bar-item dropdown">
-                    <a data-toggle="dropdown" class="text-white border-white btn btn-sm btn-secondary dropdown-toggle" asp-area="" asp-controller="StarredPostings" asp-action="Index">My Stuff</a>
-                    <div id="mystuff" class="dropdown-menu w3-theme-l5">
-                        <a class="dropdown-item text-secondary" asp-controller="StarredProjects" asp-action="Index">My Starred Projects</a>
-                        <a class="dropdown-item text-secondary" asp-controller="StarredPostings" asp-action="Index">My Starred Postings</a>
-                        <a class="dropdown-item text-secondary" asp-controller="StarredUsers" asp-action="Index">My Starred Users</a>
-                        <a class="dropdown-item text-primary" asp-controller="IntrestedCandidates" asp-action="Index">Posting Candidates</a>
+                    <a onclick="myFunction" class="w3-button dropdown-toggle" asp-area="" asp-controller="StarredPostings" asp-action="Index">My Stuff</a>
+                    <div id="stuffDrop" class="w3-dropdown-content w3-bar-block w3-card-4 w3-animate-zoom w3-theme-l5">
+                        <a class="w3-bar-item w3-button" asp-controller="StarredProjects" asp-action="Index">My Starred Projects</a>
+                        <a class="w3-bar-item w3-button" asp-controller="StarredPostings" asp-action="Index">My Starred Postings</a>
+                        <a class="w3-bar-item w3-button" asp-controller="StarredUsers" asp-action="Index">My Starred Users</a>
+                        <a class="w3-bar-item w3-button" asp-controller="IntrestedCandidates" asp-action="Index">Posting Candidates</a>
                     </div>
                 </li>
 
@@ -140,7 +135,11 @@
     </div>
 
     @*Main section Starts Here*@
-    <main role="main" class="container-fluid">
+<<<<<<< HEAD
+    <main role="main" class="w3-theme-l4">
+=======
+    <main role="main">
+>>>>>>> c34075ee5164cd33e50b6d3918d98956beee7e89
         @RenderBody()
     </main>
 
