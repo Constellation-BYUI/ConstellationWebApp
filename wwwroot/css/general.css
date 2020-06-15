@@ -1,90 +1,149 @@
-﻿                                            
-                                         /*INSTRUCTIONS FROM MICROSOFT*/
-/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
+﻿@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 
-/* Israel's Note */
-
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
-
-/*NAVIGATION LINKS*/
-
-
-/*BODY*/
-.titleCard {
-    border: 1px solid white;
-    border-bottom: 0;
-    border-radius: 5px 5px 0 0;
-    color: white;
-    text-align: center;
-    background-color: #1b6ec2;
-    padding: 0.5rem 0.5rem;
+html, body, h1, h2, h3, h4, h5 {
+    font-family: "Open Sans", sans-serif
 }
-.titleBorder {
-    border-top: 10px solid #1b6ec2;
-    border-radius: 5px 5px 0 0;
+main {
+    margin-top: 50px;
+}
+
+#sigUpBox {
+    background-color: #457b9d;
+    position: relative;
+    height: 150px;
+    width: 100%;
+    margin-bottom: 40px;
+    
+}
+.signUp-box-text {
+    text-align: justify;
+    text-align: center;
+    color: white;
+}
+
+
+.signUp-button {
+    position: absolute;
+    bottom: -40px;
+    left: 0;
+    right: 0;
+    margin-left: 40%;
+}
+#outer-circle {
     background-color: white;
-    color: #1b6ec2;
-    text-align: center;
-    margin-top: 8px;
-    width: 100%;
-    padding: 0.3em;
+    width: 80px;
+    height: 80px;
+    position: relative;
+    border-radius: 50%;
 }
 
-#usersCard .card {
-    border-radius: 0;
-    box-shadow: 5px 5px 15px #343a40;
-    transition: all 0.3s ease-in;
-    -webkit-transition: all 0.3s ease-in;
-    -moz-transition: all 0.3s ease-in;
+#inner-circle {
+    position: relative;
+    background-color: #28a745;
+    height: 80%;
+    width: 80%;
+    border-radius: 50%;
+    top: 10%;
+    left: 10%;
+    box-shadow: -2px 5px 8px #888888;
+   
 }
-
-.gradient {
-    height: 40vh;
-    min-height: 400px;
-    max-height: 1000px;
-    width: 100%;
-    background-color: #1fc8db;
-    background-image: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+#inner-circle:hover {
+    background: #e9c46a;
     color: white;
-    opacity: 0.95;
 }
 
-.gradient-content {
+#jobPostBox {
+    background-color: #a8dadc;
+    position: relative;
+    height: 100px;
+    width: 100%;
+    margin-bottom: 35px;
+}
+    #jobPostBox .circleContent {
+        position: absolute;
+        bottom: -35px;
+        left: 0;
+        right: 0;
+        margin-left: 42%;
+    }
+
+    #jobPostBox #outer-circle {
+        background-color: white;
+        width: 60px;
+        height: 60px;
+        position: relative;
+        border-radius: 50%;
+    }
+    #jobPostBox #inner-circle {
+        position: relative;
+        background-color: #1b6ec2;
+        height: 80%;
+        width: 80%;
+        border-radius: 50%;
+        top: 10%;
+        left: 10%;
+        box-shadow: -2px 5px 8px #888888;
+        
+    }
+        #jobPostBox #inner-circle:hover {
+            background: #e9c46a;
+            color: white;
+        }
+
+#section2 {
+    margin-top: 70px;
+    margin-bottom: 10px;
     display: flex;
-    justify-content: space-evenly;
-    max-width: ;
-    padding-top: 60px;
+    flex-direction: row;
+    justify-content: space-between;
 }
-
-#section1 {
-    padding: 20px;
+.view {
+    position: relative;
+    background-color: #f1faee;
+    border-radius: 5px;
+    color: black;
+    height: 50px;
+    width: 150px;
+    margin: 0 6px;
 }
-
-.bigClick {
-    height: 7em;
-    width: 7em;
-    border: 0 solid white;
-    border-radius: 90%;
-    color: white;
+.view h6 {
+    margin-top: 20%;
     text-align: center;
-    line-height: 0;
+}
+.avatarUser {
+    position: absolute;
+    top: -30px;
+    left: 30%;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #1b6ec2;
+}
+.avatarJob {
+    position: absolute;
+    top: -30px;
+    left: 30%;
+    border-radius: 5px;
+    background-color: green;
+    height: 50px;
+    width: 50px;
+}
+.avatarProject {
+    position: absolute;
+    top: -30px;
+    left: 30%;
+    border-radius: 5px;
+    background-color: #6610f2;
+    height: 50px;
+    width: 50px;
 }
 
-    #boxLink1, #boxLink2, #boxLink3 {
-        text-decoration: none !important;
-    }
-
-    .bigClick:hover {
-        background: #6c757d !important;
-        color: #fff;
-        border: none;
-        box-shadow: 5px 5px 15px #343a40;
-    }
-
-.social a {
-    font-size: 2em;
-    margin: 0 15px;
+#section3 {
+    margin-top: 10px;
+    height: 150px;
+    width: 100%;
+    background-color: #457b9d;
 }
 
 .fa-facebook {
@@ -102,89 +161,13 @@ for details on configuring this project to bundle and minify static web assets. 
 .fa-youtube {
     color: #bb0000;
 }
-
-    .fa-facebook:hover,
-    .fa-twitter:hover,
-    .fa-github:hover,
-    .fa-youtube:hover {
-        color: #6c757d;
-    }
-
-#box1 {
-    /*border: 1px solid white;*/
-    background: gray;
-    height: 20em;
-    padding: 3em 5em;
-    box-shadow: 5px 5px 15px #343a40;
-    border-radius: 10px;
-}
-
-#box2 {
-    /* border: 1px solid white; */
-    padding: 3em 5em;
-    background: #6f42c1;
-    box-shadow: 5px 5px 15px #343a40;
-    border-radius: 10px;
-}
-
- #box1:hover, #box2:hover {
-        background: #dc3545 !important;
-        color: #fff;
-        border: none;
-        box-shadow: 5px 5px 15px #343a40;
-    }
-footer {
+/*.circleText {
+    position: absolute;
+    margin: 0 0 0 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
     color: white;
-    background: #343a40;
-    padding: 1rem .5rem;
+    font-size: .9rem;
 }
-
-
-/*#usersCard .card:hover {
-        background: #e74c3c;
-        color: #fff;
-        border-radius: 5px;
-        border: none;
-        box-shadow: 5px 5px 15px #343a40;
-    }*/
-/*HEADER*/
-/*FOOTER*/
-/*BUTTONS*/
-/*CSS form Scroll-To-Top button*/
-#myBtn {
-    display: none;
-    position: fixed;
-    bottom: 5px;
-    right: 15px;
-    z-index: 99;
-    border: 1px solid white;
-    outline: none;
-    color: white;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 5px;
-    font-size: 16px;
-}
-#myBtn:hover {
-        background-color: #555; /* Add a dark-grey background on hover */
-    }
-
-
-
-/*PICTURES*/
-.small-thumbnail {
-    padding: 3px;
-    line-height: 0.7;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 2px;
-    -webkit-transition: all 0.2s ease-in-out;
-    -o-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
-    display: flex;
-    flex-direction: column;
-    width: 4rem;
-    height: 4rem;
-}
-
-
+*/

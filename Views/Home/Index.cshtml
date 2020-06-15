@@ -6,15 +6,117 @@
 
 <input type="hidden" asp-for="Id" />
 
+<!-- Section one contains two boxes with round button for signUp and Post Job -->
+<section>
+    
+    <div id="sigUpBox">
+        <div class="signUp-box-text">
+            <h3 class="py-2"><strong>Constellation Platform: Share Your Passion</strong></h3>
+            <h6 class="">
+                Show your qualities, competence, projects and achievements all in one place and make them accessible to potential employers.
+            </h6>
+        </div>
+        <!-- This is the signUp round button-->
+        <div class="signUp-button">
+            <div id="outer-circle" class="w3-theme-l4">
+                <div id="inner-circle">
+                    <a asp-controller="Account" asp-action="Register">SignUp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*Post Jobs Box*@
+<div id="jobPostBox">
+    <div class="textInside">
+        <h3>Share that job offer with some of the very best students.</h3>
+    </div>
+    <div class="circleContent">
+        <div id="outer-circle" class="w3-theme-l4">
+            <div id="inner-circle">
+                <a class="text-white" style="align-self: center" asp-controller="Postings" asp-action="Create">Post Job</a>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+@*Section two*@
+<div id="section2" class="shadow-lg">
+    <div class="card col-sm-4">
+        <div class="avatarUser">
+
+        </div>
+        <h6>View Users</h6>
+    </div>
+
+    <div class="card col-sm-4">
+        <div class="avatarJob">
+
+        </div>
+        <h6>View Jobs</h6>
+    </div>
+
+    <div class="card col-sm-4">
+        <div class="avatarProject">
+
+        </div>
+        <h6>View Projects</h6>
+    </div>
+</div>
+
+@*sectopm three*@
+<section id="section3">
+
+</section>
+
+@*section four*@
+<section>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div>
     <!-- Big Background with write-ups -->
     <section class="gradient border-bottom">
         <div class="gradient-content">
             <div id="box1" class="col-sm-12 col-md-5 pl-4">
-                <h3 class="py-2">Constellation Platform: Share Your Passion</h3>
+                <h3 class="py-2"><strong>Constellation Platform: Share Your Passion</strong></h3>
                 <h6 class="">
-                   Do you have projects, competencies, achievements and qualities <br /> you would love to share in much effects ways than in a resume?<br />
-                    Get ready to wow your potential employers.
+                    Show your qualities, competence, projects and achievements all in one place and make them accessible to potential employers.
                 </h6>
                 <a asp-controller="Account" asp-action="Register" class="btn btn-md btn-success mt-2 border-white">SignUp Now</a>
             </div>
