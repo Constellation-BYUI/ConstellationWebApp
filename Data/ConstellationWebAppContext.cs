@@ -41,6 +41,8 @@ namespace ConstellationWebApp.Data
         public DbSet<ConstellationWebApp.Models.SkillDiscipline> SkillDisciplines { get; set; }
         public DbSet<ConstellationWebApp.Models.Discipline> Disciplines { get; set; }
 
+        public DbSet<ConstellationWebApp.Models.SkillLink> SkillLinks { get; set; }
+
 
 
 
@@ -187,7 +189,11 @@ namespace ConstellationWebApp.Data
             modelBuilder.Entity<SkillDiscipline>()
                 .HasOne(bc => bc.Disciplines)
                 .WithMany(c => c.SkillDiscipline)
-                .HasForeignKey(bc => bc.DisciplineID);      
+                .HasForeignKey(bc => bc.DisciplineID);
+
+            modelBuilder.Entity<UserSkill>()
+               .HasOne(c => c.SkillLinks)
+               .WithOne(e => e.UserSkills);
         }
 
 
