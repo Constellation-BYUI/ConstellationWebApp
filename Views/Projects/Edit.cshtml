@@ -93,22 +93,24 @@
                                 @:</div>
                                     }
                                 </div>
-                                <input class="input-group rounded border-light col-md-8" list="user-list" name="selectedCollaborators">
+                                <div id="collaborators-added"></div>
+                                <input class="input-group rounded border-light col-md-8" list="user-list" name="selectedCollaborators" id="selected-collaborators">
                                 <div id="demo"></div>
                                 <input class="text-light bg-secondary border-white rounded mt-1" type="button" id="more_fields" onclick="add_collab();" value="Add Collaborator" />
                                 @*Adding Link-Lable and Link-URL*@
                                 <div class="form-group">
                                     <div class="px-0 col-md-10 small_lable">
+                                        <div id="created-links"></div>
                                         <p class="mb-0 mt-1">Link Label</p>
-                                        <input class="input-group rounded border-light col-md-8" list='contact-link-label' name='createdLinkLabels'>
+                                        <input class="input-group rounded border-light col-md-8" list='contact-link-label' name='createdLinkLabels' id="link-label">
                                         <p class="mb-0 mt-1">Link URL</p>
-                                        <input class="input-group rounded border-light col-md-8" list='contact-link-url' name='createdLinkUrls'>
+                                        <input class="input-group rounded border-light col-md-8" list='contact-link-url' name='createdLinkUrls' id="link-url">
                                         <div id="linkDemo"></div>
                                         <input class="text-light bg-secondary border-white rounded mt-1" type="button" id="more_fields" onclick="add_fields();" value="Add Link" />
                                     </div>
                                 </div>
                                 <section class="card-footer">
-                                    <button type="submit" value="Update" class="btn btn-sm btn-primary">Update</button>                                   
+                                    <button type="submit" value="Update" class="btn btn-sm btn-primary">Update</button>
                                     <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@Model.ProjectID">Delete</a>
                                     <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
                                 </section>
@@ -317,12 +319,13 @@
     </script>
     <script>
         function add_collab() {
-            document.getElementById("demo").innerHTML += "<input class='input-group' list='user-list'   name='selectedCollaborators'> ";
+            document.getElementById("collaborators-added").innerHTML += `<h3>${document.getElementById("selected-collaborators").value}</h3>`;
+            document.getElementById("selected-collaborators").value = "";
         }
     </script>
     <script>
         function add_fields() {
-            document.getElementById("linkDemo").innerHTML += "<p class='mb-0 mt-1 rounded border-light'>Add Link Label</p><input class='input-group' list='contact-link-label' name='createdLinkLabels'><p class='mb-0 mt-1 rounded border-light'>Add Url Link</p><input class='input-group' list='contact-link-url' name='createdLinkUrls'>";
+            document.getElementById("created-links").innerHTML += `<h3>${document.getElementById("link-label").value}</h3> <p><a style="text-decoration: underline" href="${document.getElementById("link-url").value}">${document.getElementById("link-url").value}</a></p>`;
         }
     </script>
 
