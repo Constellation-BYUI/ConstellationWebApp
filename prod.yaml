@@ -44,7 +44,7 @@ spec:
           claimName: constellationprod-image-claim
       - name: resumes
         persistentVolumeClaim:
-          claimName: constellationresumes-resumes-claim
+          claimName: constellationprod-resumes-claim
 ---
 apiVersion: v1
 kind: Service
