@@ -41,10 +41,10 @@ spec:
       volumes:
       - name: image
         persistentVolumeClaim:
-          claimName: constellationweb-image-claim
+          claimName: constellationprod-image-claim
       - name: resumes
         persistentVolumeClaim:
-          claimName: constellationweb-resumes-claim
+          claimName: constellationprod-resumes-claim
 ---
 apiVersion: v1
 kind: Service
