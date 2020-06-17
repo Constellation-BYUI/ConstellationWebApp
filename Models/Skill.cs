@@ -11,7 +11,6 @@ namespace ConstellationWebApp.Models
 
         public string SkillName { get; set; }
 
-        public int DisciplineID { get; set; }
         public virtual ICollection<SkillDiscipline> SkillDisciplines { get; set; }
 
         public ICollection<UserSkill> UserSkills { get; set; }

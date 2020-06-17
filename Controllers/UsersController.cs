@@ -104,7 +104,8 @@ namespace ConstellationWebApp.Controllers
                 Seeking = model.Seeking,
                 PhotoPath = uniqueFileName,
                 ResumePhotoPath = resumeFileName,
-                displayMyProfile = model.displayMyProfile
+                displayMyProfile = model.displayMyProfile,
+                AreaOfDiscipline =  model.AreaOfDiscipline
             };
             return (newUser);
         }
@@ -125,7 +126,8 @@ namespace ConstellationWebApp.Controllers
                 ResumePhotoPath = userModel.ResumePhotoPath,
                 displayMyProfile = userModel.displayMyProfile,
                 thisUser = userModel,
-                ContactLinks = userModel.ContactLinks
+                ContactLinks = userModel.ContactLinks,
+                AreaOfDiscipline = userModel.AreaOfDiscipline
             };
             return (viewModel);
         }
@@ -169,6 +171,7 @@ namespace ConstellationWebApp.Controllers
                    .AsNoTracking()
                    .OrderBy(i => i.Id)
                    .ToListAsync();
+            viewModel.Disciplines = _context.Disciplines;
             return View(viewModel);
         }
 
@@ -219,7 +222,10 @@ namespace ConstellationWebApp.Controllers
         // GET: Users/Create
         public IActionResult Create()
         {
-            return View();
+            var viewModel = new UserCreateViewModel();
+            viewModel.Disciplines = _context.Disciplines.ToList();
+            viewModel.PostingTypes = _context.PostingTypes.ToList();
+            return View(viewModel);
         }
 
         // POST: Users/Create
@@ -261,6 +267,8 @@ namespace ConstellationWebApp.Controllers
                 return NotFound();
             }
             var viewModel = userToEditViewModel(entityProjectModel);
+            viewModel.Disciplines = _context.Disciplines.ToList();
+            viewModel.PostingTypes = _context.PostingTypes.ToList();
             return View(viewModel);
         }
 
@@ -302,6 +310,7 @@ namespace ConstellationWebApp.Controllers
                 user.PhotoPath = uniqueFileName;
                 user.ResumePhotoPath = uniqueResumePath;
                 user.displayMyProfile = model.displayMyProfile;
+                user.AreaOfDiscipline = model.AreaOfDiscipline;
                 _context.Update(user);
                 await _context.SaveChangesAsync();
 

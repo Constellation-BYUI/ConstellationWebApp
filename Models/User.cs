@@ -45,6 +45,9 @@
 
         public bool displayMyProfile { get; set; }
 
+        [Display(Name = "Area of Discipline")]
+        public string AreaOfDiscipline { get; set; }
+
         public ICollection<IntrestedCandidate> IntrestedCandidates { get; set; }
         public ICollection<RecruiterPicks> Candidates { get; set; }
         public ICollection<RecruiterPicks> Recuiter { get; set; }

@@ -33,6 +33,8 @@ namespace ConstellationWebApp.ViewModels
 
         public bool displayMyProfile { get; set; }
 
+        public string AreaOfDiscipline { get; set; }
+
         public IFormFile ResumeUpload { get; set; }
 
         public IFormFile Photo { get; set; }
@@ -42,6 +44,9 @@ namespace ConstellationWebApp.ViewModels
         public User thisUser { get; set; }
 
         public ICollection<ContactLink> ContactLinks { get; set; }
+        public ICollection<Discipline> Disciplines { get; set; }
+        public ICollection<PostingType> PostingTypes { get; set; }
+
 
 
     }
