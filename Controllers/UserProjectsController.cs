@@ -47,7 +47,7 @@ namespace ConstellationWebApp.Controllers
             UserProject thisUP = ((_context.UserProjects.Where(i => (i.UserID == collabId) && (i.ProjectID == projectID)).FirstOrDefault()));
             _context.UserProjects.Remove(thisUP);
             await _context.SaveChangesAsync();
-            var returnPath = "../Users/Details/" + projectID.ToString();
+            var returnPath = "../Projects/Details/" + projectID.ToString();
             return Redirect(returnPath);
         }
 

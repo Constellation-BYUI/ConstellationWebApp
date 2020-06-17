@@ -42,7 +42,6 @@ namespace ConstellationWebApp.Models
 
         public ICollection<ProjectPosting> ProjectPostings { get; set; }
 
-
     }
 
 }

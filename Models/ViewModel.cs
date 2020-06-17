@@ -17,11 +17,13 @@ namespace ConstellationWebApp.Models
         public IEnumerable<Posting_PostingType> Posting_PostingType { get; set; }
         public IEnumerable<StarredPosting> StarredPostings { get; set; }
         public IEnumerable<StarredUser> StarredUsers { get; set; }
-
         public IEnumerable<StarredProject> StarredProjects { get; set; }
         public IEnumerable<IntrestedCandidate> intrestedCandidates { get; set; }
         public IEnumerable<RecruiterPicks> RecruiterPicks { get; set; }
-
-
+        public IEnumerable<Skill> Skills { get; set; }
+        public IEnumerable<UserSkill> UserSkills { get; set; }
+        public IEnumerable<Discipline> Disciplines { get; set; }
+        public IEnumerable<SkillDiscipline> SkillDisciplines { get; set; }
+        public IEnumerable<SkillLink> SkillLinks { get; set; }
     }
 }

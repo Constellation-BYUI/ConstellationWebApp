@@ -1,0 +1,23 @@
+﻿@model ConstellationWebApp.Models.ViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Your Skills</h1>
+
+@*
+    Outline for this page
+    1. The page has four forms in all. Contained into two cards. Changing between the respective add/remove with a button click.
+        a. The UserSkills form adding skills to a logged in user
+        b. The UserSkills form removing skills from a logged in user
+            - Both of these forms will first loop through the pulled Discipline (which by default is the user's Area of Discipline/first discipline of list')
+            - It will display all the skills linked to that discipline to allow multi-skill editing 
+                (For adding it will look to see if the user does NOT have that skill in user skills so they can be added )
+                (For removing it will look to see if the user DOES have that skill in user skills so they can be removed )
+            - Then we will have the form button to post the result        
+        c. The SkillLink form adding a link to a set/Individual skill: prooving the legitimacy of the skill
+            - will loop through all the selected User Skills and display them and thier category/Discipline
+        d. The SkillLink form removing the link from a set/Individual skill
+            - will list the skills of the respective link and have a remove button     
+*@

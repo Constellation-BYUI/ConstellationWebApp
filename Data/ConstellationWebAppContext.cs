@@ -36,6 +36,18 @@ namespace ConstellationWebApp.Data
 
         public DbSet<ConstellationWebApp.Models.RecruiterPicks> RecruiterPicks { get; set; }
 
+        public DbSet<ConstellationWebApp.Models.UserSkill> UserSkills { get; set; }
+        public DbSet<ConstellationWebApp.Models.Skill> Skills { get; set; }
+        public DbSet<ConstellationWebApp.Models.SkillDiscipline> SkillDisciplines { get; set; }
+        public DbSet<ConstellationWebApp.Models.Discipline> Disciplines { get; set; }
+
+        public DbSet<ConstellationWebApp.Models.SkillLink> SkillLinks { get; set; }
+
+
+
+
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -150,6 +162,38 @@ namespace ConstellationWebApp.Data
                 .HasOne(bc => bc.Posting)
                 .WithMany(c => c.ProjectPostings)
                 .HasForeignKey(bc => bc.PostingID);
+
+            modelBuilder.Entity<Skill>().ToTable("Skill");
+
+            modelBuilder.Entity<UserSkill>().ToTable("UserSkill");
+            modelBuilder.Entity<UserSkill>()
+     .HasKey(bc => new { bc.UserID, bc.SkillID });
+            modelBuilder.Entity<UserSkill>()
+                .HasOne(bc => bc.Skills)
+                .WithMany(b => b.UserSkills)
+                .HasForeignKey(bc => bc.SkillID);
+            modelBuilder.Entity<UserSkill>()
+                .HasOne(bc => bc.Users)
+                .WithMany(c => c.UserSkills)
+                .HasForeignKey(bc => bc.UserID);
+
+            modelBuilder.Entity<UserSkill>().ToTable("UserSkill");
+
+            modelBuilder.Entity<SkillDiscipline>().ToTable("SkillDiscipline");
+            modelBuilder.Entity<SkillDiscipline>()
+     .HasKey(bc => new { bc.DisciplineID, bc.SkillID });
+            modelBuilder.Entity<SkillDiscipline>()
+                .HasOne(bc => bc.Skills)
+                .WithMany(b => b.SkillDisciplines)
+                .HasForeignKey(bc => bc.SkillID);
+            modelBuilder.Entity<SkillDiscipline>()
+                .HasOne(bc => bc.Disciplines)
+                .WithMany(c => c.SkillDiscipline)
+                .HasForeignKey(bc => bc.DisciplineID);
+
+            modelBuilder.Entity<UserSkill>()
+               .HasOne(c => c.SkillLinks)
+               .WithOne(e => e.UserSkills);
         }
 
 

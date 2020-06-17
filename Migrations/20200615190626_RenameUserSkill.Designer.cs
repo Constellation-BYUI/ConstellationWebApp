@@ -4,14 +4,16 @@ using ConstellationWebApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ConstellationWebApp.Migrations
 {
     [DbContext(typeof(ConstellationWebAppContext))]
-    partial class ConstellationWebAppContextModelSnapshot : ModelSnapshot
+    [Migration("20200615190626_RenameUserSkill")]
+    partial class RenameUserSkill
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -273,6 +275,9 @@ namespace ConstellationWebApp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("DisciplineID")
+                        .HasColumnType("int");
+
                     b.Property<string>("SkillName")
                         .HasColumnType("nvarchar(max)");
 
@@ -294,24 +299,6 @@ namespace ConstellationWebApp.Migrations
                     b.HasIndex("SkillID");
 
                     b.ToTable("SkillDiscipline");
-                });
-
-            modelBuilder.Entity("ConstellationWebApp.Models.SkillLink", b =>
-                {
-                    b.Property<int>("SkillLinkID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("SkilLinkLabel")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SkillLinkUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("SkillLinkID");
-
-                    b.ToTable("SkillLinks");
                 });
 
             modelBuilder.Entity("ConstellationWebApp.Models.StarredPosting", b =>
@@ -403,15 +390,9 @@ namespace ConstellationWebApp.Migrations
                     b.Property<int>("SkillID")
                         .HasColumnType("int");
 
-                    b.Property<int>("SkillLinkID")
-                        .HasColumnType("int");
-
                     b.HasKey("UserID", "SkillID");
 
                     b.HasIndex("SkillID");
-
-                    b.HasIndex("SkillLinkID")
-                        .IsUnique();
 
                     b.ToTable("UserSkill");
                 });
@@ -622,9 +603,6 @@ namespace ConstellationWebApp.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<string>("AreaOfDiscipline")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Bio")
                         .IsRequired()
                         .HasColumnType("nvarchar(2000)")
@@ -810,12 +788,6 @@ namespace ConstellationWebApp.Migrations
                     b.HasOne("ConstellationWebApp.Models.Skill", "Skills")
                         .WithMany("UserSkills")
                         .HasForeignKey("SkillID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ConstellationWebApp.Models.SkillLink", "SkillLinks")
-                        .WithOne("UserSkills")
-                        .HasForeignKey("ConstellationWebApp.Models.UserSkill", "SkillLinkID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
