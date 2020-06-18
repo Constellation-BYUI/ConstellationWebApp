@@ -77,6 +77,8 @@ namespace ConstellationWebApp.Data
             modelBuilder.Entity<PostingType>().ToTable("PostingType");
             modelBuilder.Entity<Posting_PostingType>().ToTable("Posting_PostingType");
             modelBuilder.Entity<Posting>().ToTable("Posting");
+
+
             modelBuilder.Entity<StarredPosting>().ToTable("StarredPosting");
             modelBuilder.Entity<StarredPosting>()
                 .HasKey(b => b.StarredPostingID);
