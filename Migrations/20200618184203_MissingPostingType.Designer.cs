@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConstellationWebApp.Migrations
 {
     [DbContext(typeof(ConstellationWebAppContext))]
-    [Migration("20200617172119_AreaOfDiscipline")]
-    partial class AreaOfDiscipline
+    [Migration("20200618184203_MissingPostingType")]
+    partial class MissingPostingType
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
