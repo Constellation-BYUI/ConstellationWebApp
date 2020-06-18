@@ -25,5 +25,8 @@ namespace ConstellationWebApp.Models
         public IEnumerable<Discipline> Disciplines { get; set; }
         public IEnumerable<SkillDiscipline> SkillDisciplines { get; set; }
         public IEnumerable<SkillLink> SkillLinks { get; set; }
+        public User currentUser { get; set; }
+        public Discipline currentDiscipline { get; set; }
+
     }
 }

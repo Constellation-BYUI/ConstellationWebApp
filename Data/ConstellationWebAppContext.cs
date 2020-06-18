@@ -66,10 +66,12 @@ namespace ConstellationWebApp.Data
                 .WithMany(c => c.UserProjects)
                 .HasForeignKey(bc => bc.ProjectID);
 
+            modelBuilder.Entity<PostingType>().ToTable("ContactLink");
             modelBuilder.Entity<User>()
                .HasMany(c => c.ContactLinks)
                .WithOne(e => e.Users);
 
+            modelBuilder.Entity<PostingType>().ToTable("ProjectLink");
             modelBuilder.Entity<Project>()
              .HasMany(c => c.ProjectLinks)
              .WithOne(e => e.Projects);
@@ -191,6 +193,7 @@ namespace ConstellationWebApp.Data
                 .WithMany(c => c.SkillDiscipline)
                 .HasForeignKey(bc => bc.DisciplineID);
 
+            modelBuilder.Entity<PostingType>().ToTable("SkillLink");
             modelBuilder.Entity<UserSkill>()
                .HasOne(c => c.SkillLinks)
                .WithOne(e => e.UserSkills);
