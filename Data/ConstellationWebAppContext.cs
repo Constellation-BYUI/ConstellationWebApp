@@ -43,12 +43,8 @@ namespace ConstellationWebApp.Data
 
         public DbSet<ConstellationWebApp.Models.SkillLink> SkillLinks { get; set; }
 
-
-
-
-
-
-
+        public DbSet<ConstellationWebApp.Models.ProjectPosting> ProjectPosting { get; set; }
+                              
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -200,7 +196,6 @@ namespace ConstellationWebApp.Data
         }
 
 
-        public DbSet<ConstellationWebApp.Models.ProjectPosting> ProjectPosting { get; set; }
                                  
     }
     
