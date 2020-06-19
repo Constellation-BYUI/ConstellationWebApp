@@ -1,23 +1,365 @@
 ﻿@model ConstellationWebApp.Models.ViewModel
+@using System.Security.Claims;
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Skills";
+    var currentUserObj = (Model.Users).FirstOrDefault();
+    var photoPath = "~/image/" + currentUserObj.PhotoPath;
+    var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+    var assigned = false;
+    var kickout = false;
 }
 
 <h1>Your Skills</h1>
-
-@*
-    Outline for this page
+<!-- #region Outline-->
+@*Outline for this page
     1. The page has four forms in all. Contained into two cards. Changing between the respective add/remove with a button click.
         a. The UserSkills form adding skills to a logged in user
         b. The UserSkills form removing skills from a logged in user
             - Both of these forms will first loop through the pulled Discipline (which by default is the user's Area of Discipline/first discipline of list')
-            - It will display all the skills linked to that discipline to allow multi-skill editing 
+            - It will display all the skills linked to that discipline to allow multi-skill editing
                 (For adding it will look to see if the user does NOT have that skill in user skills so they can be added )
                 (For removing it will look to see if the user DOES have that skill in user skills so they can be removed )
-            - Then we will have the form button to post the result        
+            - Then we will have the form button to post the result
         c. The SkillLink form adding a link to a set/Individual skill: prooving the legitimacy of the skill
             - will loop through all the selected User Skills and display them and thier category/Discipline
         d. The SkillLink form removing the link from a set/Individual skill
-            - will list the skills of the respective link and have a remove button     
-*@
+            - will list the skills of the respective link and have a remove button*@
+<!-- #endregion-->
+<div class="Split-forms">
+
+    @{
+        <section class="Skill-form">
+
+            @* Discipline Name *@
+            <h3>@Model.currentDiscipline.DisciplineName</h3>
+
+            @* this is to seach by a specific discipline *@
+            <form asp-action="Index" asp-controller="UserSkills">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <datalist id="AreaOfDiscipline-List">
+                            @{
+                                List<ConstellationWebApp.Models.Discipline> disciplines = Model.Disciplines.ToList();
+
+                                foreach (var discipline in disciplines)
+                                {
+                                    <option value="@discipline.DisciplineName" data-id="@discipline.DisciplineName"></option>
+                                }
+                            @:</datalist>
+                        @:</div>
+                            }
+                        </div>
+
+                        <div class="form-group">
+                            <label text= class="control-label"></label>
+                            <input name="disciplineSearchString" list="AreaOfDiscipline-List">
+                            <div class="form-group mx-auto mb-0">
+                                <input class="btn btn-md btn-primary mb-1 mx-auto" type="submit" value="Find Discipline" />
+                            </div>
+                        </div>
+                    </form>
+                    <br />
+                    <section>
+                        <button class="tablink" onclick="openPage('AddSkills', this, 'lightblue')" id="defaultOpen">Add Skills</button>
+                        <button class="tablink" onclick="openPage('RemoveSkills', this, 'red')">Remove Skills</button>
+
+                        @*Adding UserSKills*@
+                        <div id="AddSkills" class="tabcontent">
+                            <h3>@Model.currentDiscipline.DisciplineName related skills not added to your profile</h3>
+                            <form asp-action="CreateManyUserSkills" asp-controller="UserSkills">
+                                @{
+                                    foreach (var skill in Model.SkillDisciplines.Where(i => i.DisciplineID == Model.currentDiscipline.DisciplineID))
+                                    {
+                                        Skill skillName = Model.Skills.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
+                                        kickout = false;
+                                        foreach (var uSkill in Model.UserSkills.Where(i => i.UserID == currentUser && i.SkillID == skill.SkillID))
+                                        {
+                                            kickout = true;
+                                        }
+                                        if (kickout == true)
+                                        {
+                                            continue;
+                                        }
+                                        else
+                                        {
+                                            assigned = false;
+                                            @:<div>
+                                                <input type="checkbox" name="skills" value="@skill.SkillID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @skillName.SkillName;
+                                            @:</div>
+                                        }
+                                    }
+                                    <div class="form-group mb-0">
+                                        <input type="hidden" value="@currentUser" class="form-control" name="userID" />
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Link selected skills" class="btn btn-sm btn-info" />
+                                    </div>
+                                }
+                            </form>
+                        </div>
+
+                        @*Removing UserSKills*@
+                        <div id="RemoveSkills" class="tabcontent">
+                            <h3>@Model.currentDiscipline.DisciplineName related skills added to your profile</h3>
+                            <form asp-action="RemoveManyUserSkills" asp-controller="UserSkills">
+                                @{
+                                    foreach (var skill in Model.SkillDisciplines.Where(i => i.DisciplineID == Model.currentDiscipline.DisciplineID))
+                                    {
+                                        Skill skillName = Model.Skills.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
+                                        kickout = false;
+                                        foreach (var uSkill in Model.UserSkills.Where(i => i.UserID == currentUser && i.SkillID == skill.SkillID))
+                                        {
+                                            assigned = false;
+                                            @:<div>
+                                                <input type="checkbox" name="skills" value="@skill.SkillID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @skillName.SkillName;
+                                            @:</div>
+                                        }
+                                    }
+                                    <div class="form-group mb-0">
+                                        <input type="hidden" value="@currentUser" class="form-control" name="userID" />
+                                        <input type="hidden" value="@Model.currentDiscipline.DisciplineID" class="form-control" name="disciplineID" />
+
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Remove selected skills" class="btn btn-sm btn-info" />
+                                    </div>
+                                }
+                            </form>
+                        </div>
+                    </section>
+      </section>
+    }
+
+
+
+    <section class="Link-form">
+        <h3>Linking Skills</h3>
+        <br />
+        <p>Add a link to prove your competency for a set or individuals skill.</p>
+        <br />
+        <br />
+        <button class="tablink" onclick="openLinkPage('AddSkillLink', this, 'lightblue')" id="defaultLinkOpen">Add Skill(s) Link</button>
+        <button class="tablink" onclick="openLinkPage('RemoveSkillLink', this, 'red')">Remove Skill(s) Link</button>
+
+        <div id="AddSkillLink" class="linktabcontent">
+            @{
+                @*
+                First determine/create all the datalists that will be present based upon the disciplines
+                This requires feeding back to the SkillDiscipline table to get to the disciple table so we can retrieve the name of that discipline
+                Populate those datalists with all userSkills part of that discipline
+                Have the add Skill from list button and implement former add link javascript ability *@
+
+            List<string> dataLists = new List<string>();
+            if (Model.UserSkills != null)
+            {
+                //find all disciplines
+                foreach (var skill in Model.UserSkills.Where(i => i.UserID == currentUser))
+                {
+                    SkillDiscipline skillDisciplineForSkill = Model.SkillDisciplines.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
+                    Discipline disciplineForSkill = Model.Disciplines.Where(i => i.DisciplineID == skillDisciplineForSkill.DisciplineID).FirstOrDefault();
+                 
+                        var varName = disciplineForSkill.DisciplineName;
+                        if (!dataLists.Contains(varName))
+                        {
+                            dataLists.Add(varName);
+                        }
+                        else
+                        {
+                            continue;
+                        }
+               
+                }
+
+                //create and populate each discpline>skill list
+                foreach (var discipline in dataLists)
+                {
+                        <datalist id="@discipline">
+                            @{
+                                foreach (var skill in Model.UserSkills.Where(i => i.UserID == currentUser))
+                                {
+                                    SkillDiscipline skillDisciplineForSkill = Model.SkillDisciplines.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
+                                    Discipline disciplineForSkill = Model.Disciplines.Where(i => i.DisciplineID == skillDisciplineForSkill.DisciplineID).FirstOrDefault();
+
+                                    if (disciplineForSkill.DisciplineName == discipline)
+                                    {
+                                        Skill skillName = Model.Skills.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
+                                        <option value="@skillName.SkillName" data-id="@skillName.SkillID"></option>
+                                    }
+
+                                }
+                            }
+                        </datalist>
+                                }
+
+                    @* Form that contains all discpline drop down lists and the Link Label/URL Fields*@
+        <form asp-action="CreateSkillLink" asp-controller="UserSkills">
+
+            @foreach (var discipline in dataLists)
+            {
+                <h3>@discipline</h3>
+                <div class="form-group">
+
+                    <input name="skills" id="skill-label" list="@discipline">
+                    <input type="button" onclick="add_fields();" value="Select another skill from this List" class="btn btn-md btn-secondary" />
+                </div>
+            }
+
+
+            @*Container for the entered Skills*@
+            <div id="enteredSkills"></div><br />
+            <div id="linkDemo"></div><br />
+
+
+            @*Link&label are need to created the SkillLInk the id derived will be used for the UserSkillLink entity selected*@
+            <h4>Link Label</h4>
+            <input type='text' name='linkLabel'>
+            <h4>Link URL</h4>
+            <input type='text' name='linkUrl'>
+
+            <div class="form-group">
+                <input type="submit" value="Add Link to selected skills" class="btn btn-sm btn-info" />
+            </div>
+        </form>
+             }
+         }
+            </div>
+
+            <div id="RemoveSkillLink" class="linktabcontent">
+                <h3>Remove SKill Link</h3>
+                <p>Remove your skill links.</p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function add_fields() {
+            //Add the selected Skill above the input so the user knows that it was added
+            document.getElementById("enteredSkills").innerHTML += `<h6 <a style="text-decoration: underline"</a>>${document.getElementById("skill-label").value}</h6>`;
+            document.getElementById("linkDemo").innerHTML += `<input class='input-group' data-id=  name='skills' value=${document.getElementById("skill-label").getAttribute('data-id')}>`;
+            (document.getElementById("skill-label").innerHTML).value = "";
+            }            
+    </script>
+
+    <script>
+                function openPage(pageName, elmnt, color) {
+                    // Hide all elements with class="tabcontent" by default */
+                    var i, tabcontent, tablinks;
+                    tabcontent = document.getElementsByClassName("tabcontent");
+                    for (i = 0; i < tabcontent.length; i++) {
+                        tabcontent[i].style.display = "none";
+                    }
+
+                    // Remove the background color of all tablinks/buttons
+                    tablinks = document.getElementsByClassName("tablink");
+                    for (i = 0; i < tablinks.length; i++) {
+                        tablinks[i].style.backgroundColor = "";
+                    }
+
+                    // Show the specific tab content
+                    document.getElementById(pageName).style.display = "block";
+
+                    // Add the specific color to the button used to open the tab content
+                    elmnt.style.backgroundColor = color;
+                }
+
+                function openLinkPage(pageName, elmnt, color) {
+                    // Hide all elements with class="tabcontent" by default */
+                    var i, linktabcontent, tablinks;
+                    tabcontent = document.getElementsByClassName("linktabcontent");
+                    for (i = 0; i < tabcontent.length; i++) {
+                        tabcontent[i].style.display = "none";
+                    }
+
+                    // Remove the background color of all tablinks/buttons
+                    tablinks = document.getElementsByClassName("tablink");
+                    for (i = 0; i < tablinks.length; i++) {
+                        tablinks[i].style.backgroundColor = "";
+                    }
+
+                    // Show the specific tab content
+                    document.getElementById(pageName).style.display = "block";
+
+                    // Add the specific color to the button used to open the tab content
+                    elmnt.style.backgroundColor = color;
+                }
+
+
+                // Get the element with id="defaultOpen" and click on it
+                document.getElementById("defaultLinkOpen").click();
+                document.getElementById("defaultOpen").click();
+
+    </script>
+
+
+
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial;
+        }
+
+        .Split-forms {
+            display: grid;
+            grid-template-columns: 5% 40% 10% 40% 5%;
+            grid-template-rows: 500px;
+        }
+
+        .Skill-form {
+            grid-column: 2/3;
+        }
+
+        .Link-form {
+            grid-column: 4/5;
+        }
+
+        /* Style tab links */
+        .tablink {
+            background-color: #555;
+            color: white;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            font-size: 17px;
+            width: 50%;
+        }
+
+            .tablink:hover {
+                background-color: #777;
+            }
+
+        /* Style the tab content (and add height:100% for full page content) */
+        .tabcontent {
+            color: white;
+            display: none;
+            padding: 100px 20px;
+            max-height: 1000px;
+        }
+
+        .linktabcontent {
+            color: white;
+            display: none;
+            padding: 100px 20px;
+            max-height: 500px;
+        }
+
+
+        #AddSkills {
+            background-color: lightblue;
+        }
+
+        #RemoveSkills {
+            background-color: red;
+        }
+
+        #AddSkillLink {
+            background-color: lightblue;
+        }
+
+        #RemoveSkillLink {
+            background-color: red;
+        }
+    </style>

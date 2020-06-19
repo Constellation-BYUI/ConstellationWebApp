@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -40,7 +39,7 @@ namespace ConstellationWebApp.Controllers
         //The created data will be included in the user details & index
         //The search ability for the user will be based upon the discipline
         //?should this also include the ability to seach for just a SkillName
-        public async Task<IActionResult> Index(string disciplineSearchString, string skillSearchString)
+        public async Task<IActionResult> Index(string disciplineSearchString)
         {
             var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -49,7 +48,8 @@ namespace ConstellationWebApp.Controllers
                 SkillDisciplines = _context.SkillDisciplines,
                 Skills = _context.Skills,
                 UserSkills = _context.UserSkills.Where(i => i.UserID == currentUser),
-                Users = _context.User.Where(i => i.Id == currentUser)
+                Users = _context.User.Where(i => i.Id == currentUser),
+                Disciplines = _context.Disciplines
             };
 
             //Pull the discipline searched for, or pull the first discipline. 
@@ -57,12 +57,19 @@ namespace ConstellationWebApp.Controllers
             //have that as the inital one shown.
             if (!String.IsNullOrEmpty(disciplineSearchString))
             {
-                viewModel.Disciplines = _context.Disciplines.Where(s => s.DisciplineName.Contains(disciplineSearchString));
+                viewModel.currentDiscipline = _context.Disciplines.Where(s => s.DisciplineName.Contains(disciplineSearchString)).FirstOrDefault();               
             }
             else
             {
-                User userDiscipline = _context.User.Where(i => i.Id == currentUser).FirstOrDefault();
-                viewModel.Disciplines = _context.Disciplines.Where(s => s.DisciplineName == userDiscipline.AreaOfDiscipline);
+                if (currentUser == null)
+                {
+                    viewModel.currentDiscipline = _context.Disciplines.Where(i => i.DisciplineID == 1).FirstOrDefault();
+                }
+                else
+                {
+                    User user = _context.User.Where(i => i.Id == currentUser).FirstOrDefault();
+                    viewModel.currentDiscipline = _context.Disciplines.Where(s => s.DisciplineName == user.AreaOfDiscipline).FirstOrDefault();
+                }
             }
 
             //Right now I am not going to have the ability to have a search string for skills, maybe later
@@ -74,143 +81,62 @@ namespace ConstellationWebApp.Controllers
             return View(viewModel);
         }
 
-        // GET: UserSkills/Details/5
-        public async Task<IActionResult> Details(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var userSkill = await _context.UserSkills
-                .Include(u => u.SkillLinks)
-                .Include(u => u.Skills)
-                .Include(u => u.Users)
-                .FirstOrDefaultAsync(m => m.UserID == id);
-            if (userSkill == null)
-            {
-                return NotFound();
-            }
-
-            return View(userSkill);
-        }
-
-        // GET: UserSkills/Create
-        public IActionResult Create()
-        {
-            ViewData["SkillLinkID"] = new SelectList(_context.SkillLinks, "SkillLinkID", "SkillLinkID");
-            ViewData["SkillID"] = new SelectList(_context.Skills, "SkillID", "SkillID");
-            ViewData["UserID"] = new SelectList(_context.User, "Id", "Id");
-            return View();
-        }
-
-        // POST: UserSkills/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SkillID,UserID,SkillLinkID")] UserSkill userSkill)
+        public async Task<IActionResult> CreateManyUserSkills(int[] skills, string userID)
         {
-            if (ModelState.IsValid)
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (currentUser == userID)
             {
-                _context.Add(userSkill);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                foreach (var skill in skills)
+                {
+                    UserSkill userSkill = (_context.UserSkills.Where(i => i.UserID == userID && i.SkillID == skill).FirstOrDefault());
+                    if (userSkill == null)
+                    {
+                        UserSkill thisUS = new UserSkill();
+                        thisUS.UserID = currentUser;
+                        thisUS.SkillID = skill;
+                        _context.Add(thisUS);
+                        await _context.SaveChangesAsync();
+                    }
+                }
             }
-            ViewData["SkillLinkID"] = new SelectList(_context.SkillLinks, "SkillLinkID", "SkillLinkID", userSkill.SkillLinkID);
-            ViewData["SkillID"] = new SelectList(_context.Skills, "SkillID", "SkillID", userSkill.SkillID);
-            ViewData["UserID"] = new SelectList(_context.User, "Id", "Id", userSkill.UserID);
-            return View(userSkill);
+            var returnPath = "../UserSkills/";
+            return Redirect(returnPath);
         }
 
-        // GET: UserSkills/Edit/5
-        public async Task<IActionResult> Edit(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var userSkill = await _context.UserSkills.FindAsync(id);
-            if (userSkill == null)
-            {
-                return NotFound();
-            }
-            ViewData["SkillLinkID"] = new SelectList(_context.SkillLinks, "SkillLinkID", "SkillLinkID", userSkill.SkillLinkID);
-            ViewData["SkillID"] = new SelectList(_context.Skills, "SkillID", "SkillID", userSkill.SkillID);
-            ViewData["UserID"] = new SelectList(_context.User, "Id", "Id", userSkill.UserID);
-            return View(userSkill);
-        }
-
-        // POST: UserSkills/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("SkillID,UserID,SkillLinkID")] UserSkill userSkill)
+        public async Task<IActionResult> RemoveManyUserSkills(int[] skills, string userID)
         {
-            if (id != userSkill.UserID)
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (currentUser == userID)
             {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                foreach (var skill in skills)
                 {
-                    _context.Update(userSkill);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UserSkillExists(userSkill.UserID))
+                    UserSkill userSkill = (_context.UserSkills.Where(i => i.UserID == userID && i.SkillID == skill).FirstOrDefault());
+                    if (userSkill != null)
                     {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
+                        _context.Remove(userSkill);
+                        await _context.SaveChangesAsync();
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
-            ViewData["SkillLinkID"] = new SelectList(_context.SkillLinks, "SkillLinkID", "SkillLinkID", userSkill.SkillLinkID);
-            ViewData["SkillID"] = new SelectList(_context.Skills, "SkillID", "SkillID", userSkill.SkillID);
-            ViewData["UserID"] = new SelectList(_context.User, "Id", "Id", userSkill.UserID);
-            return View(userSkill);
+            var returnPath = "../UserSkills/";
+            return Redirect(returnPath);
         }
 
-        // GET: UserSkills/Delete/5
-        public async Task<IActionResult> Delete(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var userSkill = await _context.UserSkills
-                .Include(u => u.SkillLinks)
-                .Include(u => u.Skills)
-                .Include(u => u.Users)
-                .FirstOrDefaultAsync(m => m.UserID == id);
-            if (userSkill == null)
-            {
-                return NotFound();
-            }
-
-            return View(userSkill);
-        }
-
-        // POST: UserSkills/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> CreateSkillLink(int[] skills, string linkLabel, string linkUrl)
         {
-            var userSkill = await _context.UserSkills.FindAsync(id);
-            _context.UserSkills.Remove(userSkill);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            //must create the skill link            
+            //create the UserSkillLink join relationship
+            var returnPath = "../UserSkills/";
+            return Redirect(returnPath);
         }
+
 
         private bool UserSkillExists(string id)
         {

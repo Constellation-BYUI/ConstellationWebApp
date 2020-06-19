@@ -43,10 +43,8 @@ namespace ConstellationWebApp.Data
 
         public DbSet<ConstellationWebApp.Models.SkillLink> SkillLinks { get; set; }
 
-
-
-
-
+        public DbSet<ConstellationWebApp.Models.ProjectPosting> ProjectPosting { get; set; }
+        public DbSet<ConstellationWebApp.Models.UserSkillLink> UserSkillLinks { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -66,18 +64,15 @@ namespace ConstellationWebApp.Data
                 .WithMany(c => c.UserProjects)
                 .HasForeignKey(bc => bc.ProjectID);
 
+            modelBuilder.Entity<ContactLink>().ToTable("ContactLink");
             modelBuilder.Entity<User>()
                .HasMany(c => c.ContactLinks)
                .WithOne(e => e.Users);
 
+            modelBuilder.Entity<ProjectLink>().ToTable("ProjectLink");
             modelBuilder.Entity<Project>()
              .HasMany(c => c.ProjectLinks)
              .WithOne(e => e.Projects);
-
-            modelBuilder.Entity<PostingType>().ToTable("PostingType");
-            modelBuilder.Entity<Posting_PostingType>().ToTable("Posting_PostingType");
-            modelBuilder.Entity<Posting>().ToTable("Posting");
-
 
             modelBuilder.Entity<StarredPosting>().ToTable("StarredPosting");
             modelBuilder.Entity<StarredPosting>()
@@ -169,7 +164,7 @@ namespace ConstellationWebApp.Data
 
             modelBuilder.Entity<UserSkill>().ToTable("UserSkill");
             modelBuilder.Entity<UserSkill>()
-     .HasKey(bc => new { bc.UserID, bc.SkillID });
+             .HasKey(k => k.UserSkillID);
             modelBuilder.Entity<UserSkill>()
                 .HasOne(bc => bc.Skills)
                 .WithMany(b => b.UserSkills)
@@ -179,7 +174,7 @@ namespace ConstellationWebApp.Data
                 .WithMany(c => c.UserSkills)
                 .HasForeignKey(bc => bc.UserID);
 
-            modelBuilder.Entity<UserSkill>().ToTable("UserSkill");
+            modelBuilder.Entity<Discipline>().ToTable("Discipline");
 
             modelBuilder.Entity<SkillDiscipline>().ToTable("SkillDiscipline");
             modelBuilder.Entity<SkillDiscipline>()
@@ -193,14 +188,27 @@ namespace ConstellationWebApp.Data
                 .WithMany(c => c.SkillDiscipline)
                 .HasForeignKey(bc => bc.DisciplineID);
 
-            modelBuilder.Entity<UserSkill>()
-               .HasOne(c => c.SkillLinks)
-               .WithOne(e => e.UserSkills);
+            modelBuilder.Entity<SkillLink>().ToTable("SkillLink");
+            modelBuilder.Entity<UserSkillLink>().ToTable("UserSkillLink");
+            modelBuilder.Entity<UserSkillLink>()
+           .HasKey(k => k.UserSkillLinkID);
+            modelBuilder.Entity<UserSkillLink>()
+                .HasOne(bc => bc.UserSkills)
+                .WithMany(b => b.UserSkillLinks)
+                .HasForeignKey(bc => bc.UserSkillID);
+            modelBuilder.Entity<UserSkillLink>()
+                .HasOne(bc => bc.SkillLinks)
+                .WithMany(c => c.UserSkillLinks)
+                .HasForeignKey(bc => bc.SkillID);
+
+            modelBuilder.Entity<Posting>().ToTable("Posting");
+            modelBuilder.Entity<Posting_PostingType>().ToTable("Posting_PostingType");
+            modelBuilder.Entity<PostingType>().ToTable("PostingType");
+
         }
 
 
-        public DbSet<ConstellationWebApp.Models.ProjectPosting> ProjectPosting { get; set; }
-                                 
+
     }
     
 }

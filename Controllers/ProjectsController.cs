@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace ConstellationWebApp.Controllers
 {
@@ -237,6 +238,8 @@ namespace ConstellationWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProjectCreateViewModel model, string[] selectedCollaborators, string[] createdLinkLabels, string[] createdLinkUrls)
         {
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             if (ModelState.IsValid)
             {
                 string uniqueFileName = ValidateImagePath(model);
@@ -244,6 +247,17 @@ namespace ConstellationWebApp.Controllers
                 await _context.SaveChangesAsync();
                 if (selectedCollaborators != null)
                 {
+                    //Add the current user to the list if they did not add themselves
+                    if (!(selectedCollaborators.Contains(currentUser)))
+                    {
+                        UserProject loggedInuserProject = new UserProject
+                        {
+                            ProjectID = newProject.ProjectID,
+                            UserID = currentUser
+                        };
+                        _context.Add(loggedInuserProject);
+                    }
+
                     model.UserProjects = new List<UserProject>();
                     foreach (var user in selectedCollaborators)
                     {
@@ -266,7 +280,6 @@ namespace ConstellationWebApp.Controllers
                             Console.WriteLine($"The user was not found: '{e}'");
                         }
                     }
-
                     CreateProjectLinks(createdLinkLabels, createdLinkUrls, newProject);
 
                     await _context.SaveChangesAsync();
