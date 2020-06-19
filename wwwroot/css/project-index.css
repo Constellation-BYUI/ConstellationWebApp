@@ -100,7 +100,12 @@
     .search-bar0 {
         display: none;
     }
-
+    .project-index-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 1em;
+        margin: 0 1em 1em 1em;
+    }
     .project-index-content {
         overflow: scroll;
         height: 35em;
