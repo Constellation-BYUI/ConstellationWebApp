@@ -133,6 +133,17 @@ html {
 }
 
 @media screen and (min-width: 768px) {
+    /* CSS for Job postings Relating to Project Details */
+    .job-posting-field {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        overflow: scroll;
+        height: 40em;
+        width: 100%;
+        margin: auto;
+    }
+
     .project-details-content {
         display: flex;
         flex-wrap: wrap;

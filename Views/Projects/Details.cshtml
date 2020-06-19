@@ -11,102 +11,7 @@
 }
 
 <link rel="stylesheet" href="/css/project-details.css" />
-
-<!-- Project Details Body contains both project details and Open roles for this project -->
-<div class="project-details-body">
-
-    <!-- Project Details Head is the same -->
-    <div class="project-details-head"><h3>Project Details</h3></div>
-
-    <!-- Project Details Content has three section : project image, project's full details and Collaborators -->
-    <div class="project-details-content">
-        <div class="project-picture"><img src="/cons_Img/panther6.jpg" alt=""></div>
-
-        <!-- Project Content has the full details of the project -->
-        <div class="project-content">
-            <div class="project-title">Title Here</div>
-            <h3>Description</h3>
-            <div class="project-description">
-
-                <p>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Sequi laborum tempora sed doloribus pariatur earum explicabo ut aut,
-                    eum culpa quas molestias assumenda adipisci! Consequuntur, cumque in!
-                    Explicabo, laudantium quod.Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Sequi laborum tempora sed doloribus pariatur earum explicabo ut aut,
-                    eum culpa quas molestias assumenda adipisci! Consequuntur, cumque in!
-                    Explicabo, laudantium quod.
-                </p>
-            </div>
-            <div class="project-date">
-                <p><strong>Creation Date : </strong>07-07-2020</p>
-                <p><strong>Start Date : </strong>07-07-2020</p>
-                <p><strong>End Date : </strong>07-07-2020</p>
-            </div>
-            <h4>Project Links</h4>
-            <div class="project-link">
-                <a href="https://www.w3schools.com/" target="_blank">W3 Schools</a>
-                <a href="https://www.github.com/" target="_blank">Github</a>
-                <a href="https://www.w3schools.com/" target="_blank">W3 Schools</a>
-                <a href="https://www.github.com/" target="_blank">Github</a>
-                <a href="https://www.w3schools.com/" target="_blank">W3 Schools</a>
-                <a href="https://www.github.com/" target="_blank">Github</a>
-                <a href="https://www.w3schools.com/" target="_blank">W3 Schools</a>
-                <a href="https://www.github.com/" target="_blank">Github</a>
-                <a href="https://www.w3schools.com/" target="_blank">W3 Schools</a>
-                <a href="https://www.github.com/" target="_blank">Github</a>
-                <a href="https://www.w3schools.com/" target="_blank">W3 Schools</a>
-                <a href="https://www.github.com/" target="_blank">Github</a>
-                <a href="https://www.w3schools.com/" target="_blank">W3 Schools</a>
-                <a href="https://www.github.com/" target="_blank">Github</a>
-                <a href="https://www.w3schools.com/" target="_blank">W3 Schools</a>
-                <a href="https://www.github.com/" target="_blank">Github</a>
-            </div>
-        </div>
-        <div class="project-collaborators">
-            <h4>Collaborators</h4>
-            <div class="project-collaborators-pictture">
-                <img src="/image/panther2.jpg" alt="Collabo picture">
-                <img src="/image/panther5.jpg" alt="Collabo picture">
-                <img src="/image/panther2.jpg" alt="Collabo picture">
-                <img src="/image/panther5.jpg" alt="Collabo picture">
-                <img src="/image/panther2.jpg" alt="Collabo picture">
-                <img src="/image/panther5.jpg" alt="Collabo picture">
-            </div>
-        </div>
-    </div>
-    <div class="project-details-footer">
-        <button class="btn btn-sm btn-primary">Back&nbsp;to&nbsp;Projects</button>
-        <button class="btn btn-sm btn-info">Add&nbsp;to&nbsp;MyStared&nbsp;Projects</button>
-    </div>
-
-    <!-- Open postings for this project -->
-    <div class="project-details-head">
-        <h3>Open Roles for this Project</h3>
-    </div>
-    <div class="job-posting-field">
-        <img src="/image/panther5.jpg" alt="Postings for this project">
-        <img src="/image/panther5.jpg" alt="Postings for this project">
-        <img src="/image/panther5.jpg" alt="Postings for this project">
-        <img src="/image/panther5.jpg" alt="Postings for this project">
-        <img src="/image/panther5.jpg" alt="Postings for this project">
-        <img src="/image/panther5.jpg" alt="Postings for this project">
-        <img src="/image/panther5.jpg" alt="Postings for this project">
-        <img src="/image/panther5.jpg" alt="Postings for this project">
-        <img src="/image/panther5.jpg" alt="Postings for this project">
-        <img src="/image/panther5.jpg" alt="Postings for this project">
-        <img src="/image/panther5.jpg" alt="Postings for this project">
-        <img src="/image/panther5.jpg" alt="Postings for this project">
-        <img src="/image/panther5.jpg" alt="Postings for this project">
-        <img src="/image/panther5.jpg" alt="Postings for this project">
-        <img src="/image/panther5.jpg" alt="Postings for this project">
-        <img src="/image/panther5.jpg" alt="Postings for this project">
-        Job Postings goes in here
-    </div>
-</div>
-
-<div class="container-fluid padding">
-    @*Button for adding projects to stardProject*@
+ @*Button for adding projects to stardProject*@
     @if (currentUser != null)
     {
         List<ConstellationWebApp.Models.AssignedStarredProjectsData> starredData = ViewBag.StarredProjects;
@@ -141,108 +46,86 @@
         }
 
     }
+<!-- Project Details Body contains both project details and Open roles for this project -->
+<div class="project-details-body">
+    <!-- Project Details Head is the same -->
+    <div class="project-details-head"><h3>Project Details</h3></div>
 
-    @*Project Heading Display*@
-    <h2 class="titleBorder shadow mb-0">Project Details</h2>
+    <!-- Project Details Content has three section : project image, project's full details and Collaborators -->
+    <div class="project-details-content">
+        <div class="project-picture"><img src=" @photoPath" alt="@Html.DisplayFor(model => model.Title)" asp-append-version="true" /></div>
 
-    @*Project Details*@
-    <div class="card bg-light border-bottom">
-        <div class="">
-            @*Project Owner Picture here*@
-            <div class="col-sm-12 col-md-4 border float-left">
-                <img style="width: 100%; height: 300px; margin: auto" src=" @photoPath" alt="@Html.DisplayFor(model => model.Title)" asp-append-version="true" />
-                <h5>Project Owner's Name Goes Here</h5>
+        <!-- Project Content has the full details of the project -->
+        <div class="project-content">
+            <div class="project-title">@Html.DisplayNameFor(model => model.Title) : <span>@Html.DisplayFor(model => model.Title)</span></div>
+            <h3> @Html.DisplayNameFor(model => model.Description)</h3>
+            <div class="project-description">
+
+                <p>@Html.DisplayFor(model => model.Description)</p>
             </div>
-            @*Project Title and Collaborators Here*@
-            <div class="col-sm-12 col-md-8 pr-0 float-right">
-                @*Title Section*@
-                <div class="float-left border col-md-8">
-                    @*Project Title*@
-                    <h3 class="card mb-0">
-                        <strong class="text-center text-primary">@Html.DisplayNameFor(model => model.Title) : <span>@Html.DisplayFor(model => model.Title)</span></strong>
-                    </h3>
-
-                    @*Description*@
-                    <h4 class="card mb-0 text-center text-primary">
-                        @Html.DisplayNameFor(model => model.Description)
-                    </h4>
-                    <p class="text-justify">
-                        @Html.DisplayFor(model => model.Description)
-                    </p>
-                    @*Creation, Start and End Dates*@
-                    <h6 class="">
-                        <strong> @Html.DisplayNameFor(model => model.CreationDate) : </strong><span>@Html.DisplayFor(model => model.CreationDate)</span>
-                    </h6>
-                    <h6 class="">
-                        <strong> @Html.DisplayNameFor(model => model.StartDate) : </strong><span>@Html.DisplayFor(model => model.StartDate)</span>
-                    </h6>
-                    <h6 class="">
-                        <strong>  @Html.DisplayNameFor(model => model.EndDate) : </strong><span>@Html.DisplayFor(model => model.EndDate)</span>
-                    </h6>
-
-                    @*Project Links*@
-                    <h5 class="card text-center text-primary">Project Links</h5>
-                    @{
-                        if (Model.UserProjects != null)
+            <div class="project-date">
+                <p><strong> @Html.DisplayNameFor(model => model.CreationDate) : </strong><span>@Html.DisplayFor(model => model.CreationDate)</span></p>
+                <p><strong> @Html.DisplayNameFor(model => model.StartDate) : </strong><span>@Html.DisplayFor(model => model.StartDate)</span></p>
+                <p><strong>  @Html.DisplayNameFor(model => model.EndDate) : </strong><span>@Html.DisplayFor(model => model.EndDate)</span></p>
+            </div>
+            <h4>Project Links</h4>
+            <div class="project-link">
+                @{
+                    if (Model.UserProjects != null)
+                    {
+                        foreach (var person in Model.UserProjects)
                         {
-                            foreach (var person in Model.UserProjects)
+                            if (person.UserID == currentUser)
                             {
-                                if (person.UserID == currentUser)
-                                {
-                                    loggedOn = true;
-                                }
-                            }
-
-                            foreach (var item in Model.ProjectLinks.Where((i => i.Projects.ProjectID == Model.ProjectID)))
-                            {
-                                <p class="card-subtitle">
-                                    <strong>@Html.DisplayFor(model => item.ProjectLinkLabel) : </strong><span class="card-link">@Html.DisplayFor(model => item.ProjectLinkUrl)</span>
-                                </p>
-
+                                loggedOn = true;
                             }
                         }
-                    }
-                </div>
-                @*Collaborators*@
-                <h4 class="card text-center text-primary">Collaborator</h4>
-                <div class="float-right d-flex flex-wrap col-md-4 pr-0">
-                    @{
-                        foreach (var collab in Model.currentProject.UserProjects)
+
+                        foreach (var item in Model.ProjectLinks.Where((i => i.Projects.ProjectID == Model.ProjectID)))
                         {
-                            var collabPath = "~/image/" + (collab.User.PhotoPath);
-                            var collabMemberPath = "../../Users/Details/" + (collab.User.Id);
-                            <a href="@collabMemberPath"><img class="small-thumbnail my-1" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
+                            <p>
+                                <strong>@Html.DisplayFor(model => item.ProjectLinkLabel) : </strong><a><span>@Html.DisplayFor(model => item.ProjectLinkUrl)</span></a>
+                            </p>
 
                         }
                     }
-                </div>
+                }
             </div>
         </div>
-        @*Project Picture Card Footer Bottons*@
-        @*Card footer section*@
+        <div class="project-collaborators">
+            <h4>Collaborators</h4>
+            <div class="project-collaborators-pictture">
+                @{
+                    foreach (var collab in Model.currentProject.UserProjects)
+                    {
+                        var collabPath = "~/image/" + (collab.User.PhotoPath);
+                        var collabMemberPath = "../../Users/Details/" + (collab.User.Id);
+                        <a href="@collabMemberPath"><img class="small-thumbnail my-1" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
 
-        <div class="col-12">
-            @*<img style="width: 80%; height: 300px; margin: auto" src=" @photoPath" alt="@Html.DisplayFor(model => model.Title)" asp-append-version="true" />*@
-            <div class="card-footer">
-                @if (loggedOn == false)
-                {
-                    <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
-                }
-                else
-                {
-                    <a class="btn btn-md btn-primary" asp-action="Edit" asp-route-id="@Model.ProjectID">Edit</a>
-                    <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
+                    }
                 }
             </div>
         </div>
     </div>
+    <div class="project-details-footer">
+        @if (loggedOn == false)
+                {
+                    <a class="btn btn-md btn-secondary" asp-action="Index">Back&nbsp;List</a>
+                }
+                else
+                {
+                    <a class="btn btn-md btn-primary" asp-action="Edit" asp-route-id="@Model.ProjectID">Edit</a>
+                    <a class="btn btn-md btn-secondary" asp-action="Index">Back&nbsp;to&nbsp;List</a>
+                }
+    </div>
 
-    @* Project Postings*@
-    <section>
+    <!-- Open postings for this project -->
+    <div class="project-details-head">
+        <h3>Open Roles for this Project</h3>
+    </div>
+    <div class="job-posting-field">
         @{
             //if the collaborator has postings and others want to add that posting to the project
-            <h2>Open Roles for this Project</h2>
-            <div id="projectDisplay">
                 @foreach (var collaborator in Model.currentProject.UserProjects)
                 {
                     var postingListholder = Model.Postings.Where(i => i.PostingOwner.Id == collaborator.UserID);
@@ -316,7 +199,8 @@
                         </div>
                     }
                 }
-            </div>
+           
         }
-    </section>
+    </div>
 </div>
+
