@@ -5,23 +5,88 @@
     ViewData["Title"] = "Projects Index";
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
-                                    @*Page Header*@
-        <h2 id="userTitle" class="titleBorder shadow mx-auto">Project Display</h2>
-    <section style="margin-left: 80%;" id="newPLink">
-        <a class="btn btn-md btn-primary mb-1" asp-action="Create">Create&nbsp;New&nbsp;Project</a>
-    </section>
+
+<link rel="stylesheet" href="/css/project-index.css" />
+<!-- The project index container -->
+<div class="project-index-container">
+    <div class="project-index-bread-crumb">Home > Projects</div>
+    <!-- search Bars -->
+    <div class="project-index-search-bars">
+        <!-- Create project button -->
+        <div class="create-project btn btn-md btn-primary">Create&nbsp;Project</div>
+        <form action="" class="search-bar0">
+            <div class="input-group">
+                <input type="search" placeholder="Search.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+        </form>
+        <form action="" class="search-bar1">
+            <div class="input-group">
+                <input type="search" placeholder="Search by technology.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+        </form>
+        <form action="" class="search-bar2">
+            <div class="input-group">
+                <input type="search" placeholder="Search by title.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+        </form>
+        <form action="" class="search-bar3">
+            <div class="input-group">
+                <input type="search" placeholder="Search by date.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- Alphabetic Search -->
+    <div class="create-project">
+
+    </div>
+    <!-- Project contents goes in here -->
+    <div class="project-index-head"><h2>Projects</h2></div>
+    <div class="project-index-content">
+        <!-- add margin-bottom to project's cards -->
+        <img src="/image/panther5.jpg" alt="Test Image for project card">
+        <img src="/image/panther5.jpg" alt="Test Image for project card">
+        <img src="/image/panther5.jpg" alt="Test Image for project card">
+        <img src="/image/panther5.jpg" alt="Test Image for project card">
+        <img src="/image/panther5.jpg" alt="Test Image for project card">
+        <img src="/image/panther5.jpg" alt="Test Image for project card">
+        <img src="/image/panther5.jpg" alt="Test Image for project card">
+        <img src="/image/panther5.jpg" alt="Test Image for project card">
+        <img src="/image/panther5.jpg" alt="Test Image for project card">
+        <div class="project-index-cards"></div>
+    </div>
+</div>
 
 
-    <div id="projectDisplay">
-        @foreach (var item in Model.Projects)
-            {
-                var photoPath = "~/image/" + (item.PhotoPath);
 
-            @*CSS RULES FOR INDIVIDUAL CARDS*@
+@*Page Header*@
+<h2 id="userTitle" class="titleBorder shadow mx-auto">Project Display</h2>
+<section style="margin-left: 80%;" id="newPLink">
+    <a class="btn btn-md btn-primary mb-1" asp-action="Create">Create&nbsp;New&nbsp;Project</a>
+</section>
+
+
+<div id="projectDisplay">
+    @foreach (var item in Model.Projects)
+    {
+        var photoPath = "~/image/" + (item.PhotoPath);
+
+        @*CSS RULES FOR INDIVIDUAL CARDS*@
         <div class="card shadow-lg border-primary mt-1 mb-3 ml-2 mr-2">
-       
+
             @*Project Title*@
-            <h4 class="card-header bg-primary py-1 text-white text-center m-0" >
+            <h4 class="card-header bg-primary py-1 text-white text-center m-0">
                 @*@Html.DisplayNameFor(modelItem => item.Title) :*@
                 @Html.DisplayFor(modelItem => item.Title)
             </h4>
@@ -51,50 +116,50 @@
             <div class="bg-light border-dark">
                 <h6 class="card-header bg-light py-1 text-black text-center m-0">@Html.DisplayNameFor(modelItem => item.Description)</h6>
                 <p class="text-black text-justify mb-1 text-truncate px-2">@Html.DisplayFor(modelItem => item.Description)</p>
-                </div>
+            </div>
 
             @*Project Dates*@
-        <div class="px-2">
-            <p class="m-0">
-                <strong class="text-black">@Html.DisplayNameFor(modelItem => item.StartDate) : </strong>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </p>
-            <p class="m-0">
-                <strong class="text-black">@Html.DisplayNameFor(modelItem => item.EndDate) : </strong>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </p>
-            <p class="m-0">
-                <strong class="text-black">@Html.DisplayNameFor(modelItem => item.CreationDate) : </strong>
-                @Html.DisplayFor(modelItem => item.CreationDate)
-            </p>
+            <div class="px-2">
+                <p class="m-0">
+                    <strong class="text-black">@Html.DisplayNameFor(modelItem => item.StartDate) : </strong>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </p>
+                <p class="m-0">
+                    <strong class="text-black">@Html.DisplayNameFor(modelItem => item.EndDate) : </strong>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </p>
+                <p class="m-0">
+                    <strong class="text-black">@Html.DisplayNameFor(modelItem => item.CreationDate) : </strong>
+                    @Html.DisplayFor(modelItem => item.CreationDate)
+                </p>
+            </div>
+
+            @*Project Links*@
+            <div class="bg-light">
+                <h5 class="card-header bg-light py-1 text-black text-center m-0">Project Links</h5>
+                @foreach (var link in item.ProjectLinks)
+                {
+                    <a class="text-primary px-2" href=" @link.ProjectLinkUrl" target="_blank">@link.ProjectLinkLabel</a>
+                }
+            </div>
+
+            @*Card Footer*@
+            <section class="card-footer align-text-bottom px-2 py-2">
+                @{
+
+                    if (isLoggedIn == true)
+                    {
+                        <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@item.ProjectID">Edit</a>
+                        <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.ProjectID">Details</a>
+                        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.ProjectID">Delete</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.ProjectID">Details</a>
+                    }
+                }
+            </section>
         </div>
 
-                @*Project Links*@
-                <div class="bg-light">
-                    <h5 class="card-header bg-light py-1 text-black text-center m-0">Project Links</h5>
-                    @foreach (var link in item.ProjectLinks)
-                    {
-                        <a class="text-primary px-2" href=" @link.ProjectLinkUrl" target="_blank">@link.ProjectLinkLabel</a>
-                    }
-                </div>
-                
-                    @*Card Footer*@
-                    <section class="card-footer align-text-bottom px-2 py-2">
-                        @{
-
-                            if (isLoggedIn == true)
-                            {
-                                <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@item.ProjectID">Edit</a>
-                                <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.ProjectID">Details</a>
-                                <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.ProjectID">Delete</a>
-                            }
-                            else
-                            {
-                                <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.ProjectID">Details</a>
-                            }
-                        }
-                    </section>
-                </div>
-           
-        }
-    </div>
+    }
+</div>
