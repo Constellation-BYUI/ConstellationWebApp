@@ -36,7 +36,20 @@
 .project-delete-content {
     background-color: whitesmoke;
 }
-
+.project-title {
+    background-color: gray;
+    width: 100%;
+    border: 1px solid black;
+    text-align: center;
+    padding: 3px;
+    font-weight: 400;
+    font-size: medium;
+    color: white;
+    margin: auto;
+}
+.project-date {
+    margin: 5px 15px;
+}
     .project-delete-content h3 {
         text-align: center;
         margin: 0;
@@ -80,7 +93,7 @@
     flex-wrap: nowrap;
 }
 
-    .project-delete-footer button {
+    .project-delete-footer form button, a {
         margin: 5px 2px;
     }
 
@@ -90,6 +103,17 @@
         width: 80%;
         height: 60%;
         margin: 5em auto;
+    }
+    .project-title {
+        background-color: gray;
+        width: 100%;
+        border: 1px solid black;
+        text-align: center;
+        padding: 3px;
+        font-weight: 400;
+        font-size: medium;
+        color: white;
+        margin: auto;
     }
 }
 
