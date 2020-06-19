@@ -159,7 +159,11 @@
                     SkillDiscipline skillDisciplineForSkill = Model.SkillDisciplines.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
                     Discipline disciplineForSkill = Model.Disciplines.Where(i => i.DisciplineID == skillDisciplineForSkill.DisciplineID).FirstOrDefault();
                  
-                        var varName = disciplineForSkill.DisciplineName;
+                        //create the discipineListName
+                        var varName = disciplineForSkill.DisciplineName;                   
+                          varName = varName.Replace(" ", "");
+                        
+                        //check to see if list was already made
                         if (!dataLists.Contains(varName))
                         {
                             dataLists.Add(varName);
@@ -184,13 +188,14 @@
                                     if (disciplineForSkill.DisciplineName == discipline)
                                     {
                                         Skill skillName = Model.Skills.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
+
                                         <option value="@skillName.SkillName" data-id="@skillName.SkillID"></option>
                                     }
 
                                 }
                             }
                         </datalist>
-                                }
+                }
 
                     @* Form that contains all discpline drop down lists and the Link Label/URL Fields*@
         <form asp-action="CreateSkillLink" asp-controller="UserSkills">
@@ -199,12 +204,10 @@
             {
                 <h3>@discipline</h3>
                 <div class="form-group">
-
-                    <input name="skills" id="skill-label" list="@discipline">
-                    <input type="button" onclick="add_fields();" value="Select another skill from this List" class="btn btn-md btn-secondary" />
+                    <input name="skills" id="@discipline" list="@discipline">
+                    <input type="button" onclick="add_fields(@discipline);" value="Select another skill from this List" class="btn btn-md btn-secondary" />
                 </div>
             }
-
 
             @*Container for the entered Skills*@
             <div id="enteredSkills"></div><br />
@@ -233,11 +236,13 @@
     </div>
 
     <script>
-        function add_fields() {
+        function add_fields(parsedDiscipline){
             //Add the selected Skill above the input so the user knows that it was added
-            document.getElementById("enteredSkills").innerHTML += `<h6 <a style="text-decoration: underline"</a>>${document.getElementById("skill-label").value}</h6>`;
-            document.getElementById("linkDemo").innerHTML += `<input class='input-group' data-id=  name='skills' value=${document.getElementById("skill-label").getAttribute('data-id')}>`;
-            (document.getElementById("skill-label").innerHTML).value = "";
+            document.getElementById("enteredSkills").innerHTML += `<h6 <a style="text-decoration: underline"</a>>${document.getElementById(parsedDiscipline).value}</h6>`;
+            //Add the hidden select below the input to be added later
+            document.getElementById("linkDemo").innerHTML += `<input class='input-group' name='skills' value=${document.getElementById(parsedDiscipline).data-id}>`;
+            //clear the input field for the user
+            (document.getElementById("inputId").innerHTML).value = "";
             }            
     </script>
 
@@ -290,8 +295,6 @@
                 document.getElementById("defaultOpen").click();
 
     </script>
-
-
 
     <style>
         body, html {
