@@ -18,6 +18,11 @@ spec:
         ports:
         - containerPort: 80
         env:
+        - name: ConnectionStrings
+          valueFrom:
+            secretKeyRef:
+              name: dev-app-settings
+              key: connection-strings
         - name: ASPNETCORE_ENVIRONMENT
           value: Development
         resources:
