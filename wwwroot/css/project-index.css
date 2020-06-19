@@ -1,1 +1,144 @@
-﻿
+﻿html {
+    width: 100%;
+}
+
+.project-index-container {
+    display: block;
+    border: 2px solid black;
+}
+
+.project-index-bread-crumb {
+    display: none;
+    background-color: aliceblue;
+    padding: 5px;
+    text-align: left;
+    color: blue;
+}
+
+.search-bar1, .search-bar2, .search-bar3, .search-bar4 {
+    display: none;
+    margin: 3px 3px;
+}
+
+.project-index-search-bars {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 3px;
+}
+
+    .project-index-search-bars .form-control {
+        width: 70% !important;
+    }
+
+.project-index-head {
+    border: 1px solid black;
+    background-color: #1b6ec2;
+    color: white;
+    width: 100%;
+    text-align: center;
+    font-size: large;
+    font-weight: 400px;
+    margin-bottom: 3px;
+}
+
+.project-index-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2em;
+    margin: 0 1em 1em 1em;
+}
+
+.project-index-content {
+    overflow: scroll;
+    height: 30em;
+    background-color: whitesmoke;
+}
+
+    .project-index-content img {
+        height: 20em;
+        width: 100%;
+    }
+
+@media screen and (min-width: 767px) {
+    .project-index-bread-crumb {
+        display: block;
+    }
+
+    .project-index-search-bars {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 1em;
+        margin: 0 5px;
+        row-gap: .5em;
+    }
+
+    .search-bar1, .search-bar2, .search-bar3, .search-bar4 {
+        display: block;
+    }
+
+    .search-bar0 {
+        display: none;
+    }
+
+    .project-index-content {
+        overflow: scroll;
+        height: 35em;
+        background-color: whitesmoke;
+    }
+
+        .project-index-content img {
+            height: 30em;
+        }
+}
+
+@media screen and (min-width: 991px) {
+    .project-index-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        column-gap: 2em;
+        row-gap: 2em;
+        margin: 1em;
+    }
+
+    .project-index-search-bars {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 1em;
+        margin-bottom: 6px;
+    }
+
+    .search-bar1, .search-bar2, {
+        display: block;
+    }
+
+    .search-bar4, .search-bar0, .search-bar3 {
+        display: none;
+    }
+
+    .alphabet-search a {
+        display: block;
+        padding: 2px 12px;
+        margin: auto;
+    }
+
+    .project-index-content img {
+        height: 35em;
+    }
+}
+
+@media screen and (min-width: 1199px) {
+    .alphabet-search a {
+        display: block;
+        padding: 2px 15px;
+        margin: auto;
+    }
+
+    .search-bar0 {
+        display: none;
+    }
+
+    .project-index-content {
+        overflow: scroll;
+        height: 50em;
+    }
+}
