@@ -37,13 +37,13 @@
     width: 100%;
     text-align: center;
     font-size: large;
-    font-weight: 400px;
+    font-weight: 400;
     margin-bottom: 3px;
 }
 
 .project-index-content {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     column-gap: 1em;
     margin: 0 1em 1em 1em;
 }
@@ -91,7 +91,6 @@
         grid-template-columns: 1fr 1fr;
         column-gap: 1em;
         margin: 0 5px;
-        row-gap: .5em;
     }
 
     .search-bar1, .search-bar2, .search-bar3, .search-bar4 {
@@ -120,7 +119,6 @@
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
         column-gap: 1em;
-        row-gap: 2em;
         margin: 1em;
     }
 
@@ -131,7 +129,7 @@
         margin-bottom: 6px;
     }
 
-    .search-bar1, .search-bar2, {
+    .search-bar1, .search-bar2 {
         display: block;
     }
 
