@@ -15,6 +15,18 @@ spec:
       containers:
       - name: constellationweb
         image: gcr.io/constellation-275522/constellationweb
+         env:
+      - name: SECRET_USERNAME
+        valueFrom:
+          secretKeyRef:
+            name: dev-app-settings
+            key: ConstellationWebAppContext
+      - name: SECRET_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: mysecret
+            key: password
+  restartPolicy: Never
         ports:
         - containerPort: 80
         env:

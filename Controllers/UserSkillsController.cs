@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -103,39 +102,41 @@ namespace ConstellationWebApp.Controllers
                     }
                 }
             }
-            var returnPath = "../UserSkill/";
+            var returnPath = "../UserSkills/";
             return Redirect(returnPath);
         }
 
-        // POST: UserSkills/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SkillID,UserID,SkillLinkID")] UserSkill userSkill)
+        public async Task<IActionResult> RemoveManyUserSkills(int[] skills, string userID)
         {
-            if (ModelState.IsValid)
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (currentUser == userID)
             {
-                _context.Add(userSkill);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                foreach (var skill in skills)
+                {
+                    UserSkill userSkill = (_context.UserSkills.Where(i => i.UserID == userID && i.SkillID == skill).FirstOrDefault());
+                    if (userSkill != null)
+                    {
+                        _context.Remove(userSkill);
+                        await _context.SaveChangesAsync();
+                    }
+                }
             }
-            ViewData["SkillLinkID"] = new SelectList(_context.SkillLinks, "SkillLinkID", "SkillLinkID", userSkill.SkillLinkID);
-            ViewData["SkillID"] = new SelectList(_context.Skills, "SkillID", "SkillID", userSkill.SkillID);
-            ViewData["UserID"] = new SelectList(_context.User, "Id", "Id", userSkill.UserID);
-            return View(userSkill);
+            var returnPath = "../UserSkills/";
+            return Redirect(returnPath);
         }
 
-         // POST: UserSkills/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> CreateSkillLink(int[] skills, string linkLabel, string linkUrl)
         {
-            var userSkill = await _context.UserSkills.FindAsync(id);
-            _context.UserSkills.Remove(userSkill);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            //must create the skill link            
+            //create the UserSkillLink join relationship
+            var returnPath = "../UserSkills/";
+            return Redirect(returnPath);
         }
+
 
         private bool UserSkillExists(string id)
         {

@@ -12,7 +12,10 @@ namespace ConstellationWebApp.Models
         public string SkillLinkUrl { get; set; }
 
         public string SkilLinkLabel { get; set; }
-        public UserSkill UserSkills { get; set; }
+
+        public ICollection<UserSkillLink> UserSkillLinks { get; set; }
+
+
 
     }
 }

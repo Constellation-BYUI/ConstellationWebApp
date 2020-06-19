@@ -97,7 +97,6 @@
                                             </div>
                                         </div>
 
-
                                         @*Resume Upload Codes*@
                                         <div class="form-group row">
                                             <label asp-for="ResumeUpload" class="col-sm-2 col-form-label"></label>
@@ -110,13 +109,16 @@
                                         </div>
                                         @* Create the Contact Links for the User *@
                                         <div class="form-group">
+                                            <div id="created-links"></div>
                                             <div class="col-md-8 p-0 small_lable">
                                                 <p class="mb-0 mt-1">Add Link Label</p>
-                                                <input class="input-group rounded border-light" list='contact-link-label' name='createdLinkLabels'>
+                                                <input id="link-label" class="input-group rounded border-light" list='contact-link-label' name='createdLinkLabels'>
                                                 <p class="mb-0 mt-1">Add Url Link</p>
-                                                <input class="input-group rounded border-light" list='contact-link-url' name='createdLinkUrls'>
+                                                <input id="link-url"class="input-group rounded border-light" list='contact-link-url' name='createdLinkUrls'>
                                                 <div id="demo"></div>
                                                 <input class="text-light bg-secondary border-white rounded mt-1" type="button" id="more_fields" onclick="add_fields();" value="Add Link" />
+                                                <div id="demo"></div>
+
                                             </div>
                                         </div>
                                         <section class="card-footer">
@@ -180,12 +182,10 @@ else
         });
     </script>
 
-
-
     <script>
         function add_fields() {
-            document.getElementById("demo").innerHTML += "<p class='mb-0 mt-1 rounded border-light'>Add Link Label</p><input class='input-group' list='contact-link-label' name='createdLinkLabels'><p class='mb-0 mt-1 rounded border-light'>Add Url Link</p><input class='input-group' list='contact-link-url' name='createdLinkUrls'>";
+            document.getElementById("demo").innerHTML += `<input type='hidden' list='contact-link-label' name='createdLinkLabels' value=${document.getElementById("link-label").value}><input type='hidden' class='input-group' list='contact-link-url' name='createdLinkUrls' value=${document.getElementById("link-url").value}>`;
+            document.getElementById("created-links").innerHTML += `<h3>${document.getElementById("link-label").value}</h3> <p><a style="text-decoration: underline" href="${document.getElementById("link-url").value}">${document.getElementById("link-url").value}</a></p>`;   
         }
     </script>
-    @*@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@
 }
