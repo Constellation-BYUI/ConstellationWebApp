@@ -1,0 +1,306 @@
+﻿/* Welcome note */
+/* Welcome note */
+/*html {
+    width: 100% !important;
+    margin: 0;
+    padding: 0;
+}*/
+.bigBoard {
+    background-color: white;
+}
+
+.section1 {
+    position: relative;
+    background-color: white;
+    min-height: 13em;
+    width: 100%;
+    border-top: 2px solid green;
+}
+
+.welcomenote {
+    padding: 20px;
+    margin: 20px 20px;
+    color: black;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+}
+
+    .welcomenote a {
+        margin: 0 40% 10px 40%;
+        text-decoration: none;
+    }
+
+    .welcomenote h3 {
+        color: #28a745;
+    }
+
+    .welcomenote p {
+        text-align: left;
+    }
+/* Job posting Box */
+.section2 {
+    position: relative;
+    background-color: white;
+    min-height: 14em;
+    width: 100%;
+    border-top: 1px solid blue;
+}
+
+.welcomenote h4 {
+    text-align: center;
+    line-height: 25px;
+    font-style: italic;
+    color: #6f42c1;
+}
+
+.section2 .welcomenote a {
+    margin: 0 42% 10px 42%;
+    color: white;
+}
+/* Go to Users, Project and Postings Page */
+.section3 {
+    background-color: whitesmoke;
+    min-height: 8em;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border-top: 1px solid purple;
+}
+
+    .section3 a {
+        text-decoration: none;
+        color: white;
+    }
+
+.view {
+    position: relative;
+    margin-top: 2.5em;
+    height: 5em;
+    width: 8em;
+    border: 1px solid white;
+    color: white;
+    border-radius: 30%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)
+}
+
+
+.icon6 {
+    text-align: center;
+    line-height: 50px;
+    font-size: small;
+}
+
+.avatarcircle {
+    position: absolute;
+    top: -30px;
+    height: 3.5em;
+    width: 3.5em;
+    background-color: rgba(0, 0, 0, 1);
+    border: 2px solid white;
+    border-radius: 50%;
+    margin-left: 30%;
+}
+/* Image holder for inspiration */
+.section4 {
+    background-color: #f1faee;
+    min-height: 5em;
+    width: 100%;
+    border-top: 1px solid orange;
+    border-bottom: 1px solid #1b6ec2;
+}
+
+    .section4 img {
+        width: 100%;
+        height: 15em;
+    }
+
+/* Social media links */
+.section5 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: whitesmoke;
+    border-bottom: 1px solid green;
+    min-height: 2em;
+    width: 100%;
+}
+
+    .section5 a {
+        font-size: 2em;
+    }
+
+.fa-facebook:hover,
+.fa-github:hover,
+.fa-twitter:hover,
+.fa-youtube:hover {
+    color: #888888;
+}
+
+.fa-facebook {
+    color: #1d75f0;
+}
+
+.fa-github {
+    color: #07324c;
+}
+
+.fa-twitter {
+    color: #42aaf3;
+}
+
+.fa-youtube {
+    color: rgb(174, 11, 11);
+}
+
+@media screen and (min-width: 767px) {
+    .bigBoard {
+        display: flex;
+        background-color: white;
+        min-height: 20em;
+        width: 100%;
+    }
+
+    .section1 {
+        color: black;
+        min-height: 16em;
+        text-align: justify;
+        word-spacing: -2px;
+        margin: 10px;
+        border-radius: 10px;
+    }
+
+    .section2 {
+        color: black;
+        height: 13em;
+        text-align: justify;
+        word-spacing: -2px;
+        margin: 35px 15px;
+        padding: 5px;
+        border-radius: 10px;
+        border-top: 2px solid blue;
+    }
+
+    .welcomenote {
+        margin: 2px 0;
+        border-radius: 5%;
+    }
+
+    .section1 .welcomenote {
+        margin: 7px 7px 0 8px;
+    }
+
+    .welcomenote a {
+        margin: 0 50% 10px 20%;
+        text-decoration: none;
+    }
+
+    .section2 .welcomenote a {
+        margin: 0 50% 10px 30%;
+        color: white;
+    }
+
+    .section3 {
+        min-height: 12em;
+    }
+
+    .view {
+        height: 6em;
+        width: 8em;
+    }
+
+    .icon6 {
+        line-height: 70px;
+        font-size: medium;
+    }
+
+    .avatarcircle {
+        height: 4em;
+        width: 4em;
+        margin-left: 25%;
+    }
+
+    .section4 img {
+        width: 100%;
+        height: 20em;
+    }
+}
+
+@media screen and (min-width: 991px) {
+    .bigBoard {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 2em;
+    }
+
+    .section1 {
+        height: 14em;
+        width: 70%;
+        margin: auto;
+    }
+
+        .section1 p {
+            text-align: left;
+        }
+
+    .section2 {
+        height: 10em;
+        width: 70%;
+        margin: auto;
+        padding: 5px;
+    }
+
+    .welcomenote {
+        padding: 5px 20px 20px 20px;
+    }
+
+        .welcomenote h3 {
+            text-align: left;
+        }
+
+        .welcomenote a {
+            margin: -47px 50% -16% 20%;
+        }
+
+    .section5 {
+        justify-content: flex-end;
+        background-color: white;
+        min-height: 2em;
+    }
+
+        .section5 a {
+            margin: auto 20px;
+        }
+}
+
+@media screen and (min-width: 1199px) {
+    .section1 {
+        height: 14em;
+        width: 70%;
+        margin: auto;
+    }
+
+    .welcomenote {
+        text-align: center;
+        padding: 5px 20px 50px 20px;
+    }
+
+    .section2 .welcomenote {
+        padding: 5px 20px 30px 20px;
+    }
+
+    .welcomenote a {
+        margin: -78px 30% -16% 20%;
+    }
+
+    .section2 {
+        height: 14em;
+        width: 70%;
+        margin: auto;
+        padding: 5px;
+        border-radius: 5px;
+    }
+
+        .section2 .welcomenote a {
+            margin: 17px 30% 10px 30%;
+        }
+}
