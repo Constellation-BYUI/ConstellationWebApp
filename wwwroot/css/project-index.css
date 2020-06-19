@@ -52,6 +52,8 @@
     overflow: scroll;
     height: 30em;
     background-color: whitesmoke;
+    margin: 90% !important;
+    margin: auto !important;
 }
 
     .project-index-content img {
@@ -84,6 +86,8 @@
         overflow: scroll;
         height: 35em;
         background-color: whitesmoke;
+        margin: 90% !important;
+        margin: auto !important;
     }
 
         .project-index-content img {
