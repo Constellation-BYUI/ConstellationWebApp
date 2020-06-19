@@ -184,8 +184,14 @@ else
 
     <script>
         function add_fields() {
+            //Place the data in hidden input fields
             document.getElementById("demo").innerHTML += `<input type='hidden' list='contact-link-label' name='createdLinkLabels' value=${document.getElementById("link-label").value}><input type='hidden' class='input-group' list='contact-link-url' name='createdLinkUrls' value=${document.getElementById("link-url").value}>`;
+            //Place a string of the created link above the input fields so the user knows it was created
             document.getElementById("created-links").innerHTML += `<h3>${document.getElementById("link-label").value}</h3> <p><a style="text-decoration: underline" href="${document.getElementById("link-url").value}">${document.getElementById("link-url").value}</a></p>`;   
+            //Clear fields for the user
+            (document.getElementById("link-label").innerHTML).value = "";
+            (document.getElementById("link-url").innerHTML).value = "";
+
         }
     </script>
 }
