@@ -26,17 +26,7 @@
             margin-bottom: .4em;
         }
 
-    #projectDisplay {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: 3px;
-    }
-
-    #usersDisplay {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-gap: 3px;
-    }
+  
 
     .card-columns {
         -webkit-column-count: 2;

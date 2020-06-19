@@ -32,23 +32,14 @@
         color: black !important;
     }
 
-    #projectDisplay {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-gap: 3px;
-    }
+  
 
     .titleBorder {
         box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
         margin: 0 !important;
     }
 
-    #usersDisplay {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-gap: 3px;
-    }
-
+   
     #newPLink {
         font-size: 14px;
         margin: auto !important;
