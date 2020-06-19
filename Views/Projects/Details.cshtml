@@ -9,6 +9,102 @@
     var loggedOn = false;
     var kickOut = false;
 }
+
+<link rel="stylesheet" href="/css/project-details.css" />
+
+<!-- Project Details Body contains both project details and Open roles for this project -->
+<div class="project-details-body">
+
+    <!-- Project Details Head is the same -->
+    <div class="project-details-head"><h3>Project Details</h3></div>
+
+    <!-- Project Details Content has three section : project image, project's full details and Collaborators -->
+    <div class="project-details-content">
+        <div class="project-picture"><img src="/cons_Img/panther6.jpg" alt=""></div>
+
+        <!-- Project Content has the full details of the project -->
+        <div class="project-content">
+            <div class="project-title">Title Here</div>
+            <h3>Description</h3>
+            <div class="project-description">
+
+                <p>
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                    Sequi laborum tempora sed doloribus pariatur earum explicabo ut aut,
+                    eum culpa quas molestias assumenda adipisci! Consequuntur, cumque in!
+                    Explicabo, laudantium quod.Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                    Sequi laborum tempora sed doloribus pariatur earum explicabo ut aut,
+                    eum culpa quas molestias assumenda adipisci! Consequuntur, cumque in!
+                    Explicabo, laudantium quod.
+                </p>
+            </div>
+            <div class="project-date">
+                <p><strong>Creation Date : </strong>07-07-2020</p>
+                <p><strong>Start Date : </strong>07-07-2020</p>
+                <p><strong>End Date : </strong>07-07-2020</p>
+            </div>
+            <h4>Project Links</h4>
+            <div class="project-link">
+                <a href="https://www.w3schools.com/" target="_blank">W3 Schools</a>
+                <a href="https://www.github.com/" target="_blank">Github</a>
+                <a href="https://www.w3schools.com/" target="_blank">W3 Schools</a>
+                <a href="https://www.github.com/" target="_blank">Github</a>
+                <a href="https://www.w3schools.com/" target="_blank">W3 Schools</a>
+                <a href="https://www.github.com/" target="_blank">Github</a>
+                <a href="https://www.w3schools.com/" target="_blank">W3 Schools</a>
+                <a href="https://www.github.com/" target="_blank">Github</a>
+                <a href="https://www.w3schools.com/" target="_blank">W3 Schools</a>
+                <a href="https://www.github.com/" target="_blank">Github</a>
+                <a href="https://www.w3schools.com/" target="_blank">W3 Schools</a>
+                <a href="https://www.github.com/" target="_blank">Github</a>
+                <a href="https://www.w3schools.com/" target="_blank">W3 Schools</a>
+                <a href="https://www.github.com/" target="_blank">Github</a>
+                <a href="https://www.w3schools.com/" target="_blank">W3 Schools</a>
+                <a href="https://www.github.com/" target="_blank">Github</a>
+            </div>
+        </div>
+        <div class="project-collaborators">
+            <h4>Collaborators</h4>
+            <div class="project-collaborators-pictture">
+                <img src="/image/panther2.jpg" alt="Collabo picture">
+                <img src="/image/panther5.jpg" alt="Collabo picture">
+                <img src="/image/panther2.jpg" alt="Collabo picture">
+                <img src="/image/panther5.jpg" alt="Collabo picture">
+                <img src="/image/panther2.jpg" alt="Collabo picture">
+                <img src="/image/panther5.jpg" alt="Collabo picture">
+            </div>
+        </div>
+    </div>
+    <div class="project-details-footer">
+        <button class="btn btn-sm btn-primary">Back&nbsp;to&nbsp;Projects</button>
+        <button class="btn btn-sm btn-info">Add&nbsp;to&nbsp;MyStared&nbsp;Projects</button>
+    </div>
+
+    <!-- Open postings for this project -->
+    <div class="project-details-head">
+        <h3>Open Roles for this Project</h3>
+    </div>
+    <div class="job-posting-field">
+        <img src="/image/panther5.jpg" alt="Postings for this project">
+        <img src="/image/panther5.jpg" alt="Postings for this project">
+        <img src="/image/panther5.jpg" alt="Postings for this project">
+        <img src="/image/panther5.jpg" alt="Postings for this project">
+        <img src="/image/panther5.jpg" alt="Postings for this project">
+        <img src="/image/panther5.jpg" alt="Postings for this project">
+        <img src="/image/panther5.jpg" alt="Postings for this project">
+        <img src="/image/panther5.jpg" alt="Postings for this project">
+        <img src="/image/panther5.jpg" alt="Postings for this project">
+        <img src="/image/panther5.jpg" alt="Postings for this project">
+        <img src="/image/panther5.jpg" alt="Postings for this project">
+        <img src="/image/panther5.jpg" alt="Postings for this project">
+        <img src="/image/panther5.jpg" alt="Postings for this project">
+        <img src="/image/panther5.jpg" alt="Postings for this project">
+        <img src="/image/panther5.jpg" alt="Postings for this project">
+        <img src="/image/panther5.jpg" alt="Postings for this project">
+        Job Postings goes in here
+    </div>
+</div>
+
 <div class="container-fluid padding">
     @*Button for adding projects to stardProject*@
     @if (currentUser != null)
@@ -209,7 +305,7 @@
                                 @if ((currentUser == posting.PostingOwner.Id) && (currentUser != null))
                                 {
                                     <a class="btn btn-sm btn-primary" asp-controller="Postings" asp-action="Edit" asp-route-id="@posting.PostingID">Edit</a>
-                                    <a class="btn btn-sm btn-secondary"asp-controller="Postings" asp-action="Details" asp-route-id="@posting.PostingID">Details</a>
+                                    <a class="btn btn-sm btn-secondary" asp-controller="Postings" asp-action="Details" asp-route-id="@posting.PostingID">Details</a>
                                     <a class="btn btn-sm btn-danger" asp-controller="Postings" asp-action="Delete" asp-route-id="@posting.PostingID">Delete</a>
                                 }
                                 else
@@ -224,4 +320,3 @@
         }
     </section>
 </div>
-        
