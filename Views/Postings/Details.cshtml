@@ -31,29 +31,11 @@
     Note from Ryan: I could not figure out how to keep this working
     when i put the css and javascript in seperate files.
     I am going to leave this as it is for now so we can place these info blips in all locations needed-->
-<style>
-    .show-info {
-        opacity: 1;
-    }
 
-    p {
-        padding: 1em;
-        opacity: 0;
-        transition: opacity 0.5s linear;
-        background-color: lightgoldenrodyellow;
-        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    }
 
-    #hidden-info-blip {
-        width: 600px;
-        z-index: 4;
-        position: absolute;
-    }
+    <!--Message from Nwokolo: I moved the css code to project-details.css file. It works great though -->
 
-    #btn1 {
-        border-radius: 100%;
-    }
-</style>
+
 
 <button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
 <p id="hidden-info-blip">
@@ -260,7 +242,7 @@
         //if the owner is looking at the post he/she only needs to see the link to possible candidates
         if (currentUser == Model.PostingOwner.Id)
         {
-            <a asp-action="Index" asp-controller="IntrestedCandidates">View your Intrested Candidates</a>
+            <a class="btn btn-sm btn-primary" asp-action="Index" asp-controller="IntrestedCandidates">View your Intrested Candidates</a>
         }
         else
         {
@@ -339,13 +321,13 @@
     @if (currentUser == Model.PostingOwner.Id)
     {
         <div>
-            <a asp-action="Edit" asp-route-id="@Model.PostingID">Edit</a> |
-            <a asp-action="Index" class="back-button"><i class="fas fa-arrow-circle-left"></i> Back to List</a>
+            <a class="btn btn-md btn-primary" asp-action="Edit" asp-route-id="@Model.PostingID">Edit</a>
+            <a asp-action="Index" class="back-button btn btn-sm btn-secondary"><i class="fas fa-arrow-circle-left"></i> Back to List</a>
         </div>
     }
     else
     {
-        <a asp-action="Index" class="back-button"><i class="fas fa-arrow-circle-left"></i> Back to List</a>
+        <a asp-action="Index" class="back-button btn btn-sm btn-secondary"><i class="fas fa-arrow-circle-left"></i> Back to List</a>
     }
 </div>
 
