@@ -1,0 +1,114 @@
+﻿.project-delete-container {
+    border: 2px solid black;
+    width: 80%;
+    height: 60%;
+    margin: 5em auto;
+}
+
+.project-delete-head {
+    border: 1px solid black;
+    background-color: #6c757d;
+    color: white;
+    width: 100%;
+    text-align: center;
+    font-size: large;
+    margin-bottom: 3px;
+}
+
+.delete-warning h5 {
+    color: red;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.project-delete-picture {
+    height: 25em;
+    width: 100%;
+    margin: auto;
+}
+
+    .project-delete-picture img {
+        border: 3px solid white;
+        height: inherit;
+        width: inherit;
+    }
+
+.project-delete-content {
+    background-color: whitesmoke;
+}
+
+    .project-delete-content h3 {
+        text-align: center;
+        margin: 0;
+        padding: 5px;
+        color: white;
+        background-color: #1b6ec2;
+    }
+
+    .project-delete-content p {
+        padding: 3px 10px;
+        text-align: justify;
+    }
+
+.project-delete-link {
+}
+
+    .project-delete-link h5 {
+        text-align: center;
+        margin: 0;
+        padding: 5px;
+        color: white;
+        background-color: #1b6ec2;
+    }
+
+    .project-delete-link a {
+        margin: 5px;
+        text-decoration: none;
+    }
+
+        .project-delete-link a:visited {
+            color: lightgreen;
+        }
+
+        .project-delete-link a:hover {
+            color: blue;
+        }
+
+.project-delete-footer {
+    background-color: lightgray;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+    .project-delete-footer button {
+        margin: 5px 2px;
+    }
+
+@media screen and (min-width: 767px) {
+    .project-delete-container {
+        border: 2px solid black;
+        width: 80%;
+        height: 60%;
+        margin: 5em auto;
+    }
+}
+
+@media screen and (min-width: 1199px) {
+    .project-delete-container {
+        border: 2px solid black;
+        width: 70%;
+        height: 60%;
+        margin: 5em auto;
+        background-color: rgba(0,0,0,0.1)
+    }
+
+    .project-delete-picture {
+        height: 35em;
+        width: 70%;
+        margin: auto;
+    }
+
+        .project-delete-picture img {
+            width: 100%;
+        }
+}
