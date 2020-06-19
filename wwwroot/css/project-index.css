@@ -60,6 +60,26 @@
         height: 20em;
         width: 100%;
     }
+.project-collaborators h4 {
+    text-align: center;
+    margin: 0;
+    padding: 5px;
+    color: white;
+    background-color: #1b6ec2;
+}
+
+.project-collaborators-pictture {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+    section a img {
+        margin: 3px;
+        width: 4em !important;
+        height: 4em !important;
+        border: 2px solid whitesmoke;
+    }
 
 @media screen and (min-width: 767px) {
     .project-index-bread-crumb {

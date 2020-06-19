@@ -79,7 +79,7 @@
                             var collabPath = "~/image/" + (collab.User.PhotoPath);
                             var collabMemberPath = "../Users/Details/" + (collab.User.Id);
 
-                            <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
+                            <a href="@collabMemberPath"><img src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
 
                             if (collab.UserID == currentUser)
                             {
