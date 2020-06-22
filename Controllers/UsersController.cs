@@ -163,37 +163,51 @@ namespace ConstellationWebApp.Controllers
         #region UserGets&PostsFunctions
         // GET: Users/Index
         [AllowAnonymous]
-        public async Task<IActionResult> Index(string discplineSearch, string nameSearch)
+        public async Task<IActionResult> Index(string discplineSearch, string nameSearch, string skillSearch)
         {
             var viewModel = new ViewModel();
-            if(discplineSearch != null)
+            viewModel.Skills = _context.Skills;
+            viewModel.Disciplines = _context.Disciplines;
+
+            if (discplineSearch != null)
             {
               viewModel.Users = await _context.User.Where(i => i.AreaOfDiscipline.Contains(discplineSearch))
              .Include(i => i.ContactLinks)
+             .Include(i => i.UserSkills)
               .AsNoTracking()
               .OrderBy(i => i.Id)
               .ToListAsync();
-                viewModel.Disciplines = _context.Disciplines;
                 return View(viewModel);
             }
             else if(nameSearch != null)
             {
                 viewModel.Users = await _context.User.Where(i => i.UserName.Contains(nameSearch) || i.FirstName.Contains(nameSearch) || i.LastName.Contains(nameSearch))
              .Include(i => i.ContactLinks)
+             .Include(i => i.UserSkills)
               .AsNoTracking()
               .OrderBy(i => i.Id)
               .ToListAsync();
-                viewModel.Disciplines = _context.Disciplines;
+                return View(viewModel);
+            }
+            else if (skillSearch != null)
+            {
+                var foundSkill = _context.Skills.Where(i => i.SkillName == skillSearch).FirstOrDefault();
+                viewModel.Users = await _context.User.Where(i => i.UserSkills.Any(e => e.SkillID == foundSkill.SkillID))
+             .Include(i => i.ContactLinks)
+             .Include(i => i.UserSkills)
+              .AsNoTracking()
+              .OrderBy(i => i.Id)
+              .ToListAsync();
                 return View(viewModel);
             }
             else
             {
                 viewModel.Users = await _context.User
                 .Include(i => i.ContactLinks)
+                 .Include(i => i.UserSkills)
                  .AsNoTracking()
                  .OrderBy(i => i.Id)
                  .ToListAsync();
-                viewModel.Disciplines = _context.Disciplines;
                 return View(viewModel);
             }           
         }

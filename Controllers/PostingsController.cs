@@ -116,17 +116,55 @@ namespace ConstellationWebApp.Controllers
         #region PostingsGets&PostsFunctions 
         // GET: Postings INDEX
         [AllowAnonymous]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string titleSearch, string typeSearch, string postingBySearch)
         {
             var viewModel = new ViewModel();
-            viewModel.Postings = await _context.Postings.Where(i => i.HidePosting == false)
+
+            if(titleSearch != null)
+            {
+                viewModel.Postings = await _context.Postings.Where(i => i.HidePosting == false && i.PostingTitle.Contains(titleSearch))
+                     .Include(i => i.Posting_PostingTypes)
+                     .ThenInclude(i => i.PostingTypes)
+                     .Include(i => i.PostingOwner)
+                      .AsNoTracking()
+                      .ToListAsync();
+                viewModel.PostingTypes = _context.PostingTypes;
+                return View(viewModel);
+            }
+            else if(typeSearch != null)
+            {
+                PostingType postingID = _context.PostingTypes.Where(i => i.PostingTypeName == typeSearch).FirstOrDefault();
+                viewModel.Postings = await _context.Postings.Where(i => i.HidePosting == false && i.Posting_PostingTypes.Any(e => e.PostingTypeID == postingID.PostingTypeID))
+                   .Include(i => i.Posting_PostingTypes)
+                  .ThenInclude(i => i.PostingTypes)
+                  .Include(i => i.PostingOwner)
+                   .AsNoTracking()
+                   .ToListAsync();
+                viewModel.PostingTypes = _context.PostingTypes;
+                return View(viewModel);
+            }
+            else if (postingBySearch != null)
+            {
+                viewModel.Postings = await _context.Postings.Where(i => i.HidePosting == false && (i.PostingOwner.FirstName.Contains(postingBySearch) || i.PostingOwner.LastName.Contains(postingBySearch) || i.PostingOwner.UserName.Contains(postingBySearch)))
+                   .Include(i => i.Posting_PostingTypes)
+                  .ThenInclude(i => i.PostingTypes)
+                  .Include(i => i.PostingOwner)
+                   .AsNoTracking()
+                   .ToListAsync();
+                viewModel.PostingTypes = _context.PostingTypes;
+                return View(viewModel);
+            }
+            else
+            {
+                viewModel.Postings = await _context.Postings.Where(i => i.HidePosting == false)
                   .Include(i => i.Posting_PostingTypes)
                   .ThenInclude(i => i.PostingTypes)
                   .Include(i => i.PostingOwner)
                    .AsNoTracking()
                    .ToListAsync();
-
-            return View(viewModel);
+                viewModel.PostingTypes = _context.PostingTypes;
+                return View(viewModel);
+            }            
         }
 
         // GET: Postings/Details/5
