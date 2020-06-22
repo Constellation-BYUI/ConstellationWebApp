@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConstellationWebApp.Migrations
 {
     [DbContext(typeof(ConstellationWebAppContext))]
-    [Migration("20200618221254_Constellation-nullableSkillLinkID-6-18-2020")]
-    partial class ConstellationnullableSkillLinkID6182020
+    [Migration("20200619203410_SkillOwnerId")]
+    partial class SkillOwnerId
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -42,7 +42,7 @@ namespace ConstellationWebApp.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("ContactLinks");
+                    b.ToTable("ContactLink");
                 });
 
             modelBuilder.Entity("ConstellationWebApp.Models.Discipline", b =>
@@ -213,7 +213,7 @@ namespace ConstellationWebApp.Migrations
 
                     b.HasIndex("ProjectsProjectID");
 
-                    b.ToTable("ProjectLinks");
+                    b.ToTable("ProjectLink");
                 });
 
             modelBuilder.Entity("ConstellationWebApp.Models.ProjectPosting", b =>
@@ -308,6 +308,9 @@ namespace ConstellationWebApp.Migrations
                     b.Property<string>("SkilLinkLabel")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SkillLinkOwner")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SkillLinkUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -399,24 +402,46 @@ namespace ConstellationWebApp.Migrations
 
             modelBuilder.Entity("ConstellationWebApp.Models.UserSkill", b =>
                 {
-                    b.Property<string>("UserID")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("UserSkillID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("SkillID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SkillLinkID")
-                        .HasColumnType("int");
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("UserID", "SkillID");
+                    b.HasKey("UserSkillID");
 
                     b.HasIndex("SkillID");
 
-                    b.HasIndex("SkillLinkID")
-                        .IsUnique()
-                        .HasFilter("[SkillLinkID] IS NOT NULL");
+                    b.HasIndex("UserID");
 
                     b.ToTable("UserSkill");
+                });
+
+            modelBuilder.Entity("ConstellationWebApp.Models.UserSkillLink", b =>
+                {
+                    b.Property<int>("UserSkillLinkID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("LinkID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserSkillID")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserSkillLinkID");
+
+                    b.HasIndex("LinkID");
+
+                    b.HasIndex("UserSkillID");
+
+                    b.ToTable("UserSkillLink");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -816,13 +841,22 @@ namespace ConstellationWebApp.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ConstellationWebApp.Models.SkillLink", "SkillLinks")
-                        .WithOne("UserSkills")
-                        .HasForeignKey("ConstellationWebApp.Models.UserSkill", "SkillLinkID");
-
                     b.HasOne("ConstellationWebApp.Models.User", "Users")
                         .WithMany("UserSkills")
-                        .HasForeignKey("UserID")
+                        .HasForeignKey("UserID");
+                });
+
+            modelBuilder.Entity("ConstellationWebApp.Models.UserSkillLink", b =>
+                {
+                    b.HasOne("ConstellationWebApp.Models.SkillLink", "SkillLinks")
+                        .WithMany("UserSkillLinks")
+                        .HasForeignKey("LinkID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ConstellationWebApp.Models.UserSkill", "UserSkills")
+                        .WithMany("UserSkillLinks")
+                        .HasForeignKey("UserSkillID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

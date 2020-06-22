@@ -13,6 +13,8 @@ namespace ConstellationWebApp.Models
 
         public string SkilLinkLabel { get; set; }
 
+        public string SkillLinkOwner{get; set; }
+
         public ICollection<UserSkillLink> UserSkillLinks { get; set; }
 
 

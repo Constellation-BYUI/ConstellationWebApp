@@ -275,9 +275,9 @@ namespace ConstellationWebApp.Controllers
 
                             _context.Add(userProjects);
                         }
-                        catch (InvalidOperationException e)
+                        catch
                         {
-                            Console.WriteLine($"The user was not found: '{e}'");
+                            continue;
                         }
                     }
                     CreateProjectLinks(createdLinkLabels, createdLinkUrls, newProject);
