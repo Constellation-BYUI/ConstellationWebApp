@@ -199,7 +199,7 @@ namespace ConstellationWebApp.Data
             modelBuilder.Entity<UserSkillLink>()
                 .HasOne(bc => bc.SkillLinks)
                 .WithMany(c => c.UserSkillLinks)
-                .HasForeignKey(bc => bc.SkillID);
+                .HasForeignKey(bc => bc.LinkID);
 
             modelBuilder.Entity<Posting>().ToTable("Posting");
             modelBuilder.Entity<Posting_PostingType>().ToTable("Posting_PostingType");

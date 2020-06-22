@@ -128,122 +128,94 @@
                             </form>
                         </div>
                     </section>
-      </section>
+                </section>
     }
-
-
-
     <section class="Link-form">
-        <h3>Linking Skills</h3>
-        <br />
-        <p>Add a link to prove your competency for a set or individuals skill.</p>
-        <br />
-        <br />
-        <button class="tablink" onclick="openLinkPage('AddSkillLink', this, 'lightblue')" id="defaultLinkOpen">Add Skill(s) Link</button>
-        <button class="tablink" onclick="openLinkPage('RemoveSkillLink', this, 'red')">Remove Skill(s) Link</button>
+        <section>
+            <h3>Linking Skills</h3>
+            <br />
+            <p>Add a link to prove your competency for a set or individuals skill.</p>
+            <br />
+            <br />
+            <button class="tablink" onclick="openLinkPage('AddSkillLink', this, 'lightblue')" id="defaultLinkOpen">Add Skill(s) Link</button>
+            <button class="tablink" onclick="openLinkPage('RemoveSkillLink', this, 'red')">Remove Skill(s) Link</button>
 
-        <div id="AddSkillLink" class="linktabcontent">
-            @{
-                @*
-                First determine/create all the datalists that will be present based upon the disciplines
-                This requires feeding back to the SkillDiscipline table to get to the disciple table so we can retrieve the name of that discipline
-                Populate those datalists with all userSkills part of that discipline
-                Have the add Skill from list button and implement former add link javascript ability *@
+            <div id="AddSkillLink" class="linktabcontent">
+                @{
+                    <datalist id="userSkills">
+                        @{
+                            foreach (var skill in Model.UserSkills.Where(i => i.UserID == currentUser))
+                            {
+                                SkillDiscipline skillDisciplineForSkill = Model.SkillDisciplines.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
+                                Discipline disciplineForSkill = Model.Disciplines.Where(i => i.DisciplineID == skillDisciplineForSkill.DisciplineID).FirstOrDefault();
 
-            List<string> dataLists = new List<string>();
-            if (Model.UserSkills != null)
-            {
-                //find all disciplines
-                foreach (var skill in Model.UserSkills.Where(i => i.UserID == currentUser))
-                {
-                    SkillDiscipline skillDisciplineForSkill = Model.SkillDisciplines.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
-                    Discipline disciplineForSkill = Model.Disciplines.Where(i => i.DisciplineID == skillDisciplineForSkill.DisciplineID).FirstOrDefault();
-                 
-                        //create the discipineListName
-                        var varName = disciplineForSkill.DisciplineName;                   
-                          varName = varName.Replace(" ", "");
-                        
-                        //check to see if list was already made
-                        if (!dataLists.Contains(varName))
-                        {
-                            dataLists.Add(varName);
-                        }
-                        else
-                        {
-                            continue;
-                        }
-               
-                }
-
-                //create and populate each discpline>skill list
-                foreach (var discipline in dataLists)
-                {
-                        <datalist id="@discipline">
-                            @{
-                                foreach (var skill in Model.UserSkills.Where(i => i.UserID == currentUser))
-                                {
-                                    SkillDiscipline skillDisciplineForSkill = Model.SkillDisciplines.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
-                                    Discipline disciplineForSkill = Model.Disciplines.Where(i => i.DisciplineID == skillDisciplineForSkill.DisciplineID).FirstOrDefault();
-
-                                    if (disciplineForSkill.DisciplineName == discipline)
-                                    {
-                                        Skill skillName = Model.Skills.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
-
-                                        <option value="@skillName.SkillName" data-id="@skillName.SkillID"></option>
-                                    }
-
-                                }
+                                Skill skillName = Model.Skills.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
+                                <option value=@skill.UserSkillID>@skillName.SkillName - @disciplineForSkill.DisciplineName</option>
                             }
-                        </datalist>
-                }
+                        }
+                    </datalist>
 
                     @* Form that contains all discpline drop down lists and the Link Label/URL Fields*@
-        <form asp-action="CreateSkillLink" asp-controller="UserSkills">
+                    <form asp-action="CreateSkillLink" asp-controller="UserSkills">
+                        <h3>Select from you Skills</h3>
+                        <div class="form-group">
+                            <input name="skills" id="skill-label" list="userSkills">
+                            <input type="button" onclick="add_fields();" value="Select another skill from this List" class="btn btn-md btn-secondary" />
+                        </div>
 
-            @foreach (var discipline in dataLists)
-            {
-                <h3>@discipline</h3>
-                <div class="form-group">
-                    <input name="skills" id="@discipline" list="@discipline">
-                    <input type="button" onclick="add_fields(@discipline);" value="Select another skill from this List" class="btn btn-md btn-secondary" />
-                </div>
-            }
+                        @*Container for the entered Skills*@
+                        <div id="enteredSkills"></div><br />
+                        <div id="linkDemo"></div><br />
 
-            @*Container for the entered Skills*@
-            <div id="enteredSkills"></div><br />
-            <div id="linkDemo"></div><br />
+                        @*Link&label are need to created the SkillLInk the id derived will be used for the UserSkillLink entity selected*@
+                        <h4>Link Label</h4>
+                        <input type='text' name='linkLabel'>
+                        <h4>Link URL</h4>
+                        <input type='text' name='linkUrl'>
 
-
-            @*Link&label are need to created the SkillLInk the id derived will be used for the UserSkillLink entity selected*@
-            <h4>Link Label</h4>
-            <input type='text' name='linkLabel'>
-            <h4>Link URL</h4>
-            <input type='text' name='linkUrl'>
-
-            <div class="form-group">
-                <input type="submit" value="Add Link to selected skills" class="btn btn-sm btn-info" />
-            </div>
-        </form>
-             }
-         }
-            </div>
-
-            <div id="RemoveSkillLink" class="linktabcontent">
-                <h3>Remove SKill Link</h3>
-                <p>Remove your skill links.</p>
+                        <div class="form-group">
+                            <input type="submit" value="Add Link to selected skills" class="btn btn-sm btn-info" />
+                        </div>
+                    </form>
+                }
             </div>
         </section>
-    </div>
-
-    <script>
-        function add_fields(parsedDiscipline){
-            //Add the selected Skill above the input so the user knows that it was added
-            document.getElementById("enteredSkills").innerHTML += `<h6 <a style="text-decoration: underline"</a>>${document.getElementById(parsedDiscipline).value}</h6>`;
-            //Add the hidden select below the input to be added later
-            document.getElementById("linkDemo").innerHTML += `<input class='input-group' name='skills' value=${document.getElementById(parsedDiscipline).data-id}>`;
-            //clear the input field for the user
-            (document.getElementById("inputId").innerHTML).value = "";
-            }            
+        <section>
+            <div id="RemoveSkillLink" class="linktabcontent">
+                <h3>Remove SKill Links</h3>
+                <p>
+                    You can remove a link and
+                    its URL. Your skills will not be removed from
+                    this action but the you will not showcase the
+                    skill with this link on your profile any longer.
+                </p>
+               @{
+                    foreach (var link in Model.SkillLinks.Where(i => i.SkillLinkOwner == currentUser))
+                    {
+                    <div>
+                        <form asp-action="DeleteSkillLink" asp-controller="UserSkills">
+                            <p><a style="text-decoration: underline" href="@link.SkillLinkUrl">@link.SkilLinkLabel</a></p>
+                            <input type="hidden" name="link" value="@link.SkillLinkID" list="userSkills">
+                            <div class="form-group">
+                                <input type="submit" value="Remove" class="btn btn-sm btn-info" />
+                            </div>
+                        </form>
+                    </div>
+                    }
+                }
+                    </div>
+        </section>
+</section>
+</div>
+    <script>    
+       function add_fields() {
+     //Add the selected Skill above the input so the user knows that it was added
+       document.getElementById("enteredSkills").innerHTML += `<h6 style="text-decoration: underline">${document.getElementById("skill-label").value}</h6>`;
+     //Add the hidden select below the input to be added later
+       document.getElementById("linkDemo").innerHTML += `<input type='hidden' class='input-group' name='skills' value=${document.getElementById("skill-label").value}>`;
+     //clear the input field for the user
+     document.getElementById("skill-label").value = "";
+     }                           
     </script>
 
     <script>
@@ -303,10 +275,12 @@
             font-family: Arial;
         }
 
+     
         .Split-forms {
             display: grid;
             grid-template-columns: 5% 40% 10% 40% 5%;
             grid-template-rows: 500px;
+            margin-bottom: 15em;
         }
 
         .Skill-form {
@@ -364,5 +338,18 @@
 
         #RemoveSkillLink {
             background-color: red;
+        }
+           @@media only screen and (max-width: 800px) {
+           .Split-forms {
+             display: block;
+           }
+               .Skill-form {
+             display: block;
+        }
+
+        .Link-form {
+             display: block;
+        }
+
         }
     </style>

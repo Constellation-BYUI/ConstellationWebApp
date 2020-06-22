@@ -8,7 +8,7 @@ namespace ConstellationWebApp.Models
     public class UserSkillLink
     {
         public int UserSkillLinkID { get; set; }
-        public int SkillID { get; set; }
+        public int LinkID { get; set; }
         public int UserSkillID { get; set; }
        
         public UserSkill UserSkills { get; set; }
