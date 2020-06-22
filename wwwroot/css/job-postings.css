@@ -1,0 +1,114 @@
+﻿main {
+    margin-top: 100px;
+}
+
+#job-postings-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#newPLink {
+    margin: 20px;
+}
+
+.job-post-create {
+    display: block;
+    width: 90%;
+    margin: 10px auto;
+}
+
+.job-card {
+    box-shadow: 0 0 10px grey;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.job-post-title {
+    text-align: center;
+    background-color: #1b6ec2;
+    padding: 10px;
+    margin-top: 0;
+    color: white;
+}
+
+.job-post-position {
+    text-align: center;
+}
+
+.job-position-text {
+    color: green;
+}
+
+.recruiter-info {
+    text-align: left;
+}
+
+    .recruiter-info img {
+        margin: 0 !important;
+        max-width: 75px;
+        height: 75px !important;
+        display: inline;
+        float: left;
+    }
+
+.job-post-type {
+    text-align: center;
+    margin-top: 50px;
+}
+
+    .job-post-type:nth-child(1) {
+        margin: 15px;
+        background-color: #17a2b8;
+        border-radius: 10px;
+        padding: 5px;
+        color: white;
+    }
+
+.job-post-buttons-section {
+    padding: 10px;
+    border-top: 1px solid black;
+}
+
+.job-post-main-title {
+    margin: 15px;
+    background-color: #17a2b8;
+    border-radius: 10px;
+    padding: 5px;
+    color: white;
+}
+
+@media (min-width: 700px) {
+
+    #newPLink {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+
+    .job-post-create {
+        width: auto;
+        margin: 0;
+    }
+
+    #job-postings-container {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .job-card {
+        max-width: 40%;
+    }
+
+    .recruiter-info img {
+        margin: 0;
+    }
+}
+
+@media (min-width: 1000px) {
+    .job-card {
+        max-width: 28%;
+    }
+}
+
