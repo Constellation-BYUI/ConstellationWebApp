@@ -163,16 +163,39 @@ namespace ConstellationWebApp.Controllers
         #region UserGets&PostsFunctions
         // GET: Users/Index
         [AllowAnonymous]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string discplineSearch, string nameSearch)
         {
             var viewModel = new ViewModel();
-            viewModel.Users = await _context.User
-                  .Include(i => i.ContactLinks)
-                   .AsNoTracking()
-                   .OrderBy(i => i.Id)
-                   .ToListAsync();
-            viewModel.Disciplines = _context.Disciplines;
-            return View(viewModel);
+            if(discplineSearch != null)
+            {
+              viewModel.Users = await _context.User.Where(i => i.AreaOfDiscipline.Contains(discplineSearch))
+             .Include(i => i.ContactLinks)
+              .AsNoTracking()
+              .OrderBy(i => i.Id)
+              .ToListAsync();
+                viewModel.Disciplines = _context.Disciplines;
+                return View(viewModel);
+            }
+            else if(nameSearch != null)
+            {
+                viewModel.Users = await _context.User.Where(i => i.UserName.Contains(nameSearch) || i.FirstName.Contains(nameSearch) || i.LastName.Contains(nameSearch))
+             .Include(i => i.ContactLinks)
+              .AsNoTracking()
+              .OrderBy(i => i.Id)
+              .ToListAsync();
+                viewModel.Disciplines = _context.Disciplines;
+                return View(viewModel);
+            }
+            else
+            {
+                viewModel.Users = await _context.User
+                .Include(i => i.ContactLinks)
+                 .AsNoTracking()
+                 .OrderBy(i => i.Id)
+                 .ToListAsync();
+                viewModel.Disciplines = _context.Disciplines;
+                return View(viewModel);
+            }           
         }
 
         // GET: User/Details/5
