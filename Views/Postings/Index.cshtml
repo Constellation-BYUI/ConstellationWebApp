@@ -6,15 +6,14 @@
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
 
-<link href="~/css/job-postings.css"/>
-
+<link rel="stylesheet" href="~/css/job-postings.css" />
 <h2 id="userTitle" class="titleBorder shadow mx-auto">Job Postings</h2>
-<section style="margin-left: 80%;" id="newPLink">
-    <a class="btn btn-md btn-primary mb-1" asp-action="Create">Create&nbsp;a&nbsp;Job&nbsp;Posting</a>
+<section id="newPLink">
+    <a class="btn btn-md btn-primary mb-1 job-post-create" asp-action="Create">Create&nbsp;a&nbsp;Job&nbsp;Posting</a>
 </section>
 
+<div id="job-postings-container">
 
-<div id="projectDisplay">
     @{
         foreach (var item in Model.Postings)
         {
@@ -22,60 +21,63 @@
 
             var collabMemberPath = "../Users/Details/" + (item.PostingOwner.Id);
 
-        <div class="card shadow-lg text-black text-center m-2 padding">
-            @*Name of Company*@
-            <h3 class="card-header bg-primary py-1 text-white text-center m-0">
-                @Html.DisplayFor(modelItem => item.PostingFor)
-            </h3>
-            @*Position*@
-            <h5 class="text-center m-0 bg-light p-2 border-bottom">
-                <strong class="text-success">Position : </strong><span class="mb-0 p-1 text-black">@Html.DisplayFor(modelItem => item.PostingTitle)</span>
-            </h5>
+            <div class="job-card">
+                @*Name of Company*@
+                <h3 class="job-post-title">
+                    @Html.DisplayFor(modelItem => item.PostingFor)
+                </h3>
+                @*Position*@
+                <h5 class="job-post-position">
+                    <strong class="job-position-text">Position</strong><br /><span class="mb-0 p-1 text-black">@Html.DisplayFor(modelItem => item.PostingTitle)</span>
+                </h5>
 
-            @*<div class="card-title bg-light container-fluid py-1 shadow text-success rounded">
+                @*<div class="card-title bg-light container-fluid py-1 shadow text-success rounded">
 
-        </div>*@
-           
-            <section class="bg-light text-wrap text-justify">
-                <div class="col-6 text-left float-left">
-                   <div class="bg-light text-wrap p-2 py-0 border-bottom"><strong class="text-black">Recruiter's Name : </strong><span class="text-black-50">@Html.DisplayFor(modelItem => item.PostingOwner.UserName)</span></div>
-                                <a  class="m-1 border-success" href="@collabMemberPath"><img style="height: 300px; width: 60%; margin: auto; display: block; box-shadow: 5px 5px 15px #343a40;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.PostingOwner.UserName)" asp-append-version="true" /></a>
-                            </div>
-                <div class="col-6 float-right text-center">
-                    @*Type of Posting*@
-                    <h5 class="card-title bg-info container-fluid float-right py-2 text-white rounded mt-2">Type of Posting</h5>
-                    @foreach (var type in item.Posting_PostingTypes)
-                    {
-                        <h6 class="text-black">
-                            @type.PostingTypes.PostingTypeName
+                    </div>*@
+
+                <section>
+                    <div class="recruiter-info">
+                        <div>
+                            <a class="m-1 border-success" href="@collabMemberPath"><img style="height: 300px; width: 100%; display: block; border: 1px dotted red" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.PostingOwner.UserName)" asp-append-version="true" /></a>
+                            <strong style="margin-left: 10px;">Recruiter</strong><br /><span style="margin-left: 10px">@Html.DisplayFor(modelItem => item.PostingOwner.UserName)</span>
+                        </div>
+                    </div>
+                    <div class="job-post-type">
+                        @*Type of Posting*@
+                        <h5 class="job-post-main-title">Type of Posting</h5>
+                        <h6>
+                            @foreach (var type in item.Posting_PostingTypes)
+                            {
+                                @type.PostingTypes.PostingTypeName
+                            }
                         </h6>
 
+                        @*Description of Posting*@
+                        <h5 class="job-post-main-title">Description</h5>
+                        <p style="height: 80px; overflow: scroll; text-align: left">@Html.DisplayFor(modelItem => item.Description)</p>
+                    </div>
+                </section>
+
+                <section class="job-post-buttons-section">
+                    @if ((currentUser == item.PostingOwner.Id) && (currentUser != null))
+                    {
+
+                        <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@item.PostingID">Edit</a>
+                        <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.PostingID">Details</a>
+                        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.PostingID">Delete</a>
+
                     }
-                    @*Description of Posting*@
-                    <h5 class="card-title bg-info container-fluid float-right py-2 text-white rounded">Description</h5>
-                    <p class="text-black-50 p-2">@Html.DisplayFor(modelItem => item.Description)</p>
-                </div>
-            </section>
+                    else
+                    {
+                        <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.PostingID">Details</a>
+                    }
+                </section>
+            </div>
 
-            <section class="card-footer text-left">
-                @if ((currentUser == item.PostingOwner.Id) && (currentUser != null))
-                {
 
-                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@item.PostingID">Edit</a>
-                    <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.PostingID">Details</a>
-                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.PostingID">Delete</a>
 
-                }
-                else
-                {
-                    <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.PostingID">Details</a>
-                }
-            </section>
-        </div>
-
-            
-       
         }
 
     }
+
 </div>

@@ -2,6 +2,10 @@
     
 }
 
+#postings-details-container {
+    padding: 0 2em;
+}
+
 h2 {
     text-align: center;
     margin: 0;
@@ -27,6 +31,11 @@ header img {
 
 .back-button {
     padding: 10px;
+}
+
+#company-banner-details-page {
+    height: 5em;
+    width: 100%;
 }
 
 @media (min-width: 800px) {
