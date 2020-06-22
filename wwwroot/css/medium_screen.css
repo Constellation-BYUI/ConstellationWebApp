@@ -58,3 +58,10 @@
             padding: 8px 14px;
         }
 }
+
+@media screen and (min-width: 767px) {
+    .navBar-padding-large {
+        padding: 12px 9px !important;
+        text-decoration: none;
+    }
+}
