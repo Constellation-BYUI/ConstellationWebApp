@@ -48,7 +48,7 @@
             }
 
             @*Recuiter can add user to many "Picks" that the user is not already part of *@
-            if (postings != null && @Model.Id != currentUser)
+            if ((!(postings.Count() == 0)) && @Model.Id != currentUser)
             {
                 <h4>Add this User to your picks</h4>
                 <form asp-action="CreateManyPicks" asp-controller="IntrestedCandidates">
@@ -90,7 +90,7 @@
                 </form>
 
                 @*Remove a user from many picks that the user is already part of*@
-                <h4>Remove this User to your picks</h4>
+                <h4>Remove this User from your picks</h4>
                 <form asp-action="DeleteManyPick" asp-controller="IntrestedCandidates">
                     @{
                         int count = 0;
