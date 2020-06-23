@@ -61,14 +61,18 @@
                     <input class="text-light bg-secondary border-white rounded mt-1" type="button" id="more_fields" onclick="add_collab();" value="Add Collaborator" />
 
                     @* Adding Contact Links*@
-                    <div class="form-group add-link">
-                        <div class="px-0 col-md-12 small_lable">
-                            <p class="mb-0 mt-1">Link Label</p>
-                            <input class="input-group rounded border-light col-md-12" list='contact-link-label' name='createdLinkLabels'>
-                            <p class="mb-0 mt-1">Link URL</p>
-                            <input class="input-group rounded border-light col-md-12" list='contact-link-url' name='createdLinkUrls'>
-                            <div id="linkDemo"></div>
+                    @* Create the Project Links for the User *@
+                    <div class="form-group">
+                        <div id="created-links"></div>
+                        <div class="col-md-8 p-0 small_lable">
+                            <p class="mb-0 mt-1">Add Link Label</p>
+                            <input id="link-label" class="input-group rounded border-light" list='contact-link-label' name='createdLinkLabels'>
+                            <p class="mb-0 mt-1">Add Url Link</p>
+                            <input id="link-url" class="input-group rounded border-light" list='contact-link-url' name='createdLinkUrls'>
+                            <div id="demo"></div>
                             <input class="text-light bg-secondary border-white rounded mt-1" type="button" id="more_fields" onclick="add_fields();" value="Add Link" />
+                            <div id="demo"></div>
+
                         </div>
                     </div>
                     <div class="card-footer">
@@ -81,7 +85,6 @@
             </div>
         </div>
 
-
         @section Scripts {
             <script>
                 $(document).ready(function () {
@@ -89,16 +92,20 @@
                         var fileName = $(this).val().split("\\").pop();
                         $(this).next('.custom-file-label').html(fileName);
                     });
-            </script>
-      
-            <script>
-                function add_collab() {
-                    document.getElementById("demo").innerHTML += "<input class='input-group' list='user-list'   name='selectedCollaborators'> ";
-                }
+                });
             </script>
             <script>
                 function add_fields() {
-                    document.getElementById("linkDemo").innerHTML += "<p class='mb-0 mt-1 rounded border-light'>Add Link Label</p><input class='input-group' list='contact-link-label' name='createdLinkLabels'><p class='mb-0 mt-1 rounded border-light'>Add Url Link</p><input class='input-group' list='contact-link-url' name='createdLinkUrls'>";
+                    //Place the data in hidden input fields
+                    document.getElementById("demo").innerHTML += `<input type='hidden' list='contact-link-label' name='createdLinkLabels' value=${document.getElementById("link-label").value}><input type='hidden' class='input-group' list='contact-link-url' name='createdLinkUrls' value=${document.getElementById("link-url").value}>`;
+                    //Place a string of the created link above the input fields so the user knows it was created
+                    document.getElementById("created-links").innerHTML += `<h3>${document.getElementById("link-label").value}</h3> <p><a style="text-decoration: underline" href="${document.getElementById("link-url").value}">${document.getElementById("link-url").value}</a></p>`;
+                    //Clear fields for the user
+                    (document.getElementById("link-label").innerHTML).value = "";
+                    (document.getElementById("link-url").innerHTML).value = "";
+
                 }
             </script>
+
+            @*@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@
         }

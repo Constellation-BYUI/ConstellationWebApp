@@ -61,8 +61,15 @@
             {
                 if (item.displayMyProfile == true)
                 {
-                    var photoPath = "~/image/" + (item.PhotoPath);
-
+                  var photoPath = "";
+                  if (item.PhotoPath != null)
+                  {
+                   photoPath = "~/image/" + item.PhotoPath;
+                  }
+                  else
+                  {
+                   photoPath = "~/WebAssests/siteImages/avataricon.png";
+                  }
 
                     @*CSS RULES FOR INDIVIDUAL CARDS*@
                     <section id="usersCard">

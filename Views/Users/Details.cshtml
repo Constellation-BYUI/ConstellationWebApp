@@ -4,7 +4,15 @@
 
 @{
     ViewData["Title"] = "Details";
-    var photoPath = "~/image/" + Model.PhotoPath;
+    var photoPath = "";
+    if (Model.PhotoPath != null)
+    {
+     photoPath = "~/image/" + Model.PhotoPath;
+    }
+    else
+    {
+     photoPath = "~/WebAssests/siteImages/avataricon.png";
+    }
     var resumePath = "../../../../Resumes/" + Model.ResumePhotoPath;
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
     var allReadyStarred = false;

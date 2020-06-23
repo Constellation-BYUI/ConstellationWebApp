@@ -3,7 +3,15 @@
 
 @{
     ViewData["Title"] = "Details";
-    var photoPath = "~/image/" + Model.PhotoPath;
+      var photoPath = "";
+    if (Model.PhotoPath != null)
+    {
+     photoPath = "~/image/" + Model.PhotoPath;
+    }
+    else
+    {
+     photoPath = "~/WebAssests/siteImages/projectsicon.png";
+    }
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
     var allReadyStarred = false;
     var loggedOn = false;
@@ -98,7 +106,15 @@
                 @{
                     foreach (var collab in Model.currentProject.UserProjects)
                     {
-                        var collabPath = "~/image/" + (collab.User.PhotoPath);
+                        var collabPath = "";
+                        if (collab.User.PhotoPath != null)
+                        {
+                         collabPath = "~/image/" + (collab.User.PhotoPath);
+                        }
+                        else
+                        {
+                         collabPath = "~/WebAssests/siteImages/avataricon.png";
+                        }
                         var collabMemberPath = "../../Users/Details/" + (collab.User.Id);
                         <a href="@collabMemberPath"><img class="small-thumbnail my-1" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
 
