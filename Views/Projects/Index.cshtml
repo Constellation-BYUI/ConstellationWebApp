@@ -57,7 +57,16 @@
     <div class="project-index-content">
         @foreach (var item in Model.Projects)
         {
-            var photoPath = "~/image/" + (item.PhotoPath);
+                var photoPath = "";
+                if (item.PhotoPath != null)
+                {
+                 photoPath = "~/image/" + item.PhotoPath;
+                }
+                else
+                {
+                 photoPath = "~/WebAssests/siteImages/projectsicon.png";
+
+                }
 
             @*CSS RULES FOR INDIVIDUAL CARDS*@
             <div class="card shadow-lg border-primary mt-1 mb-3 ml-2 mr-2">
@@ -77,7 +86,15 @@
                         foreach (var collab in item.UserProjects)
 
                         {
-                            var collabPath = "~/image/" + (collab.User.PhotoPath);
+                              var collabPath = "";
+                              if (collab.User.PhotoPath != null)
+                              {
+                               collabPath = "~/image/" + (collab.User.PhotoPath);
+                              }
+                              else
+                              {
+                               collabPath = "~/WebAssests/siteImages/avataricon.png";
+                              }
                             var collabMemberPath = "../Users/Details/" + (collab.User.Id);
 
                             <a href="@collabMemberPath"><img src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>

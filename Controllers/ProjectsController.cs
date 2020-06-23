@@ -210,7 +210,7 @@ namespace ConstellationWebApp.Controllers
                          .ThenInclude(i => i.User)
                           .Include(i => i.ProjectLinks)
                        .AsNoTracking()
-                       .OrderByDescending(i => i.CreationDate)
+                       .OrderBy(i => i.CreationDate)
                        .ToListAsync();
                 return View(viewModel);
 
@@ -222,7 +222,7 @@ namespace ConstellationWebApp.Controllers
                          .ThenInclude(i => i.User)
                           .Include(i => i.ProjectLinks)
                        .AsNoTracking()
-                       .OrderBy(i => i.CreationDate)
+                       .OrderByDescending(i => i.CreationDate)
                        .ToListAsync();
                 return View(viewModel);
 

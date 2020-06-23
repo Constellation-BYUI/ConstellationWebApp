@@ -53,7 +53,15 @@
         @{
             foreach (var item in Model.Postings)
             {
-                var photoPath = "~/image/" + (item.PostingOwner.PhotoPath);
+                  var photoPath = "";
+                  if (item.PostingOwner.PhotoPath != null)
+                  {
+                   photoPath = "~/image/" + item.PostingOwner.PhotoPath;
+                  }
+                  else
+                  {
+                   photoPath = "~/WebAssests/siteImages/avataricon.png";
+                  }
 
                 var collabMemberPath = "../Users/Details/" + (item.PostingOwner.Id);
 
