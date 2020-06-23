@@ -3,7 +3,16 @@
 
 @{
     ViewData["Title"] = "Edit User";
-    var photoPath = "~/image/" + (Model.OldPhotoPath);
+    var photoPath = "";
+    if (Model.PhotoPath != null)
+    {
+     photoPath = "~/image/" + Model.OldPhotoPath;
+    }
+    else
+    {
+     photoPath = "~/WebAssests/siteImages/avataricon.png";
+    }
+
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
 

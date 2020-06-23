@@ -186,7 +186,7 @@ namespace ConstellationWebApp.Controllers
         #region ProjectGets&PostsFunctions
         // GET: Projects/Index
         [AllowAnonymous]
-        public async Task<IActionResult> Index(string titleSearch, string personSearch)
+        public async Task<IActionResult> Index(string titleSearch, string personSearch, string sortOrderOld, string sortOrderNew)
         {         
 
             var viewModel = new ViewModel();
@@ -200,8 +200,10 @@ namespace ConstellationWebApp.Controllers
                  .AsNoTracking()
                  .OrderBy(i => i.CreationDate)
                  .ToListAsync();
+                return View(viewModel);
+
             }
-            else
+            else if(sortOrderOld != null)
             {
                 viewModel.Projects = await _context.Projects
                        .Include(i => i.UserProjects)
@@ -210,9 +212,33 @@ namespace ConstellationWebApp.Controllers
                        .AsNoTracking()
                        .OrderBy(i => i.CreationDate)
                        .ToListAsync();
+                return View(viewModel);
+
             }
-            return View(viewModel);
+            else if (sortOrderNew != null)
+            {
+                viewModel.Projects = await _context.Projects
+                       .Include(i => i.UserProjects)
+                         .ThenInclude(i => i.User)
+                          .Include(i => i.ProjectLinks)
+                       .AsNoTracking()
+                       .OrderByDescending(i => i.CreationDate)
+                       .ToListAsync();
+                return View(viewModel);
+
+            }
+            else {
+                    viewModel.Projects = await _context.Projects
+                     .Include(i => i.UserProjects)
+                       .ThenInclude(i => i.User)
+                        .Include(i => i.ProjectLinks)
+                     .AsNoTracking()
+                     .OrderBy(i => i.Title)
+                     .ToListAsync();
+                    return View(viewModel);
+            }
         }
+        
 
         // GET: Projects/Details/5
         [AllowAnonymous]

@@ -15,7 +15,15 @@
 
         if (item.StarredPerson.displayMyProfile == true)
         {
-            var photoPath = "~/image/" + (item.StarredPerson.PhotoPath);
+              var photoPath = "";
+                  if (item.StarredPerson.PhotoPath != null)
+                  {
+                   photoPath = "~/image/" + item.StarredPerson.PhotoPath;
+                  }
+                  else
+                  {
+                   photoPath = "~/WebAssests/siteImages/avataricon.png";
+                  }
 
 
     <div class="col-md-12 card shadow text-black-50 bg-light m-2 padding">

@@ -5,7 +5,15 @@
 @{
     ViewData["Title"] = "Delete User";
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
+    var photoPath = "";
+    if (Model.PhotoPath != null)
+    {
+     photoPath = "~/image/" + Model.PhotoPath;
+    }
+    else
+    {
+     photoPath = "~/WebAssests/siteImages/avataricon.png";
+    }
 }
 
 

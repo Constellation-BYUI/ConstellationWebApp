@@ -2,7 +2,7 @@
 @using System.Security.Claims;
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Starred Postings";
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
 
@@ -12,7 +12,17 @@
 
 {
     var spID = item.StarredPostingID;
-    var photoPath = "~/image/" + (item.Posting.PostingOwner.PhotoPath);
+    var photoPath = "";
+                  if (item.Posting.PostingOwner.PhotoPath != null)
+                  {
+                   photoPath = "~/image/" + item.Posting.PostingOwner.PhotoPath;
+                  }
+                  else
+                  {
+                   photoPath = "~/WebAssests/siteImages/avataricon.png";
+                  }
+
+
     var collabMemberPath = "../Users/Details/" + (item.Posting.PostingOwner.Id);
 
     <div>

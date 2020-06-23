@@ -30,22 +30,23 @@
                 </div>
             </div>
         </form>
-        <form action="" class="search-bar2">
+        <form asp-action="Index" asp-controller="Projects" class="search-bar1">
             <div class="input-group">
-                <input type="search" placeholder="Filter by Technology.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
+                <input value="filterByNew" type="hidden" name="sortOrderNew">
                 <div class="input-group-append">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                    <button type="submit" class="btn btn-primary">Sort by Newest Projects<i class="fa fa-search"></i></button>
                 </div>
             </div>
         </form>
-        <form action="" class="search-bar3">
+        <form asp-action="Index" asp-controller="Projects" class="search-bar2">
             <div class="input-group">
-                <input type="search" placeholder="Search by date.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
+                <input value="filterByOld" type="hidden" name="sortOrderOld">
                 <div class="input-group-append">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                    <button type="submit" class="btn btn-primary">Sort by Oldest Projects<i class="fa fa-search"></i></button>
                 </div>
             </div>
         </form>
+
     </div>
     <!-- Alphabetic Search -->
     <div class="create-project">
@@ -56,7 +57,16 @@
     <div class="project-index-content">
         @foreach (var item in Model.Projects)
         {
-            var photoPath = "~/image/" + (item.PhotoPath);
+                var photoPath = "";
+                if (item.PhotoPath != null)
+                {
+                 photoPath = "~/image/" + item.PhotoPath;
+                }
+                else
+                {
+                 photoPath = "~/WebAssests/siteImages/projectsicon.png";
+
+                }
 
             @*CSS RULES FOR INDIVIDUAL CARDS*@
             <div class="card shadow-lg border-primary mt-1 mb-3 ml-2 mr-2">
@@ -76,7 +86,15 @@
                         foreach (var collab in item.UserProjects)
 
                         {
-                            var collabPath = "~/image/" + (collab.User.PhotoPath);
+                              var collabPath = "";
+                              if (collab.User.PhotoPath != null)
+                              {
+                               collabPath = "~/image/" + (collab.User.PhotoPath);
+                              }
+                              else
+                              {
+                               collabPath = "~/WebAssests/siteImages/avataricon.png";
+                              }
                             var collabMemberPath = "../Users/Details/" + (collab.User.Id);
 
                             <a href="@collabMemberPath"><img src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
