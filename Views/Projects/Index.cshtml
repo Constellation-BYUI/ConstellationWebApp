@@ -30,22 +30,23 @@
                 </div>
             </div>
         </form>
-        <form action="" class="search-bar2">
+        <form asp-action="Index" asp-controller="Projects" class="search-bar1">
             <div class="input-group">
-                <input type="search" placeholder="Filter by Technology.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
+                <input value="filterByNew" type="hidden" name="sortOrderNew">
                 <div class="input-group-append">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                    <button type="submit" class="btn btn-primary">Sort by Newest Projects<i class="fa fa-search"></i></button>
                 </div>
             </div>
         </form>
-        <form action="" class="search-bar3">
+        <form asp-action="Index" asp-controller="Projects" class="search-bar2">
             <div class="input-group">
-                <input type="search" placeholder="Search by date.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
+                <input value="filterByOld" type="hidden" name="sortOrderOld">
                 <div class="input-group-append">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                    <button type="submit" class="btn btn-primary">Sort by Oldest Projects<i class="fa fa-search"></i></button>
                 </div>
             </div>
         </form>
+
     </div>
     <!-- Alphabetic Search -->
     <div class="create-project">
