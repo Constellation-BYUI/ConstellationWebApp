@@ -29,49 +29,53 @@
              alt="This is the banner image for the company of the recruiter." />
     </header>
 
+    <!--
+        #####################################################################################################################################
+        Message from Nwokolo: Lets hide the info blip for now. It is affecting some of the project details page display and functionality
+        ######################################################################################################################################
+        -->
+
     <!-- #region Info button:
         Note from Ryan: I could not figure out how to keep this working
         when i put the css and javascript in seperate files.
         I am going to leave this as it is for now so we can place these info blips in all locations needed-->
-    <!--Message from Nwokolo: I moved the css code to project-details.css file. It works great though -->
+    @*<style>
+            /*Info Blip CSS codes*/
+            .show-info {
+                opacity: 1;
+            }
 
-    <style>
-        /*Info Blip CSS codes*/
-        .show-info {
-            opacity: 1;
-        }
+            p {
+                padding: 1em;
+                opacity: 0;
+                transition: opacity 0.5s linear;
+                background-color: lightgoldenrodyellow;
+                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            }
 
-        p {
-            padding: 1em;
-            opacity: 0;
-            transition: opacity 0.5s linear;
-            background-color: lightgoldenrodyellow;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        }
+            #hidden-info-blip {
+                width: 100%;
+                height: 10em;
+                z-index: 99;
+                position: absolute;
+            }
 
-        #hidden-info-blip {
-            width: 100%;
-            height: 10em;
-            z-index: 99;
-            position: absolute;
-        }
+            #btn1 {
+                border-radius: 50%;
+            }
+        </style>
 
-        #btn1 {
-            border-radius: 50%;
-        }
-    </style>
-
-    <button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
-    <p id="hidden-info-blip">
-        To Save this posting, so you can view it later, add it to your <b><i>Starred posting list</i></b>.
-        If you are interested in this position, add yourself to the <b><i>intrested pool</i></b>.
-        Postings that you own allow you to see who has intrest. Review them by clicking the
-        <b><i>View your Intrested Candidates</i></b> button on this page. You can also acces this page on
-        the <b><i>Posting Candidates</i></b> page in found in the
-        <b><i>My Stuff</i></b> in the profile navigation, located on the top right corner of the site when logged in.
-    </p>
+        <button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
+        <p id="hidden-info-blip">
+            To Save this posting, so you can view it later, add it to your <b><i>Starred posting list</i></b>.
+            If you are interested in this position, add yourself to the <b><i>intrested pool</i></b>.
+            Postings that you own allow you to see who has intrest. Review them by clicking the
+            <b><i>View your Intrested Candidates</i></b> button on this page. You can also acces this page on
+            the <b><i>Posting Candidates</i></b> page in found in the
+            <b><i>My Stuff</i></b> in the profile navigation, located on the top right corner of the site when logged in.
+        </p>*@
     @* Scripts and resources for info button *@
-    <script type="text/javascript">
+    @*<script type="text/javascript">
         var btn = document.getElementById('btn1')
         var p = document.getElementById('hidden-info-blip')
         btn.addEventListener('click', evt => {
@@ -81,11 +85,9 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <script src="/scripts/snippet-javascript-console.min.js?v=1"></script>
+    <script src="/scripts/snippet-javascript-console.min.js?v=1"></script>*@
 
     <!-- #endregion -->
-
-
 
 
 

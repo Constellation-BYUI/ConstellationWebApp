@@ -79,7 +79,7 @@
     color: white;
 }
 
-@media (min-width: 700px) {
+@media (min-width: 767px) {
 
     #newPLink {
         display: flex;
@@ -106,7 +106,7 @@
     }
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 991px) {
     .job-card {
         max-width: 28%;
     }

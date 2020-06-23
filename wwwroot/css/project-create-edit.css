@@ -1,0 +1,73 @@
+﻿/*CSS form Creat project page*/
+.titleBorder {
+    border-top: 10px solid #1b6ec2;
+    border-radius: 5px 5px 0 0;
+    background-color: white;
+    color: #1b6ec2;
+    text-align: center;
+    margin-top: 2.2em !important;
+    margin-bottom: 0 !important;
+    width: 100%;
+}
+ 
+.card {
+    margin-bottom: .5em;
+    padding: .5em 1.5em;
+}
+.card-footer {
+    padding: .5em .5em;
+}
+.card-footer .form-group {
+    margin-bottom: 0;
+}
+.form-group .add-link, .add-collab {
+    width: 100% !important;
+}
+.form-group .col-md-12 {
+    padding-right: 0 !important;
+}
+
+@media screen and (min-width: 767px) {
+    .project-create-container {
+        width: 90%;
+        margin: auto;
+    }
+    .titleBorder {
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+        background-color: white;
+        color: #1b6ec2;
+        text-align: center;
+        margin-top: 2.3em !important;
+        margin-bottom: 0 !important;
+    }
+}
+
+@media screen and (min-width: 1199px) {
+    .project-create-container {
+        width: 60%;
+        margin: auto;
+    }
+
+    .titleBorder {
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+        background-color: white;
+        color: #1b6ec2;
+        text-align: center;
+        margin-top: 2.3em !important;
+        margin-bottom: 0 !important;
+    }
+}
+
+/*CSS form edit project page*/
+@media screen and (min-width: 767px) {
+    .project-edit-container {
+        width: 90%;
+        margin: auto;
+    }
+}
+@media screen and (min-width: 1199px) {
+    .project-edit-container {
+        width: 60%;
+        margin: auto;
+    }
+}
