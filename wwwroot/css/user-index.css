@@ -4,7 +4,6 @@
 
 .user-index-container {
     display: block;
-    border: 2px solid black;
 }
 
 .user-index-bread-crumb {
@@ -22,7 +21,7 @@
 
 .user-index-search-bars {
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
     padding: 5px 3px;
 }
 
@@ -31,7 +30,6 @@
     }
 
 .user-index-head {
-    border: 1px solid black;
     background-color: #1b6ec2;
     color: white;
     width: 100%;
@@ -39,14 +37,18 @@
     font-size: large;
     font-weight: 400;
     margin-bottom: 3px;
+    padding: 5px;
 }
+    .user-index-head h2 {
+        margin: 0;
+    }
 
-.user-index-content {
-    display: grid;
-    grid-template-columns: 1fr;
-    column-gap: 1em;
-    margin: 0 1em 1em 1em;
-}
+    .user-index-content {
+        display: grid;
+        grid-template-columns: 1fr;
+        column-gap: 1em;
+        margin: 0 1em 1em 1em;
+    }
 
 .user-index-content {
     overflow: scroll;
