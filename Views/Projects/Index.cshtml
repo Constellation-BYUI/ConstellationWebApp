@@ -22,27 +22,19 @@
                 </div>
             </div>
         </form>
+        <form asp-action="Index" asp-controller="Projects" class="">
+            <input value="filterByNew" type="hidden" name="sortOrderNew">
+            <button type="submit" class="btn btn-primary sort-button1">Sort&nbsp;by&nbsp;Newest&nbsp;Projects</button>
+        </form>
+        <form asp-action="Index" asp-controller="Projects" class="">
+            <input value="filterByOld" type="hidden" name="sortOrderOld">
+            <button type="submit" class="btn btn-primary sort-button2">Sort&nbsp;by&nbsp;Oldest&nbsp;Projects</button>
+        </form>
         <form asp-action="Index" asp-controller="Projects" class="search-bar1">
             <div class="input-group">
                 <input type="search" name="titleSearch" placeholder="Search by title.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                </div>
-            </div>
-        </form>
-        <form asp-action="Index" asp-controller="Projects" class="search-bar1">
-            <div class="input-group">
-                <input value="filterByNew" type="hidden" name="sortOrderNew">
-                <div class="input-group-append">
-                    <button type="submit" class="btn btn-primary">Sort by Newest Projects<i class="fa fa-search"></i></button>
-                </div>
-            </div>
-        </form>
-        <form asp-action="Index" asp-controller="Projects" class="search-bar2">
-            <div class="input-group">
-                <input value="filterByOld" type="hidden" name="sortOrderOld">
-                <div class="input-group-append">
-                    <button type="submit" class="btn btn-primary">Sort by Oldest Projects<i class="fa fa-search"></i></button>
                 </div>
             </div>
         </form>
