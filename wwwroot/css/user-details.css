@@ -61,7 +61,7 @@
 }
 
 .user-bio {
-    overflow: scroll;
+    overflow: auto;
     height: 10em;
     width: 100%;
 }
