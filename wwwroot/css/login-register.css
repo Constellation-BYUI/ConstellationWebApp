@@ -1,0 +1,96 @@
+﻿
+/*CSS form Login Page*/
+.login-card h2 {
+    text-align: center;
+}
+.login-card {
+    margin: 0 2em 4em 2em;
+}
+.login-card h3 {
+    text-align:center;
+    margin: 0;
+}
+
+@media screen and (min-width: 767px) {
+    .login-card {
+        margin: 10em;
+        padding: 1.5em;
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+    }
+   
+}
+
+@media screen and (min-width: 991px) {
+    .login-card {
+        margin: 10em 15em 10em 15em;
+        padding: 1.5em;
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+    }
+
+}
+
+
+@media screen and (min-width: 1199px) {
+    .login-card {
+        margin: 10em 35em 10em 35em;
+        padding: 1.5em;
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+    }
+}
+@media screen and (min-width: 2000px) {
+    .login-card {
+        margin: 10em 40em 10em 40em;
+        padding: 1.5em;
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+    }
+}
+
+/*CSS for Register page*/
+.register-card {
+    margin: 0 2em 4em 2em;
+}
+
+    .register-card h3 {
+        text-align: center;
+        margin: 0;
+    }
+.register-card .hr1 {
+    display: block;
+}
+
+@media screen and (min-width: 767px) {
+    .register-card {
+        margin: 10em;
+        padding: 1.5em;
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+    }
+    .register-card .hr1 {
+        display: none;
+        margin-top: 0;
+        font-weight: 700;
+    }
+}
+
+@media screen and (min-width: 991px) {
+    .register-card {
+        margin: 10em 15em 10em 15em;
+        padding: 1.5em;
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+    }
+}
+
+@media screen and (min-width: 1199px) {
+    .register-card {
+        margin: 10em 35em 10em 35em;
+        padding: 1.5em;
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+    }
+}
+
+@media screen and (min-width: 2000px) {
+    .register-card {
+        margin: 10em 40em 10em 40em;
+        padding: 1.5em;
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+    }
+}

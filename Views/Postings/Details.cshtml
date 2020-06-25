@@ -4,7 +4,15 @@
 @{
     ViewData["Title"] = "Create";
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-    var photoPath = "~/image/" + (Model.PostingOwner.PhotoPath);
+     var photoPath = "";
+                  if (Model.PostingOwner.PhotoPath != null)
+                  {
+                   photoPath = "~/image/" + Model.PostingOwner.PhotoPath;
+                  }
+                  else
+                  {
+                   photoPath = "~/WebAssests/siteImages/avataricon.png";
+                  }
     var collabMemberPath = "../../Users/Details/" + (Model.PostingOwner.Id);
     var allReadyStarred = false;
     var allReadyIntrested = false;
@@ -12,157 +20,182 @@
 }
 <link rel="stylesheet" href="~/css/postings-details.css" />
 
-<!--<h1>Details</h1>-->
-<!-- Adding semantic html to document for better web accessibility. Adds header for -->
-<!-- banner image. //Comment by Israel Garcia -->
-@* banner image to Isreal Garcia from Ryan:
-    Currently there is no input method for a recuiter or company to include their banner, great thought for later
-    but for now you could just include a image that you save to the wwwroot/WebAssests/sitImages folder and have
-    that static for posting detail page to uses it just use src="../../../Thenwhateverthenameis.png this way it will be from our
-    local images and not have to reach out"*@
+<div id="postings-details-container">
 
-<header>
-    <img id="company-banner-details-page"
-         src="https://via.placeholder.com/1980x150.jpg"
-         alt="This is the banner image for the company of the recruiter." />
-</header>
+    <!--<h1>Details</h1>-->
+    <!-- Adding semantic html to document for better web accessibility. Adds header for -->
+    <!-- banner image. //Comment by Israel Garcia -->
+    @* banner image to Isreal Garcia from Ryan:
+        Currently there is no input method for a recuiter or company to include their banner, great thought for later
+        but for now you could just include a image that you save to the wwwroot/WebAssests/sitImages folder and have
+        that static for posting detail page to uses it just use src="../../../Thenwhateverthenameis.png this way it will be from our
+        local images and not have to reach out"*@
 
-<!-- #region Info button:
-    Note from Ryan: I could not figure out how to keep this working
-    when i put the css and javascript in seperate files.
-    I am going to leave this as it is for now so we can place these info blips in all locations needed-->
-<style>
-    .show-info {
-        opacity: 1;
-    }
+    <header>
+        <img id="company-banner-details-page"
+             src="https://via.placeholder.com/1980x150.jpg"
+             alt="This is the banner image for the company of the recruiter." />
+    </header>
 
-    p {
-        padding: 1em;
-        opacity: 0;
-        transition: opacity 0.5s linear;
-        background-color: lightgoldenrodyellow;
-        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    }
+    <!--
+        #####################################################################################################################################
+        Message from Nwokolo: Lets hide the info blip for now. It is affecting some of the project details page display and functionality
+        ######################################################################################################################################
+        -->
 
-    #hidden-info-blip {
-        width: 600px;
-        z-index: 4;
-        position: absolute;
-    }
+    <!-- #region Info button:
+        Note from Ryan: I could not figure out how to keep this working
+        when i put the css and javascript in seperate files.
+        I am going to leave this as it is for now so we can place these info blips in all locations needed-->
+    @*<style>
+            /*Info Blip CSS codes*/
+            .show-info {
+                opacity: 1;
+            }
 
-    #btn1 {
-        border-radius: 100%;
-    }
-</style>
+            p {
+                padding: 1em;
+                opacity: 0;
+                transition: opacity 0.5s linear;
+                background-color: lightgoldenrodyellow;
+                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            }
 
-<button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
-<p id="hidden-info-blip">
-    To Save this posting, so you can view it later, add it to your <b><i>Starred posting list</i></b>.
-    If you are interested in this position, add yourself to the <b><i>intrested pool</i></b>.
-    Postings that you own allow you to see who has intrest. Review them by clicking the
-    <b><i>View your Intrested Candidates</i></b> button on this page. You can also acces this page on
-    the <b><i>Posting Candidates</i></b> page in found in the
-    <b><i>My Stuff</i></b> in the profile navigation, located on the top right corner of the site when logged in.
-</p>
-@* Scripts and resources for info button *@
-<script type="text/javascript">
-    var btn = document.getElementById('btn1')
-    var p = document.getElementById('hidden-info-blip')
-    btn.addEventListener('click', evt => {
-        p.classList.toggle('show-info')
-    })
-</script>
+            #hidden-info-blip {
+                width: 100%;
+                height: 10em;
+                z-index: 99;
+                position: absolute;
+            }
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            #btn1 {
+                border-radius: 50%;
+            }
+        </style>
 
-<script src="/scripts/snippet-javascript-console.min.js?v=1"></script>
+        <button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
+        <p id="hidden-info-blip">
+            To Save this posting, so you can view it later, add it to your <b><i>Starred posting list</i></b>.
+            If you are interested in this position, add yourself to the <b><i>intrested pool</i></b>.
+            Postings that you own allow you to see who has intrest. Review them by clicking the
+            <b><i>View your Intrested Candidates</i></b> button on this page. You can also acces this page on
+            the <b><i>Posting Candidates</i></b> page in found in the
+            <b><i>My Stuff</i></b> in the profile navigation, located on the top right corner of the site when logged in.
+        </p>*@
+    @* Scripts and resources for info button *@
+    @*<script type="text/javascript">
+        var btn = document.getElementById('btn1')
+        var p = document.getElementById('hidden-info-blip')
+        btn.addEventListener('click', evt => {
+            p.classList.toggle('show-info')
+        })
+    </script>
 
-<!-- #endregion -->
-<!-- I color coded the "add/remove to starred postings" and  "add/remove from interest pool" -->
-<!-- green and red to distinguish the buttons better. //Comment by Israel Garcia -->
-<!-- Moved this to another section
-@*if (currentUser != null)
-{
-    List<ConstellationWebApp.Models.AssignedStarredPostingData> starredData = ViewBag.UsersStarredPostings;
-    foreach (var starred in starredData)
-    {
-        if (starred.UserID == currentUser && starred.Owned == true)
-        {
-            <form asp-action="Delete" asp-controller="StarredPostings">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <input type="hidden" asp-for="PostingID" class="form-control" value="@Model.PostingID" />
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Remove from MyStarred Postings" class="btn btn-primary btn-danger" />
-                </div>
-            </form>
-            allReadyStarred = true;
-        }
-    }
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    if (allReadyStarred == false)
-    {
-        <form asp-action="Create" asp-controller="StarredPostings">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <input type="hidden" asp-for="PostingID" class="form-control" value="@Model.PostingID" />
+    <script src="/scripts/snippet-javascript-console.min.js?v=1"></script>*@
+
+    <!-- #endregion -->
+
+
+
+    <div id="details-recruiter-info">
+        <!-- This tag contains the image of the recruiter -->
+        <div>
+            <a href="@collabMemberPath"><img class="small-thumbnail" src=" @photoPath" alt="@Html.DisplayFor(modelItem => Model.PostingOwner.UserName)" asp-append-version="true" /></a>
+        </div>
+
+        <div id="recruiter-flex-spacer">
+            <h2>Company Name</h2>
+            <!-- This contains the email/usernam of the recruiter -->
+            <div>
+                @Html.DisplayFor(modelItem => Model.PostingOwner.UserName)
             </div>
-            <div class="form-group">
-                <input type="submit" value="Add to MyStarred Postings" class="btn btn-primary btn-success" />
-            </div>
-        </form>
-    }
+        </div>
 
-    //if the owner is looking at the post he/she only needs to see the link to possible candidates
-    if (currentUser == Model.PostingOwner.Id)
-    {
-        <a asp-action="Index" asp-controller="IntrestedCandidates">View your Intrested Candidates</a>
-    }
-    else
-    {
-        List<ConstellationWebApp.Models.AssignedIntrestData> intrestedData = ViewBag.intrestInPostings;
-        //Detemine if the current user has already marked if he/she is intrested
-        foreach (var candidate in intrestedData)
+
+
+
+        <!-- This contains the two buttons -->
+        @if (currentUser != null)
         {
-            if (candidate.UserID == currentUser && candidate.Intrested == true)
+            List<ConstellationWebApp.Models.AssignedStarredPostingData> starredData = ViewBag.UsersStarredPostings;
+            foreach (var starred in starredData)
             {
-                <form asp-action="Delete" asp-controller="IntrestedCandidates">
+                if (starred.UserID == currentUser && starred.Owned == true)
+                {
+                    <form asp-action="Delete" asp-controller="StarredPostings">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <input type="hidden" asp-for="PostingID" class="form-control" value="@Model.PostingID" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Remove from MyStarred Postings" class="btn btn-primary btn-danger" />
+                        </div>
+                    </form>
+                    allReadyStarred = true;
+                }
+            }
+
+            if (allReadyStarred == false)
+            {
+                <form asp-action="Create" asp-controller="StarredPostings">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
                         <input type="hidden" asp-for="PostingID" class="form-control" value="@Model.PostingID" />
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Remove me from Intrested Pool" class="btn btn-primary btn-danger" />
+                        <input type="submit" value="Add to MyStarred Postings" class="btn btn-primary btn-success" />
                     </div>
                 </form>
-                allReadyIntrested = true;
+            }
+
+            //if the owner is looking at the post he/she only needs to see the link to possible candidates
+            if (currentUser == Model.PostingOwner.Id)
+            {
+                <a class="btn btn-sm btn-primary" asp-action="Index" asp-controller="IntrestedCandidates">View your Intrested Candidates</a>
+            }
+            else
+            {
+                List<ConstellationWebApp.Models.AssignedIntrestData> intrestedData = ViewBag.intrestInPostings;
+                //Detemine if the current user has already marked if he/she is intrested
+                foreach (var candidate in intrestedData)
+                {
+                    if (candidate.UserID == currentUser && candidate.Intrested == true)
+                    {
+                        <form asp-action="Delete" asp-controller="IntrestedCandidates">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <input type="hidden" asp-for="PostingID" class="form-control" value="@Model.PostingID" />
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Remove me from Intrested Pool" class="btn btn-primary btn-danger" />
+                            </div>
+                        </form>
+                        allReadyIntrested = true;
+                    }
+                }
+                //if the user is already in the intrested pool show remove me from intrested
+                if (allReadyIntrested == false)
+                {
+                    <form asp-action="Create" asp-controller="IntrestedCandidates">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <input type="hidden" asp-for="PostingID" class="form-control" value="@Model.PostingID" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Add me to Intrested Pool" class="btn btn-primary btn-success" />
+                        </div>
+                    </form>
+                }
             }
         }
-        //if the user is already in the intrested pool show remove me from intrested
-        if (allReadyIntrested == false)
-        {
-            <form asp-action="Create" asp-controller="IntrestedCandidates">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <input type="hidden" asp-for="PostingID" class="form-control" value="@Model.PostingID" />
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Add me to Intrested Pool" class="btn btn-primary btn-success" />
-                </div>
-            </form>
-        }
-    }
-} *@
+    </div>
 
--->
-<!-- Going to remove the div tag and replace it with a main tag for better semantic html layout -->
-<!--  -->
-@*
-    <div>
-        <h4>Posting</h4>
-        <hr />
 
+    <!-- End of recruiter information section -->
+
+    <div id="details-job-description">
         <!-- This tag displays the title of the job post -->
         <h2>
             @Html.DisplayFor(modelItem => Model.PostingFor)
@@ -173,180 +206,44 @@
             @Html.DisplayFor(modelItem => Model.PostingTitle)
         </div>
 
+        <h4>Type of Posting</h4>
+        <!-- This contains the position hours e.g. Part Time, Full Time, Remote, etc. -->
+        <!-- To Israel from Ryan: I included the way you can get the related data for a posting in the way that you designed it initally. Delete this note when you see it-->
+        <p>
+            @{
+                var typeCount = Model.Posting_PostingTypes.Count();
+                foreach (var type in Model.Posting_PostingTypes)
+                {
+                    @type.PostingTypes.PostingTypeName;
+                    if (!(typeCount - 1 == 0))
+                    {
+                        <span>/</span>
+                    }
+                    typeCount--;
+                }
+            }
+        </p>
+
         <!-- This tag contains the description of the job post -->
         <div>
             @Html.DisplayFor(modelItem => Model.Description)
         </div>
 
-        <!-- This tag contains the image of the recruiter -->
-        <div>
-            <a href="@collabMemberPath"><img class="small-thumbnail" src=" @photoPath" alt="@Html.DisplayFor(modelItem => Model.PostingOwner.UserName)" asp-append-version="true" /></a>
-        </div>
-
-        <!-- This contains the email/usernam of the recruiter -->
-        <div>
-            @Html.DisplayFor(modelItem => Model.PostingOwner.UserName)
-        </div>
-
-        <h4>Type of Posting</h4>
-
-        <!-- This contains the position hours e.g. Part Time, Full Time, Remote, etc. -->
-        <div class="Demo-Types">
-            @foreach (var type in Model.Posting_PostingTypes)
-            {
-                <div class="Demo-Types">
-                    @type.PostingTypes.PostingTypeName
-                </div>
-                <br />
-            }
-        </div>
-    </div>
-*@
-
-
-
-
-<div id="details-recruiter-info">
-    <!-- This tag contains the image of the recruiter -->
-    <div>
-        <a href="@collabMemberPath"><img class="small-thumbnail" src=" @photoPath" alt="@Html.DisplayFor(modelItem => Model.PostingOwner.UserName)" asp-append-version="true" /></a>
-    </div>
-
-    <div id="recruiter-flex-spacer">
-        <h2>Company Name</h2>
-        <!-- This contains the email/usernam of the recruiter -->
-        <div>
-            @Html.DisplayFor(modelItem => Model.PostingOwner.UserName)
-        </div>
-    </div>
-
-
-
-
-    <!-- This contains the two buttons -->
-    @if (currentUser != null)
-    {
-        List<ConstellationWebApp.Models.AssignedStarredPostingData> starredData = ViewBag.UsersStarredPostings;
-        foreach (var starred in starredData)
+        @if (currentUser == Model.PostingOwner.Id)
         {
-            if (starred.UserID == currentUser && starred.Owned == true)
-            {
-                <form asp-action="Delete" asp-controller="StarredPostings">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <input type="hidden" asp-for="PostingID" class="form-control" value="@Model.PostingID" />
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Remove from MyStarred Postings" class="btn btn-primary btn-danger" />
-                    </div>
-                </form>
-                allReadyStarred = true;
-            }
-        }
-
-        if (allReadyStarred == false)
-        {
-            <form asp-action="Create" asp-controller="StarredPostings">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <input type="hidden" asp-for="PostingID" class="form-control" value="@Model.PostingID" />
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Add to MyStarred Postings" class="btn btn-primary btn-success" />
-                </div>
-            </form>
-        }
-
-        //if the owner is looking at the post he/she only needs to see the link to possible candidates
-        if (currentUser == Model.PostingOwner.Id)
-        {
-            <a asp-action="Index" asp-controller="IntrestedCandidates">View your Intrested Candidates</a>
+            <div>
+                <a class="btn btn-md btn-primary" asp-action="Edit" asp-route-id="@Model.PostingID">Edit</a>
+                <a asp-action="Index" class="back-button btn btn-sm btn-secondary"><i class="fas fa-arrow-circle-left"></i> Back to List</a>
+            </div>
         }
         else
         {
-            List<ConstellationWebApp.Models.AssignedIntrestData> intrestedData = ViewBag.intrestInPostings;
-            //Detemine if the current user has already marked if he/she is intrested
-            foreach (var candidate in intrestedData)
-            {
-                if (candidate.UserID == currentUser && candidate.Intrested == true)
-                {
-                    <form asp-action="Delete" asp-controller="IntrestedCandidates">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group">
-                            <input type="hidden" asp-for="PostingID" class="form-control" value="@Model.PostingID" />
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Remove me from Intrested Pool" class="btn btn-primary btn-danger" />
-                        </div>
-                    </form>
-                    allReadyIntrested = true;
-                }
-            }
-            //if the user is already in the intrested pool show remove me from intrested
-            if (allReadyIntrested == false)
-            {
-                <form asp-action="Create" asp-controller="IntrestedCandidates">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <input type="hidden" asp-for="PostingID" class="form-control" value="@Model.PostingID" />
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Add me to Intrested Pool" class="btn btn-primary btn-success" />
-                    </div>
-                </form>
-            }
+            <a asp-action="Index" class="back-button btn btn-sm btn-secondary"><i class="fas fa-arrow-circle-left"></i> Back to List</a>
         }
-    }
+    </div>
+
 </div>
 
 
-<!-- End of recruiter information section -->
-
-<div id="details-job-description">
-    <!-- This tag displays the title of the job post -->
-    <h2>
-        @Html.DisplayFor(modelItem => Model.PostingFor)
-    </h2>
-
-    <!-- This tag displays the position title of the job -->
-    <div>
-        @Html.DisplayFor(modelItem => Model.PostingTitle)
-    </div>
-
-    <h4>Type of Posting</h4>
-    <!-- This contains the position hours e.g. Part Time, Full Time, Remote, etc. -->
-    <!-- To Israel from Ryan: I included the way you can get the related data for a posting in the way that you designed it initally. Delete this note when you see it-->
-    <p>
-        @{
-            var typeCount = Model.Posting_PostingTypes.Count();
-            foreach (var type in Model.Posting_PostingTypes)
-            {
-                @type.PostingTypes.PostingTypeName;
-                if (!(typeCount - 1 == 0))
-                {
-                    <span>/</span>
-                }
-                typeCount--;
-            }
-        }
-    </p>
-
-    <!-- This tag contains the description of the job post -->
-    <div>
-        @Html.DisplayFor(modelItem => Model.Description)
-    </div>
-
-    @if (currentUser == Model.PostingOwner.Id)
-    {
-        <div>
-            <a asp-action="Edit" asp-route-id="@Model.PostingID">Edit</a> |
-            <a asp-action="Index" class="back-button"><i class="fas fa-arrow-circle-left"></i> Back to List</a>
-        </div>
-    }
-    else
-    {
-        <a asp-action="Index" class="back-button"><i class="fas fa-arrow-circle-left"></i> Back to List</a>
-    }
-</div>
 
 

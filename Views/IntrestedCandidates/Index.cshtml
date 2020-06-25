@@ -77,7 +77,16 @@
                         {
                             <h2> Your Picks for @pick.Posting.PostingTitle</h2>
                         }
-                        var candidatePath = "~/image/" + (pick.Candidate.PhotoPath);
+                        var candidatePath = "";
+                          if (pick.Candidate.PhotoPath != null)
+                          {
+                           candidatePath = "~/image/" + pick.Candidate.PhotoPath;
+                          }
+                          else
+                          {
+                           candidatePath = "~/WebAssests/siteImages/avataricon.png";
+                          }
+
                         var candidateMemberPath = "../Users/Details/" + (pick.Candidate.Id);
                         <a href="@candidateMemberPath"><img class="small-thumbnail" src=" @candidatePath" alt="@Html.DisplayFor(modelItem => pick.Candidate.UserName)" asp-append-version="true" /></a>
                         <p>@pick.Candidate.UserName</p>
@@ -97,7 +106,16 @@
                     @* Display the Posting/Role itself *@
                     @{
                         var spID = item.PostingID;
-                        var photoPath = "~/image/" + (item.PostingOwner.PhotoPath);
+                         var photoPath = "";
+                          if (item.PostingOwner.PhotoPath != null)
+                          {
+                           photoPath = "~/image/" + item.PostingOwner.PhotoPath;
+                          }
+                          else
+                          {
+                           photoPath = "~/WebAssests/siteImages/avataricon.png";
+                          }
+
                         var collabMemberPath = "../Users/Details/" + (item.PostingOwner.Id);
                     }
 
@@ -153,7 +171,16 @@
                         <h4>Those Intrested</h4>
                         foreach (var candidate in Model.intrestedCandidates.Where(i => i.PostingID == item.PostingID))
                         {
-                            var candidatePath = "~/image/" + (candidate.User.PhotoPath);
+                          var candidatePath = "";
+                          if (candidate.User.PhotoPath != null)
+                          {
+                           candidatePath = "~/image/" + candidate.User.PhotoPath;
+                          }
+                          else
+                          {
+                           candidatePath = "~/WebAssests/siteImages/avataricon.png";
+                          }
+
                             var candidateMemberPath = "../Users/Details/" + (candidate.UserID);
 
                             <a href="@candidateMemberPath"><img class="small-thumbnail" src=" @candidatePath" alt="@Html.DisplayFor(modelItem => candidate.User.UserName)" asp-append-version="true" /></a>

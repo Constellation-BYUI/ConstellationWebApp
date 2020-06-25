@@ -5,7 +5,15 @@
 
 @{
     ViewData["Title"] = "Delete";
-    var photoPath = "~/image/" + Model.PhotoPath;
+     var photoPath = "";
+    if (Model.PhotoPath != null)
+    {
+     photoPath = "~/image/" + Model.PhotoPath;
+    }
+    else
+    {
+     photoPath = "~/WebAssests/siteImages/projectsicon.png";
+    }
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
     bool canView = false;
 }

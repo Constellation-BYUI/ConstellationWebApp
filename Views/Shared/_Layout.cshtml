@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="~/css/medium_screen.css" />
     <link rel="stylesheet" href="~/css/large_screen.css" />
     <link rel="stylesheet" href="/lib/bootstrap/dist/css/w3css.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="icon" href="~/favicon.ico" />
@@ -34,9 +34,9 @@
         <div class="w3-bar w3-theme-d5 w3-left-align w3-large">
             <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
             <a class="w3-bar-item w3-button w3-padding-large w3-theme-d3" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-home w3-margin-right"></i>Logo</a>
-            <a class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" asp-area="" asp-controller="Users" asp-action="Index">Members</a>
-            <a class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" asp-area="" asp-controller="Projects" asp-action="Index">Projects</a>
-            <a class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" asp-area="" asp-controller="Postings" asp-action="Index">Job Postings</a>
+            <a class="w3-bar-item w3-button w3-hide-small navBar-padding-large w3-hover-white" asp-area="" asp-controller="Users" asp-action="Index">Members</a>
+            <a class="w3-bar-item w3-button w3-hide-small navBar-padding-large w3-hover-white" asp-area="" asp-controller="Projects" asp-action="Index">Projects</a>
+            <a class="w3-bar-item w3-button w3-hide-small navBar-padding-large w3-hover-white" asp-area="" asp-controller="Postings" asp-action="Index">Job Postings</a>
             <div class="w3-bar-item w3-hide-small w3-right" style="padding: 5px">
                 <form action="" class="float-left m-auto w3-text-grey">
                     <div class="input-group mb-2">
@@ -51,11 +51,12 @@
                     @if (signInManager.IsSignedIn(User))
                     {
                         <li class="">
-                            <a class="w3-bar-item w3-large w3-padding-small w3-hover-gray ml-2" href="javascript:void(0);" onclick="openUser()"><img src="/image/panther2.jpg" class="w3-circle" style="height:26px;width:26px" alt="Avatar" title="My Account"></a>
+                            <a class="w3-bar-item w3-large w3-padding-small w3-hover-gray ml-2" href="javascript:void(0);" onclick="openUser()"><img src="/WebAssests/siteImages/avataricon.png" class="w3-circle" style="height:35px;width:35px" alt="Avatar" title="My Account"></a>
                             <div id="navSetting" class="w3-bar-item w3-bar-block w3-theme-l4 w3-hide w3-hide-small">
                                 <div class="w3-bar-item dropdown">
                                     <a data-toggle="dropdown" class="w3-bar-item w3-padding-small w3-hover-white bg-primary text-white dropdown-toggle" asp-area="" asp-controller="StarredPostings" asp-action="Index">My Stuff</a>
                                     <div id="mystuff" class="dropdown-menu w3-theme-l5">
+                                        <a class="dropdown-item text-secondary" asp-controller="UserSkills" asp-action="Index">My Skills</a>
                                         <a class="dropdown-item text-secondary" asp-controller="StarredProjects" asp-action="Index">My Starred Projects</a>
                                         <a class="dropdown-item text-secondary" asp-controller="StarredPostings" asp-action="Index">My Starred Postings</a>
                                         <a class="dropdown-item text-secondary" asp-controller="StarredUsers" asp-action="Index">My Starred Users</a>
@@ -129,14 +130,6 @@
                 </li>
             }
         </ul>
-        <form action="" class="w3-text-grey">
-            <div class="input-group mb-2">
-                <input type="search" placeholder="search.." aria-describedby="button-addon5" class="form-control">
-                <div class="input-group-append">
-                    <button id="button-addon5" type="submit" class="btn btn-primary w3-hover-green"><i class="fa fa-search"></i></button>
-                </div>
-            </div>
-        </form>
     </div>
 
     @*Main section Starts Here*@

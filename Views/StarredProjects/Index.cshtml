@@ -84,7 +84,16 @@
                         foreach (var collab in item.UserProjects)
 
                         {
-                            var collabPath = "~/image/" + (collab.User.PhotoPath);
+                          var collabPath = "";
+                          if (collab.User.PhotoPath != null)
+                          {
+                           collabPath = "~/image/" + "~/image/" + (collab.User.PhotoPath);
+                          }
+                          else
+                          {
+                           collabPath = "~/WebAssests/siteImages/avataricon.png";
+                          }
+
                             var collabMemberPath = "../Users/Details/" + (collab.User.Id);
 
                             <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>

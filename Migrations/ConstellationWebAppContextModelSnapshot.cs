@@ -306,6 +306,9 @@ namespace ConstellationWebApp.Migrations
                     b.Property<string>("SkilLinkLabel")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SkillLinkOwner")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SkillLinkUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -424,7 +427,7 @@ namespace ConstellationWebApp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("SkillID")
+                    b.Property<int>("LinkID")
                         .HasColumnType("int");
 
                     b.Property<int>("UserSkillID")
@@ -432,7 +435,7 @@ namespace ConstellationWebApp.Migrations
 
                     b.HasKey("UserSkillLinkID");
 
-                    b.HasIndex("SkillID");
+                    b.HasIndex("LinkID");
 
                     b.HasIndex("UserSkillID");
 
@@ -845,7 +848,7 @@ namespace ConstellationWebApp.Migrations
                 {
                     b.HasOne("ConstellationWebApp.Models.SkillLink", "SkillLinks")
                         .WithMany("UserSkillLinks")
-                        .HasForeignKey("SkillID")
+                        .HasForeignKey("LinkID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

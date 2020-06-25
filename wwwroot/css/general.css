@@ -73,5 +73,8 @@ main {
     width: 4rem;
     height: 4rem;
 }
-
+/*Removes text-decoration from navigation bar links*/
+ .w3-bar a {
+     text-decoration: none;
+ }
 

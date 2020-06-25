@@ -13,7 +13,7 @@
     <!-- search Bars -->
     <div class="project-index-search-bars">
         <!-- Create project button -->
-        <a asp-action="Create" ><div class="create-project btn btn-md btn-primary">Create&nbsp;Project</div></a>
+        <a asp-action="Create"><div class="create-project btn btn-md btn-success">Create&nbsp;Project</div></a>
         <form action="" class="search-bar0">
             <div class="input-group">
                 <input type="search" placeholder="Search.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
@@ -22,30 +22,23 @@
                 </div>
             </div>
         </form>
-        <form action="" class="search-bar1">
+        <form asp-action="Index" asp-controller="Projects" class="">
+            <input value="filterByNew" type="hidden" name="sortOrderNew">
+            <button type="submit" class="btn btn-primary sort-button1">Sort&nbsp;by&nbsp;Newest&nbsp;Projects</button>
+        </form>
+        <form asp-action="Index" asp-controller="Projects" class="">
+            <input value="filterByOld" type="hidden" name="sortOrderOld">
+            <button type="submit" class="btn btn-primary sort-button2">Sort&nbsp;by&nbsp;Oldest&nbsp;Projects</button>
+        </form>
+        <form asp-action="Index" asp-controller="Projects" class="search-bar1">
             <div class="input-group">
-                <input type="search" placeholder="Search by technology.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
+                <input type="search" name="titleSearch" placeholder="Search by title.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
                 </div>
             </div>
         </form>
-        <form action="" class="search-bar2">
-            <div class="input-group">
-                <input type="search" placeholder="Search by title.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
-                <div class="input-group-append">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                </div>
-            </div>
-        </form>
-        <form action="" class="search-bar3">
-            <div class="input-group">
-                <input type="search" placeholder="Search by date.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
-                <div class="input-group-append">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                </div>
-            </div>
-        </form>
+
     </div>
     <!-- Alphabetic Search -->
     <div class="create-project">
@@ -56,7 +49,16 @@
     <div class="project-index-content">
         @foreach (var item in Model.Projects)
         {
-            var photoPath = "~/image/" + (item.PhotoPath);
+                var photoPath = "";
+                if (item.PhotoPath != null)
+                {
+                 photoPath = "~/image/" + item.PhotoPath;
+                }
+                else
+                {
+                 photoPath = "~/WebAssests/siteImages/projectsicon.png";
+
+                }
 
             @*CSS RULES FOR INDIVIDUAL CARDS*@
             <div class="card shadow-lg border-primary mt-1 mb-3 ml-2 mr-2">
@@ -76,7 +78,15 @@
                         foreach (var collab in item.UserProjects)
 
                         {
-                            var collabPath = "~/image/" + (collab.User.PhotoPath);
+                              var collabPath = "";
+                              if (collab.User.PhotoPath != null)
+                              {
+                               collabPath = "~/image/" + (collab.User.PhotoPath);
+                              }
+                              else
+                              {
+                               collabPath = "~/WebAssests/siteImages/avataricon.png";
+                              }
                             var collabMemberPath = "../Users/Details/" + (collab.User.Id);
 
                             <a href="@collabMemberPath"><img src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
@@ -138,16 +148,6 @@
             </div>
 
         }
-        <!-- add margin-bottom to project's cards -->
-        @*<img src="/image/panther5.jpg" alt="Test Image for project card">
-        <img src="/image/panther5.jpg" alt="Test Image for project card">
-        <img src="/image/panther5.jpg" alt="Test Image for project card">
-        <img src="/image/panther5.jpg" alt="Test Image for project card">
-        <img src="/image/panther5.jpg" alt="Test Image for project card">
-        <img src="/image/panther5.jpg" alt="Test Image for project card">
-        <img src="/image/panther5.jpg" alt="Test Image for project card">
-        <img src="/image/panther5.jpg" alt="Test Image for project card">
-        <img src="/image/panther5.jpg" alt="Test Image for project card">*@
         <div class="project-index-cards"></div>
     </div>
 </div>

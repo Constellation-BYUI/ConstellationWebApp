@@ -117,6 +117,20 @@ namespace ConstellationWebApp.Controllers
             return newProject;
         }
 
+        private Project projectViewModelToProject(ProjectCreateViewModel model)
+        {
+            Project newProject = new Project
+            {
+                Title = model.Title,
+                Description = model.Description,
+                StartDate = model.StartDate,
+                EndDate = model.EndDate,
+                CreationDate = DateTime.Now
+            };
+            _context.Add(newProject);
+            return newProject;
+        }
+
         private static ProjectEditViewModel projectToViewModel(Project entityProjectModel)
         {
             return new ProjectEditViewModel
@@ -172,18 +186,59 @@ namespace ConstellationWebApp.Controllers
         #region ProjectGets&PostsFunctions
         // GET: Projects/Index
         [AllowAnonymous]
-        public async Task<IActionResult> Index()
-        {
+        public async Task<IActionResult> Index(string titleSearch, string personSearch, string sortOrderOld, string sortOrderNew)
+        {         
+
             var viewModel = new ViewModel();
-            viewModel.Projects = await _context.Projects
-                   .Include(i => i.UserProjects)
-                     .ThenInclude(i => i.User)
-                      .Include(i => i.ProjectLinks)
-                   .AsNoTracking()
-                   .OrderBy(i => i.CreationDate)
-                   .ToListAsync();
-            return View(viewModel);
+
+            if (titleSearch != null)
+            {
+                viewModel.Projects = await _context.Projects.Where(i => i.Title.Contains(titleSearch))
+                 .Include(i => i.UserProjects)
+                   .ThenInclude(i => i.User)
+                    .Include(i => i.ProjectLinks)
+                 .AsNoTracking()
+                 .OrderBy(i => i.CreationDate)
+                 .ToListAsync();
+                return View(viewModel);
+
+            }
+            else if(sortOrderOld != null)
+            {
+                viewModel.Projects = await _context.Projects
+                       .Include(i => i.UserProjects)
+                         .ThenInclude(i => i.User)
+                          .Include(i => i.ProjectLinks)
+                       .AsNoTracking()
+                       .OrderBy(i => i.CreationDate)
+                       .ToListAsync();
+                return View(viewModel);
+
+            }
+            else if (sortOrderNew != null)
+            {
+                viewModel.Projects = await _context.Projects
+                       .Include(i => i.UserProjects)
+                         .ThenInclude(i => i.User)
+                          .Include(i => i.ProjectLinks)
+                       .AsNoTracking()
+                       .OrderByDescending(i => i.CreationDate)
+                       .ToListAsync();
+                return View(viewModel);
+
+            }
+            else {
+                    viewModel.Projects = await _context.Projects
+                     .Include(i => i.UserProjects)
+                       .ThenInclude(i => i.User)
+                        .Include(i => i.ProjectLinks)
+                     .AsNoTracking()
+                     .OrderBy(i => i.Title)
+                     .ToListAsync();
+                    return View(viewModel);
+            }
         }
+        
 
         // GET: Projects/Details/5
         [AllowAnonymous]
@@ -242,9 +297,19 @@ namespace ConstellationWebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                string uniqueFileName = ValidateImagePath(model);
-                Project newProject = projectViewModelToProject(model, uniqueFileName);
-                await _context.SaveChangesAsync();
+                Project newProject = new Project();
+                if (!string.IsNullOrEmpty(model.PhotoPath))
+                {
+                    string uniqueFileName = ValidateImagePath(model);
+                    newProject = projectViewModelToProject(model, uniqueFileName);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    newProject = projectViewModelToProject(model);
+                    await _context.SaveChangesAsync();
+                }
+                
                 if (selectedCollaborators != null)
                 {
                     //Add the current user to the list if they did not add themselves
@@ -275,9 +340,9 @@ namespace ConstellationWebApp.Controllers
 
                             _context.Add(userProjects);
                         }
-                        catch (InvalidOperationException e)
+                        catch
                         {
-                            Console.WriteLine($"The user was not found: '{e}'");
+                            continue;
                         }
                     }
                     CreateProjectLinks(createdLinkLabels, createdLinkUrls, newProject);

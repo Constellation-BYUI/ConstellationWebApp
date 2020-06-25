@@ -47,9 +47,10 @@ namespace ConstellationWebApp.Controllers
             {
                 SkillDisciplines = _context.SkillDisciplines,
                 Skills = _context.Skills,
+                Disciplines = _context.Disciplines,
                 UserSkills = _context.UserSkills.Where(i => i.UserID == currentUser),
                 Users = _context.User.Where(i => i.Id == currentUser),
-                Disciplines = _context.Disciplines
+                SkillLinks = _context.SkillLinks.Where(i => i.SkillLinkOwner == currentUser)
             };
 
             //Pull the discipline searched for, or pull the first discipline. 
@@ -61,23 +62,17 @@ namespace ConstellationWebApp.Controllers
             }
             else
             {
-                if (currentUser == null)
+                User user = _context.User.Where(i => i.Id == currentUser).FirstOrDefault();
+
+                if (user.AreaOfDiscipline != null)              
                 {
-                    viewModel.currentDiscipline = _context.Disciplines.Where(i => i.DisciplineID == 1).FirstOrDefault();
+                    viewModel.currentDiscipline = _context.Disciplines.Where(s => s.DisciplineName == user.AreaOfDiscipline).FirstOrDefault();
                 }
                 else
                 {
-                    User user = _context.User.Where(i => i.Id == currentUser).FirstOrDefault();
-                    viewModel.currentDiscipline = _context.Disciplines.Where(s => s.DisciplineName == user.AreaOfDiscipline).FirstOrDefault();
-                }
+                    viewModel.currentDiscipline = _context.Disciplines.Where(i => i.DisciplineID == 1).FirstOrDefault();
+                }                
             }
-
-            //Right now I am not going to have the ability to have a search string for skills, maybe later
-            //if (!String.IsNullOrEmpty(skillSearchString))
-            //{
-            //    viewModel.Skills = _context.Skills.Where(s => s.SkillName.Contains(skillSearchString));
-            //}
-
             return View(viewModel);
         }
 
@@ -131,14 +126,66 @@ namespace ConstellationWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateSkillLink(int[] skills, string linkLabel, string linkUrl)
         {
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var slID = 0;
             //must create the skill link            
-            //create the UserSkillLink join relationship
+            if (linkLabel != null && linkUrl != null)
+            {               
+                    SkillLink thisSL = new SkillLink();
+                    thisSL.SkillLinkOwner = currentUser;
+                    thisSL.SkillLinkUrl = linkUrl;
+                    thisSL.SkilLinkLabel = linkLabel;
+                    _context.Add(thisSL);
+                    await _context.SaveChangesAsync();
+                //create the UserSkillLink join relationship
+                slID = thisSL.SkillLinkID;
+
+                foreach (var skill in skills)
+                {
+                    try
+                    {      
+                        UserSkillLink ThisUSL = new UserSkillLink();
+                        ThisUSL.LinkID = slID;
+                        ThisUSL.UserSkillID = skill;
+                        _context.Add(ThisUSL);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                }
+            }            
             var returnPath = "../UserSkills/";
             return Redirect(returnPath);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteSkillLink(int link)
+        {
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (currentUser != null)
+            {
+                var skillLink = _context.SkillLinks.Where(i => i.SkillLinkID == link).FirstOrDefault();
 
-        private bool UserSkillExists(string id)
+                var userSkillLinks = _context.UserSkillLinks.Where(i => i.LinkID == link);
+
+                foreach (var usl in userSkillLinks)
+                {
+                    _context.Remove(usl);
+                    await _context.SaveChangesAsync();
+                }
+
+                _context.Remove(skillLink);
+                await _context.SaveChangesAsync();
+            }
+
+            var returnPath = "../UserSkills/";
+            return Redirect(returnPath);
+        }
+
+            private bool UserSkillExists(string id)
         {
             return _context.UserSkills.Any(e => e.UserID == id);
         }
