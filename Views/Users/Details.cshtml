@@ -127,6 +127,7 @@
         }
     }
 </section>
+
 <div class="user-details-container">
 
     <div class="user-details-content shadow">
@@ -195,6 +196,9 @@
     <div class="user-project-container">
         <div class="user-project-head"><h2>@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Projects</h2></div>
         <div class="user-project-content">
+
+
+
             @*User Project Card Display*@
             @foreach (var userProject in Model.UserProjects)
             {

@@ -1,13 +1,303 @@
-﻿                                            
-                                         /*INSTRUCTIONS FROM MICROSOFT*/
-/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
+﻿@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 
-/* Israel's Note */
+/* Small Screen Size */
+@media (max-width: 576px) {
+    html {
+        font-size: 12px;
+    }
 
-@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+    .image {
+        width: 100% !important;
+        height: 300px !important;
+    }
 
-/*NAVIGATION LINKS*/
+    .small_lable {
+        padding-left: 0;
+    }
+
+        .small_lable p {
+            margin-bottom: 0;
+        }
+
+    header {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 1020;
+        background-color: #1b6ec2;
+    }
+
+        header nav a {
+            color: white !important;
+        }
+
+    #mystuff a {
+        color: black !important;
+    }
+
+
+
+    .titleBorder {
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+        margin: 0 !important;
+    }
+
+
+    #newPLink {
+        font-size: 14px;
+        margin: auto !important;
+    }
+
+    #userTitle {
+        font-size: 1.5em;
+    }
+
+    .card-columns {
+        -webkit-column-count: 1;
+        column-count: 1;
+        -webkit-column-gap: 1.5rem;
+        column-gap: 1.5rem;
+        orphans: 1;
+        widows: 1
+    }
+
+    /*    Search Bar*/
+    .smallSearch {
+        margin-top: .5em;
+        display: flex !important;
+        justify-content: end !important;
+    }
+
+        .smallSearch form {
+            width: 50% !important;
+            margin-left: 50% !important;
+            margin-bottom: 3px;
+        }
+
+    /*        Home screen outlook*/
+    .gradient {
+        height: 30vh;
+        min-height: 300px;
+        max-height: 1000px;
+        width: 100%;
+        background-color: transparent;
+        background-image: linear-gradient(141deg, #9fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+        color: white;
+        opacity: 0.98;
+    }
+
+    .gradient-content {
+        display: block;
+        padding-top: 0;
+        text-align: center;
+    }
+
+    #box1, #box2 {
+        text-align: center;
+        padding: 1.5em 2em !important;
+        margin: .5em auto;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    #box2 {
+        height: 100px;
+    }
+
+    #box1 {
+        height: 180px;
+    }
+
+    #section1 {
+        padding: 15px;
+        display: flex !important;
+        justify-content: space-around !important;
+        background: #f8f9fa;
+        /*margin-top: 1.5em;*/
+        box-shadow: lightgray;
+    }
+
+    .social {
+        margin-top: .5em !important;
+    }
+
+    .bigClick {
+        height: 5em !important;
+        width: 5em !important;
+        background: #1b6ec2;
+        border: 0 solid black !important;
+        border-radius: 20%;
+        color: white !important;
+        text-align: center;
+        line-height: 1px;
+        box-shadow: 5px 5px 15px #343a40;
+        margin-bottom: 5px;
+    }
+
+    #slider {
+        padding: 0;
+    }
+
+    #boxLink2 {
+        color: white;
+        background: #28a745;
+    }
+
+    /*    small screen footer color*/
+    footer {
+        margin-top: 3px;
+        text-align: center;
+        color: white;
+        background: #343a40;
+        padding: 1rem .5rem;
+    }
+
+    /*        collaboratores display*/
+    .d-flex {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+    }
+
+    /*css form carousel*/
+    .carousel-caption {
+        top: 10%;
+        font-size: 80%;
+    }
+
+    /*.carousel-caption h1 {
+            font-size: 200%;
+            text-transform: uppercase;
+        }*/
+
+    /* .carousel-caption h4 {
+            font-size: 110%;
+            font-weight: 400;
+            padding-bottom: .2rem;
+        }*/
+
+    /*.carousel-caption .btn {
+            font-size: 80%;
+            padding: 4px 4px;
+        }*/
+    /* .carousel-indicators {
+        display: none;
+    }*/
+    /*  .jumbotron h3 {
+        font-size: 18px !important;
+    }
+    .jumbotron .btn {
+        font-size: 15px !important;
+    }*/
+}
+
+
+/*Medium Screen*/
+/* Midium Screen Size */
+@media (max-width: 768px) {
+    .gradient-content {
+        display: flex;
+        padding-top: 2em;
+        text-align: left;
+    }
+
+    #box1 {
+        text-align: left;
+        padding: 0 1em !important;
+        margin: .5em auto;
+        border-radius: 10px;
+    }
+
+    #box2 {
+        text-align: center !important;
+        padding: 1.5em 1em !important;
+        margin: .5em auto;
+        height: 200px;
+        border-radius: 10px;
+    }
+
+        #box2 h3 {
+            font-size: 1.2em;
+            margin-bottom: .4em;
+        }
+
+
+
+    .card-columns {
+        -webkit-column-count: 2;
+        column-count: 2;
+        -webkit-column-gap: 1.5rem;
+        column-gap: 1.5rem;
+        orphans: 1;
+        widows: 1
+    }
+
+    /*css form carousel*/
+    .carousel-caption {
+        top: 40%;
+    }
+
+        .carousel-caption h1 {
+            font-size: 350%;
+            text-transform: uppercase;
+        }
+
+        .carousel-caption h4 {
+            font-size: 140%;
+            font-weight: 400;
+            padding-bottom: .2rem;
+        }
+
+        .carousel-caption .btn {
+            font-size: 95%;
+            padding: 8px 14px;
+        }
+}
+
+@media screen and (min-width: 767px) {
+    .navBar-padding-large {
+        padding: 12px 9px !important;
+        text-decoration: none;
+    }
+}
+
+/* Extra Lare Screen size */
+@media (min-width: 1199px) {
+
+
+    .card-columns {
+        -webkit-column-count: 3;
+        column-count: 3;
+        -webkit-column-gap: 1.5rem;
+        column-gap: 1.5rem;
+        orphans: 1;
+        widows: 1
+    }
+
+    .card article {
+        font-size: 1.2rem;
+    }
+}
+
+/* Large Screen size */
+@media (max-width: 1198px) {
+
+    .carousel-caption h4, h1 {
+    }
+
+    .card-columns {
+        -webkit-column-count: 3;
+        column-count: 3;
+        -webkit-column-gap: 1.5rem;
+        column-gap: 1.5rem;
+        orphans: 1;
+        widows: 1
+    }
+
+    .card article {
+        font-size: 1.2rem;
+    }
+}
 
 
 /*BODY*/
@@ -77,4 +367,5 @@ main {
  .w3-bar a {
      text-decoration: none;
  }
+
 
