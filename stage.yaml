@@ -18,11 +18,11 @@ spec:
         ports:
         - containerPort: 80
         env:
-        - name: ConnectionStrings
+        - name: CUSTOMCONNSTR_ConstellationWebAppContext
           valueFrom:
             secretKeyRef:
-              name: stage-app-settings
-              key: connection-strings
+              name: prod-app-settings
+              key: web-app-context
         - name: ASPNETCORE_ENVIRONMENT
           value: staging
         resources:
