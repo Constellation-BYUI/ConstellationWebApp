@@ -1,6 +1,13 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
+//Info button on all pages javascript
+var btn = document.getElementById('btn1');
+var p = document.getElementById('hidden-info-blip');
+
+btn.addEventListener('click', evt => {
+    p.classList.toggle('show-info');
+});
 //JavaScript to control the Scroll-To-Top Button
 //Get the button:
 mybutton = document.getElementById("myBtn");

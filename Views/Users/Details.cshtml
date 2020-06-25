@@ -7,11 +7,11 @@
     var photoPath = "";
     if (Model.PhotoPath != null)
     {
-     photoPath = "~/image/" + Model.PhotoPath;
+        photoPath = "~/image/" + Model.PhotoPath;
     }
     else
     {
-     photoPath = "~/WebAssests/siteImages/avataricon.png";
+        photoPath = "~/WebAssests/siteImages/avataricon.png";
     }
     var resumePath = "../../../../Resumes/" + Model.ResumePhotoPath;
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -24,6 +24,8 @@
         @* Add a user to the my starred users list *@
         @if (currentUser != null && currentUser != Model.Id)
         {
+
+
             List<ConstellationWebApp.Models.StarredUser> starredData = ViewBag.StarredUsers;
             foreach (var starred in starredData)
             {
@@ -54,10 +56,17 @@
                     </div>
                 </form>
             }
-
-            @*Recuiter can add user to many "Picks" that the user is not already part of *@
+            @*Recuiter can add/Remove user to or from many "Picks"*@
             if ((!(postings.Count() == 0)) && @Model.Id != currentUser)
             {
+                <!-- #region Info button:-->
+                <button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
+                <p id="hidden-info-blip">
+                    These options are available because you are a job posting owner. You can easily add or remove this user and
+                    other users from these roles by using these actions below.
+                </p>
+                <!-- #endregion -->
+                @*Recuiter can add user to many "Picks" that the user is not already part of *@
                 <h4>Add this User to your picks</h4>
                 <form asp-action="CreateManyPicks" asp-controller="IntrestedCandidates">
                     @{
@@ -128,8 +137,10 @@
         }
     </section>
 
+
+
 <div class="d-flex flex-row">
-@*User Profile Card Display*@
+    @*User Profile Card Display*@
     <div class="col-sm-12 col-md-5">
         <div class="">
             <div class="col-md-10 p-0 m-0">
@@ -137,9 +148,12 @@
                 <div class="card text-black shadow-lg mb-2 padding">
                     <img style="height: 400px; width: 80%;" class="mx-auto d-block" src="@photoPath" asp-append-version="true" />
                     <div class="card-body">
-                        <div>
-                            <a href="@resumePath">  @Html.DisplayFor(model => model.UserName)'s Resume</a>
-                        </div>
+                        @if (Model.ResumePhotoPath != null)
+                        {
+                            <div>
+                                <a href="@resumePath">  View Members Resume</a>
+                            </div>
+                        }
                         <div>
                             <p>
                                 <strong>
@@ -212,76 +226,87 @@
     @*User Project Card Display*@
     <div class="col-sm-12 col-md-7 p-1">
         @*User Projects Heading Card*@
-        
+
         <h2 class="titleBorder m-0">@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Projects</h2>
 
         <div id="projectDisplay">
-            @foreach (var userProject in Model.UserProjects)
-            {
-                var projectPhotoPath = "~/image/" + (userProject.Project.PhotoPath);
-                var projectPath = "../../Projects/Details/" + (userProject.Project.ProjectID);
-                var projectId = (userProject.Project.ProjectID);
+            @{
+                var projectPhotoPath = "";
 
-                <div class="">
-                    <div class="col-sm-12">
-                        <div class="card text-black mb-3 p-2 text-center">
-                            @*Note: We do not want to display the PhotoPath Path but the image itself*@
-                            <div>
-                                @*<a href="@projectPath"><img class="img-thumbnail mx-auto d-block" src=" @projectPhotoPath" alt="@Html.DisplayFor(modelItem => userProject.Project.Title)" asp-append-version="true" /></a>*@
-                            </div>
-                            <div>
-                                @Html.DisplayNameFor(modelItem => userProject.Project.Title) :
-                                @Html.DisplayFor(modelItem => userProject.Project.Title)
-                            </div>
-                            <div>
-                                @Html.DisplayNameFor(modelItem => userProject.Project.Description) :
-                                @Html.DisplayFor(modelItem => userProject.Project.Description)
-                            </div>
-                            <div>
-                                @Html.DisplayNameFor(modelItem => userProject.Project.StartDate) :
-                                @Html.DisplayFor(modelItem => userProject.Project.StartDate)
-                            </div>
-                            <div>
-                                @Html.DisplayNameFor(modelItem => userProject.Project.EndDate) :
-                                @Html.DisplayFor(modelItem => userProject.Project.EndDate)
-                            </div>
-                            <div>
-                                @Html.DisplayNameFor(modelItem => userProject.Project.CreationDate) :
-                                @Html.DisplayFor(modelItem => userProject.Project.CreationDate)
-                            </div>
+                foreach (var userProject in Model.UserProjects)
+                {
+                    if (userProject.Project.PhotoPath != null)
+                    {
+                        projectPhotoPath = "~/image/" + Model.PhotoPath;
+                    }
+                    else
+                    {
+                        projectPhotoPath = "~/WebAssests/siteImages/avataricon.png";
+                    }
+                    var projectId = (userProject.Project.ProjectID);
+                    var projectPath = "../../../Projects/" + projectId;
 
-                            <h4>Collaborators</h4>
-                            <div class="d-flex">
-                                @foreach (var collab in ViewBag.collaborators)
-                                {
-                                    if ((userProject.UserID != collab.UserID) && (userProject.ProjectID == collab.ProjectID))
+                    <div class="">
+                        <div class="col-sm-12">
+                            <div class="card text-black mb-3 p-2 text-center">
+                                @*Note: We do not want to display the PhotoPath Path but the image itself*@
+                                <div>
+                                    @*<a href="@projectPath"><img class="img-thumbnail mx-auto d-block" src=" @projectPhotoPath" alt="@Html.DisplayFor(modelItem => userProject.Project.Title)" asp-append-version="true" /></a>*@
+                                </div>
+                                <div>
+                                    @Html.DisplayNameFor(modelItem => userProject.Project.Title) :
+                                    @Html.DisplayFor(modelItem => userProject.Project.Title)
+                                </div>
+                                <div>
+                                    @Html.DisplayNameFor(modelItem => userProject.Project.Description) :
+                                    @Html.DisplayFor(modelItem => userProject.Project.Description)
+                                </div>
+                                <div>
+                                    @Html.DisplayNameFor(modelItem => userProject.Project.StartDate) :
+                                    @Html.DisplayFor(modelItem => userProject.Project.StartDate)
+                                </div>
+                                <div>
+                                    @Html.DisplayNameFor(modelItem => userProject.Project.EndDate) :
+                                    @Html.DisplayFor(modelItem => userProject.Project.EndDate)
+                                </div>
+                                <div>
+                                    @Html.DisplayNameFor(modelItem => userProject.Project.CreationDate) :
+                                    @Html.DisplayFor(modelItem => userProject.Project.CreationDate)
+                                </div>
+
+                                <h4>Collaborators</h4>
+                                <div class="d-flex">
+                                    @foreach (var collab in ViewBag.collaborators)
                                     {
-                                        var collabPath = "~/image/" + (collab.User.PhotoPath);
+                                        if ((userProject.UserID != collab.UserID) && (userProject.ProjectID == collab.ProjectID))
+                                        {
+                                            var collabPath = "~/image/" + (collab.User.PhotoPath);
 
-                                        var collabMemberPath = "../../Users/Details/" + (collab.UserID);
+                                            var collabMemberPath = "../../Users/Details/" + (collab.UserID);
 
 
-                                        <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" asp-append-version="true" /></a>
+                                            <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" asp-append-version="true" /></a>
+                                        }
+
                                     }
+                                </div>
 
+
+                                <h4>Project Links</h4>
+                                @foreach (var link in userProject.Project.ProjectLinks)
+                                {
+                                    <a class="card-link" href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
+                                    <br />
                                 }
-                            </div>
 
-
-                            <h4>Project Links</h4>
-                            @foreach (var link in userProject.Project.ProjectLinks)
-                            {
-                                <a class="card-link" href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
-                                <br />
-                            }
-
-                            <div class="card-footer">
-                                <a class="btn btn-md btn-primary" href="@projectPath">View&nbsp;Project</a>
+                                <div class="card-footer">
+                                    <a class="btn btn-md btn-primary" href="@projectPath">View&nbsp;Project</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
+                }
             }
         </div>
     </div>
