@@ -7,11 +7,11 @@
     var photoPath = "";
     if (Model.PhotoPath != null)
     {
-     photoPath = "~/image/" + Model.PhotoPath;
+        photoPath = "~/image/" + Model.PhotoPath;
     }
     else
     {
-     photoPath = "~/WebAssests/siteImages/avataricon.png";
+        photoPath = "~/WebAssests/siteImages/avataricon.png";
     }
     var resumePath = "../../../../Resumes/" + Model.ResumePhotoPath;
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -20,272 +20,249 @@
     List<ConstellationWebApp.Models.Posting> postings = ViewBag.currentUserPostings;
 }
 
-    <section id="newPLink">
-        @* Add a user to the my starred users list *@
-        @if (currentUser != null && currentUser != Model.Id)
+<link rel="stylesheet" href="~/css/user-details.css" />
+<section class="optional-buttons">
+    @* Add a user to the my starred users list *@
+    @if (currentUser != null && currentUser != Model.Id)
+    {
+        List<ConstellationWebApp.Models.StarredUser> starredData = ViewBag.StarredUsers;
+        foreach (var starred in starredData)
         {
-            List<ConstellationWebApp.Models.StarredUser> starredData = ViewBag.StarredUsers;
-            foreach (var starred in starredData)
+            if (starred.StarredOwnerID == currentUser && starred.UserStarredID == @Model.Id)
             {
-                if (starred.StarredOwnerID == currentUser && starred.UserStarredID == @Model.Id)
-                {
-                    <form asp-action="Delete" asp-controller="StarredUsers">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group mb-0">
-                            <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id" />
-                        </div>
-                        <div class="form-group mx-auto mb-0">
-                            <input class="btn btn-md btn-primary mb-1 mx-auto" type="submit" value="Remove from MyStarred Users" />
-                        </div>
-                    </form>
-                    allReadyStarred = true;
-                }
-            }
-            @* Remove a user to the my starred users list *@
-            if (allReadyStarred == false)
-            {
-                <form asp-action="Create" asp-controller="StarredUsers">
+                <form asp-action="Delete" asp-controller="StarredUsers">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group mb-0">
+                    
                         <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id" />
-                    </div>
-                    <div class="form-group mb-0 mx-auto">
-                        <input class="btn btn-md btn-primary mb-1 mx-auto" type="submit" value="Add to MyStarred Users" />
-                    </div>
+                  
+                        <input class="btn btn-sm btn-outline-danger mb-1 mx-auto" type="submit" value="Remove from MyStarred Users" />
+                
                 </form>
-            }
-
-            @*Recuiter can add user to many "Picks" that the user is not already part of *@
-            if ((!(postings.Count() == 0)) && @Model.Id != currentUser)
-            {
-                <h4>Add this User to your picks</h4>
-                <form asp-action="CreateManyPicks" asp-controller="IntrestedCandidates">
-                    @{
-                        int cnt = 0;
-                        List<int> shown = new List<int>();
-                        foreach (var posting in postings.Where(i => !(shown.Contains(i.PostingID))))
-                        {
-                            var assigned = false;
-                            foreach (var pick in picks.Where(i => i.CandidateID == Model.Id && i.RecuiterID == currentUser && i.PostingID == posting.PostingID))
-                            {
-                                assigned = true;
-                            }
-                            if (assigned == false)
-                            {
-                                if (cnt++ % 3 == 0)
-                                {
-                                    @:<div>
-                                    }
-
-                                    @:<div>
-                                        <input type="checkbox" name="postings" value="@posting.PostingID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @:  @posting.PostingTitle
-                                    @:</div>
-                                    shown.Add(posting.PostingID);
-                                }
-                            }
-                        @:</div>
-                    }
-                    <div class="form-group mb-0">
-                        <input type="hidden" class="form-control" value="@currentUser" name="recruiterID" />
-                    </div>
-                    <div class="form-group mb-0">
-                        <input type="hidden" class="form-control" value="@Model.Id" name="candidateID" />
-                    </div>
-
-                    <div class="form-group">
-                        <input type="submit" value="Add to Picks" class="btn btn-primary" />
-                    </div>
-                </form>
-
-                @*Remove a user from many picks that the user is already part of*@
-                <h4>Remove this User from your picks</h4>
-                <form asp-action="DeleteManyPick" asp-controller="IntrestedCandidates">
-                    @{
-                        int count = 0;
-                        List<int> showndeleted = new List<int>();
-                        foreach (var posting in postings.Where(i => !(showndeleted.Contains(i.PostingID))))
-                        {
-                            var assigned = false;
-                            foreach (var pick in picks.Where(i => i.CandidateID == Model.Id && i.RecuiterID == currentUser && i.PostingID == posting.PostingID))
-                            {
-                                if (count++ % 3 == 0)
-                                {
-                                    @:<div>
-                                    }
-                                    @:<div>
-                                        <input type="checkbox" name="recuiterPicks" value="@pick.RecuiterPicksID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @:  @posting.PostingTitle
-                                    @:</div>
-                                    showndeleted.Add(posting.PostingID);
-                                }
-                            }
-                        @:</div>
-                    }
-                    <div class="form-group">
-                        <input type="submit" value="Remove from picks" class="btn btn-primary" />
-                    </div>
-                </form>
+                allReadyStarred = true;
             }
         }
-    </section>
+        @* Remove a user to the my starred users list *@
+        if (allReadyStarred == false)
+        {
+            <form asp-action="Create" asp-controller="StarredUsers">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+             
+                    <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id" />
+             
+               
+                    <input class="btn btn-sm btn-primary mb-1 mx-auto" type="submit" value="Add to MyStarred Users" />
+              
+            </form>
+        }
 
-<div class="d-flex flex-row">
-@*User Profile Card Display*@
-    <div class="col-sm-12 col-md-5">
-        <div class="">
-            <div class="col-md-10 p-0 m-0">
-                <h2 class="titleBorder m-0">@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Profile</h2>
-                <div class="card text-black shadow-lg mb-2 padding">
-                    <img style="height: 400px; width: 80%;" class="mx-auto d-block" src="@photoPath" asp-append-version="true" />
-                    <div class="card-body">
-                        <div>
-                            <a href="@resumePath">  @Html.DisplayFor(model => model.UserName)'s Resume</a>
-                        </div>
-                        <div>
-                            <p>
-                                <strong>
-                                    @Html.DisplayNameFor(model => model.UserName) :
-                                </strong>
-                                @Html.DisplayFor(model => model.UserName)
-                            </p>
-
-                            <p>
-                                <strong>
-                                    @Html.DisplayNameFor(model => model.FirstName) :
-                                </strong>
-                                @Html.DisplayFor(model => model.FirstName)
-                            </p>
-
-
-                            <p>
-                                <strong>
-                                    @Html.DisplayNameFor(model => model.LastName) :
-                                </strong>
-                                @Html.DisplayFor(model => model.LastName)
-                            </p>
-                        </div>
-                        <div class="card-text text-justify mb-2">
-                            <strong> @Html.DisplayNameFor(model => model.Bio) : </strong>
-                            @Html.DisplayFor(model => model.Bio)
-                        </div>
-                        <div class="card-text mb-2">
-                            <stong> @Html.DisplayNameFor(model => model.AreaOfDiscipline) : </stong>
-                            @Html.DisplayFor(model => model.AreaOfDiscipline)
-                        </div>
-                        <div class="card-text mb-2">
-                            <stong> @Html.DisplayNameFor(model => model.Seeking) : </stong>
-                            @Html.DisplayFor(model => model.Seeking)
-                        </div>
-
-                        <section style="margin-bottom: 3em;">
-                            <h4 class="mb-0">Contact Links</h4>
-                            @foreach (var contactLink in Model.ContactLinks)
+        @*Recuiter can add user to many "Picks" that the user is not already part of *@
+        if ((!(postings.Count() == 0)) && @Model.Id != currentUser)
+        {
+            @*<h4>Add this User to your picks</h4>*@
+            <form class="user-check-box" asp-action="CreateManyPicks" asp-controller="IntrestedCandidates">
+                @{
+                    int cnt = 0;
+                    List<int> shown = new List<int>();
+                    foreach (var posting in postings.Where(i => !(shown.Contains(i.PostingID))))
+                    {
+                        var assigned = false;
+                        foreach (var pick in picks.Where(i => i.CandidateID == Model.Id && i.RecuiterID == currentUser && i.PostingID == posting.PostingID))
+                        {
+                            assigned = true;
+                        }
+                        if (assigned == false)
+                        {
+                            if (cnt++ % 3 == 0)
                             {
-                                <div class="card-link">
-                                    @Html.DisplayFor(modelItem => contactLink.ContactLinkLabel) :
-                                    @Html.DisplayFor(modelItem => contactLink.ContactLinkUrl)
-                                </div>
+                                @:<div>
+                                }
+
+                                @:<div class="check">
+                                    <input type="checkbox" name="postings" value="@posting.PostingID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @:  @posting.PostingTitle
+                                @:</div>
+                                shown.Add(posting.PostingID);
                             }
-                        </section>
-
-                        <section class="card-footer">
-                            @if (currentUser == Model.Id)
-                            {
-
-                                <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-                                <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
-
-                            }
-                            else
-                            {
-
-                                <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
-
-                            }
-                        </section>
-                    </div>
+                        }
+                    @:</div>
+                }
+                <div class="form-group mb-0">
+                    <input type="hidden" class="form-control" value="@currentUser" name="recruiterID" />
                 </div>
+                <div class="form-group mb-0">
+                    <input type="hidden" class="form-control" value="@Model.Id" name="candidateID" />
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Add to Picks" class="btn btn-sm btn-primary picks" />
+                </div>
+            </form>
+
+            @*Remove a user from many picks that the user is already part of*@
+            @*<h4>Remove this User from your picks</h4>*@
+            <form class="user-check-box" asp-action="DeleteManyPick" asp-controller="IntrestedCandidates">
+                @{
+                    int count = 0;
+                    List<int> showndeleted = new List<int>();
+                    foreach (var posting in postings.Where(i => !(showndeleted.Contains(i.PostingID))))
+                    {
+                        var assigned = false;
+                        foreach (var pick in picks.Where(i => i.CandidateID == Model.Id && i.RecuiterID == currentUser && i.PostingID == posting.PostingID))
+                        {
+                            if (count++ % 3 == 0)
+                            {
+                                @:<div>
+                                }
+                                @:<div class="check">
+                                    <input type="checkbox" name="recuiterPicks" value="@pick.RecuiterPicksID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @:  @posting.PostingTitle
+                                @:</div>
+                                showndeleted.Add(posting.PostingID);
+                            }
+                        }
+                    @:</div>
+                }
+                <div class="form-group">
+                    <input type="submit" value="Remove from picks" class="btn btn-sm btn-outline-danger" />
+                </div>
+            </form>
+        }
+    }
+</section>
+<div class="user-details-container">
+
+    <div class="user-details-content shadow">
+        <div class="user-details-head"><h2>@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Profile</h2></div>
+        <div class="user-details-image"><img src="@photoPath" asp-append-version="true" /></div>
+        <div class="user-details-info">
+            <p>
+                <strong>
+                    @Html.DisplayNameFor(model => model.UserName) :
+                </strong>
+                @Html.DisplayFor(model => model.UserName)
+            </p>
+            <p>
+                <strong>
+                    @Html.DisplayNameFor(model => model.FirstName) :
+                </strong>
+                @Html.DisplayFor(model => model.FirstName)
+            </p>
+            <p>
+                <strong>
+                    @Html.DisplayNameFor(model => model.LastName) :
+                </strong>
+                @Html.DisplayFor(model => model.LastName)
+            </p>
+            <h4><strong> @Html.DisplayNameFor(model => model.Bio)</strong></h4>
+            <div class="user-bio">
+                <p>
+                    @Html.DisplayFor(model => model.Bio)
+                </p>
+            </div>
+            <h4><strong> @Html.DisplayNameFor(model => model.AreaOfDiscipline)</strong></h4>
+            <h6> @Html.DisplayFor(model => model.AreaOfDiscipline)</h6>
+            <p>
+                <stong> @Html.DisplayNameFor(model => model.Seeking) : </stong>
+                @Html.DisplayFor(model => model.Seeking)
+            </p>
+            <a class="btn btn-sm btn-primary" href="@resumePath">  @Html.DisplayFor(model => model.UserName)'s Resume</a>
+            <div class="Contact-Links">
+                <h4>Contact Links</h4>
+                @foreach (var contactLink in Model.ContactLinks)
+                {
+                    <div class="card-link">
+                        @Html.DisplayFor(modelItem => contactLink.ContactLinkLabel) :
+                        @Html.DisplayFor(modelItem => contactLink.ContactLinkUrl)
+                    </div>
+                }
+            <div class="card-footer">
+                @if (currentUser == Model.Id)
+                {
+
+                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                    <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
+
+                }
+                else
+                {
+
+                    <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
+
+                }
+            </div>
             </div>
         </div>
     </div>
 
-
-    @*User Project Card Display*@
-    <div class="col-sm-12 col-md-7 p-1">
-        @*User Projects Heading Card*@
-        
-        <h2 class="titleBorder m-0">@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Projects</h2>
-
-        <div id="projectDisplay">
+    <div class="user-project-container">
+        <div class="user-project-head"><h2>@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Projects</h2></div>
+        <div class="user-project-content">
+            @*User Project Card Display*@
             @foreach (var userProject in Model.UserProjects)
             {
                 var projectPhotoPath = "~/image/" + (userProject.Project.PhotoPath);
                 var projectPath = "../../Projects/Details/" + (userProject.Project.ProjectID);
                 var projectId = (userProject.Project.ProjectID);
 
-                <div class="">
-                    <div class="col-sm-12">
-                        <div class="card text-black mb-3 p-2 text-center">
-                            @*Note: We do not want to display the PhotoPath Path but the image itself*@
-                            <div>
-                                @*<a href="@projectPath"><img class="img-thumbnail mx-auto d-block" src=" @projectPhotoPath" alt="@Html.DisplayFor(modelItem => userProject.Project.Title)" asp-append-version="true" /></a>*@
-                            </div>
-                            <div>
-                                @Html.DisplayNameFor(modelItem => userProject.Project.Title) :
-                                @Html.DisplayFor(modelItem => userProject.Project.Title)
-                            </div>
-                            <div>
-                                @Html.DisplayNameFor(modelItem => userProject.Project.Description) :
-                                @Html.DisplayFor(modelItem => userProject.Project.Description)
-                            </div>
-                            <div>
-                                @Html.DisplayNameFor(modelItem => userProject.Project.StartDate) :
-                                @Html.DisplayFor(modelItem => userProject.Project.StartDate)
-                            </div>
-                            <div>
-                                @Html.DisplayNameFor(modelItem => userProject.Project.EndDate) :
-                                @Html.DisplayFor(modelItem => userProject.Project.EndDate)
-                            </div>
-                            <div>
-                                @Html.DisplayNameFor(modelItem => userProject.Project.CreationDate) :
-                                @Html.DisplayFor(modelItem => userProject.Project.CreationDate)
-                            </div>
 
-                            <h4>Collaborators</h4>
-                            <div class="d-flex">
-                                @foreach (var collab in ViewBag.collaborators)
-                                {
-                                    if ((userProject.UserID != collab.UserID) && (userProject.ProjectID == collab.ProjectID))
-                                    {
-                                        var collabPath = "~/image/" + (collab.User.PhotoPath);
+            <div class="card shadow m-1">
+                @*Note: We do not want to display the PhotoPath Path but the image itself*@
+                <div>
+                    @*<a href="@projectPath"><img class="img-thumbnail mx-auto d-block" src=" @projectPhotoPath" alt="@Html.DisplayFor(modelItem => userProject.Project.Title)" asp-append-version="true" /></a>*@
+                </div>
+                <h4><strong> @Html.DisplayFor(modelItem => userProject.Project.Title)</strong></h4>
+                @*<div>
+            @Html.DisplayNameFor(modelItem => userProject.Project.Title) :
 
-                                        var collabMemberPath = "../../Users/Details/" + (collab.UserID);
+        </div>*@
 
+                <h4><strong> @Html.DisplayNameFor(modelItem => userProject.Project.Description)</strong></h4>
+                <div class="user-bio">@Html.DisplayFor(modelItem => userProject.Project.Description)</div>
 
-                                        <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" asp-append-version="true" /></a>
-                                    }
-
-                                }
-                            </div>
-
-
-                            <h4>Project Links</h4>
-                            @foreach (var link in userProject.Project.ProjectLinks)
-                            {
-                                <a class="card-link" href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
-                                <br />
-                            }
-
-                            <div class="card-footer">
-                                <a class="btn btn-md btn-primary" href="@projectPath">View&nbsp;Project</a>
-                            </div>
-                        </div>
-                    </div>
+                <div>
+                    @Html.DisplayNameFor(modelItem => userProject.Project.StartDate) :
+                    @Html.DisplayFor(modelItem => userProject.Project.StartDate)
+                </div>
+                <div>
+                    @Html.DisplayNameFor(modelItem => userProject.Project.EndDate) :
+                    @Html.DisplayFor(modelItem => userProject.Project.EndDate)
+                </div>
+                <div>
+                    @Html.DisplayNameFor(modelItem => userProject.Project.CreationDate) :
+                    @Html.DisplayFor(modelItem => userProject.Project.CreationDate)
                 </div>
 
+                <h4><strong>Collaborators</strong></h4>
+                <div class="d-flex">
+                    @foreach (var collab in ViewBag.collaborators)
+                    {
+                        if ((userProject.UserID != collab.UserID) && (userProject.ProjectID == collab.ProjectID))
+                        {
+                            var collabPath = "~/image/" + (collab.User.PhotoPath);
+
+                            var collabMemberPath = "../../Users/Details/" + (collab.UserID);
+
+
+                            <a href="@collabMemberPath"><img class="collaborators-picture" src=" @collabPath" asp-append-version="true" /></a>
+                        }
+
+                    }
+                </div>
+
+                <h4><strong>Project Links</strong></h4>
+                @foreach (var link in userProject.Project.ProjectLinks)
+                {
+                    <a class="card-link" href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
+                    <br />
+                }
+
+                <div class="card-footer">
+                    <a class="btn btn-md btn-primary" href="@projectPath">View&nbsp;Project</a>
+                </div>
+            </div>
             }
         </div>
     </div>
 </div>
+ 
 
 
 
