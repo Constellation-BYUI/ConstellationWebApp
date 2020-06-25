@@ -376,7 +376,7 @@ namespace ConstellationWebApp.Controllers
             ContactLink thisCL = ((_context.ContactLinks.Where(i => (i.Users.Id == userID) && (i.ContactLinkID == contactLinkID)).FirstOrDefault()));
             _context.ContactLinks.Remove(thisCL);
             await _context.SaveChangesAsync();
-            var returnPath = "../User/Edit/" + userID.ToString();
+            var returnPath = "../Users/Edit/" + userID.ToString();
             return Redirect(returnPath);
         }
 

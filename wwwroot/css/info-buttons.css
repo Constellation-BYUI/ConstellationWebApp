@@ -4,19 +4,31 @@
 }
 
 p {
-    padding: 1em;
+    padding: 0.5em;
     opacity: 0;
     transition: opacity 0.5s linear;
-    background-color: lightgoldenrodyellow;
+    background-color: white;
     font-size: 10px;
+    display: inline;
 }
 
 #hidden-info-blip {
-    width: 800px;
+    width: 500px;
     z-index: 4;
     position: fixed;
+    display: inline;
 }
 
 #btn1 {
     border-radius: 100%;
+}
+
+@media (max-width: 600px) {
+    #hidden-info-blip {
+        width: 90%;
+    }
+    p {
+        font-size: 8px;
+    }
+
 }

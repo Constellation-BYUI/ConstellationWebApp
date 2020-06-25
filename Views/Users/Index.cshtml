@@ -21,9 +21,9 @@
     <div class="user-index-bread-crumb">Home > Members</div>
     <!-- search Bars -->
     <div class="user-index-search-bars">
-        <form action="" class="search-bar0">
+        <form asp-action="Index" asp-controller="Users" class="search-bar0">
             <div class="input-group">
-                <input type="search" placeholder="Search.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
+                <input type="search" name="nameSearch" placeholder="Search by name.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
                 </div>
