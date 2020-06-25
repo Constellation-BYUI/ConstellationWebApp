@@ -1,7 +1,11 @@
 ﻿html {
     width: 100%;
 }
-
+.user-bio {
+    overflow: scroll;
+    height: 10em;
+    width: 100%;
+}
 .posting-index-container {
     display: block;
 }

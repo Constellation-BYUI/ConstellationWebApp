@@ -19,10 +19,10 @@ spec:
         - containerPort: 80
         env:
         - name: ConnectionStrings
-        valueFrom:
-          secretKeyRef:
-            name: stage-app-settings
-            key: connection-strings
+          valueFrom:
+            secretKeyRef:
+              name: stage-app-settings
+              key: connection-strings
         - name: ASPNETCORE_ENVIRONMENT
           value: staging
         resources:
