@@ -8,6 +8,14 @@
 
 <link rel="stylesheet" href="~/css/user-index.css" />
 
+<!-- #region Info button:-->
+<button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
+<p id="hidden-info-blip">
+    See the current people using this platform. Check out their projects and resume, see who they work with, and 
+    get their contact information by visiting their profiles.
+</p>
+<!-- #endregion -->
+
 <!-- User index container -->
 <div class="user-index-container">
     <div class="user-index-bread-crumb">Home > Members</div>
@@ -47,117 +55,120 @@
         </form>
     </div>
 
-        <!-- User contents goes in here -->
-        <div class="user-index-head"><h2>Members</h2></div>
-        <div class="user-index-content">
-            <datalist id="disciplines-List">
-                @{
-                    List<ConstellationWebApp.Models.Discipline> disciplines = Model.Disciplines.ToList();
+    <!-- User contents goes in here -->
+    <div class="user-index-head"><h2>Members</h2></div>
+    <div class="user-index-content">
+        <datalist id="disciplines-List">
+            @{
+                List<ConstellationWebApp.Models.Discipline> disciplines = Model.Disciplines.ToList();
 
-                    foreach (var disciipline in disciplines)
+                foreach (var disciipline in disciplines)
+                {
+                    <option value="@disciipline.DisciplineName"></option>
+                }
+            @:</datalist>
+            }
+
+            <datalist id="skill-List">
+                @{
+                    List<ConstellationWebApp.Models.Skill> skills = Model.Skills.ToList();
+
+                    foreach (var skill in skills)
                     {
-                        <option value="@disciipline.DisciplineName"></option>
+                        <option value="@skill.SkillName"></option>
                     }
                 @:</datalist>
                 }
 
-                <datalist id="skill-List">
-                    @{
-                        List<ConstellationWebApp.Models.Skill> skills = Model.Skills.ToList();
+                @foreach (var item in Model.Users)
+                {
+                    if (item.displayMyProfile == true)
+                    {
+                        var photoPath = "~/image/" + (item.PhotoPath);
 
-                        foreach (var skill in skills)
-                        {
-                            <option value="@skill.SkillName"></option>
-                        }
-                    @:</datalist>
-                    }
 
-                        @foreach (var item in Model.Users)
-                        {
-                            if (item.displayMyProfile == true)
+                        @*CSS RULES FOR INDIVIDUAL CARDS*@
+                        <div class="card shadow mb-3">
+                            @*Card Heading*@
+                            @*Fisrt Name and Last Name*@
+                            <h4 class="card-header bg-primary py-1 text-white text-center m-0">
+                                @*@Html.DisplayNameFor(modelItem => item.FirstName) :*@
+                                @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
+                            </h4>
+                            @*card Image*@
+                            <a href="./Users/Details/@item.Id"><img src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.UserName)" asp-append-version="true" /></a>
+                            @*User name*@
+                            <small class="text-center py-1 m-0">@Html.DisplayFor(modelItem => item.UserName)</small>
+
+                            @*User Biography*@
+                            @*<div class="bg-light">
+                                    <h4 class="text-light bg-info text-center m-0">@Html.DisplayNameFor(modelItem => item.Bio)</h4>
+                                    <p class="text-justify bg-light text-black-50 px-2 py-1 mb-0"> @Html.DisplayFor(modelItem => item.Bio) </p>
+                                </div>*@
+
+                            @*Seeking*@
+                            @if (!(string.IsNullOrEmpty(item.AreaOfDiscipline)))
                             {
-                                var photoPath = "~/image/" + (item.PhotoPath);
-
-
-                                @*CSS RULES FOR INDIVIDUAL CARDS*@
-                                    <div class="card shadow mb-3">
-                                        @*Card Heading*@
-                                        @*Fisrt Name and Last Name*@
-                                        <h4 class="card-header bg-primary py-1 text-white text-center m-0">
-                                            @*@Html.DisplayNameFor(modelItem => item.FirstName) :*@
-                                            @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
-                                        </h4>
-                                        @*card Image*@
-                                        <a href="./Users/Details/@item.Id"><img src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.UserName)" asp-append-version="true" /></a>
-                                        @*User name*@
-                                        <small class="text-center py-1 m-0">@Html.DisplayFor(modelItem => item.UserName)</small>
-
-                                        @*User Biography*@
-                                        @*<div class="bg-light">
-                                            <h4 class="text-light bg-info text-center m-0">@Html.DisplayNameFor(modelItem => item.Bio)</h4>
-                                            <p class="text-justify bg-light text-black-50 px-2 py-1 mb-0"> @Html.DisplayFor(modelItem => item.Bio) </p>
-                                        </div>*@
-
-                                        @*Seeking*@
-                                        @if (!(string.IsNullOrEmpty(item.AreaOfDiscipline)))
-                                        {
-                                            <h6 class="m-0 bg-light text-center text-black p-1"> @Html.DisplayNameFor(modelItem => item.AreaOfDiscipline)</h6>
-                                            <p class="mb-0 text-black-50 text-center px-2 py-1">@Html.DisplayFor(modelItem => item.AreaOfDiscipline)</p>
-                                        }
-
-                                        @if (!(string.IsNullOrEmpty(item.Seeking)))
-                                        {
-                                            <h6 class="m-0 bg-light text-center text-black p-1"> @Html.DisplayNameFor(modelItem => item.Seeking)</h6>
-                                            <p class="mb-0 text-black-50 text-center px-2 py-1">@Html.DisplayFor(modelItem => item.Seeking)</p>
-                                        }
-
-
-                                        @*Contact Links*@
-                                        <h6 class="card-header text-black bg-light py-1 text-center m-0">Contact Links</h6>
-                                        <section class="d-flex flex-wrap justify-content-center bg-light mb-1">
-                                            @foreach (var link in item.ContactLinks)
-                                            {
-                                                <div class="card-link text-black-50">
-                                                    <a style="font-size: 30px" href="#"><i class="fab fa-linkedin-in"></i></a>
-                                                    <a style="font-size: 30px; color: #fb3958;" href="#"><i class="fab fa-instagram"></i></a>
-                                                    @Html.DisplayFor(modelItem => link.ContactLinkLabel) :
-                                                    @Html.DisplayFor(modelItem => link.ContactLinkUrl)
-                                                    @*<a style="font-size: 30px" href="#"><i class="fab fa-facebook"></i></a>*@
-                                                </div>
-                                            }
-                                        </section>
-
-
-                                        @*<div>
-                                            <strong class="text-warning">
-                                                @Html.DisplayNameFor(modelItem => item.UserName) :
-                                            </strong>
-
-                                        </div>
-                                        <div>
-                                            <strong class="text-warning">
-                                                @Html.DisplayNameFor(modelItem => item.LastName) :
-                                            </strong>
-                                        </div>*@
-
-                                        <section class="card-footer text-white text-center align-text-bottom px-2 py-2">
-                                            @{
-                                                if (item.Id == currentUser)
-                                                {
-                                                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                                                    <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                                                }
-                                                else
-                                                {
-                                                    <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                                                }
-                                            }
-                                        </section>
-                                    </div>
-
-                               
+                                <h6 class="m-0 bg-light text-center text-black p-1"> @Html.DisplayNameFor(modelItem => item.AreaOfDiscipline)</h6>
+                                <p class="mb-0 text-black-50 text-center px-2 py-1">@Html.DisplayFor(modelItem => item.AreaOfDiscipline)</p>
                             }
-                        }
-                   
-                </div>
+
+                            @if (!(string.IsNullOrEmpty(item.Seeking)))
+                            {
+                                <h6 class="m-0 bg-light text-center text-black p-1"> @Html.DisplayNameFor(modelItem => item.Seeking)</h6>
+                                <p class="mb-0 text-black-50 text-center px-2 py-1">@Html.DisplayFor(modelItem => item.Seeking)</p>
+                            }
+
+
+                            @*Contact Links*@
+                            @if (item.ContactLinks.Any())
+                            {
+                                <h6 class="card-header text-black bg-light py-1 text-center m-0">Contact Links</h6>
+                                <section class="d-flex flex-wrap justify-content-center bg-light mb-1">
+                                    @foreach (var link in item.ContactLinks)
+                                    {
+                                        <div class="card-link text-black-50">
+                                            <a style="font-size: 30px" href="#"><i class="fab fa-linkedin-in"></i></a>
+                                            <a style="font-size: 30px; color: #fb3958;" href="#"><i class="fab fa-instagram"></i></a>
+                                            @Html.DisplayFor(modelItem => link.ContactLinkLabel) :
+                                            @Html.DisplayFor(modelItem => link.ContactLinkUrl)
+                                            @*<a style="font-size: 30px" href="#"><i class="fab fa-facebook"></i></a>*@
+                                        </div>
+                                    }
+                                </section>
+                            }
+
+
+                            @*<div>
+                                    <strong class="text-warning">
+                                        @Html.DisplayNameFor(modelItem => item.UserName) :
+                                    </strong>
+
+                                </div>
+                                <div>
+                                    <strong class="text-warning">
+                                        @Html.DisplayNameFor(modelItem => item.LastName) :
+                                    </strong>
+                                </div>*@
+
+                            <section class="card-footer text-white text-center align-text-bottom px-2 py-2">
+                                @{
+                                    if (item.Id == currentUser)
+                                    {
+                                        <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                        <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                    }
+                                }
+                            </section>
+                        </div>
+
+
+                    }
+                }
+
             </div>
+        </div>

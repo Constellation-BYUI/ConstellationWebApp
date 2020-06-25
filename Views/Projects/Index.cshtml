@@ -8,6 +8,7 @@
 
 <link rel="stylesheet" href="/css/project-index.css" />
 <!-- The project index container -->
+
 <div class="project-index-container">
     <div class="project-index-bread-crumb">Home > Projects</div>
     <!-- search Bars -->
@@ -38,9 +39,20 @@
                 </div>
             </div>
         </form>
-
     </div>
-    <!-- Alphabetic Search -->
+
+    <!-- #region Info button:-->
+    <div>
+        <button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
+        <p id="hidden-info-blip">
+            Whether users are working in teams or learning independently, the projects page allows
+            you to view the projects that others are currently working on or have completed. Users
+            can include all they did to complete the project and showcase what they gained from the
+            experience. Create your own projects to increase your marketability.
+        </p>
+    </div>
+    <!-- #endregion -->
+
     <div class="create-project">
 
     </div>
@@ -49,16 +61,16 @@
     <div class="project-index-content">
         @foreach (var item in Model.Projects)
         {
-                var photoPath = "";
-                if (item.PhotoPath != null)
-                {
-                 photoPath = "~/image/" + item.PhotoPath;
-                }
-                else
-                {
-                 photoPath = "~/WebAssests/siteImages/projectsicon.png";
+            var photoPath = "";
+            if (item.PhotoPath != null)
+            {
+                photoPath = "~/image/" + item.PhotoPath;
+            }
+            else
+            {
+                photoPath = "~/WebAssests/siteImages/projectsicon.png";
 
-                }
+            }
 
             @*CSS RULES FOR INDIVIDUAL CARDS*@
             <div class="card shadow-lg border-primary mt-1 mb-3 ml-2 mr-2">
@@ -78,15 +90,15 @@
                         foreach (var collab in item.UserProjects)
 
                         {
-                              var collabPath = "";
-                              if (collab.User.PhotoPath != null)
-                              {
-                               collabPath = "~/image/" + (collab.User.PhotoPath);
-                              }
-                              else
-                              {
-                               collabPath = "~/WebAssests/siteImages/avataricon.png";
-                              }
+                            var collabPath = "";
+                            if (collab.User.PhotoPath != null)
+                            {
+                                collabPath = "~/image/" + (collab.User.PhotoPath);
+                            }
+                            else
+                            {
+                                collabPath = "~/WebAssests/siteImages/avataricon.png";
+                            }
                             var collabMemberPath = "../Users/Details/" + (collab.User.Id);
 
                             <a href="@collabMemberPath"><img src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>

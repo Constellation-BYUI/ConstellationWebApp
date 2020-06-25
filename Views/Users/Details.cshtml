@@ -1,4 +1,4 @@
-﻿@model ConstellationWebApp.Models.User
+@model ConstellationWebApp.Models.User
 @using System.Security.Claims;
 
 
@@ -32,11 +32,11 @@
             {
                 <form asp-action="Delete" asp-controller="StarredUsers">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    
-                        <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id" />
-                  
-                        <input class="btn btn-sm btn-outline-danger mb-1 mx-auto" type="submit" value="Remove from MyStarred Users" />
-                
+
+                    <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id" />
+
+                    <input class="btn btn-sm btn-outline-danger mb-1 mx-auto" type="submit" value="Remove from MyStarred Users" />
+
                 </form>
                 allReadyStarred = true;
             }
@@ -46,18 +46,26 @@
         {
             <form asp-action="Create" asp-controller="StarredUsers">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-             
-                    <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id" />
-             
-               
-                    <input class="btn btn-sm btn-primary mb-1 mx-auto" type="submit" value="Add to MyStarred Users" />
-              
+
+                <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id" />
+
+
+                <input class="btn btn-sm btn-primary mb-1 mx-auto" type="submit" value="Add to MyStarred Users" />
+
             </form>
         }
 
         @*Recuiter can add user to many "Picks" that the user is not already part of *@
         if ((!(postings.Count() == 0)) && @Model.Id != currentUser)
         {
+            <!-- #region Info button:-->
+            <button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
+            <p id="hidden-info-blip">
+                These options are available because you are a job posting owner. You can easily add or remove this user and
+                other users from these roles by using these actions below.
+            </p>
+            <!-- #endregion -->
+
             @*<h4>Add this User to your picks</h4>*@
             <form class="user-check-box" asp-action="CreateManyPicks" asp-controller="IntrestedCandidates">
                 @{
@@ -163,7 +171,14 @@
                 <stong> @Html.DisplayNameFor(model => model.Seeking) : </stong>
                 @Html.DisplayFor(model => model.Seeking)
             </p>
-            <a class="btn btn-sm btn-primary" href="@resumePath">  @Html.DisplayFor(model => model.UserName)'s Resume</a>
+            @if (Model.ResumePhotoPath != null)
+            {
+        <div>
+            <h4><strong> Resume</strong></h4>
+            <a href="@resumePath">  View Members Resume</a>
+        </div>
+            }
+
             <div class="Contact-Links">
                 <h4>Contact Links</h4>
                 @foreach (var contactLink in Model.ContactLinks)
@@ -173,21 +188,21 @@
                         @Html.DisplayFor(modelItem => contactLink.ContactLinkUrl)
                     </div>
                 }
-            <div class="card-footer">
-                @if (currentUser == Model.Id)
-                {
+                <div class="card-footer">
+                    @if (currentUser == Model.Id)
+                    {
 
-                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-                    <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
+                        <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                        <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
 
-                }
-                else
-                {
+                    }
+                    else
+                    {
 
-                    <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
+                        <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
 
-                }
-            </div>
+                    }
+                </div>
             </div>
         </div>
     </div>
@@ -198,9 +213,18 @@
             @*User Project Card Display*@
             @foreach (var userProject in Model.UserProjects)
             {
-                var projectPhotoPath = "~/image/" + (userProject.Project.PhotoPath);
-                var projectPath = "../../Projects/Details/" + (userProject.Project.ProjectID);
-                var projectId = (userProject.Project.ProjectID);
+                var projectPhotoPath = "";
+                if (userProject.Project.PhotoPath != null)
+                    {
+                        projectPhotoPath = "~/image/" + Model.PhotoPath;
+                    }
+                    else
+                    {
+                        projectPhotoPath = "~/WebAssests/siteImages/avataricon.png";
+                    }
+                    var projectId = (userProject.Project.ProjectID);
+                    var projectPath = "../../../Projects/" + projectId;
+
 
 
             <div class="card shadow m-1">
@@ -236,10 +260,19 @@
                     {
                         if ((userProject.UserID != collab.UserID) && (userProject.ProjectID == collab.ProjectID))
                         {
-                            var collabPath = "~/image/" + (collab.User.PhotoPath);
+
+                            var collabPath = "";
+
+                             if (userProject.Project.PhotoPath != null)
+                            {
+                             collabPath = "~/image/" + (collab.User.PhotoPath);
+                            }
+                            else
+                            {
+                             collabPath = "~/WebAssests/siteImages/avataricon.png";
+                            }
 
                             var collabMemberPath = "../../Users/Details/" + (collab.UserID);
-
 
                             <a href="@collabMemberPath"><img class="collaborators-picture" src=" @collabPath" asp-append-version="true" /></a>
                         }
