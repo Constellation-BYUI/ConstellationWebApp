@@ -18,7 +18,7 @@ spec:
         ports:
         - containerPort: 80
         env:
-          - name: CUSTOMCONNSTR_ConstellationWebAppContext
+        - name: CUSTOMCONNSTR_ConstellationWebAppContext
           valueFrom:
             secretKeyRef:
               name: prod-app-settings
