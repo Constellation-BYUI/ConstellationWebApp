@@ -51,6 +51,14 @@
     margin-bottom: 10px;
     padding: 5px;
 }
+.description-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-top: 0;
+    padding: 0 .5em;
+}
 .project-index-head h2 {
     margin: 0;
 }
