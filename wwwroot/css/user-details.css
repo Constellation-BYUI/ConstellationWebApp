@@ -29,6 +29,42 @@
         margin: 0;
     }
 
+.skills-sections{
+    display: grid;
+    padding: 1em;
+}
+
+.skills-and-links {
+    grid-column: 1/3;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: scroll;
+    max-height: 200px;
+}
+
+.user-skill-and-link-head {
+    grid-column: 1/3;
+}
+
+.user-skill-and-link-head h2 {
+    background-color: #1b6ec2;
+    color: white;
+    text-align: center;
+    font-size: large;
+    font-weight: 400;
+    padding: 5px;
+    width:100%;
+}
+
+.skillLink_skills {
+    grid-column: 2/3;
+    padding: 1em;
+}
+
+.Discipline_Skills {
+    grid-column: 1/2;
+    padding: 1em;
+}
 .user-details-image {
     width: 90%;
     margin: auto;
@@ -70,7 +106,7 @@
     display: grid;
     grid-template-columns: 1fr;
     overflow: scroll;
-    height: 30em;
+    max-height: 750px;
     /* width: 100%; */
 }
 .collaborators-picture {

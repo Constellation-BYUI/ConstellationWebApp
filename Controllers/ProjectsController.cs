@@ -34,6 +34,12 @@ namespace ConstellationWebApp.Controllers
             {
                 for (var i = 0; i < createdLinkLabels.Length; i++)
                 {
+                    createdLinkUrls[i] = createdLinkUrls[i].ToLower();
+                    if (!createdLinkUrls[i].Contains("constellation.citwdd.net") && !(createdLinkUrls[i].Contains("http://") || createdLinkUrls[i].Contains("https://")))
+                    {
+                        createdLinkUrls[i] = "http://" + createdLinkUrls[i];
+                    }
+
                     ProjectLink newContact = new ProjectLink
                     {
                         ProjectLinkLabel = createdLinkLabels[i],

@@ -84,9 +84,17 @@
                 {
                     if (item.displayMyProfile == true)
                     {
-                        var photoPath = "~/image/" + (item.PhotoPath);
 
-
+                            var photoPath = "";
+                            if (item.PhotoPath != null)
+                            {
+                                photoPath = "~/image/" + item.PhotoPath;
+                            }
+                            else
+                            {
+                                photoPath = "~/WebAssests/siteImages/avataricon.png";
+                            }
+                                                       
                         @*CSS RULES FOR INDIVIDUAL CARDS*@
                         <div class="card shadow mb-3">
                             @*Card Heading*@
@@ -110,30 +118,26 @@
                             @if (!(string.IsNullOrEmpty(item.AreaOfDiscipline)))
                             {
                                 <h6 class="m-0 bg-light text-center text-black p-1"> @Html.DisplayNameFor(modelItem => item.AreaOfDiscipline)</h6>
-                                <p class="mb-0 text-black-50 text-center px-2 py-1">@Html.DisplayFor(modelItem => item.AreaOfDiscipline)</p>
+                                <h6 class="mb-0 text-black-50 text-center px-2 py-1">@item.AreaOfDiscipline</h6>
                             }
 
                             @if (!(string.IsNullOrEmpty(item.Seeking)))
                             {
                                 <h6 class="m-0 bg-light text-center text-black p-1"> @Html.DisplayNameFor(modelItem => item.Seeking)</h6>
-                                <p class="mb-0 text-black-50 text-center px-2 py-1">@Html.DisplayFor(modelItem => item.Seeking)</p>
+                                <h6 class="mb-0 text-black-50 text-center px-2 py-1">@item.Seeking</h6>
                             }
 
 
                             @*Contact Links*@
                             @if (item.ContactLinks.Any())
-                            {
+                            {          
                                 <h6 class="card-header text-black bg-light py-1 text-center m-0">Contact Links</h6>
                                 <section class="d-flex flex-wrap justify-content-center bg-light mb-1">
                                     @foreach (var link in item.ContactLinks)
                                     {
-                                        <div class="card-link text-black-50">
-                                            <a style="font-size: 30px" href="#"><i class="fab fa-linkedin-in"></i></a>
-                                            <a style="font-size: 30px; color: #fb3958;" href="#"><i class="fab fa-instagram"></i></a>
-                                            @Html.DisplayFor(modelItem => link.ContactLinkLabel) :
-                                            @Html.DisplayFor(modelItem => link.ContactLinkUrl)
-                                            @*<a style="font-size: 30px" href="#"><i class="fab fa-facebook"></i></a>*@
-                                        </div>
+                                    <div class="card-link text-black-50">
+                                        <a href="@link.ContactLinkUrl" target="_blank">@link.ContactLinkLabel</a>
+                                    </div>
                                     }
                                 </section>
                             }

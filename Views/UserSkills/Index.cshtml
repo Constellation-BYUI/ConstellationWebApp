@@ -193,7 +193,7 @@
         <section>
             <div id="RemoveSkillLink" class="linktabcontent">
                 <h3>Remove SKill Links</h3>
-                <p>
+                <p style="opacity:1; color:black; background-color:none;">
                     You can remove a link and
                     its URL. Your skills will not be removed from
                     this action but the you will not showcase the
@@ -202,15 +202,15 @@
                 @{
                     foreach (var link in Model.SkillLinks.Where(i => i.SkillLinkOwner == currentUser))
                     {
-                        <div>
-                            <form asp-action="DeleteSkillLink" asp-controller="UserSkills">
-                                <p><a style="text-decoration: underline" href="@link.SkillLinkUrl">@link.SkilLinkLabel</a></p>
-                                <input type="hidden" name="link" value="@link.SkillLinkID" list="userSkills">
-                                <div class="form-group">
-                                    <input type="submit" value="Remove" class="btn btn-sm btn-info" />
+                                <div>
+                                    <a href="@link.SkillLinkUrl"><p style="opacity:1; color:black; background-color:none;">@link.SkilLinkLabel</p></a>
+                                    <form asp-action="DeleteSkillLink" asp-controller="UserSkills">
+                                        <input type="hidden" name="link" value="@link.SkillLinkID" list="userSkills">
+                                        <div class="form-group">
+                                            <input type="submit" value="Remove" class="btn btn-sm btn-info" />
+                                        </div>
+                                    </form>
                                 </div>
-                            </form>
-                        </div>
                     }
                 }
             </div>
