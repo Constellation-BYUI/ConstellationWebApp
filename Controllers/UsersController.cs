@@ -256,34 +256,7 @@ namespace ConstellationWebApp.Controllers
             return View(user);
         }
 
-        // GET: Users/Create
-        public IActionResult Create()
-        {
-            var viewModel = new UserCreateViewModel();
-            viewModel.Disciplines = _context.Disciplines.ToList();
-            viewModel.PostingTypes = _context.PostingTypes.ToList();
-            return View(viewModel);
-        }
-
-        // POST: Users/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(UserCreateViewModel model, string[] createdLinkLabels, string[] createdLinkUrls)
-        {
-            if (ModelState.IsValid)
-            {
-                var resumeFileName = UploadResume(model);
-                var uniqueFileName = ValidateImagePath(model);
-                User newUser = ViewModeltoUser(model, uniqueFileName, resumeFileName);
-                CreateUserLinks(createdLinkLabels, createdLinkUrls, newUser);
-                _context.Add(newUser);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View();
-        }
+        // POST: Users/Create is handeled by the Account controller
 
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(string? id)
@@ -403,7 +376,7 @@ namespace ConstellationWebApp.Controllers
             ContactLink thisCL = ((_context.ContactLinks.Where(i => (i.Users.Id == userID) && (i.ContactLinkID == contactLinkID)).FirstOrDefault()));
             _context.ContactLinks.Remove(thisCL);
             await _context.SaveChangesAsync();
-            var returnPath = "../User/Edit/" + userID.ToString();
+            var returnPath = "../Users/Edit/" + userID.ToString();
             return Redirect(returnPath);
         }
 

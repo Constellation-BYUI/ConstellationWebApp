@@ -1,4 +1,4 @@
-﻿@model ConstellationWebApp.Models.ViewModel
+@model ConstellationWebApp.Models.ViewModel
 @using System.Security.Claims;
 
 @{
@@ -6,9 +6,16 @@
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
 
-    <link rel="stylesheet" href="~/css/cards.css" />
-    <link rel="stylesheet" href="~/css/user-index.css" />
+<link rel="stylesheet" href="~/css/cards.css" />
+<link rel="stylesheet" href="~/css/user-index.css" />
 
+<!-- #region Info button:-->
+<button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
+<p id="hidden-info-blip">
+    See the current people using this platform. Check out their projects and resume, see who they work with, and
+    get their contact information by visiting their profiles.
+</p>
+<!-- #endregion -->
 
 <!-- User index container -->
 <div class="user-index-container">
@@ -49,79 +56,89 @@
         </form>
     </div>
 
-        <!-- User contents goes in here -->
-        <div class="user-index-head"><h2>Users of Constellation</h2></div>
-        <div class="user-index-content">
-            <datalist id="disciplines-List">
-                @{
-                    List<ConstellationWebApp.Models.Discipline> disciplines = Model.Disciplines.ToList();
+    <!-- User contents goes in here -->
+    <div class="user-index-head"><h2>Users of Constellation</h2></div>
+    <div class="user-index-content">
+        <datalist id="disciplines-List">
+            @{
+                List<ConstellationWebApp.Models.Discipline> disciplines = Model.Disciplines.ToList();
 
-                    foreach (var disciipline in disciplines)
+                foreach (var disciipline in disciplines)
+                {
+                    <option value="@disciipline.DisciplineName"></option>
+                }
+            @:</datalist>
+            }
+
+            <datalist id="skill-List">
+                @{
+                    List<ConstellationWebApp.Models.Skill> skills = Model.Skills.ToList();
+
+                    foreach (var skill in skills)
                     {
-                        <option value="@disciipline.DisciplineName"></option>
+                        <option value="@skill.SkillName"></option>
                     }
                 @:</datalist>
                 }
 
-                <datalist id="skill-List">
-                    @{
-                        List<ConstellationWebApp.Models.Skill> skills = Model.Skills.ToList();
-
-                        foreach (var skill in skills)
-                        {
-                            <option value="@skill.SkillName"></option>
-                        }
-                    @:</datalist>
-                    }
-
-                    @foreach (var item in Model.Users)
+                @foreach (var item in Model.Users)
+                {
+                    if (item.displayMyProfile == true)
                     {
-                        if (item.displayMyProfile == true)
-                        {
-                            var photoPath = "~/image/" + (item.PhotoPath);
+                        var photoPath = "~/image/" + (item.PhotoPath);
 
 
-                            <!-- CSS RULES FOR INDIVIDUAL CARDS -->
-                            <div class="const-card-wrapper">
-                                <div class="const-card">
-                                    <img class="const-card-image" src="/WebAssests/siteImages/constelation_image.webp" alt="card background">
-                                    <a href="./Users/Details/@item.Id"><img class="const-profile-image" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.UserName)" asp-append-version="true" /></a>
-                                    <h1> @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)</h1>
-                                    <h3><strong>User Name : </strong>@Html.DisplayFor(modelItem => item.UserName)</h3>
-                                    <!--Area of Discipline-->
-                                    @if (!(string.IsNullOrEmpty(item.AreaOfDiscipline)))
-                                    {
-                                        <h2>@Html.DisplayNameFor(modelItem => item.AreaOfDiscipline)</h2>
-                                        <div class="discipline">@Html.DisplayFor(modelItem => item.AreaOfDiscipline)</div>
-                                    }
-                                    <!--Seeckin-->
-                                    @if (!(string.IsNullOrEmpty(item.Seeking)))
-                                    {
-                                        <h2>@Html.DisplayNameFor(modelItem => item.Seeking)</h2>
-                                        <div class="discipline">@Html.DisplayFor(modelItem => item.Seeking)</div>
-                                    }
-                                    <!--Contack Links-->
-                                    <h2>Contact Links</h2>
+                        <!-- CSS RULES FOR INDIVIDUAL CARDS -->
+                        <div class="const-card-wrapper">
+                            <div class="const-card">
+                                <img class="const-card-image" src="/WebAssests/siteImages/constelation_image.webp" alt="card background">
+                                <a href="./Users/Details/@item.Id"><img class="const-profile-image" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.UserName)" asp-append-version="true" /></a>
+                                <h1> @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)</h1>
+                                <h3><strong>User Name : </strong>@Html.DisplayFor(modelItem => item.UserName)</h3>
+                                <!--Area of Discipline-->
+                                @if (!(string.IsNullOrEmpty(item.AreaOfDiscipline)))
+                                {
+                                    <h2>@Html.DisplayNameFor(modelItem => item.AreaOfDiscipline)</h2>
+                                    <div class="discipline">@Html.DisplayFor(modelItem => item.AreaOfDiscipline)</div>
+                                }
+                                <!--Seeckin-->
+                                @if (!(string.IsNullOrEmpty(item.Seeking)))
+                                {
+                                    <h2>@Html.DisplayNameFor(modelItem => item.Seeking)</h2>
+                                    <div class="discipline">@Html.DisplayFor(modelItem => item.Seeking)</div>
+                                }
+                                <!--Contack Links-->
+                                @if (item.ContactLinks.Any())
+                                {
+                                        <h2>Contact Links</h2>
+                                                    <section class="d-flex flex-wrap justify-content-center bg-light mb-1">
+                                                        @foreach (var link in item.ContactLinks)
+                                                        {
+                                <div class="card-link text-black-50">
+                                    @Html.DisplayFor(modelItem => link.ContactLinkLabel) :
+                                    <a href="@link.ContactLinkUrl" target="_blank">@link.ContactLinkLabel</a>
+                                </div>}
+                                                    </section>}
 
-                                    <div class="discipline">
-                                        @*@foreach (var link in item.ContactLinks)
-                                        {
-                                            <strong> @Html.DisplayFor(modelItem => link.ContactLinkLabel) :</strong>
-                                            @Html.DisplayFor(modelItem => link.ContactLinkUrl)
-                                        }*@
-                                        <!--Message from Nwokolo: Ryan if we can users to enter their social media information in these area, That will be great-->
-                                        <ul class="social-media">
-                                            <li><a href="#"><i class="fab fa-linkedin-square"></i></a></li>
-                                            <li><a href="#"><i class="fab fa-github-square"></i></a></li>
-                                            <li><a href="#"><i class="fab fa-twitter-square"></i></a></li>
-                                            <li><a href="#"><i class="fab fa-facebook-square"></i></a></li>
-                                        </ul> 
+                                <div class="discipline">
+                                    @*@foreach (var link in item.ContactLinks)
+            {
+                <strong> @Html.DisplayFor(modelItem => link.ContactLinkLabel) :</strong>
+                @Html.DisplayFor(modelItem => link.ContactLinkUrl)
+            }*@
+                                    <!--Message from Nwokolo: Ryan if we can users to enter their social media information in these area, That will be great-->
+                                    @*<ul class="social-media">
+                <li><a href="#"><i class="fab fa-linkedin-square"></i></a></li>
+                <li><a href="#"><i class="fab fa-github-square"></i></a></li>
+                <li><a href="#"><i class="fab fa-twitter-square"></i></a></li>
+                <li><a href="#"><i class="fab fa-facebook-square"></i></a></li>
+            </ul>*@
                                     <div class="const-card-footer">
                                         @{
                                             if (item.Id == currentUser)
                                             {
                                                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-lg btn-primary">Edit</a>
-                                       
+
                                                 <a class="btn btn-lg btn-secondary" asp-action="Details" asp-route-id="@item.Id">Details</a>
                                             }
                                             else
@@ -130,11 +147,11 @@
                                             }
                                         }
                                     </div>
-                                    </div>
                                 </div>
                             </div>
-                        }
+                        </div>
                     }
+                }
 
-                </div>
             </div>
+        </div>

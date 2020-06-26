@@ -10,55 +10,12 @@
 
 <h1>My Starred Projects</h1>
 
-<!-- #region Info button:
-    Note from Ryan: I could not figure out how to keep this working
-    when i put the css and javascript in seperate files.
-    I am going to leave this as it is for now so we can place these info blips in all locations needed-->
-@* Stlye for info button *@
-<style>
-    .show-info {
-        opacity: 1;
-    }
-
-    p {
-        padding: 1em;
-        opacity: 0;
-        transition: opacity 0.5s linear;
-        background-color: lightgoldenrodyellow;
-        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    }
-
-    #hidden-info-blip {
-        width: 600px;
-        z-index: 4;
-        position: absolute;
-    }
-
-    #btn1 {
-        border-radius: 100%;
-    }
-</style>
-@* html for info button *@
-
+<!-- #region Info button:-->
 <button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
 <p id="hidden-info-blip">
-    Your “starred” projects are shown below, to add more to this list visit a project’s
-    details page that you want to add. If you no longer want to have a project “starred”,
-    remove it by clicking the remove button on this page or on the project’s details page.
+    Your “starred” projects are shown below. To add more to this list, visit a project’s details page that you want to add from. 
+    If you no longer want to have a project “starred”, remove it by clicking the remove button on this page or on the project’s details page.
 </p>
-
-@* Scripts and resources for info button *@
-<script type="text/javascript">
-    var btn = document.getElementById('btn1')
-    var p = document.getElementById('hidden-info-blip')
-
-    btn.addEventListener('click', evt => {
-        p.classList.toggle('show-info')
-    })
-</script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="/scripts/snippet-javascript-console.min.js?v=1"></script>
-
 <!-- #endregion -->
 
 <div id="projectDisplay">
