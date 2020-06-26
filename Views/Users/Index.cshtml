@@ -10,11 +10,14 @@
 <link rel="stylesheet" href="~/css/user-index.css" />
 
 <!-- #region Info button:-->
-<button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
-<p id="hidden-info-blip">
-    See the current people using this platform. Check out their projects and resume, see who they work with, and
-    get their contact information by visiting their profiles.
-</p>
+<div class="const-info-blip">
+    <button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
+    <p id="hidden-info-blip">
+        See the current people using this platform. Check out their projects and resume, see who they work with, and
+        get their contact information by visiting their profiles.
+    </p>
+</div>
+
 <!-- #endregion -->
 <!-- User index container -->
 <div class="user-index-container">
@@ -97,7 +100,7 @@
                         }
                                     <!-- CSS RULES FOR INDIVIDUAL CARDS -->
                                     <div class="const-card-wrapper">
-                                        <section class="const-card">
+                                        <div class="const-card">
                                             <img class="const-card-image" src="/WebAssests/siteImages/constelation_image.webp" alt="card background">
                                             <a href="./Users/Details/@item.Id"><img class="const-profile-image" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.UserName)" asp-append-version="true" /></a>
                                             <h1> @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)</h1>
@@ -109,7 +112,7 @@
                                                 <div class="discipline">@Html.DisplayFor(modelItem => item.AreaOfDiscipline)</div>
                                             }
 
-
+                                            <!--Seeking-->
                                             @if (!(string.IsNullOrEmpty(item.Seeking)))
                                             {
                                                 <h2> @Html.DisplayNameFor(modelItem => item.Seeking)</h2>
@@ -120,31 +123,29 @@
                                                     @*Contact Links*@
                                                     @if (item.ContactLinks.Any())
                                                     {
-                                                        <h6 class="card-header text-black bg-light py-1 text-center m-0">Contact Links</h6>
-                                                        <section class="d-flex flex-wrap justify-content-center bg-light mb-1">
+                                                        <h2>Contact Links</h2>
+                                                        <div class="discipline">
                                                             @foreach (var link in item.ContactLinks)
                                                             {
-                                                                <div class="card-link text-black-50">
-                                                                    <a href="@link.ContactLinkUrl" target="_blank">@link.ContactLinkLabel</a>
-                                                                </div>
+                                                              <a href="@link.ContactLinkUrl" target="_blank">@link.ContactLinkLabel</a>
                                                             }
-                                                        </section>
+                                                        </div>
                                                     }
 
 
                                                     @*<div>
-            <strong class="text-warning">
-                @Html.DisplayNameFor(modelItem => item.UserName) :
-            </strong>
+                                                        <strong class="text-warning">
+                                                            @Html.DisplayNameFor(modelItem => item.UserName) :
+                                                        </strong>
 
-        </div>
-        <div>
-            <strong class="text-warning">
-                @Html.DisplayNameFor(modelItem => item.LastName) :
-            </strong>
-        </div>*@
+                                                    </div>
+                                                    <div>
+                                                        <strong class="text-warning">
+                                                            @Html.DisplayNameFor(modelItem => item.LastName) :
+                                                        </strong>
+                                                    </div>*@
 
-                                                    <section class="card-footer text-white text-center align-text-bottom px-2 py-2">
+                                                    <div class="const-card-footer">
                                                         @{
                                                             if (item.Id == currentUser)
                                                             {
@@ -157,12 +158,11 @@
                                                             }
 
                                                         }
-                                                    </section>
-</section>
+                                                    </div>
+                                        </div>
 
                                     </div>
                                 }
-
                     }                
 
             </div>

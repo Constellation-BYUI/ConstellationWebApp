@@ -3,6 +3,9 @@
     display: block;
 }
 
+.const-info-blip {
+    display: none;
+}
 .user-index-bread-crumb {
     display: none;
     background-color: aliceblue;
@@ -42,11 +45,11 @@
     }
 
 .user-index-content {
+    align-items: start;
     display: grid;
     grid-template-columns: 1fr;
-    column-gap: 1em;
-    margin: ;
-    overflow: auto;
+    column-gap: .7em;
+    overflow: scroll;
     height: 30em;
     background-color: whitesmoke;
 }
@@ -57,8 +60,11 @@
         display: block;
     }
 
+    .const-info-blip {
+        display: block;
+    }
     .user-index-content {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(3, 1fr);
         height: 35em;
         margin: 0 2em 1em 2em;
     }
@@ -81,7 +87,7 @@
 
 @media screen and (min-width: 991px) {
     .user-index-content {
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: repeat(4, 1fr);
     }
 
     .user-index-search-bars {
@@ -92,7 +98,7 @@
 
 @media screen and (min-width: 1199px) {
     .user-index-content {
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: repeat(6, 1fr);
         height: 40em;
     }
 }

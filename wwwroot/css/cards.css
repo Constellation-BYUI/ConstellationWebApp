@@ -31,45 +31,45 @@ a {
 
     .const-card .const-card-image {
         width: 100%;
-        height: 20rem;
+        height: 12rem;
         object-fit: cover;
-        -webkit-clip-path: polygon(0 0, 100% 0, 100% 81%, 0% 100%);
-        clip-path: polygon(0 0, 100% 0, 100% 81%, 0% 100%);
+       /* -webkit-clip-path: polygon(0 0, 100% 0, 100% 81%, 0% 100%);
+        clip-path: polygon(0 0, 100% 0, 100% 81%, 0% 100%);*/
     }
 
-.const-profile-image {
+.const-card a .const-profile-image {
     width: 15rem;
     height: 15rem;
     object-fit: cover;
     border-radius: 50%;
-    margin-top: -11rem;
+    margin-top: -9rem;
     z-index: 999 !important;
     border: 1rem solid #ebeef8;
 }
 
 .const-card h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: #1b6ec2;
     margin: 1rem 0 0 0;
     text-align: center;
 }
 
 .const-card h2 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     width: 100%;
     text-align: center;
     background-color: #ebeef8;
     padding: .5rem;
-    margin: .5rem 0;
+    margin: 0;
 }
 
 .const-card h3 {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     margin: .3rem 0 1rem 0;
 }
 
 .discipline {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     color: #777;
     font-weight: 300;
     width: 100%;
@@ -77,17 +77,21 @@ a {
     background-color: #fff;
     padding: .5rem;
 }
-
-.const-card .const-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: .5rem .5rem .2rem rgba(0,0,0,.2);
-}
+    .discipline a {
+        color: #333;
+        text-decoration: none;
+    }
+    .const-card .const-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: .5rem .5rem .2rem rgba(0,0,0,.2);
+    }
 
 .const-card-footer {
+    width: 100%;
     text-align: left;
-    padding: 1rem;
+    padding: .5rem;
     border-top: 1px solid rgba(0,0,0,.1);
-    background-color: #ebeef8;
+    background-color: #242b41;
 }
 
 .social-media {
@@ -129,8 +133,8 @@ a {
 
 @media screen and (min-width: 767px) {
     .const-card {
-        width: 100%;
-        margin: 1rem 2rem 1rem 1rem;
+        width: 95%;
+        margin: 1rem 0 ;
         transition: transform .5s;
     }
 
