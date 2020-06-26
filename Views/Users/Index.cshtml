@@ -39,7 +39,7 @@
                 </div>
             </div>
         </form>
-        <form asp-action="Index" asp-controller="Users" class="search-bar2">
+        <form asp-action="Index" asp-controller="Users" class="search-bar3">
             <div class="input-group">
                 <input list="skill-List" name="skillSearch" placeholder="Seach by a skill.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
                 <div class="input-group-append">
@@ -50,9 +50,8 @@
     </div>
 
         <!-- User contents goes in here -->
-        <div class="user-index-head"><h2>Members</h2></div>
+        <div class="user-index-head"><h2>Users of Constellation</h2></div>
         <div class="user-index-content">
-            <!-- Sample Card -->
             <datalist id="disciplines-List">
                 @{
                     List<ConstellationWebApp.Models.Discipline> disciplines = Model.Disciplines.ToList();
@@ -105,18 +104,18 @@
                                     <h2>Contact Links</h2>
 
                                     <div class="discipline">
-                                        @foreach (var link in item.ContactLinks)
+                                        @*@foreach (var link in item.ContactLinks)
                                         {
                                             <strong> @Html.DisplayFor(modelItem => link.ContactLinkLabel) :</strong>
                                             @Html.DisplayFor(modelItem => link.ContactLinkUrl)
-                                        }
+                                        }*@
                                         <!--Message from Nwokolo: Ryan if we can users to enter their social media information in these area, That will be great-->
-                                        <!-- <ul class="social-media">
-                                        <li><a href="#"><i class="fab fa-facebook-square"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-linkedin-square"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-github-square"></i></a></li>
-                                        <li><a href="#"><i class="fab fa-twitter-square"></i></a></li>
-                                </ul> -->
+                                        <ul class="social-media">
+                                            <li><a href="#"><i class="fab fa-linkedin-square"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-github-square"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-twitter-square"></i></a></li>
+                                            <li><a href="#"><i class="fab fa-facebook-square"></i></a></li>
+                                        </ul> 
                                     <div class="const-card-footer">
                                         @{
                                             if (item.Id == currentUser)
