@@ -273,7 +273,7 @@ namespace ConstellationWebApp.Controllers
             ViewBag.thisUserSkillLinks = userSkillLinks;
             ViewBag.thisSkillLinks = skillLinks;
 
-            List<StarredUser> thisSU = _context.StarredUsers.ToList();
+            List<StarredUser> thisSU = _context.StarredUsers.Where(i => i.StarredOwnerID == currentUser).ToList();
             ViewBag.StarredUsers = thisSU;
             return View(user);
         }
