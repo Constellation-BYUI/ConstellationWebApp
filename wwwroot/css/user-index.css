@@ -58,10 +58,10 @@
     margin: auto !important;
 }
 
-    .user-index-content img {
+   /* .user-index-content img {
         height: 20em;
         width: 100%;
-    }
+    }*/
 
 /*.project-collaborators h4 {
     text-align: center;
@@ -105,6 +105,7 @@
     }
 
     .user-index-content {
+        align-items: center;
         display: grid;
         grid-template-columns: 1fr 1fr;
         column-gap: 1em;
@@ -119,9 +120,9 @@
         margin: auto !important;
     }
 
-        .user-index-content img {
+        /*.user-index-content img {
             height: 30em;
-        }
+        }*/
 }
 
 @media screen and (min-width: 991px) {
@@ -153,9 +154,9 @@
         margin: auto;
     }
 
-    .user-index-content img {
+    /*.user-index-content img {
         height: 25em;
-    }
+    }*/
 }
 
 @media screen and (min-width: 1199px) {
