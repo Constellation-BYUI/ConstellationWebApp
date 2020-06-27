@@ -3,14 +3,14 @@
 
 @{
     ViewData["Title"] = "Details";
-      var photoPath = "";
+    var photoPath = "";
     if (Model.PhotoPath != null)
     {
-     photoPath = "~/image/" + Model.PhotoPath;
+        photoPath = "~/image/" + Model.PhotoPath;
     }
     else
     {
-     photoPath = "~/WebAssests/siteImages/projectsicon.png";
+        photoPath = "~/WebAssests/siteImages/projectsicon.png";
     }
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
     var allReadyStarred = false;
@@ -19,41 +19,55 @@
 }
 
 <link rel="stylesheet" href="/css/project-details.css" />
- @*Button for adding projects to stardProject*@
-    @if (currentUser != null)
-    {
-        List<ConstellationWebApp.Models.AssignedStarredProjectsData> starredData = ViewBag.StarredProjects;
-        foreach (var starred in starredData)
-        {
-            if (starred.UserID == currentUser && starred.Starred == true)
-            {
-                <form asp-action="Delete" asp-controller="StarredProjects">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <input type="hidden" asp-for="ProjectID" class="form-control" value="@Model.ProjectID" />
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Remove from MyStarred Projects" class="btn btn-primary" />
-                    </div>
-                </form>
-                allReadyStarred = true;
-            }
-        }
+@*Button for adding projects to stardProject*@
+@if (currentUser != null)
+{
 
-        if (allReadyStarred == false)
+
+    List<ConstellationWebApp.Models.AssignedStarredProjectsData> starredData = ViewBag.StarredProjects;
+    foreach (var starred in starredData)
+    {
+        if (starred.UserID == currentUser && starred.Starred == true)
         {
-            <form asp-action="Create" asp-controller="StarredProjects">
+            <form asp-action="Delete" asp-controller="StarredProjects">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <input type="hidden" asp-for="ProjectID" class="form-control" value="@Model.ProjectID" />
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Add to MyStarred Projects" class="btn btn-primary" />
+                    <input type="submit" value="Remove from MyStarred Projects" class="btn btn-primary" />
                 </div>
             </form>
+            allReadyStarred = true;
         }
 
     }
+
+    if (allReadyStarred == false)
+    {
+        <form asp-action="Create" asp-controller="StarredProjects">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" asp-for="ProjectID" class="form-control" value="@Model.ProjectID" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add to MyStarred Projects" class="btn btn-primary" />
+            </div>
+        </form>
+    }
+
+    <!-- #region Info button:-->
+    <div>
+        <button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
+        <p id="hidden-info-blip">
+            To Save this project so you can view it later, add it to your 'starred projects' list by
+            clicking the 'Add to MyStarred Projects' button.  If you are interested in getting involved
+            with the project, any available listings will be shown on this page or you can contact the
+            members of the project, using the links they provide on their profiles.
+        </p>
+    </div>
+    <!-- #endregion -->
+}
 <!-- Project Details Body contains both project details and Open roles for this project -->
 <div class="project-details-body">
     <!-- Project Details Head is the same -->
@@ -102,18 +116,18 @@
         </div>
         <div class="project-collaborators">
             <h4>Collaborators</h4>
-            <div class="project-collaborators-pictture">
+            <div class="project-collaborators-picture">
                 @{
                     foreach (var collab in Model.currentProject.UserProjects)
                     {
                         var collabPath = "";
                         if (collab.User.PhotoPath != null)
                         {
-                         collabPath = "~/image/" + (collab.User.PhotoPath);
+                            collabPath = "~/image/" + (collab.User.PhotoPath);
                         }
                         else
                         {
-                         collabPath = "~/WebAssests/siteImages/avataricon.png";
+                            collabPath = "~/WebAssests/siteImages/avataricon.png";
                         }
                         var collabMemberPath = "../../Users/Details/" + (collab.User.Id);
                         <a href="@collabMemberPath"><img class="small-thumbnail my-1" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
@@ -125,14 +139,14 @@
     </div>
     <div class="project-details-footer">
         @if (loggedOn == false)
-                {
-                    <a class="btn btn-md btn-secondary" asp-action="Index">Back&nbsp;List</a>
-                }
-                else
-                {
-                    <a class="btn btn-md btn-primary" asp-action="Edit" asp-route-id="@Model.ProjectID">Edit</a>
-                    <a class="btn btn-md btn-secondary" asp-action="Index">Back&nbsp;to&nbsp;List</a>
-                }
+        {
+            <a class="btn btn-md btn-secondary" asp-action="Index">Back&nbsp;List</a>
+        }
+        else
+        {
+            <a class="btn btn-md btn-primary" asp-action="Edit" asp-route-id="@Model.ProjectID">Edit</a>
+            <a class="btn btn-md btn-secondary" asp-action="Index">Back&nbsp;to&nbsp;List</a>
+        }
     </div>
 
     <!-- Open postings for this project -->
@@ -142,80 +156,80 @@
     <div class="job-posting-field">
         @{
             //if the collaborator has postings and others want to add that posting to the project
-                @foreach (var collaborator in Model.currentProject.UserProjects)
+            @foreach (var collaborator in Model.currentProject.UserProjects)
+            {
+                var postingListholder = Model.Postings.Where(i => i.PostingOwner.Id == collaborator.UserID);
+                var projectPostingHolder = Model.ProjectPostings;
+                //if user has no postings do not create an empty form
+                if (!(postingListholder.Any()))
                 {
-                    var postingListholder = Model.Postings.Where(i => i.PostingOwner.Id == collaborator.UserID);
-                    var projectPostingHolder = Model.ProjectPostings;
-                    //if user has no postings do not create an empty form
-                    if (!(postingListholder.Any()))
+                    continue;
+                }
+                //postings linked to the project
+                @foreach (var posting in postingListholder)
+                {
+                    kickOut = true;
+                    foreach (var projPost in projectPostingHolder.Where(i => i.PostingID == posting.PostingID && i.ProjectID == Model.ProjectID))
+                    {
+                        kickOut = false;
+                    }
+                    if (kickOut == true)
                     {
                         continue;
                     }
-                    //postings linked to the project
-                    @foreach (var posting in postingListholder)
-                    {
-                        kickOut = true;
-                        foreach (var projPost in projectPostingHolder.Where(i => i.PostingID == posting.PostingID && i.ProjectID == Model.ProjectID))
-                        {
-                            kickOut = false;
-                        }
-                        if (kickOut == true)
-                        {
-                            continue;
-                        }
 
-                        <!--#region Display the Posting Details-->
-                        photoPath = "~/image/" + (posting.PostingOwner.PhotoPath);
-                        var collabMemberPath = "../../Users/Details/" + (posting.PostingOwner.Id);
+                    <!--#region Display the Posting Details-->
+                    photoPath = "~/image/" + (posting.PostingOwner.PhotoPath);
+                    var collabMemberPath = "../../Users/Details/" + (posting.PostingOwner.Id);
 
-                        <div class="card shadow-lg text-black text-center m-2 padding">
-                            @*Name of Company*@
-                            <h3 class="card-header bg-primary py-1 text-white text-center m-0">
-                                @Html.DisplayFor(modelItem => posting.PostingFor)
-                            </h3>
-                            @*Position*@
-                            <h5 class="text-center m-0 bg-light p-2 border-bottom">
-                                <strong class="text-success">Position : </strong><span class="mb-0 p-1 text-black">@Html.DisplayFor(modelItem => posting.PostingTitle)</span>
-                            </h5>
+                    <div class="card shadow-lg text-black text-center m-2 padding">
+                        @*Name of Company*@
+                        <h3 class="card-header bg-primary py-1 text-white text-center m-0">
+                            @Html.DisplayFor(modelItem => posting.PostingFor)
+                        </h3>
+                        @*Position*@
+                        <h5 class="text-center m-0 bg-light p-2 border-bottom">
+                            <strong class="text-success">Position : </strong><span class="mb-0 p-1 text-black">@Html.DisplayFor(modelItem => posting.PostingTitle)</span>
+                        </h5>
 
-                            <section class="bg-light text-wrap text-justify">
-                                <div class="col-6 text-left float-left">
-                                    <div class="bg-light text-wrap p-2 py-0 border-bottom"><strong class="text-black">Recruiter's Name : </strong><span class="text-black-50">@Html.DisplayFor(modelItem => posting.PostingOwner.UserName)</span></div>
-                                    <a class="m-1 border-success" href="@collabMemberPath"><img style="height: 300px; width: 100%; display: block; box-shadow: 5px 5px 15px #343a40;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => posting.PostingOwner.UserName)" asp-append-version="true" /></a>
-                                </div>
-                                <div class="col-6 float-right text-center">
-                                    @*Type of Posting*@
-                                    <h5 class="card-title bg-info container-fluid float-right py-2 text-white rounded mt-2">Type of Posting</h5>
-                                    @foreach (var type in posting.Posting_PostingTypes)
-                                    {
-                                        <h6 class="text-black">
-                                            @type.PostingTypes.PostingTypeName
-                                        </h6>
-                                    }
-                                    @*Description of Posting*@
-                                    <h5 class="card-title bg-info container-fluid float-right py-2 text-white rounded">Description</h5>
-                                    <p class="text-black-50 p-2">@Html.DisplayFor(modelItem => posting.Description)</p>
-                                </div>
-                                <!--#endregion Posting Details-->
-
-                            </section>
-
-                            <section class="card-footer text-left">
-                                @if ((currentUser == posting.PostingOwner.Id) && (currentUser != null))
+                        <section class="bg-light text-wrap text-justify">
+                            <div class="col-6 text-left float-left">
+                                <div class="bg-light text-wrap p-2 py-0 border-bottom"><strong class="text-black">Recruiter's Name : </strong><span class="text-black-50">@Html.DisplayFor(modelItem => posting.PostingOwner.UserName)</span></div>
+                                <a class="m-1 border-success" href="@collabMemberPath"><img style="height: 300px; width: 100%; display: block; box-shadow: 5px 5px 15px #343a40;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => posting.PostingOwner.UserName)" asp-append-version="true" /></a>
+                            </div>
+                            <div class="col-6 float-right text-center">
+                                @*Type of Posting*@
+                                <h5 class="card-title bg-info container-fluid float-right py-2 text-white rounded mt-2">Type of Posting</h5>
+                                @foreach (var type in posting.Posting_PostingTypes)
                                 {
-                                    <a class="btn btn-sm btn-primary" asp-controller="Postings" asp-action="Edit" asp-route-id="@posting.PostingID">Edit</a>
-                                    <a class="btn btn-sm btn-secondary" asp-controller="Postings" asp-action="Details" asp-route-id="@posting.PostingID">Details</a>
-                                    <a class="btn btn-sm btn-danger" asp-controller="Postings" asp-action="Delete" asp-route-id="@posting.PostingID">Delete</a>
+                                    <h6 class="text-black">
+                                        @type.PostingTypes.PostingTypeName
+                                    </h6>
                                 }
-                                else
-                                {
-                                    <a class="btn btn-sm btn-secondary" asp-controller="Postings" asp-action="Details" asp-route-id="@posting.PostingID">Details</a>
-                                }
-                            </section>
-                        </div>
-                    }
+                                @*Description of Posting*@
+                                <h5 class="card-title bg-info container-fluid float-right py-2 text-white rounded">Description</h5>
+                                <p class="text-black-50 p-2">@Html.DisplayFor(modelItem => posting.Description)</p>
+                            </div>
+                            <!--#endregion Posting Details-->
+
+                        </section>
+
+                        <section class="card-footer text-left">
+                            @if ((currentUser == posting.PostingOwner.Id) && (currentUser != null))
+                            {
+                                <a class="btn btn-sm btn-primary" asp-controller="Postings" asp-action="Edit" asp-route-id="@posting.PostingID">Edit</a>
+                                <a class="btn btn-sm btn-secondary" asp-controller="Postings" asp-action="Details" asp-route-id="@posting.PostingID">Details</a>
+                                <a class="btn btn-sm btn-danger" asp-controller="Postings" asp-action="Delete" asp-route-id="@posting.PostingID">Delete</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-sm btn-secondary" asp-controller="Postings" asp-action="Details" asp-route-id="@posting.PostingID">Details</a>
+                            }
+                        </section>
+                    </div>
                 }
-           
+            }
+
         }
     </div>
 </div>

@@ -31,7 +31,7 @@ namespace ConstellationWebApp.Controllers
 
         }
 
-        //Region of all Methods that perform a simple function
+        //Region of all Methods that perform a recieve/return function
         #region SimpleUserFunctions
         private string UploadResume(UserCreateViewModel model)
         {
@@ -65,6 +65,12 @@ namespace ConstellationWebApp.Controllers
             {
                 for (var i = 0; i < createdLinkLabels.Length; i++)
                 {
+                    createdLinkUrls[i] = createdLinkUrls[i].ToLower();
+                    if (!createdLinkUrls[i].Contains("constellation.citwdd.net") && !(createdLinkUrls[i].Contains("http://") || createdLinkUrls[i].Contains("https://"))) 
+                    {
+                        createdLinkUrls[i] = "http://" + createdLinkUrls[i];
+                    }
+
                     ContactLink newContact = new ContactLink
                     {
                         ContactLinkLabel = createdLinkLabels[i],
@@ -229,6 +235,7 @@ namespace ConstellationWebApp.Controllers
           .Include(s => s.UserProjects)
           .ThenInclude(s => s.Project)
           .ThenInclude(s => s.ProjectLinks)
+          .Include(s => s.UserSkills)
           .AsNoTracking()
           .FirstOrDefaultAsync(m => m.Id == id);
 
@@ -237,6 +244,7 @@ namespace ConstellationWebApp.Controllers
                 return NotFound();
             }
 
+            User userDetails = _context.User.Where(i => i.Id == id).FirstOrDefault();
 
             var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -246,44 +254,96 @@ namespace ConstellationWebApp.Controllers
             List<Posting> currentUserPostings = _context.Postings.Where(i => i.PostingOwner.Id == currentUser).ToList();
             List<RecruiterPicks> recruitersData = _context.RecruiterPicks.Where(i => i.RecuiterID == currentUser).ToList();
 
+            List<UserSkill> userSkills = _context.UserSkills.Where(i => i.UserID == currentUser).ToList();
+            List<UserSkillLink> userSkillLinks = _context.UserSkillLinks.Where(i => i.UserSkills.UserID == currentUser).ToList();
+            List<SkillLink> skillLinks = _context.SkillLinks.Where(i => i.SkillLinkOwner == currentUser).ToList();
+            List<Skill> skills = UserSkillsLookup(id);
+            List<SkillDiscipline> skillDisciplines = SkillDisciplineLookup(skills);
+            List<Discipline> disciplines = UserDisciplineLookup(skillDisciplines);
+            
             ViewBag.collaborators = userProjectList;
             ViewBag.allUsers = usersList;
+            ViewBag.allNeededDisciplines = disciplines;
+            ViewBag.allNeededSKills = skills;
+            ViewBag.allNeededSKillDisciplines = skillDisciplines;
+
             ViewBag.currentUserPostings = currentUserPostings;
             ViewBag.recruitersData = recruitersData;
+            ViewBag.thisSkills = userSkills;
+            ViewBag.thisUserSkillLinks = userSkillLinks;
+            ViewBag.thisSkillLinks = skillLinks;
 
-            List<StarredUser> thisSU = _context.StarredUsers.ToList();
+            List<StarredUser> thisSU = _context.StarredUsers.Where(i => i.StarredOwnerID == currentUser).ToList();
             ViewBag.StarredUsers = thisSU;
             return View(user);
         }
 
-        // GET: Users/Create
-        public IActionResult Create()
+ 
+        public List<Skill> UserSkillsLookup(string id)
+        {    
+            List<Skill> currentSkills = new List<Skill>();
+
+
+            //find all disciplines
+            foreach (var skill in _context.UserSkills.Where(i => i.UserID == id))
+                {
+                    Skill SkillOfUser = _context.Skills.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
+
+                if (!currentSkills.Contains(SkillOfUser))
+                {
+                    currentSkills.Add(SkillOfUser);
+                }
+                else
+                {
+                    continue;
+                }
+
+                }
+            return currentSkills;
+         }
+
+        public List<SkillDiscipline> SkillDisciplineLookup(List<Skill> skills)
         {
-            var viewModel = new UserCreateViewModel();
-            viewModel.Disciplines = _context.Disciplines.ToList();
-            viewModel.PostingTypes = _context.PostingTypes.ToList();
-            return View(viewModel);
+            List<Discipline> currentDisciplines = new List<Discipline>();
+            List<SkillDiscipline> skillDisciplineLookup = new List<SkillDiscipline>();
+            //find all disciplines
+            foreach (var skill in skills)
+            {
+                SkillDiscipline skillDisciplineForSkill = _context.SkillDisciplines.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
+                if (!skillDisciplineLookup.Contains(skillDisciplineForSkill))
+                {
+                    skillDisciplineLookup.Add(skillDisciplineForSkill);
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            return (skillDisciplineLookup);
         }
 
-        // POST: Users/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(UserCreateViewModel model, string[] createdLinkLabels, string[] createdLinkUrls)
+        public List<Discipline> UserDisciplineLookup(List<SkillDiscipline> skillDisciplines)
         {
-            if (ModelState.IsValid)
-            {
-                var resumeFileName = UploadResume(model);
-                var uniqueFileName = ValidateImagePath(model);
-                User newUser = ViewModeltoUser(model, uniqueFileName, resumeFileName);
-                CreateUserLinks(createdLinkLabels, createdLinkUrls, newUser);
-                _context.Add(newUser);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+            List<Discipline> currentDisciplines = new List<Discipline>();
+            //find all disciplines
+            foreach (var sd in skillDisciplines)
+            {            
+                Discipline disciplineForSkill = _context.Disciplines.Where(i => i.DisciplineID == sd.DisciplineID).FirstOrDefault();
+                if (!currentDisciplines.Contains(disciplineForSkill))
+                {
+                    currentDisciplines.Add(disciplineForSkill);
+                }
+                else
+                {
+                    continue;
+                }
             }
-            return View();
+            return (currentDisciplines);
         }
+
+        
+        
+        // POST: Users/Create is handeled by the Account controller
 
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(string? id)
@@ -403,7 +463,7 @@ namespace ConstellationWebApp.Controllers
             ContactLink thisCL = ((_context.ContactLinks.Where(i => (i.Users.Id == userID) && (i.ContactLinkID == contactLinkID)).FirstOrDefault()));
             _context.ContactLinks.Remove(thisCL);
             await _context.SaveChangesAsync();
-            var returnPath = "../User/Edit/" + userID.ToString();
+            var returnPath = "../Users/Edit/" + userID.ToString();
             return Redirect(returnPath);
         }
 

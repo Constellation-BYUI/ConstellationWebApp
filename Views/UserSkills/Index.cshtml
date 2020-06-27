@@ -10,6 +10,16 @@
     var kickout = false;
 }
 
+<!-- #region Info button:-->
+<div>
+    <button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
+    <p id="hidden-info-blip">
+        On this page you can link your skills to your profile. You can also provide a link for an 
+        individual skill or set of skills to a URL. This allows you to give legitimacy to your claim to competency in a skill.
+    </p>
+</div><!-- #endregion -->
+
+<br />
 <h1>Your Skills</h1>
 <!-- #region Outline-->
 @*Outline for this page
@@ -183,173 +193,174 @@
         <section>
             <div id="RemoveSkillLink" class="linktabcontent">
                 <h3>Remove SKill Links</h3>
-                <p>
+                <p style="opacity:1; color:black; background-color:none;">
                     You can remove a link and
                     its URL. Your skills will not be removed from
                     this action but the you will not showcase the
                     skill with this link on your profile any longer.
                 </p>
-               @{
+                @{
                     foreach (var link in Model.SkillLinks.Where(i => i.SkillLinkOwner == currentUser))
                     {
-                    <div>
-                        <form asp-action="DeleteSkillLink" asp-controller="UserSkills">
-                            <p><a style="text-decoration: underline" href="@link.SkillLinkUrl">@link.SkilLinkLabel</a></p>
-                            <input type="hidden" name="link" value="@link.SkillLinkID" list="userSkills">
-                            <div class="form-group">
-                                <input type="submit" value="Remove" class="btn btn-sm btn-info" />
-                            </div>
-                        </form>
-                    </div>
+                                <div>
+                                    <a href="@link.SkillLinkUrl"><p style="opacity:1; color:black; background-color:none;">@link.SkilLinkLabel</p></a>
+                                    <form asp-action="DeleteSkillLink" asp-controller="UserSkills">
+                                        <input type="hidden" name="link" value="@link.SkillLinkID" list="userSkills">
+                                        <div class="form-group">
+                                            <input type="submit" value="Remove" class="btn btn-sm btn-info" />
+                                        </div>
+                                    </form>
+                                </div>
                     }
                 }
-                    </div>
+            </div>
         </section>
-</section>
+    </section>
 </div>
-    <script>    
-       function add_fields() {
-     //Add the selected Skill above the input so the user knows that it was added
-       document.getElementById("enteredSkills").innerHTML += `<h6 style="text-decoration: underline">${document.getElementById("skill-label").value}</h6>`;
-     //Add the hidden select below the input to be added later
-       document.getElementById("linkDemo").innerHTML += `<input type='hidden' class='input-group' name='skills' value=${document.getElementById("skill-label").value}>`;
-     //clear the input field for the user
-     document.getElementById("skill-label").value = "";
-     }                           
-    </script>
+<script>
+    function add_fields() {
+        //Add the selected Skill above the input so the user knows that it was added
+        document.getElementById("enteredSkills").innerHTML += `<h6 style="text-decoration: underline">${document.getElementById("skill-label").value}</h6>`;
+        //Add the hidden select below the input to be added later
+        document.getElementById("linkDemo").innerHTML += `<input type='hidden' class='input-group' name='skills' value=${document.getElementById("skill-label").value}>`;
+        //clear the input field for the user
+        document.getElementById("skill-label").value = "";
+    }
+</script>
 
-    <script>
-                function openPage(pageName, elmnt, color) {
-                    // Hide all elements with class="tabcontent" by default */
-                    var i, tabcontent, tablinks;
-                    tabcontent = document.getElementsByClassName("tabcontent");
-                    for (i = 0; i < tabcontent.length; i++) {
-                        tabcontent[i].style.display = "none";
-                    }
-
-                    // Remove the background color of all tablinks/buttons
-                    tablinks = document.getElementsByClassName("tablink");
-                    for (i = 0; i < tablinks.length; i++) {
-                        tablinks[i].style.backgroundColor = "";
-                    }
-
-                    // Show the specific tab content
-                    document.getElementById(pageName).style.display = "block";
-
-                    // Add the specific color to the button used to open the tab content
-                    elmnt.style.backgroundColor = color;
-                }
-
-                function openLinkPage(pageName, elmnt, color) {
-                    // Hide all elements with class="tabcontent" by default */
-                    var i, linktabcontent, tablinks;
-                    tabcontent = document.getElementsByClassName("linktabcontent");
-                    for (i = 0; i < tabcontent.length; i++) {
-                        tabcontent[i].style.display = "none";
-                    }
-
-                    // Remove the background color of all tablinks/buttons
-                    tablinks = document.getElementsByClassName("tablink");
-                    for (i = 0; i < tablinks.length; i++) {
-                        tablinks[i].style.backgroundColor = "";
-                    }
-
-                    // Show the specific tab content
-                    document.getElementById(pageName).style.display = "block";
-
-                    // Add the specific color to the button used to open the tab content
-                    elmnt.style.backgroundColor = color;
-                }
-
-
-                // Get the element with id="defaultOpen" and click on it
-                document.getElementById("defaultLinkOpen").click();
-                document.getElementById("defaultOpen").click();
-
-    </script>
-
-    <style>
-        body, html {
-            height: 100%;
-            margin: 0;
-            font-family: Arial;
+<script>
+    function openPage(pageName, elmnt, color) {
+        // Hide all elements with class="tabcontent" by default */
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
         }
 
-     
+        // Remove the background color of all tablinks/buttons
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].style.backgroundColor = "";
+        }
+
+        // Show the specific tab content
+        document.getElementById(pageName).style.display = "block";
+
+        // Add the specific color to the button used to open the tab content
+        elmnt.style.backgroundColor = color;
+    }
+
+    function openLinkPage(pageName, elmnt, color) {
+        // Hide all elements with class="tabcontent" by default */
+        var i, linktabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("linktabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Remove the background color of all tablinks/buttons
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].style.backgroundColor = "";
+        }
+
+        // Show the specific tab content
+        document.getElementById(pageName).style.display = "block";
+
+        // Add the specific color to the button used to open the tab content
+        elmnt.style.backgroundColor = color;
+    }
+
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultLinkOpen").click();
+    document.getElementById("defaultOpen").click();
+
+</script>
+
+<style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: Arial;
+    }
+
+
+    .Split-forms {
+        display: grid;
+        grid-template-columns: 5% 40% 10% 40% 5%;
+        grid-template-rows: 500px;
+        margin-bottom: 15em;
+    }
+
+    .Skill-form {
+        grid-column: 2/3;
+    }
+
+    .Link-form {
+        grid-column: 4/5;
+    }
+
+    /* Style tab links */
+    .tablink {
+        background-color: #555;
+        color: white;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        font-size: 17px;
+        width: 50%;
+    }
+
+        .tablink:hover {
+            background-color: #777;
+        }
+
+    /* Style the tab content (and add height:100% for full page content) */
+    .tabcontent {
+        color: white;
+        display: none;
+        padding: 100px 20px;
+        max-height: 1000px;
+    }
+
+    .linktabcontent {
+        color: white;
+        display: none;
+        padding: 100px 20px;
+        max-height: 500px;
+    }
+
+
+    #AddSkills {
+        background-color: lightblue;
+    }
+
+    #RemoveSkills {
+        background-color: red;
+    }
+
+    #AddSkillLink {
+        background-color: lightblue;
+    }
+
+    #RemoveSkillLink {
+        background-color: red;
+    }
+
+    @@media only screen and (max-width: 800px) {
         .Split-forms {
-            display: grid;
-            grid-template-columns: 5% 40% 10% 40% 5%;
-            grid-template-rows: 500px;
-            margin-bottom: 15em;
+            display: block;
         }
 
         .Skill-form {
-            grid-column: 2/3;
+            display: block;
         }
 
         .Link-form {
-            grid-column: 4/5;
+            display: block;
         }
-
-        /* Style tab links */
-        .tablink {
-            background-color: #555;
-            color: white;
-            float: left;
-            border: none;
-            outline: none;
-            cursor: pointer;
-            padding: 14px 16px;
-            font-size: 17px;
-            width: 50%;
-        }
-
-            .tablink:hover {
-                background-color: #777;
-            }
-
-        /* Style the tab content (and add height:100% for full page content) */
-        .tabcontent {
-            color: white;
-            display: none;
-            padding: 100px 20px;
-            max-height: 1000px;
-        }
-
-        .linktabcontent {
-            color: white;
-            display: none;
-            padding: 100px 20px;
-            max-height: 500px;
-        }
-
-
-        #AddSkills {
-            background-color: lightblue;
-        }
-
-        #RemoveSkills {
-            background-color: red;
-        }
-
-        #AddSkillLink {
-            background-color: lightblue;
-        }
-
-        #RemoveSkillLink {
-            background-color: red;
-        }
-           @@media only screen and (max-width: 800px) {
-           .Split-forms {
-             display: block;
-           }
-               .Skill-form {
-             display: block;
-        }
-
-        .Link-form {
-             display: block;
-        }
-
-        }
-    </style>
+    }
+</style>

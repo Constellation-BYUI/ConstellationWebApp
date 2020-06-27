@@ -10,14 +10,14 @@ steps:
   - --location=us-east1-b
   - --cluster=cluster-1  
 
-# This step deploys the prod application in Kubernetes
-- name: 'gcr.io/cloud-builders/gcloud'
-  args:
-  - builds
-  - submit
-  - --config
-  - cloudbuild-prod.yaml
-  - --substitutions
-  - _SHORT_SHA=$_SHORT_SHA
-  - .
+# # This step deploys the prod application in Kubernetes
+# - name: 'gcr.io/cloud-builders/gcloud'
+#   args:
+#   - builds
+#   - submit
+#   - --config
+#   - cloudbuild-prod.yaml
+#   - --substitutions
+#   - _SHORT_SHA=$_SHORT_SHA
+#   - .
  

@@ -29,14 +29,21 @@
 
 }
 
+
 @media screen and (min-width: 1199px) {
     .login-card {
-        margin: 10em 50em 10em 50em;
+        margin: 10em 35em 10em 35em;
         padding: 1.5em;
         box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
     }
 }
-
+@media screen and (min-width: 2000px) {
+    .login-card {
+        margin: 10em 40em 10em 40em;
+        padding: 1.5em;
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+    }
+}
 
 /*CSS for Register page*/
 .register-card {
@@ -74,7 +81,15 @@
 
 @media screen and (min-width: 1199px) {
     .register-card {
-        margin: 10em 50em 10em 50em;
+        margin: 10em 35em 10em 35em;
+        padding: 1.5em;
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+    }
+}
+
+@media screen and (min-width: 2000px) {
+    .register-card {
+        margin: 10em 40em 10em 40em;
         padding: 1.5em;
         box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
     }
