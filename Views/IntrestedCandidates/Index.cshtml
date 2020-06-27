@@ -9,54 +9,24 @@
     List<ConstellationWebApp.Models.IntrestedCandidate> data = ViewBag.intrestData;
     var count = 0;
 }
+
+<link rel="css" stylesheet="" href=""/>
 <div class="container col-md-6 rounded shadow-lg">
     <h3 class="text-black-50 text-center mt-2 py-3 py-sm-2">Posted Roles</h3>
 </div>
 
-<!-- #region Info button:
-    Note from Ryan: I could not figure out how to keep this working
-    when i put the css and javascript in seperate files.
-    I am going to leave this as it is for now so we can place these info blips in all locations needed-->
-<style>
-    .show-info {
-        opacity: 1;
-    }
+<!-- #region Info button:-->
+<div>
+    <button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
+    <p id="hidden-info-blip">
+        In this view you can see the list of candidates that you have picked for a posting. 
+        If you no longer want a person as a “pick”, remove them with the “remove from your picks pool” button.  
+        You can also see those who are interested and add them on to the Picks Pool. 
+        The information on your posting will also be available. If you do not have anyone selected that they are interested in the role, 
+        and if you do not have anyone selected for a “pick”, those sections will not appear.
+    </p>
+</div><!-- #endregion -->
 
-    p {
-        padding: 1em;
-        opacity: 0;
-        transition: opacity 0.5s linear;
-        background-color: lightgoldenrodyellow;
-        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    }
-
-    #hidden-info-blip {
-        width: 600px;
-        z-index: 4;
-        position: absolute;
-    }
-
-    #btn1 {
-        border-radius: 100%;
-    }
-</style>
-
-<button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
-<p id="hidden-info-blip">
-    Here you can see those who are intrested in your posting. You 
-</p>
-@* Scripts and resources for info button *@
-<script type="text/javascript">
-    var btn = document.getElementById('btn1')
-    var p = document.getElementById('hidden-info-blip')
-    btn.addEventListener('click', evt => {
-        p.classList.toggle('show-info')
-    })
-</script>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="/scripts/snippet-javascript-console.min.js?v=1"></script>
-<!-- #endregion -->
 
 <div id="projectDisplay">
     @*The user must be logged in that should ensure that only the right user is seeign this data*@
@@ -78,14 +48,14 @@
                             <h2> Your Picks for @pick.Posting.PostingTitle</h2>
                         }
                         var candidatePath = "";
-                          if (pick.Candidate.PhotoPath != null)
-                          {
-                           candidatePath = "~/image/" + pick.Candidate.PhotoPath;
-                          }
-                          else
-                          {
-                           candidatePath = "~/WebAssests/siteImages/avataricon.png";
-                          }
+                        if (pick.Candidate.PhotoPath != null)
+                        {
+                            candidatePath = "~/image/" + pick.Candidate.PhotoPath;
+                        }
+                        else
+                        {
+                            candidatePath = "~/WebAssests/siteImages/avataricon.png";
+                        }
 
                         var candidateMemberPath = "../Users/Details/" + (pick.Candidate.Id);
                         <a href="@candidateMemberPath"><img class="small-thumbnail" src=" @candidatePath" alt="@Html.DisplayFor(modelItem => pick.Candidate.UserName)" asp-append-version="true" /></a>
@@ -106,15 +76,15 @@
                     @* Display the Posting/Role itself *@
                     @{
                         var spID = item.PostingID;
-                         var photoPath = "";
-                          if (item.PostingOwner.PhotoPath != null)
-                          {
-                           photoPath = "~/image/" + item.PostingOwner.PhotoPath;
-                          }
-                          else
-                          {
-                           photoPath = "~/WebAssests/siteImages/avataricon.png";
-                          }
+                        var photoPath = "";
+                        if (item.PostingOwner.PhotoPath != null)
+                        {
+                            photoPath = "~/image/" + item.PostingOwner.PhotoPath;
+                        }
+                        else
+                        {
+                            photoPath = "~/WebAssests/siteImages/avataricon.png";
+                        }
 
                         var collabMemberPath = "../Users/Details/" + (item.PostingOwner.Id);
                     }
@@ -171,15 +141,15 @@
                         <h4>Those Intrested</h4>
                         foreach (var candidate in Model.intrestedCandidates.Where(i => i.PostingID == item.PostingID))
                         {
-                          var candidatePath = "";
-                          if (candidate.User.PhotoPath != null)
-                          {
-                           candidatePath = "~/image/" + candidate.User.PhotoPath;
-                          }
-                          else
-                          {
-                           candidatePath = "~/WebAssests/siteImages/avataricon.png";
-                          }
+                            var candidatePath = "";
+                            if (candidate.User.PhotoPath != null)
+                            {
+                                candidatePath = "~/image/" + candidate.User.PhotoPath;
+                            }
+                            else
+                            {
+                                candidatePath = "~/WebAssests/siteImages/avataricon.png";
+                            }
 
                             var candidateMemberPath = "../Users/Details/" + (candidate.UserID);
 

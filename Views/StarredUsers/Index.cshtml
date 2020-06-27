@@ -7,6 +7,17 @@
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
 
+<!-- #region Info button:-->
+<div>
+    <button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
+    <p id="hidden-info-blip">
+        Your ‘starred’ users are shown below. To add more to this list, visit a user’s details page that you want to add from. 
+        If you no longer want to have a certain user ‘starred’, remove them by clicking the remove button on this page or on the 
+        project’s details page.
+    </p>
+</div><!-- #endregion -->
+
+
 <h1>My Starred Users</h1>
 <div id="projectDisplay" class="overflow-auto">
 
@@ -15,69 +26,69 @@
 
         if (item.StarredPerson.displayMyProfile == true)
         {
-              var photoPath = "";
-                  if (item.StarredPerson.PhotoPath != null)
-                  {
-                   photoPath = "~/image/" + item.StarredPerson.PhotoPath;
-                  }
-                  else
-                  {
-                   photoPath = "~/WebAssests/siteImages/avataricon.png";
-                  }
+            var photoPath = "";
+            if (item.StarredPerson.PhotoPath != null)
+            {
+                photoPath = "~/image/" + item.StarredPerson.PhotoPath;
+            }
+            else
+            {
+                photoPath = "~/WebAssests/siteImages/avataricon.png";
+            }
 
 
-    <div class="col-md-12 card shadow text-black-50 bg-light m-2 padding">
-        @*Note: We do not want to display the PhotoPath Path but the image itself*@
-        <div>
-            <img style="height: 300px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.StarredPerson.UserName)" asp-append-version="true" />
-        </div>
-        <div class="card-body">
-            <div>
-                @Html.DisplayNameFor(modelItem => item.StarredPerson.UserName) :
-                @Html.DisplayFor(modelItem => item.StarredPerson.UserName)
-            </div>
-            <div>
-                @Html.DisplayNameFor(modelItem => item.StarredPerson.FirstName) :
-                @Html.DisplayFor(modelItem => item.StarredPerson.FirstName)
-            </div>
-            <div>
-                @Html.DisplayNameFor(modelItem => item.StarredPerson.LastName) :
-                @Html.DisplayFor(modelItem => item.StarredPerson.LastName)
+            <div class="col-md-12 card shadow text-black-50 bg-light m-2 padding">
+                @*Note: We do not want to display the PhotoPath Path but the image itself*@
+                <div>
+                    <img style="height: 300px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.StarredPerson.UserName)" asp-append-version="true" />
+                </div>
+                <div class="card-body">
+                    <div>
+                        @Html.DisplayNameFor(modelItem => item.StarredPerson.UserName) :
+                        @Html.DisplayFor(modelItem => item.StarredPerson.UserName)
+                    </div>
+                    <div>
+                        @Html.DisplayNameFor(modelItem => item.StarredPerson.FirstName) :
+                        @Html.DisplayFor(modelItem => item.StarredPerson.FirstName)
+                    </div>
+                    <div>
+                        @Html.DisplayNameFor(modelItem => item.StarredPerson.LastName) :
+                        @Html.DisplayFor(modelItem => item.StarredPerson.LastName)
 
-            </div>
-            <div>
-                @Html.DisplayNameFor(modelItem => item.StarredPerson.Bio) :
-                @Html.DisplayFor(modelItem => item.StarredPerson.Bio)
+                    </div>
+                    <div>
+                        @Html.DisplayNameFor(modelItem => item.StarredPerson.Bio) :
+                        @Html.DisplayFor(modelItem => item.StarredPerson.Bio)
 
-            </div>
-            <div>
-                @Html.DisplayNameFor(modelItem => item.StarredPerson.Seeking) :
-                @Html.DisplayFor(modelItem => item.StarredPerson.Seeking)
+                    </div>
+                    <div>
+                        @Html.DisplayNameFor(modelItem => item.StarredPerson.Seeking) :
+                        @Html.DisplayFor(modelItem => item.StarredPerson.Seeking)
 
+                    </div>
+                </div>
+                <h4 class="card-title">Contact Links</h4>
+                @foreach (var link in item.StarredPerson.ContactLinks)
+                {
+                    <div class="card-link">
+                        @Html.DisplayFor(modelItem => link.ContactLinkLabel) :
+                        @Html.DisplayFor(modelItem => link.ContactLinkUrl)
+                    </div>
+                    <br />
+                }
+                <form asp-action="Delete" asp-controller="StarredUsers">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <input type="hidden" asp-for="@item.UserStarredID" class="form-control" value="@item.UserStarredID" name="id" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Remove from MyStarred Users" class="btn btn-primary" />
+                    </div>
+                </form>
+                <div class="card-footer">
+                    <a class="btn btn-md btn-secondary" asp-action="Details" asp-controller="Users" asp-route-id="@item.StarredPerson.Id">Details</a>
+                </div>
             </div>
-        </div>
-        <h4 class="card-title">Contact Links</h4>
-        @foreach (var link in item.StarredPerson.ContactLinks)
-        {
-            <div class="card-link">
-                @Html.DisplayFor(modelItem => link.ContactLinkLabel) :
-                @Html.DisplayFor(modelItem => link.ContactLinkUrl)
-            </div>
-            <br />
-        }
-        <form asp-action="Delete" asp-controller="StarredUsers">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <input type="hidden" asp-for="@item.UserStarredID" class="form-control" value="@item.UserStarredID" name="id" />
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Remove from MyStarred Users" class="btn btn-primary" />
-            </div>
-        </form>
-        <div class="card-footer">
-            <a class="btn btn-md btn-secondary" asp-action="Details" asp-controller="Users" asp-route-id="@item.StarredPerson.Id">Details</a>
-        </div>
-    </div>
 
         }
     }

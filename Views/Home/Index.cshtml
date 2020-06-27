@@ -6,7 +6,7 @@
 
 <input type="hidden" asp-for="Id" />
 
-<link rel="stylesheet" href="/css/homepage.css"/>
+<link rel="stylesheet" href="/css/homepage.css" />
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 <!-- Welcome note  -->
@@ -16,7 +16,7 @@
         <div class="welcomenote">
             <h3>Constellation Platform: Share your passion.</h3>
             <p>
-                Show your qualities, competence and projects all in one location
+                Show your qualities, competence, and projects all in one location
                 and make them accessible to potential employers.
             </p>
             <a asp-controller="Account" asp-action="Register" class="btn btn-lg btn-success">SignUp&nbsp;Now</a>
@@ -29,7 +29,7 @@
         <div class="welcomenote">
             <h4>
                 Are you looking to fill a job
-                opening with the right people? make those openings available here.
+                opening with the right person? Make a position openings available here.
             </h4>
             <a asp-controller="Postings" asp-action="Create" class="btn btn-lg btn-primary">Post&nbsp;Jobs</a>
         </div>
@@ -38,6 +38,10 @@
 
 <!-- 3 -->
 <!-- Go to Users, Project and Postings Page  -->
+@*Note from Ryan: Include this text into the div of users
+    " See the current people using this platform. Check out their projects and resume, see who they work with, 
+    and get their contact information by visiting their profiles. "
+    *@
 <section class="section3">
     <a asp-controller="Users" asp-action="Index">
         <div class="view user btn-primary bg-primary">
@@ -46,6 +50,12 @@
         </div>
     </a>
 
+    @*Note from Ryan: Include this text into the div of Postings
+        " The roles and positions needing to be filled are available in the job postings section. Create your own
+        posting if you are a recruiter or looking for someone to join your project. Specify what kind of job, a
+        short description, the position or role available, and the company or project that it is made for. Those
+        who are interested and those who you think are a good fit can be saved so they can be easily viewed later.  "
+    *@
     <a asp-controller="Postings" asp-action="Index">
         <div class="view job btn-success bg-success">
             <img class="avatarcircle" src="/WebAssests/siteImages/jobsicon.pn.png" alt="AvatarIcon">
@@ -53,11 +63,15 @@
 
         </div>
     </a>
+    @*Note from Ryan: Include this text into the div of Projects
+        " Whether users are working in teams or learning independently, the projects page allows you to view the 
+        projects that others are currently working on or have completed. Users can include all they did to complete 
+        the project and showcase what they gained from the experience. Create your own projects to increase your marketability.  "
+    *@
     <a asp-controller="Projects" asp-action="Index">
         <div class="view project btn-info bg-info">
             <img class="avatarcircle" src="/WebAssests/siteImages/projectsicon.png" alt="AvatarIcon">
             <h6 class="icon6"><strong>View&nbsp;Projects</strong></h6>
-
         </div>
     </a>
 </section>
@@ -84,19 +98,19 @@
 
 <!--This script is in sharge of chaging the pictures on this page -->
 <script>
-var myIndex = 0;
-carousel();
+    var myIndex = 0;
+    carousel();
 
-function carousel() {
-  var i;
-  var x = document.getElementsByClassName("mySlides");
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
-  }
-  myIndex++;
-  if (myIndex > x.length) {myIndex = 1}
-  x[myIndex-1].style.display = "block";
-  setTimeout(carousel, 5000);
-}
+    function carousel() {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        myIndex++;
+        if (myIndex > x.length) { myIndex = 1 }
+        x[myIndex - 1].style.display = "block";
+        setTimeout(carousel, 5000);
+    }
 </script>
 

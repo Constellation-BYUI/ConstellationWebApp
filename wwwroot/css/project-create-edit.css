@@ -1,11 +1,11 @@
-﻿/*CSS form Creat project page*/
+﻿/*CSS for Creat project page*/
 .titleBorder {
     border-top: 10px solid #1b6ec2;
     border-radius: 5px 5px 0 0;
     background-color: white;
     color: #1b6ec2;
     text-align: center;
-    margin-top: 2.2em !important;
+    margin-top: 2.2em!important;
     margin-bottom: 0 !important;
     width: 100%;
 }
@@ -58,16 +58,24 @@
     }
 }
 
-/*CSS form edit project page*/
+
+
+/*CSS for edit project page*/
 @media screen and (min-width: 767px) {
+    .edit-heading {
+        padding: 0 1em;
+    }
     .project-edit-container {
-        width: 90%;
-        margin: auto;
+        display: flex;
+        width: 100%;
+        padding: 0 1em;
+    }
+
+    .first-half, second-half {
+        width: 100%;
+        margin: 0 2px;
     }
 }
-@media screen and (min-width: 1199px) {
-    .project-edit-container {
-        width: 60%;
-        margin: auto;
-    }
+@media screen and (min-width: 991px) {
+    
 }

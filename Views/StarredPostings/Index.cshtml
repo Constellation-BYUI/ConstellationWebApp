@@ -6,6 +6,17 @@
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
 
+<!-- #region Info button:-->
+<div>
+    <button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
+    <p id="hidden-info-blip">
+        Your 'starred' job postings are shown below. To add more to this list, visit a job posting’s details 
+        page that you want to add from. If you no longer want to have a certain job posting 'starred', remove 
+        it by clicking the remove button on this page or on the project’s details page.
+    </p>
+</div><!-- #endregion -->
+
+
 <h1>My Starred Postings</h1>
 @foreach (var item in Model.StarredPostings.Where(i => i.UserID == currentUser))
 @*@for (int i = 0; i < Model.Count(); i++)*@
@@ -13,14 +24,14 @@
 {
     var spID = item.StarredPostingID;
     var photoPath = "";
-                  if (item.Posting.PostingOwner.PhotoPath != null)
-                  {
-                   photoPath = "~/image/" + item.Posting.PostingOwner.PhotoPath;
-                  }
-                  else
-                  {
-                   photoPath = "~/WebAssests/siteImages/avataricon.png";
-                  }
+    if (item.Posting.PostingOwner.PhotoPath != null)
+    {
+        photoPath = "~/image/" + item.Posting.PostingOwner.PhotoPath;
+    }
+    else
+    {
+        photoPath = "~/WebAssests/siteImages/avataricon.png";
+    }
 
 
     var collabMemberPath = "../Users/Details/" + (item.Posting.PostingOwner.Id);

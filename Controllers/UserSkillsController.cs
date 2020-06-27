@@ -130,8 +130,14 @@ namespace ConstellationWebApp.Controllers
             var slID = 0;
             //must create the skill link            
             if (linkLabel != null && linkUrl != null)
-            {               
-                    SkillLink thisSL = new SkillLink();
+            {
+                linkUrl = linkUrl.ToLower();
+                if (!linkUrl.Contains("constellation.citwdd.net") && !(linkUrl.Contains("http://") || linkUrl.Contains("https://")))
+                {
+                    linkUrl = "http://" + linkUrl;
+                }
+
+                SkillLink thisSL = new SkillLink();
                     thisSL.SkillLinkOwner = currentUser;
                     thisSL.SkillLinkUrl = linkUrl;
                     thisSL.SkilLinkLabel = linkLabel;
