@@ -254,9 +254,9 @@ namespace ConstellationWebApp.Controllers
             List<Posting> currentUserPostings = _context.Postings.Where(i => i.PostingOwner.Id == currentUser).ToList();
             List<RecruiterPicks> recruitersData = _context.RecruiterPicks.Where(i => i.RecuiterID == currentUser).ToList();
 
-            List<UserSkill> userSkills = _context.UserSkills.Where(i => i.UserID == currentUser).ToList();
-            List<UserSkillLink> userSkillLinks = _context.UserSkillLinks.Where(i => i.UserSkills.UserID == currentUser).ToList();
-            List<SkillLink> skillLinks = _context.SkillLinks.Where(i => i.SkillLinkOwner == currentUser).ToList();
+            List<UserSkill> userSkills = _context.UserSkills.Where(i => i.UserID == id).ToList();
+            List<UserSkillLink> userSkillLinks = _context.UserSkillLinks.Where(i => i.UserSkills.UserID == id).ToList();
+            List<SkillLink> skillLinks = _context.SkillLinks.Where(i => i.SkillLinkOwner == id).ToList();
             List<Skill> skills = UserSkillsLookup(id);
             List<SkillDiscipline> skillDisciplines = SkillDisciplineLookup(skills);
             List<Discipline> disciplines = UserDisciplineLookup(skillDisciplines);
@@ -273,7 +273,7 @@ namespace ConstellationWebApp.Controllers
             ViewBag.thisUserSkillLinks = userSkillLinks;
             ViewBag.thisSkillLinks = skillLinks;
 
-            List<StarredUser> thisSU = _context.StarredUsers.ToList();
+            List<StarredUser> thisSU = _context.StarredUsers.Where(i => i.StarredOwnerID == currentUser).ToList();
             ViewBag.StarredUsers = thisSU;
             return View(user);
         }

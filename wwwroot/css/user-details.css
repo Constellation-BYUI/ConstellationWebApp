@@ -1,4 +1,4 @@
-﻿.optional-buttons {
+﻿/*.optional-buttons {
     margin-top: 3.8em;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -7,6 +7,7 @@
     .optional-buttons input, .optional-buttons .check {
         width: 100%;
         font-size: .7em;
+        display:block;
     }
     .user-check-box {
         display: flex;
@@ -14,7 +15,7 @@
     }
         .user-check-box picks {
             width: 100%;
-        }
+        }*/
         .user-details-head, .user-project-head {
             background-color: #1b6ec2;
             color: white;
@@ -29,7 +30,14 @@
         margin: 0;
     }
 
-.skills-sections{
+#recuiterPosting {
+    display: none;
+    position: fixed;
+    background-color: white;
+    padding: 1em;
+}
+
+.skills-sections {
     display: grid;
     padding: 1em;
 }
