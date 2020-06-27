@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConstellationWebApp.Migrations
 {
     [DbContext(typeof(ConstellationWebAppContext))]
-    [Migration("20200619203410_SkillOwnerId")]
-    partial class SkillOwnerId
+    [Migration("20200627035932_6-26-2020-Schema")]
+    partial class _6262020Schema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
