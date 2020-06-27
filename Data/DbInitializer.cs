@@ -17,11 +17,9 @@ namespace ConstellationWebApp.Data
             {
                 return;   // DB has been seeded
             }
-            else
-            {
 
-                var postingType = new PostingType[]
-                {
+            var postingType = new PostingType[]
+            {
               new PostingType { PostingTypeName = "Internship"},
               new PostingType { PostingTypeName = "Full-Time"},
               new PostingType { PostingTypeName = "Part-Time"},
@@ -29,16 +27,16 @@ namespace ConstellationWebApp.Data
               new PostingType { PostingTypeName = "Hourly Wage"},
               new PostingType { PostingTypeName = "Remote"},
               new PostingType { PostingTypeName = "On Site"}
-                };
+            };
 
-                foreach (PostingType s in postingType)
-                {
-                    context.PostingTypes.Add(s);
-                }
-                context.SaveChanges();
+            foreach (PostingType s in postingType)
+            {
+                context.PostingTypes.Add(s);
+            }
+            context.SaveChanges();
 
-                var disciplines = new Discipline[]
-               {
+            var disciplines = new Discipline[]
+           {
               new Discipline { DisciplineName = "Software Engineering"},
               new Discipline { DisciplineName = "Project Engineering"},
               new Discipline { DisciplineName = "Industrial Engineering"},
@@ -53,15 +51,15 @@ namespace ConstellationWebApp.Data
               new Discipline { DisciplineName = "Supply chain   Engineering"},
               new Discipline { DisciplineName = "Systems Engineering"},
               new Discipline { DisciplineName = "Textile Engineering"}
-               };
-                foreach (Discipline dis in disciplines)
-                {
-                    context.Disciplines.Add(dis);
-                }
-                context.SaveChanges();
-
-                var skills = new Skill[]
+           };            
+            foreach (Discipline dis in disciplines)
             {
+                context.Disciplines.Add(dis);
+            }
+            context.SaveChanges();
+
+            var skills = new Skill[]
+        {
             //Software Engineering
               new Skill { SkillName = "Object-oriented design"},
               new Skill { SkillName = "Software testing and debugging"},
@@ -118,15 +116,14 @@ namespace ConstellationWebApp.Data
               new Skill { SkillName = "Mathematics"},
               new Skill { SkillName = "Science"},
               new Skill { SkillName = "Technology"}
-            };
+        };
 
-                foreach (Skill sk in skills)
-                {
-                    context.Skills.Add(sk);
-                }
-                context.SaveChanges();
-
+            foreach (Skill sk in skills)
+            {
+                context.Skills.Add(sk);
             }
+            context.SaveChanges();
+
         }
     }
 }
