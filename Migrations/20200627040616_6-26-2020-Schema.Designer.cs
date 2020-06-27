@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConstellationWebApp.Migrations
 {
     [DbContext(typeof(ConstellationWebAppContext))]
-    [Migration("20200627032526_6-26-2020-Schema")]
+    [Migration("20200627040616_6-26-2020-Schema")]
     partial class _6262020Schema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
