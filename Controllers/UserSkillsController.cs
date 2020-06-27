@@ -64,13 +64,15 @@ namespace ConstellationWebApp.Controllers
             {
                 User user = _context.User.Where(i => i.Id == currentUser).FirstOrDefault();
 
-                if (user.AreaOfDiscipline != null)              
+                Discipline userSelectDiscipline = _context.Disciplines.Where(s => s.DisciplineName == user.AreaOfDiscipline).FirstOrDefault();
+
+                if (userSelectDiscipline != null)              
                 {
-                    viewModel.currentDiscipline = _context.Disciplines.Where(s => s.DisciplineName == user.AreaOfDiscipline).FirstOrDefault();
+                    viewModel.currentDiscipline = userSelectDiscipline;
                 }
                 else
                 {
-                    viewModel.currentDiscipline = _context.Disciplines.Where(i => i.DisciplineID == 1).FirstOrDefault();
+                    viewModel.currentDiscipline = _context.Disciplines.First();
                 }                
             }
             return View(viewModel);
