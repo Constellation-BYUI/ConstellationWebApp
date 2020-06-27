@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ConstellationWebApp.Migrations
 {
-    public partial class SkillOwnerId : Migration
+    public partial class _6262020Schema : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

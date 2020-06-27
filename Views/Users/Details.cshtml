@@ -280,16 +280,17 @@
                     <section class="skillLink_skills">
                         @{
                             <h4 class="m-0 bg-light text-center text-black p-1">Links Showcasing Skills</h4>
-                            foreach (var uslink in userSkillLinks)
+                            foreach (var link in skillLinks)
                             {
-                                SkillLink link = skillLinks.Where(i => i.SkillLinkID == uslink.LinkID).First();
                                 <a href="@link.SkillLinkUrl" target="_blank">@link.SkilLinkLabel</a>
                                 <div><p style="opacity:1; font-size:12px">Skills Displayed</p></div>
                                 @:<div>
-                                    foreach (var userSkill in userSkills.Where(i => i.UserSkillID == uslink.UserSkillID))
-                                    {
-                                        Skill SkillLinked = skills.Where(i => i.SkillID == userSkill.SkillID).First();
-                                        <p style="opacity:1;">@SkillLinked.SkillName</p>
+                                 List<UserSkillLink> uSkills = userSkillLinks.Where(i => i.LinkID == link.SkillLinkID).ToList();
+                                foreach (var uskill in uSkills)
+                                {
+                                    UserSkill thisUserSkill = userSkills.Where(i => i.UserSkillID == uskill.UserSkillID).FirstOrDefault();
+                                    Skill SkillLinked = skills.Where(i => i.SkillID == thisUserSkill.SkillID).First();
+                                    <p style="opacity:1;">@SkillLinked.SkillName</p>
 
                                     }
                                 @:</div>
