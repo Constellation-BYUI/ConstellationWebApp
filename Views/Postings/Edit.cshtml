@@ -1,4 +1,4 @@
-﻿@model ConstellationWebApp.Models.Posting
+@model ConstellationWebApp.Models.Posting
 @using System.Security.Claims;
 
 @{
@@ -8,94 +8,78 @@
 
 @if (currentUser == Model.PostingOwner.Id)
 {
-    <!-- #region Info button:-->
-    <button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
-    <p id="hidden-info-blip">
-        Creating a posting can be for individuals who are searching for someone to join their project or for recruiters
-        who are seeking candidates. Below you can specify the kind of job, its description, the role or title, and the
-        company or project that it is made for. Those who are interested will be given the ability to say so when they
-        visit your posting's details page. You will be able to add those interested to a “picks pool”. You can also
-        access this page on the posting candidates page. This is found in the My Stuff tab which is part of the profile
-        navigation located on the top right corner of the site when logged in. You can also add any user to this pool by
-        visiting their profile.
-    </p>
-    <!-- #endregion -->
-
-
-    <h1>Edit</h1>
-    <h4>Posting</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Edit">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="PostingID" />
-                <div class="form-group">
-                    <label asp-for="PostingTitle" class="control-label"></label>
-                    <input asp-for="PostingTitle" class="form-control" />
-                    <span asp-validation-for="PostingTitle" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Description" class="control-label"></label>
-                    <input asp-for="Description" class="form-control" />
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PostingFor" class="control-label"></label>
-                    <input asp-for="PostingFor" class="form-control" />
-                    <span asp-validation-for="PostingFor" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="SharableToTeam" class="control-label">Allow projects, where you're a collaborator, to Link to this posting?</label>
-                    <div>
-                        @Html.CheckBoxFor(m => m.SharableToTeam) Yes
+    <div class="container-fluid padding">
+        <div class="col-md-8 mx-auto p-0 col-sm-12">
+            <div class="card text-black-50 shadow-lg my-2 mt-0 padding">
+                <h3 class="titleBorder border-bottom my-0" style="box-shadow: none !important">Edit Post</h3>
+                <form asp-action="Edit" class="m-2 col-sm-12">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="PostingID" />
+                    <div class="form-group">
+                        <label asp-for="PostingTitle" class="control-label"></label>
+                        <input asp-for="PostingTitle" class="form-control col-md-9 col-sm-12" />
+                        <span asp-validation-for="PostingTitle" class="text-danger"></span>
                     </div>
-                </div>
-                @* Need to say reasoning: Hold off on showing all people this posting, save it for later, or maybe reuse it next time you recuit for a similar posiiton*@
-                <div class="form-group">
-                    <label asp-for="HidePosting" class="control-label">Do you want your Posting hidden to others?</label>
-                    <div>
-                        @Html.CheckBoxFor(m => m.HidePosting) Yes
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <input asp-for="Description" class="form-control col-md-9 col-sm-12" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <table>
-                            <tr>
-                                @{
-                                    int cnt = 0;
-                                    List<ConstellationWebApp.Models.AssignedTypeData> postingTypes = ViewBag.PostingTypes;
-
-                                    foreach (var postingType in postingTypes)
-                                    {
-                                        if (cnt++ % 3 == 0)
-                                        {
-                                        @:</tr><tr>
-                                        }
-                                        @:<td>
-                                            <input type="checkbox"
-                                                   name="selectedTypes"
-                                                   value="@postingType.PostingTypeID"
-                                                   @(Html.Raw(postingType.Assigned ? "checked=\"checked\"" : "")) />
-                                            @:  @postingType.PostingTypeName
-                                        @:</td>
-                                    }
-                                @:</tr>
-                                }
-                            </table>
+                    <div class="form-group">
+                        <label asp-for="PostingFor" class="control-label"></label>
+                        <input asp-for="PostingFor" class="form-control col-md-9 col-sm-12" />
+                        <span asp-validation-for="PostingFor" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SharableToTeam" class="control-label">Allow projects, where you're a collaborator, to Link to this posting?</label>
+                        <div>
+                            @Html.CheckBoxFor(m => m.SharableToTeam) Yes
+                        </div>
+                    </div>
+                    @* Need to say reasoning: Hold off on showing all people this posting, save it for later, or maybe reuse it next time you recuit for a similar posiiton*@
+                    <div class="form-group">
+                        <label asp-for="HidePosting" class="control-label">Do you want your Posting hidden to others?</label>
+                        <div>
+                            @Html.CheckBoxFor(m => m.HidePosting) Yes
                         </div>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Update" class="btn btn-primary" />
-                    </div>
-                </form>
-                <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@Model.PostingID">Delete</a>
-            </div>
-        </div>
-        <div>
-            <a asp-action="Index">Back to List</a>
+                        <div class="col-md-offset-2 col-md-10">
+                            <table>
+                                <tr>
+                                    @{
+                                        int cnt = 0;
+                                        List<ConstellationWebApp.Models.AssignedTypeData> postingTypes = ViewBag.PostingTypes;
 
+                                        foreach (var postingType in postingTypes)
+                                        {
+                                            if (cnt++ % 3 == 0)
+                                            {
+                                            @:</tr><tr>
+                                            }
+                                            @:<td>
+                                                <input type="checkbox"
+                                                       name="selectedTypes"
+                                                       value="@postingType.PostingTypeID"
+                                                       @(Html.Raw(postingType.Assigned ? "checked=\"checked\"" : "")) />
+                                                @:  @postingType.PostingTypeName
+                                            @:</td>
+                                        }
+                                    @:</tr>
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    <div class="form-group">
+                        <input type="submit" value="Update" class="btn btn-primary mr-1" />
+                        <a class="btn btn-md btn-danger mr-1" asp-action="Delete" asp-route-id="@Model.PostingID">Delete</a>
+                        <a asp-action="Index">Back to List</a>
+                    </div>
+                            
+                    </form>
+                </div>
         </div>
+    </div>
     }
     else
     {
