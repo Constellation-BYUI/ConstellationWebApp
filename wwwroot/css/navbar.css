@@ -1,0 +1,219 @@
+﻿
+body {
+    padding: 0;
+    margin: 0;
+    background-image: url(/cons_Img/tech-image2.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-family: sans-serif;
+}
+
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #1d3557;
+    padding: 0 5px;
+    box-sizing: border-box;
+}
+
+    header .logo a {
+        color: #fff;
+        height: 50px;
+        line-height: 50px;
+        font-size: 24px;
+        float: left;
+        font-weight: bold;
+        text-decoration: none;
+        padding: 0 5px;
+    }
+
+  header .logo a:hover, .avatar:hover {
+            background: #e63946;
+            transition: .5s;
+        }
+
+ header nav {
+        float: right;
+    }
+
+header nav ul {
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+header nav ul li {
+                list-style: none;
+                font-size: 20px;
+            }
+
+    header nav ul li a {
+        height: 50px;
+        line-height: 50px;
+        padding: 0 14px;
+        color: #fff !important;
+        text-decoration: none !important;
+    }
+
+        header nav ul li a:hover, header nav ul li a.active {
+            background: #e63946;
+            transition: .5s;
+            display: block;
+        }
+        header nav ul li form button {
+            background-color: rgba(0,0,0,0.8);
+            width: 100%;
+            border: none;
+            color: #fff;
+            text-align: left;
+            text-decoration: none;
+            padding: 5px 10px;
+            font-size: 18px
+        }
+            header nav ul li form button:hover {
+                background: #e63946;
+                transition: .5s;
+            }
+
+            .menu-toggle {
+                color: #fff;
+                float: right;
+                line-height: 50px;
+                cursor: pointer;
+                font-size: 24px;
+                display: none;
+            }
+
+.close {
+    display: none;
+}
+
+.avatar {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 5px;
+}
+   
+
+    header .fas {
+        margin-right: 8px;
+    }
+
+.fa-caret-down {
+    margin-left: 8px;
+}
+
+.sub-menu-1 ul, .sub-menu-2 ul {
+    height: calc(0vh - 10px);
+    position: absolute;
+    top: -800%;
+    right: 5px;
+    display: flex;
+    flex-direction: column;
+/*    background: rgba(0,0,0,0.8);*/
+    transition: .5s;
+}
+
+    .sub-menu-1 ul li, .sub-menu-2 ul li {
+        background: rgba(0,0,0,0.9);
+    }
+
+    .sub-menu-1 ul.show {
+        top: 50px;
+        z-index: 99;
+    }
+
+    .sub-menu-2 ul.show {
+        top: 50px;
+        right: 10px;
+        z-index: 99;
+    }
+
+@media screen and (max-width: 767px) {
+    header {
+        padding: 0 20px;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    header nav {
+        position: absolute;
+        width: 100%;
+        height: calc(90vh - 50px);
+        background: rgba(0,0,0,0.8);
+        top: 50px;
+        left: -100%;
+        transition: all .5s;
+    }
+
+        header nav.active {
+            left: 0;
+            z-index: 99;
+        }
+
+        header nav ul {
+            display: block;
+            text-align: center;
+        }
+
+            header nav ul li a {
+                border-bottom: 1px solid whitesmoke;
+                display: block;
+                font-size: 20px;
+            }
+            header nav ul li form button {
+                background-color: rgba(0,0,0,0);
+                text-align: center;
+                font-size: 20px;
+            }
+
+    .close {
+        display: block;
+    }
+
+    header nav .fa-home,
+    header nav .fa-project-diagram,
+    header nav .fa-briefcase,
+    header nav .fa-users {
+        display: none;
+    }
+  
+    .sub-menu-1 ul {
+        display: none;
+        flex-direction: column;
+        background: rgba(0,0,0,0.5);
+        transition: .5s;
+    }
+
+        .sub-menu-1 ul.show {
+            display: flex;
+           top: 270px;
+            left: 0;
+            z-index: 98;
+        }
+        .sub-menu-1 ul li {
+            background: rgba(0,0,0,0.5);
+        }
+
+    header nav ul li:first-child {
+        border-top: 1px solid whitesmoke;
+    }
+
+    .sub-menu-1 ul li a {
+        border-bottom: none;
+        font-size: 18px;
+    }
+
+    .avatar {
+        display: none;
+    }
+}
