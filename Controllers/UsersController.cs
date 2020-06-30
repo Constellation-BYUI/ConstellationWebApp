@@ -160,7 +160,70 @@ namespace ConstellationWebApp.Controllers
             {
                 _context.ContactLinks.Remove(link);
             }
-        } 
+        }
+
+        public List<Skill> UserSkillsLookup(string id)
+        {
+            List<Skill> currentSkills = new List<Skill>();
+
+
+            //find all disciplines
+            foreach (var skill in _context.UserSkills.Where(i => i.UserID == id))
+            {
+                Skill SkillOfUser = _context.Skills.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
+
+                if (!currentSkills.Contains(SkillOfUser))
+                {
+                    currentSkills.Add(SkillOfUser);
+                }
+                else
+                {
+                    continue;
+                }
+
+            }
+            return currentSkills;
+        }
+
+        public List<SkillDiscipline> SkillDisciplineLookup(List<Skill> skills)
+        {
+            List<Discipline> currentDisciplines = new List<Discipline>();
+            List<SkillDiscipline> skillDisciplineLookup = new List<SkillDiscipline>();
+            //find all disciplines
+            foreach (var skill in skills)
+            {
+                SkillDiscipline skillDisciplineForSkill = _context.SkillDisciplines.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
+                if (!skillDisciplineLookup.Contains(skillDisciplineForSkill))
+                {
+                    skillDisciplineLookup.Add(skillDisciplineForSkill);
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            return (skillDisciplineLookup);
+        }
+
+        public List<Discipline> UserDisciplineLookup(List<SkillDiscipline> skillDisciplines)
+        {
+            List<Discipline> currentDisciplines = new List<Discipline>();
+            //find all disciplines
+            foreach (var sd in skillDisciplines)
+            {
+                Discipline disciplineForSkill = _context.Disciplines.Where(i => i.DisciplineID == sd.DisciplineID).FirstOrDefault();
+                if (!currentDisciplines.Contains(disciplineForSkill))
+                {
+                    currentDisciplines.Add(disciplineForSkill);
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            return (currentDisciplines);
+        }
+
 
         #endregion
 
@@ -279,69 +342,7 @@ namespace ConstellationWebApp.Controllers
         }
 
  
-        public List<Skill> UserSkillsLookup(string id)
-        {    
-            List<Skill> currentSkills = new List<Skill>();
-
-
-            //find all disciplines
-            foreach (var skill in _context.UserSkills.Where(i => i.UserID == id))
-                {
-                    Skill SkillOfUser = _context.Skills.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
-
-                if (!currentSkills.Contains(SkillOfUser))
-                {
-                    currentSkills.Add(SkillOfUser);
-                }
-                else
-                {
-                    continue;
-                }
-
-                }
-            return currentSkills;
-         }
-
-        public List<SkillDiscipline> SkillDisciplineLookup(List<Skill> skills)
-        {
-            List<Discipline> currentDisciplines = new List<Discipline>();
-            List<SkillDiscipline> skillDisciplineLookup = new List<SkillDiscipline>();
-            //find all disciplines
-            foreach (var skill in skills)
-            {
-                SkillDiscipline skillDisciplineForSkill = _context.SkillDisciplines.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
-                if (!skillDisciplineLookup.Contains(skillDisciplineForSkill))
-                {
-                    skillDisciplineLookup.Add(skillDisciplineForSkill);
-                }
-                else
-                {
-                    continue;
-                }
-            }
-            return (skillDisciplineLookup);
-        }
-
-        public List<Discipline> UserDisciplineLookup(List<SkillDiscipline> skillDisciplines)
-        {
-            List<Discipline> currentDisciplines = new List<Discipline>();
-            //find all disciplines
-            foreach (var sd in skillDisciplines)
-            {            
-                Discipline disciplineForSkill = _context.Disciplines.Where(i => i.DisciplineID == sd.DisciplineID).FirstOrDefault();
-                if (!currentDisciplines.Contains(disciplineForSkill))
-                {
-                    currentDisciplines.Add(disciplineForSkill);
-                }
-                else
-                {
-                    continue;
-                }
-            }
-            return (currentDisciplines);
-        }
-
-        
+      
         
         // POST: Users/Create is handeled by the Account controller
 

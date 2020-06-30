@@ -90,7 +90,7 @@ namespace ConstellationWebApp.Data
               new Skill {  SkillName = "Database Security" },
               new Skill {  SkillName = "Optimize database performance" },
               new Skill {  SkillName = "PostgreSQL" },
-              new Skill {  SkillName = "SQL" },
+              new Skill {  SkillName = "TSQL" },
               new Skill {  SkillName = "SqlServer" },
               new Skill {  SkillName = "MySQL" },
               new Skill {  SkillName = "PLSQL" },
@@ -154,6 +154,7 @@ namespace ConstellationWebApp.Data
                 context.Skills.Add(sk);
             }
             context.SaveChanges();
+            //Truncate the skill discpline tabel
 
             var skillDisciplines = new SkillDiscipline[]
             {
