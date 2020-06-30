@@ -8,17 +8,6 @@
 
 <link rel="stylesheet" href="/css/homepage.css" />
 
-
-<!-- Page info -->
-<section class="page-info">
-    <div class="info-button" id="button-info">View&nbsp;Page&nbsp;Info</div>
-    <article>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Distinctio itaque aut rerum
-        consequuntur facere. Expedita odit autem deserunt voluptate culpa aspernatur repellat
-        nisi voluptatum, sit nihil quibusdam quidem, tenetur voluptatem?
-    </article>
-</section>
-
 <!-- Welcome Note to users and employers -->
 <div class="jumbo">
     <div class="welcome1">
@@ -27,11 +16,11 @@
             Show your qualities, competence, and projects all in one location
             and make them accessible to potential employers.
         </p>
-        <a asp-controller="Account" asp-action="Register" class="button1">SignUp</a>
+        <a asp-controller="Account" asp-action="Register" ><div class="button1">SignUp Now</div></a>
     </div>
     <div class="welcome2">
         <h4>You have a Job Opening and you are looking to fill it up with the right <span style="font-style: italic;">CANDIDATE</span></h4>
-        <a asp-controller="Postings" asp-action="Create" class="button2">Post Jobs</a>
+        <a asp-controller="Postings" asp-action="Create"><div class="button2">Post Jobs</div></a>
     </div>
 </div>
 
@@ -103,13 +92,9 @@
 </section>
 
 <!--This script is in harge of chaging the pictures on this page -->
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('#button-info').click(function () {
-            $('article').toggleClass('display')
-        })
-    })
+    
 
     var myIndex = 0;
     carousel();

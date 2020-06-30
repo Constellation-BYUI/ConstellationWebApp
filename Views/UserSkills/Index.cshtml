@@ -10,14 +10,15 @@
     var kickout = false;
 }
 
-<!-- #region Info button:-->
-<div>
-    <button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
-    <p id="hidden-info-blip">
-        On this page you can link your skills to your profile. You can also provide a link for an 
+<!-- Page info -->
+<section class="page-info">
+    <div class="info-button" id="button-info">View&nbsp;Page&nbsp;Info</div>
+    <article>
+        On this page you can link your skills to your profile. You can also provide a link for an
         individual skill or set of skills to a URL. This allows you to give legitimacy to your claim to competency in a skill.
-    </p>
-</div><!-- #endregion -->
+    </article>
+</section>
+<!-- #endregion -->
 
 <br />
 <h1>Your Skills</h1>
@@ -202,15 +203,15 @@
                 @{
                     foreach (var link in Model.SkillLinks.Where(i => i.SkillLinkOwner == currentUser))
                     {
-                                <div>
-                                    <a href="@link.SkillLinkUrl"><p style="opacity:1; color:black; background-color:none;">@link.SkilLinkLabel</p></a>
-                                    <form asp-action="DeleteSkillLink" asp-controller="UserSkills">
-                                        <input type="hidden" name="link" value="@link.SkillLinkID" list="userSkills">
-                                        <div class="form-group">
-                                            <input type="submit" value="Remove" class="btn btn-sm btn-info" />
-                                        </div>
-                                    </form>
+                        <div>
+                            <a href="@link.SkillLinkUrl"><p style="opacity:1; color:black; background-color:none;">@link.SkilLinkLabel</p></a>
+                            <form asp-action="DeleteSkillLink" asp-controller="UserSkills">
+                                <input type="hidden" name="link" value="@link.SkillLinkID" list="userSkills">
+                                <div class="form-group">
+                                    <input type="submit" value="Remove" class="btn btn-sm btn-info" />
                                 </div>
+                            </form>
+                        </div>
                     }
                 }
             </div>

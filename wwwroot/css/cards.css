@@ -1,16 +1,13 @@
 ﻿@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 
-html {
-    font-size: 10px !important;
-    font-family: "Roboto", sans-serif !important;
-}
-
 a {
     text-decoration: none;
     color: #fff;
 }
 
 .const-card-wrapper {
+    font-size: 10px !important;
+    font-family: "Roboto", sans-serif !important;
     display: flex;
     align-items: center;
     align-content: center;
@@ -18,6 +15,8 @@ a {
 }
 
 .const-card {
+    font-size: 10px !important;
+    font-family: "Roboto", sans-serif !important;
     border: 1px solid #cbd4f1;
     width: 80%;
     background-color: #fff;
@@ -26,56 +25,56 @@ a {
     align-items: center;
     justify-content: center;
     margin: 1rem;
-    box-shadow: .5rem .3rem .5rem rgba(0,0,0,0.2);
+    box-shadow: .5em .3em .5em rgba(0,0,0,0.2);
 }
 
     .const-card .const-card-image {
         width: 100%;
-        height: 12rem;
+        height: 12em;
         object-fit: cover;
        /* -webkit-clip-path: polygon(0 0, 100% 0, 100% 81%, 0% 100%);
         clip-path: polygon(0 0, 100% 0, 100% 81%, 0% 100%);*/
     }
 
 .const-card a .const-profile-image {
-    width: 15rem;
-    height: 15rem;
+    width: 15em;
+    height: 15em;
     object-fit: cover;
     border-radius: 50%;
-    margin-top: -9rem;
+    margin-top: -9em;
     z-index: 999 !important;
-    border: 1rem solid #ebeef8;
+    border: 1em solid #ebeef8;
 }
 
 .const-card h1 {
-    font-size: 2rem;
+    font-size: 2em;
     color: #1b6ec2;
-    margin: 1rem 0 0 0;
+    margin: 1em 0 0 0;
     text-align: center;
 }
 
 .const-card h2 {
-    font-size: 1.5rem;
+    font-size: 1.5em;
     width: 100%;
     text-align: center;
     background-color: #ebeef8;
-    padding: .5rem;
+    padding: .5em;
     margin: 0;
 }
 
 .const-card h3 {
-    font-size: 1.2rem;
-    margin: .3rem 0 1rem 0;
+    font-size: 1.2em;
+    margin: .3em 0 1em 0;
 }
 
 .discipline {
-    font-size: 1.5rem;
+    font-size: 1.5em;
     color: #777;
     font-weight: 300;
     width: 100%;
     text-align: center;
     background-color: #fff;
-    padding: .5rem;
+    padding: .5em;
 }
     .discipline a {
         color: #333;
@@ -83,13 +82,13 @@ a {
     }
     .const-card .const-btn:hover {
         transform: translateY(-2px);
-        box-shadow: .5rem .5rem .2rem rgba(0,0,0,.2);
+        box-shadow: .5rem .5em .2em rgba(0,0,0,.2);
     }
 
 .const-card-footer {
     width: 100%;
     text-align: left;
-    padding: .5rem;
+    padding: .5em;
     border-top: 1px solid rgba(0,0,0,.1);
     background-color: #242b41;
 }
@@ -99,12 +98,12 @@ a {
     list-style: none;
     display: flex;
     justify-content: space-evenly;
-    margin-bottom: .3rem;
-    padding: 0 0 1rem 0;
+    margin-bottom: .3em;
+    padding: 0 0 1em 0;
 }
 
     .social-media i {
-        font-size: 3rem;
+        font-size: 3em;
         transition: color .5s;
     }
 
@@ -134,7 +133,7 @@ a {
 @media screen and (min-width: 767px) {
     .const-card {
         width: 95%;
-        margin: 1rem 0 ;
+        margin: 1em 0 ;
         transition: transform .5s;
     }
 

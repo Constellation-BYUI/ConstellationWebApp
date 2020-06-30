@@ -6,17 +6,19 @@
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
 
-<!-- #region Info button:-->
-<button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
-<p id="hidden-info-blip">
-    Creating a posting can be for individuals who are searching for someone to join their project or for recruiters 
-    who are seeking candidates. Below you can specify the kind of job, its description, the role or title, and the 
-    company or project that it is made for. Those who are interested will be given the ability to say so when they 
-    visit your posting's details page. You will be able to add those interested to a “picks pool”. You can also 
-    access this page on the posting candidates page. This is found in the My Stuff tab which is part of the profile 
-    navigation located on the top right corner of the site when logged in. You can also add any user to this pool by 
-    visiting their profile.
-</p>
+<!-- Page info -->
+<section class="page-info">
+    <div class="info-button" id="button-info">View&nbsp;Page&nbsp;Info</div>
+    <article>
+        Creating a posting can be for individuals who are searching for someone to join their project or for recruiters
+        who are seeking candidates. Below you can specify the kind of job, its description, the role or title, and the
+        company or project that it is made for. Those who are interested will be given the ability to say so when they
+        visit your posting's details page. You will be able to add those interested to a “picks pool”. You can also
+        access this page on the posting candidates page. This is found in the My Stuff tab which is part of the profile
+        navigation located on the top right corner of the site when logged in. You can also add any user to this pool by
+        visiting their profile.
+    </article>
+</section>
 <!-- #endregion -->
 
 
