@@ -10,12 +10,14 @@
 
 <h1>My Starred Projects</h1>
 
-<!-- #region Info button:-->
-<button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
-<p id="hidden-info-blip">
-    Your “starred” projects are shown below. To add more to this list, visit a project’s details page that you want to add from. 
-    If you no longer want to have a project “starred”, remove it by clicking the remove button on this page or on the project’s details page.
-</p>
+<!-- Page info -->
+<section class="page-info">
+    <div class="info-button" id="button-info">View&nbsp;Page&nbsp;Info</div>
+    <article>
+        Your “starred” projects are shown below. To add more to this list, visit a project’s details page that you want to add from.
+        If you no longer want to have a project “starred”, remove it by clicking the remove button on this page or on the project’s details page.
+    </article>
+</section>
 <!-- #endregion -->
 
 <div id="projectDisplay">
@@ -41,15 +43,15 @@
                         foreach (var collab in item.UserProjects)
 
                         {
-                          var collabPath = "";
-                          if (collab.User.PhotoPath != null)
-                          {
-                           collabPath = "~/image/" + "~/image/" + (collab.User.PhotoPath);
-                          }
-                          else
-                          {
-                           collabPath = "~/WebAssests/siteImages/avataricon.png";
-                          }
+                            var collabPath = "";
+                            if (collab.User.PhotoPath != null)
+                            {
+                                collabPath = "~/image/" + "~/image/" + (collab.User.PhotoPath);
+                            }
+                            else
+                            {
+                                collabPath = "~/WebAssests/siteImages/avataricon.png";
+                            }
 
                             var collabMemberPath = "../Users/Details/" + (collab.User.Id);
 

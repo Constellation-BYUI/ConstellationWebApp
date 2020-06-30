@@ -7,15 +7,16 @@
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
 
-<!-- #region Info button:-->
-<div>
-    <button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
-    <p id="hidden-info-blip">
-        Your ‘starred’ users are shown below. To add more to this list, visit a user’s details page that you want to add from. 
-        If you no longer want to have a certain user ‘starred’, remove them by clicking the remove button on this page or on the 
+<!-- Page info -->
+<section class="page-info">
+    <div class="info-button" id="button-info">View&nbsp;Page&nbsp;Info</div>
+    <article>
+        Your ‘starred’ users are shown below. To add more to this list, visit a user’s details page that you want to add from.
+        If you no longer want to have a certain user ‘starred’, remove them by clicking the remove button on this page or on the
         project’s details page.
-    </p>
-</div><!-- #endregion -->
+    </article>
+</section>
+<!-- #endregion -->
 
 
 <h1>My Starred Users</h1>

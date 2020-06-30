@@ -6,9 +6,10 @@
 
 .info-button {
     position: absolute;
-    right: 0;
+    right: -68px;
+    transition: 0.3s;
     font-size: .9rem;
-    padding: .3rem;
+    padding: .5rem 2px;
     text-align: center;
     color: white;
     border: 0 solid transparent;
@@ -16,7 +17,11 @@
     cursor: pointer;
     border-radius: 3px;
     background-color: #fd7e14;
+    z-index: 999;
 }
+    .info-button:hover {
+        right: 0;
+    }
 
     .info-button:hover {
         background: #9b4c0b;
@@ -27,7 +32,7 @@ section article {
     top: 2.2rem;
     left: -100%;
     color: rgb(223, 178, 29);
-    background-color: black;
+    background-color: rgba(0,0,0,.8);
     text-align: justify;
     padding: 10px;
     font-style: italic;
@@ -37,4 +42,8 @@ section article {
     width: 90%;
     z-index: 999;
 }
+    section article.display {
+        left: 0;
+        transition: .5s;
+    }
 /*Ends here*/

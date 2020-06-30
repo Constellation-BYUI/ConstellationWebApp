@@ -1,6 +1,7 @@
 ﻿@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 /*BODY*/
 main {
+    background-color: rgba(0,0,0,0.1);
     margin-top: 50px;
 }
 

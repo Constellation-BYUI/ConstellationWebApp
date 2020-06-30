@@ -24,16 +24,16 @@
 
 <link rel="stylesheet" href="~/css/project-create-edit.css" />
 
-<!-- #region Info button:-->
-<div>
-    <button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
-    <p id="hidden-info-blip">
-        The postings made by any of the collaborators on your project are available to be linked. 
-        Use this so that when you are getting started or adding people to your team, interested 
+<!-- Page info -->
+<section class="page-info">
+    <div class="info-button" id="button-info">View&nbsp;Page&nbsp;Info</div>
+    <article>
+        The postings made by any of the collaborators on your project are available to be linked.
+        Use this so that when you are getting started or adding people to your team, interested
         candidates can see both the role needed to be filled and the project itself.
-    </p>
-</div><!-- #endregion -->
-
+    </article>
+</section>
+<!-- #endregion -->
 @*Detemines if curretn user is a collaborator of Project*@
 @foreach (var collaborator in Model.currentProject.UserProjects)
 {
@@ -180,16 +180,16 @@
                             <div class="d-flex justify-content-start">
                                 @foreach (var collab in Model.currentProject.UserProjects)
                                 {
-                                       var collabPath = "";
-                                        if (collab.User.PhotoPath != null)
-                                        {
-                                            collabPath = "~/image/" + (collab.User.PhotoPath);
-                                        }
-                                        else
-                                        {
-                                            collabPath = "~/WebAssests/siteImages/avataricon.png";
-                                        }
-                                        var collabMemberPath = "../../Users/Details/" + (collab.User.Id);
+                                    var collabPath = "";
+                                    if (collab.User.PhotoPath != null)
+                                    {
+                                        collabPath = "~/image/" + (collab.User.PhotoPath);
+                                    }
+                                    else
+                                    {
+                                        collabPath = "~/WebAssests/siteImages/avataricon.png";
+                                    }
+                                    var collabMemberPath = "../../Users/Details/" + (collab.User.Id);
 
                                     @*@collab.User.UserName<br />*@
 

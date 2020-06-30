@@ -11,13 +11,13 @@ body {
 }
 
 header {
-    position: absolute;
+    position: fixed;
     top: 0;
-    left: 0;
     width: 100%;
     background: #1d3557;
     padding: 0 5px;
     box-sizing: border-box;
+    z-index: 1020;
 }
 
     header .logo a {
@@ -48,7 +48,7 @@ header nav ul {
 
 header nav ul li {
                 list-style: none;
-                font-size: 20px;
+                font-size: 16px;
             }
 
     header nav ul li a {
@@ -65,7 +65,7 @@ header nav ul li {
             display: block;
         }
         header nav ul li form button {
-            background-color: rgba(0,0,0,0.8);
+            background-color: rgba(0,0,0,0.5);
             width: 100%;
             border: none;
             color: #fff;
@@ -117,12 +117,13 @@ header nav ul li {
     right: 5px;
     display: flex;
     flex-direction: column;
-/*    background: rgba(0,0,0,0.8);*/
     transition: .5s;
+    border-radius: 5px;
 }
 
     .sub-menu-1 ul li, .sub-menu-2 ul li {
-        background: rgba(0,0,0,0.9);
+        background: rgba(0,0,0,0.5);
+        cursor: pointer;
     }
 
     .sub-menu-1 ul.show {
@@ -149,7 +150,6 @@ header nav ul li {
         position: absolute;
         width: 100%;
         height: calc(90vh - 50px);
-        background: rgba(0,0,0,0.8);
         top: 50px;
         left: -100%;
         transition: all .5s;
@@ -161,6 +161,7 @@ header nav ul li {
         }
 
         header nav ul {
+            background-color: rgba(0,0,0,.8);
             display: block;
             text-align: center;
         }
@@ -190,18 +191,15 @@ header nav ul li {
     .sub-menu-1 ul {
         display: none;
         flex-direction: column;
-        background: rgba(0,0,0,0.5);
+        background: rgba(0,0,0,0.7);
         transition: .5s;
     }
 
         .sub-menu-1 ul.show {
             display: flex;
-           top: 270px;
+           top: 277px;
             left: 0;
             z-index: 98;
-        }
-        .sub-menu-1 ul li {
-            background: rgba(0,0,0,0.5);
         }
 
     header nav ul li:first-child {
