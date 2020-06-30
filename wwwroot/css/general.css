@@ -1,7 +1,9 @@
 ﻿@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 /*BODY*/
-main {
+body {
     background-color: rgba(0,0,0,0.1);
+}
+main {
     margin-top: 50px;
 }
 
@@ -51,5 +53,13 @@ footer {
 #myBtn:hover {
         background-color: #555; /* Add a dark-grey background on hover */
     }
+
+.small-thumbnail {
+    width: 200px;
+    height: 200px;
+    object-fit:cover;
+    border: 1px solid white;
+    border-radius: 3px;
+}
 
 

@@ -3,6 +3,7 @@
 }
 
 #postings-details-container {
+    margin-top: 50px;
     padding: 0 2em;
 }
 
@@ -34,11 +35,12 @@ header img {
 }
 
 #company-banner-details-page {
-    height: 5em;
+    
+    height: 6em;
     width: 100%;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 767px) {
     #details-recruiter-info {
         flex-direction: row;
     }

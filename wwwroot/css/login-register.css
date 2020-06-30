@@ -1,11 +1,12 @@
 ﻿
 /*CSS form Login Page*/
+.login-card {
+    margin: 0 2em 6em 2em;
+}
 .login-card h2 {
     text-align: center;
 }
-.login-card {
-    margin: 0 2em 4em 2em;
-}
+
 .login-card h3 {
     text-align:center;
     margin: 0;
@@ -47,7 +48,7 @@
 
 /*CSS for Register page*/
 .register-card {
-    margin: 0 2em 4em 2em;
+    margin: 0 2em 10em 2em;
 }
 
     .register-card h3 {

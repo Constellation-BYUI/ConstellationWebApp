@@ -215,6 +215,21 @@
         height: 10rem;
         margin: auto;
     }
+    .welcome1 h4 {
+        font-size: 1.5rem;
+        padding: .2rem 1rem;
+    }
+
+    .welcome1 p {
+        padding: .5rem .7rem;
+        font-size: 1rem;
+    }
+    .welcome2 h4 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        padding: .8rem .5rem 1rem .5rem;
+        text-align: left;
+    }
 
     .button2 {
         transform: translate(-50%, 0);
