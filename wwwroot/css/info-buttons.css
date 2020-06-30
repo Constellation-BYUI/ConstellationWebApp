@@ -1,34 +1,40 @@
-﻿/*Info button rules*/
-.show-info {
-    opacity: 1;
+﻿/* page information button */
+.page-info {
+    position: relative;
+    margin-top: 3.5rem;
 }
 
-p {
-    padding: 0.5em;
-    opacity: 0;
-    transition: opacity 0.5s linear;
-    background-color: white;
-    font-size: 10px;
-    display: inline;
+.info-button {
+    position: absolute;
+    right: 0;
+    font-size: .9rem;
+    padding: .3rem;
+    text-align: center;
+    color: white;
+    border: 0 solid transparent;
+    width: 6.5rem;
+    cursor: pointer;
+    border-radius: 3px;
+    background-color: #fd7e14;
 }
 
-#hidden-info-blip {
-    width: 500px;
-    z-index: 4;
-    position: fixed;
-    display: inline;
-}
-
-#btn1 {
-    border-radius: 100%;
-}
-
-@media (max-width: 600px) {
-    #hidden-info-blip {
-        width: 90%;
-    }
-    p {
-        font-size: 8px;
+    .info-button:hover {
+        background: #9b4c0b;
     }
 
+section article {
+    position: absolute;
+    top: 2.2rem;
+    left: -100%;
+    color: rgb(223, 178, 29);
+    background-color: black;
+    text-align: justify;
+    padding: 10px;
+    font-style: italic;
+    font-size: 16px;
+    margin: 0 10px;
+    border-radius: 5px;
+    width: 90%;
+    z-index: 999;
 }
+/*Ends here*/

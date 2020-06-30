@@ -1,105 +1,97 @@
-﻿/* Welcome note */
-/* Welcome note */
-/*html {
-    width: 100% !important;
-    margin: 0;
-    padding: 0;
-}*/
-.bigBoard {
-    background-color: white;
-}
+﻿
 
-.section1 {
-    position: relative;
-    background-color: white;
-    min-height: 13em;
+
+/* Welcome Note to users and employers */
+.jumbo {
+    margin-top: -5px;
     width: 100%;
-    border-top: 2px solid green;
+    height: 18rem;
+    background-image: url(/WebAssests/siteImages/tech-background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    padding: .1rem;
 }
 
-.welcomenote {
-    padding: 20px;
-    margin: 20px 20px;
-    color: black;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
-}
-
-    .welcomenote a {
-        margin: 0 40% 10px 40%;
-        text-decoration: none;
-    }
-
-    .welcomenote h3 {
-        color: #28a745;
-    }
-
-    .welcomenote p {
-        text-align: left;
-    }
-/* Job posting Box */
-.section2 {
-    position: relative;
-    background-color: white;
-    min-height: 14em;
-    width: 100%;
-    border-top: 1px solid blue;
-}
-
-.welcomenote h4 {
-    text-align: center;
-    line-height: 25px;
-    font-style: italic;
-    color: #6f42c1;
-}
-
-.section2 .welcomenote a {
-    margin: 0 42% 10px 42%;
+.welcome1, .welcome2 {
+    background-color: rgba(15, 12, 12, 0.5);
+    height: 8rem;
+    width: 90%;
+    margin: auto;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
     color: white;
 }
-/* Go to Users, Project and Postings Page */
-.section3 {
-    background-color: whitesmoke;
-    min-height: 8em;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    border-top: 1px solid purple;
-}
 
-    .section3 a {
+    .welcome1 h4 {
+        font-size: 1.3rem;
+        padding: .2rem .5rem;
+        margin: 0;
+    }
+
+    .welcome1 p {
+        padding: .4rem;
+        margin: 0;
+        font-size: .9rem;
+        text-align: justify;
+        font-style: italic;
+        font-weight: 400;
+        color: whitesmoke;
+    }
+
+    .welcome1 a {
         text-decoration: none;
         color: white;
+        width: 80px;
+        text-align: center;
+        padding: 4px;
+        border-radius: 4px;
+        margin: 40%;
+        margin: auto;
+        font-size: 15px;
+    }
+    .welcome2 a {
+        text-decoration: none;
+        color: white;
+        width: 80px;
+        text-align: center;
+        padding: 4px;
+        margin: 35%;
+        border-radius: 4px;
+        margin: auto;
+        font-size: 15px;
     }
 
-.view {
-    position: relative;
-    margin-top: 2.5em;
-    height: 5em;
-    width: 8em;
-    border: 1px solid white;
-    color: white;
-    border-radius: 30%;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2)
-}
-
-
-.icon6 {
+.welcome2 h4 {
+    font-size: 1.1rem;
+    font-weight: 300;
+    padding: .8rem .5rem .5rem .5rem;
+    margin: 0;
     text-align: center;
-    line-height: 50px;
-    font-size: small;
 }
 
-.avatarcircle {
-    position: absolute;
-    top: -30px;
-    height: 3.5em;
-    width: 3.5em;
-    background-color: rgba(0, 0, 0, 1);
-    border: 2px solid white;
-    border-radius: 50%;
-    margin-left: 30%;
+.button2 {
+    background-color: #1b6ec2;
+    margin-top: 3px;
 }
+
+.button1 {
+    background-color: #28a745;
+    margin-top: 5px;
+}
+
+
+
+    section article.display {
+        left: 0;
+        transition: .5s;
+    }
+/*Ends here*/
+
+
+
 /* Image holder for inspiration */
 .section4 {
     background-color: #f1faee;
@@ -153,74 +145,50 @@
 }
 
 @media screen and (min-width: 767px) {
-    .bigBoard {
+    /* Welcome Note to users and employers */
+    .jumbo {
+        height: 12rem;
         display: flex;
-        background-color: white;
-        min-height: 20em;
-        width: 100%;
+        padding: 1rem;
     }
 
-    .section1 {
-        color: black;
-        min-height: 16em;
-        text-align: justify;
-        word-spacing: -2px;
-        margin: 10px;
-        border-radius: 10px;
+    .welcome1, .welcome2 {
+        height: 10rem;
+        margin: 1rem;
     }
 
-    .section2 {
-        color: black;
-        height: 13em;
-        text-align: justify;
-        word-spacing: -2px;
-        margin: 35px 15px;
-        padding: 5px;
-        border-radius: 10px;
-        border-top: 2px solid blue;
-    }
-    .welcomenote h3 {
-        text-align: left;
+        .welcome1 h4 {
+            font-size: 1.7rem;
+            padding: .3rem .5rem;
+        }
+
+        .welcome1 p {
+            font-size: 1rem;
+        }
+
+        .welcome2 h4 {
+            margin: 5px;
+        }
+
+    .button2 {
+        margin-top: 10px;
     }
 
-    .welcomenote {
-        margin: 2px 0;
-        border-radius: 5%;
+    .button1, .button2 {
+        width: 80px;
+        padding: 6px;
+        font-size: 17px;
     }
 
-    .section1 .welcomenote {
-        margin: 7px 7px 0 8px;
-    }
+        .button1:hover {
+            background-color: #0f7126;
+        }
 
-    .welcomenote a {
-        margin: 0 50% 10px 20%;
-        text-decoration: none;
-    }
+        .button2:hover {
+            background-color: #105191;
+        }
+/*        Ends here*/
 
-    .section2 .welcomenote a {
-        margin: 0 50% 10px 30%;
-        color: white;
-    }
-
-    .section3 {
-        min-height: 12em;
-    }
-
-    .view {
-        height: 6em;
-        width: 8em;
-    }
-
-    .icon6 {
-        line-height: 70px;
-        font-size: medium;
-    }
-
-    .avatarcircle {
-        height: 4em;
-        width: 4em;
-        margin-left: 25%;
-    }
 
     .section4 img {
         width: 100%;
@@ -229,38 +197,28 @@
 }
 
 @media screen and (min-width: 991px) {
-    .bigBoard {
+/*    Welcome notes form users emplyers*/
+    .jumbo {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        column-gap: 2em;
+        grid-column-gap: 2rem;
     }
 
-    .section1 {
-        height: 14em;
-        width: 70%;
+    .welcome1 {
+        width: 90%;
         margin: auto;
     }
 
-        .section1 p {
-            text-align: left;
-        }
-
-    .section2 {
-        height: 10em;
-        width: 70%;
+    .welcome2 {
+        width: 80%;
+        height: 8rem;
         margin: auto;
-        padding: 5px;
     }
 
-    .welcomenote {
-        padding: 5px 20px 20px 20px;
+    .button1 {
+        margin-top: 12px;
     }
-
-       
-
-        .welcomenote a {
-            margin: -47px 50% -16% 20%;
-        }
+/*    Ends here*/
 
     .section5 {
         justify-content: flex-end;
@@ -273,35 +231,14 @@
         }
 }
 
-@media screen and (min-width: 1199px) {
-    .section1 {
-        height: 14em;
+@media screen and (min-width: 1024px) {
+/*    Welcome note form users and employers*/
+    .jumbo {
+        grid-column-gap: 0;
+    }
+
+    .welcome2 {
         width: 70%;
-        margin: auto;
     }
-
-    .welcomenote {
-        text-align: center;
-        padding: 5px 20px 50px 20px;
-    }
-
-    .section2 .welcomenote {
-        padding: 5px 20px 30px 20px;
-    }
-
-    .welcomenote a {
-        margin: -78px 30% -16% 20%;
-    }
-
-    .section2 {
-        height: 14em;
-        width: 70%;
-        margin: auto;
-        padding: 5px;
-        border-radius: 5px;
-    }
-
-        .section2 .welcomenote a {
-            margin: 17px 30% 10px 30%;
-        }
 }
+
