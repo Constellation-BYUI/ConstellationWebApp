@@ -43,7 +43,7 @@
                     </li>
                     @*<li class="close"><a>Settings</a></li>*@
                     <li class="close">
-                         <form method="post" asp-action="logout" asp-controller="account">
+                        <form method="post" asp-action="logout" asp-controller="account">
                             <button type="submit" class="">Logout</button>
                         </form>
                     </li>
@@ -63,7 +63,7 @@
                         <img class="avatar" src="/WebAssests/siteImages/avataricon.png" alt="my avatar">
                         <div class="sub-menu-2">
                             <ul class="avatar-down">
-                                <li> 
+                                <li>
                                     <form method="get" asp-action="Edit" asp-controller="Users" asp-route-id="@userId">
                                         <button type="submit" class="">Edit&nbsp;Profile</button>
                                     </form>
@@ -80,10 +80,10 @@
                 }
                 else
                 {
-                    <li><a asp-controller="account" asp-action="register" >SignUp</a></li>
+                    <li><a asp-controller="account" asp-action="register">SignUp</a></li>
                     <li><a asp-controller="account" asp-action="login">Login</a></li>
                 }
-                </ul>
+            </ul>
         </nav>
         <div class="menu-toggle"><i class="fas fa-bars" aria-hidden="true"></i></div>
     </header>
@@ -118,10 +118,11 @@
     <button class="btn btn-success btn-sm" onclick="topFunction()" id="myBtn" title="Go to top"><i class="fas fa-arrow-alt-circle-up"></i></button>
 
     @*Footer Section*@
- 
+
     <footer>
         <div class="footer-text">&copy; 2020 - ConstellationWebApp - <a class="text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></div>
     </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validate/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive//jquery.validate.unobtrusive.js"></script>
