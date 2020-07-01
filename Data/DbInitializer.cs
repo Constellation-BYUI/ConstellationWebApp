@@ -10,36 +10,30 @@ namespace ConstellationWebApp.Data
     {
         public static void Initialize(ConstellationWebAppContext context)
         {
-            context.Database.EnsureCreated();
-
-           //Look for any students.
-           if (context.User.Any() || context.PostingTypes.Any())
-           {
-               return;   // DB has been seeded
-           }
-
-           
-            var postingType = new PostingType[]
+            //Look for any students.
+            if (!context.PostingTypes.Any())
             {
-              new PostingType { PostingTypeName = "Internship"},
-              new PostingType { PostingTypeName = "Full-Time employement"},
-              new PostingType { PostingTypeName = "Part-Time employement"},
-              new PostingType { PostingTypeName = "Salary base pay"},
-              new PostingType { PostingTypeName = "Hourly wage"},
-              new PostingType { PostingTypeName = "Remote"},
-              new PostingType { PostingTypeName = "On Site"},
-              new PostingType { PostingTypeName = "Community Service"},
-              new PostingType { PostingTypeName = "Society Project"},
-              new PostingType { PostingTypeName = "School Project"},
-              new PostingType { PostingTypeName = "Volunteer"}
-            };
-
-            foreach (PostingType s in postingType)
-            {
-                context.PostingTypes.Add(s);
+                var postingType = new PostingType[]
+                {
+                  new PostingType { PostingTypeName = "Internship"},
+                  new PostingType { PostingTypeName = "Full-Time employement"},
+                  new PostingType { PostingTypeName = "Part-Time employement"},
+                  new PostingType { PostingTypeName = "Salary base pay"},
+                  new PostingType { PostingTypeName = "Hourly wage"},
+                  new PostingType { PostingTypeName = "Remote"},
+                  new PostingType { PostingTypeName = "On Site"},
+                  new PostingType { PostingTypeName = "Community Service"},
+                  new PostingType { PostingTypeName = "Society Project"},
+                  new PostingType { PostingTypeName = "School Project"},
+                  new PostingType { PostingTypeName = "Volunteer"}
+                };           
+                    foreach (PostingType s in postingType)
+                    {
+                        context.PostingTypes.Add(s);
+                    }
+                    context.SaveChanges();
             }
-            context.SaveChanges();
-
+            
             var disciplines = new Discipline[]
            {
               new Discipline { DisciplineName = "Network Engineering"},
