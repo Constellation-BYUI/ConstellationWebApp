@@ -26,15 +26,18 @@ namespace ConstellationWebApp.Data
                   new PostingType { PostingTypeName = "Society Project"},
                   new PostingType { PostingTypeName = "School Project"},
                   new PostingType { PostingTypeName = "Volunteer"}
-                };           
-                    foreach (PostingType s in postingType)
-                    {
-                        context.PostingTypes.Add(s);
-                    }
-                    context.SaveChanges();
+                };
+                foreach (PostingType s in postingType)
+                {
+                    context.PostingTypes.Add(s);
+                }
+                context.SaveChanges();
             }
-            
-            var disciplines = new Discipline[]
+
+            if (!context.Disciplines.Any())
+            {
+
+                var disciplines = new Discipline[]
            {
               new Discipline { DisciplineName = "Network Engineering"},
               new Discipline { DisciplineName = "Cyber Security"},
@@ -43,15 +46,15 @@ namespace ConstellationWebApp.Data
               new Discipline { DisciplineName = "Software Development"},
               new Discipline { DisciplineName = "System Administration"},
               new Discipline { DisciplineName = "Soft Skills"}
-           };            
-            foreach (Discipline dis in disciplines)
-            {
-                context.Disciplines.Add(dis);
-            }
-            context.SaveChanges();
+           };
+                foreach (Discipline dis in disciplines)
+                {
+                    context.Disciplines.Add(dis);
+                }
+                context.SaveChanges();
 
-            var skills = new Skill[]
-            {
+                var skills = new Skill[]
+                {
               //Network Engineering 11
               new Skill {  SkillName = "Troubleshooting of Computer hardware" },
               new Skill {  SkillName = "Managing / Maintaining Servers | Routers | Switches" },
@@ -142,16 +145,16 @@ namespace ConstellationWebApp.Data
               new Skill {  SkillName = "Compasionate" },
               new Skill {  SkillName = "Dependable" },
               new Skill {  SkillName = "Leadership" }
-        };
-            foreach (Skill sk in skills)
-            {
-                context.Skills.Add(sk);
-            }
-            context.SaveChanges();
-            //Truncate the skill discpline tabel
+            };
+                foreach (Skill sk in skills)
+                {
+                    context.Skills.Add(sk);
+                }
+                context.SaveChanges();
+                //Truncate the skill discpline tabel
 
-            var skillDisciplines = new SkillDiscipline[]
-            {
+                var skillDisciplines = new SkillDiscipline[]
+                {
               //networking : 11
               new SkillDiscipline{ DisciplineID = disciplines.Single( d => d.DisciplineName == "Network Engineering").DisciplineID, SkillID = skills.Single( s => s.SkillName == "Troubleshooting of Computer hardware").SkillID },
               new SkillDiscipline{ DisciplineID = disciplines.Single( d => d.DisciplineName == "Network Engineering").DisciplineID, SkillID = skills.Single( s => s.SkillName == "Managing / Maintaining Servers | Routers | Switches").SkillID },
@@ -178,7 +181,7 @@ namespace ConstellationWebApp.Data
               new SkillDiscipline{ DisciplineID = disciplines.Single( d => d.DisciplineName == "Cyber Security").DisciplineID, SkillID = skills.Single( s => s.SkillName == "Digital Forensics").SkillID},
               new SkillDiscipline{ DisciplineID = disciplines.Single( d => d.DisciplineName == "Cyber Security").DisciplineID, SkillID = skills.Single( s => s.SkillName == "Identity & Access Management").SkillID},
               //Data 11
-              new SkillDiscipline{ DisciplineID = disciplines.Single( d => d.DisciplineName == "Database Administration").DisciplineID, SkillID = skills.Single( s => s.SkillName == "Data Modellings").SkillID },                                                                 
+              new SkillDiscipline{ DisciplineID = disciplines.Single( d => d.DisciplineName == "Database Administration").DisciplineID, SkillID = skills.Single( s => s.SkillName == "Data Modellings").SkillID },
               new SkillDiscipline{ DisciplineID = disciplines.Single( d => d.DisciplineName == "Database Administration").DisciplineID, SkillID = skills.Single( s => s.SkillName == "Extract, Transform, Load various data types and sources").SkillID},
               new SkillDiscipline{ DisciplineID = disciplines.Single( d => d.DisciplineName == "Database Administration").DisciplineID, SkillID = skills.Single( s => s.SkillName == "Design and test Database plans").SkillID },
               new SkillDiscipline{ DisciplineID = disciplines.Single( d => d.DisciplineName == "Database Administration").DisciplineID, SkillID = skills.Single( s => s.SkillName == "Database Security").SkillID },
@@ -242,12 +245,13 @@ namespace ConstellationWebApp.Data
               new SkillDiscipline{ DisciplineID = disciplines.Single( d => d.DisciplineName == "Soft Skills").DisciplineID, SkillID = skills.Single( s => s.SkillName == "Compasionate").SkillID },
               new SkillDiscipline{ DisciplineID = disciplines.Single( d => d.DisciplineName == "Soft Skills").DisciplineID, SkillID = skills.Single( s => s.SkillName == "Dependable").SkillID },
               new SkillDiscipline{ DisciplineID = disciplines.Single( d => d.DisciplineName == "Soft Skills").DisciplineID, SkillID = skills.Single( s => s.SkillName == "Leadership").SkillID }
-            };
-            foreach (SkillDiscipline sd in skillDisciplines)
-            {
-                context.SkillDisciplines.Add(sd);
+                };
+                foreach (SkillDiscipline sd in skillDisciplines)
+                {
+                    context.SkillDisciplines.Add(sd);
+                }
+                context.SaveChanges();
             }
-            context.SaveChanges();
         }
     }
 }
