@@ -21,7 +21,7 @@ spec:
         - name: CUSTOMCONNSTR_ConstellationWebAppContext
           valueFrom:
             secretKeyRef:
-              name: prod-app-settings
+              name: stage-app-settings
               key: web-app-context
         - name: ASPNETCORE_ENVIRONMENT
           value: staging
