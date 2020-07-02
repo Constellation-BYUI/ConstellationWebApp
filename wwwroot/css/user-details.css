@@ -1,4 +1,11 @@
-﻿/*.optional-buttons {
+﻿
+
+.user-details-container {
+    margin-top: 50px;
+}
+
+.optional-buttons {
+    z-index:99;
     margin-top: 3.8em;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -15,7 +22,7 @@
     }
         .user-check-box picks {
             width: 100%;
-        }*/
+        }
         .user-details-head, .user-project-head {
             background-color: #1b6ec2;
             color: white;
@@ -82,6 +89,8 @@
         margin-top: .2em;
         height: 25em;
         width: 100%;
+        border-radius: 50%;
+        border: 2px solid #ebeef8;
     }
 
 .user-details-info {

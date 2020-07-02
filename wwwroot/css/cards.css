@@ -6,7 +6,7 @@ a {
 }
 
 .const-card-wrapper {
-    font-size: 10px !important;
+    font-size: 8px !important;
     font-family: "Roboto", sans-serif !important;
     display: flex;
     align-items: center;
@@ -24,7 +24,7 @@ a {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 1rem;
+    margin: 0 auto 1rem auto;
     box-shadow: .5em .3em .5em rgba(0,0,0,0.2);
 }
 
@@ -210,7 +210,7 @@ a {
     .const-card {
         width: 95%;
         margin: 1em 0 ;
-        transition: transform .5s;
+/*        transition: transform .5s;*/
     }
 
     @keyframes fadeIn {
