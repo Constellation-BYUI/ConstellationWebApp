@@ -34,7 +34,7 @@
             <div class="card text-black shadow-lg my-2 mt-0 padding">
                 <h3 class="titleBorder border-bottom my-0">Edit User</h3>
                 @*Note: We do not want to display the PhotoPath Path but the image itself*@
-                <img class=" mx-auto d-block" style="width: 60%; height: 30em" src=" @photoPath" alt="@Html.DisplayFor(model => model.UserName)" asp-append-version="true" />
+                <img class="big-thumbnail" src=" @photoPath" alt="@Html.DisplayFor(model => model.UserName)" asp-append-version="true" />
                 <div class="card-body">
                     <form enctype="multipart/form-data" asp-action="Edit">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>

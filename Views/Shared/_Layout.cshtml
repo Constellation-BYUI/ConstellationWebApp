@@ -30,9 +30,9 @@
         <div class="logo"><a asp-area="" asp-controller="Home" asp-action="Index"><i class="fas fa-home"></i>LOGO</a></div>
         <nav>
             <ul>
+                <li><a asp-area="" asp-controller="Users" asp-action="Index"><i class="fas fa-users"></i>Users</a></li>
                 <li><a asp-area="" asp-controller="Projects" asp-action="Index"><i class="fas fa-project-diagram"></i>Projects</a></li>
                 <li><a asp-area="" asp-controller="Postings" asp-action="Index"><i class="fas fa-briefcase"></i>Job Postings</a></li>
-                <li><a asp-area="" asp-controller="Users" asp-action="Index"><i class="fas fa-users"></i>Users</a></li>
 
                 @if (signInManager.IsSignedIn(User))
                 {
