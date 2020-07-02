@@ -14,20 +14,25 @@ using System.Dynamic;
 using ConstellationWebApp.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
-
+using Microsoft.AspNetCore.Identity;
 
 namespace ConstellationWebApp.Controllers
 {
     [Authorize]
     public class UsersController : Controller
     {
+        private readonly UserManager<User> userManager;
+        private readonly SignInManager<User> signInManager;
         private readonly ConstellationWebAppContext _context;
         private readonly IWebHostEnvironment hostingEnvironment;
 
-        public UsersController(ConstellationWebAppContext context, IWebHostEnvironment hostingEnvironment)
+        public UsersController(ConstellationWebAppContext context, IWebHostEnvironment hostingEnvironment, UserManager<User> userManager,
+                                 SignInManager<User> signInManager)
         {
             _context = context;
             this.hostingEnvironment = hostingEnvironment;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
 
         }
 
@@ -140,9 +145,22 @@ namespace ConstellationWebApp.Controllers
 
 
 
-        private void DeletePhoto(UserEditViewModel model)
+        private void DeletePhotoAndResume(UserEditViewModel model)
         {
             if (model.OldPhotoPath != null)
+            {
+                string filePath = Path.Combine(hostingEnvironment.WebRootPath, "image", model.OldPhotoPath);
+                System.IO.File.Delete(filePath);
+            }
+            if (model.ResumePhotoPath != null)
+            {
+                string resumefilePath = Path.Combine(hostingEnvironment.WebRootPath, "image", model.ResumePhotoPath);
+                System.IO.File.Delete(resumefilePath);
+            }
+        }
+
+        private void DeletePhoto(UserEditViewModel model)
+        {            if (model.OldPhotoPath != null)
             {
                 string filePath = Path.Combine(hostingEnvironment.WebRootPath, "image", model.OldPhotoPath);
                 System.IO.File.Delete(filePath);
@@ -446,14 +464,95 @@ namespace ConstellationWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
+            //Fist remove relational data: join tables
+            RemoveAllStarredData(id);
             RemoveAllContactLinks(id);
-
+            RemoveAllUserSkills(id);
+            //Second remove owner data: Projects/Postings/Profile Image & Resume
+            RemoveAllPostingandProjects(id);
             var user = await _context.User.FindAsync(id);
             var viewModel = userToEditViewModel(user);
-            DeletePhoto(viewModel);
+            DeletePhotoAndResume(viewModel);
+            //Finally remove entitiy Data: User
             _context.User.Remove(user);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Account", "Register");
+            await signInManager.SignOutAsync();
+            return RedirectToAction("index", "home");
+        }
+
+        private void RemoveAllPostingandProjects(string id)
+        {
+            var userProjectsData = _context.UserProjects.Where(s => s.UserID == id);
+            foreach (var instanceOfuserProjects in userProjectsData)
+            {
+                _context.UserProjects.Remove(instanceOfuserProjects);
+            }
+
+            //Only delete Projects which are not shared by other Collaborators
+            var SoloProjectsData = _context.Projects.Where(s => s.UserProjects.Count < 1 && s.UserProjects.Any(u => u.UserID == id));
+            foreach (var instanceOfSoloProject in SoloProjectsData)
+            {
+                _context.Projects.Remove(instanceOfSoloProject);
+            }
+
+            var PostingsData = _context.Postings.Where(s => s.PostingOwner.Id == id);
+            foreach (var instanceOfPosting in PostingsData)
+            {
+                _context.Postings.Remove(instanceOfPosting);
+            }
+        }
+
+        private void RemoveAllStarredData(string id)
+        {
+            var starredUserData = _context.StarredUsers.Where(s => s.StarredOwnerID == id || s.UserStarredID == id);
+            foreach (var instanceOfStarredUser in starredUserData)
+            {
+                _context.StarredUsers.Remove(instanceOfStarredUser);
+            }
+            var starredProjectData = _context.StarredProjects.Where(s => s.UserID == id);
+            foreach (var instanceOfstarredProject in starredProjectData)
+            {
+                _context.StarredProjects.Remove(instanceOfstarredProject);
+            }
+
+            var starredPostingsData = _context.StarredPosting.Where(s => s.UserID == id);
+            foreach (var instanceOfStarredPosting in starredPostingsData)
+            {
+                _context.StarredPosting.Remove(instanceOfStarredPosting);
+            }
+
+            var intrestedCandidateData = _context.IntrestedCandidate.Where(s => s.UserID == id);
+            foreach (var instanceOfintrestedCandidate in intrestedCandidateData)
+            {
+                _context.IntrestedCandidate.Remove(instanceOfintrestedCandidate);
+            }
+
+            var recuiterPickData = _context.RecruiterPicks.Where(s => s.CandidateID == id || s.RecuiterID == id);
+            foreach (var instanceOfrecuiterPick in recuiterPickData)
+            {
+                _context.RecruiterPicks.Remove(instanceOfrecuiterPick);
+            }
+        }
+
+        private void RemoveAllUserSkills(string id)
+        {
+            var userSkilllinks = _context.UserSkillLinks.Where(s => s.UserSkills.UserID == id);
+            foreach (var uslink in userSkilllinks)
+            {
+                _context.UserSkillLinks.Remove(uslink);
+            }
+
+            var userSkills = _context.UserSkills.Where(s => s.UserID == id);
+            foreach (var userSkill in userSkills)
+            {
+                _context.UserSkills.Remove(userSkill);
+            }
+
+            var skillLinks = _context.SkillLinks.Where(s => s.SkillLinkOwner == id);
+            foreach (var skillLink in skillLinks)
+            {
+                _context.SkillLinks.Remove(skillLink);
+            }
         }
 
         // POST: UserProjects/Delete/5

@@ -25,12 +25,14 @@ namespace ConstellationWebApp
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-            public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
 
             services.AddDbContext<ConstellationWebAppContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("ConstellationWebAppContext")));
+
+
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ConstellationWebAppContext>();
@@ -48,9 +50,15 @@ namespace ConstellationWebApp
 
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ConstellationWebAppContext context)
         {
-            UpdateDatabase(app);
+
+            if (context.PostingTypes != null) {
+                UpdateDatabase(app);
+            }
+            else {
+                context.Database.EnsureCreated();
+            }
 
             if (env.IsDevelopment())
             {

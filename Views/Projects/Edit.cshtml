@@ -110,9 +110,10 @@
                                 @:</div>
                                     }
                                 </div>
-                                <input class="input-group rounded border-light col-md-12" list="user-list" name="selectedCollaborators">
-                                <h6>Project Links</h6>
-                                <input class="text-light bg-secondary border-white rounded mt-1" type="button" id="more_fields" onclick="add_collab();" value="Add Collaborator" />
+                                <div id="collab-Display"></div>
+                                <input id="collab-input" class="input-group rounded border-light col-md-12" list="user-list" name="selectedCollaborators">
+                                <div id="userCollab-demo"></div>
+                                <input class="text-light bg-secondary border-white rounded mt-1" type="button" id="more_collab" onclick="add_collab();" value="Add Collaborator" />
                                 @* Create the Project Links for the User *@
                                 <div class="form-group">
                                     <div id="created-links"></div>

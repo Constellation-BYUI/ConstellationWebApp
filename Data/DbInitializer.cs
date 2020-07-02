@@ -10,6 +10,7 @@ namespace ConstellationWebApp.Data
     {
         public static void Initialize(ConstellationWebAppContext context)
         {
+            // context.Database.EnsureCreated();
             //Look for any students.
             if (!context.PostingTypes.Any())
             {
@@ -34,9 +35,8 @@ namespace ConstellationWebApp.Data
                 context.SaveChanges();
             }
 
-            if (!context.Disciplines.Any())
+            if (!context.PostingTypes.Any())
             {
-
                 var disciplines = new Discipline[]
            {
               new Discipline { DisciplineName = "Network Engineering"},
