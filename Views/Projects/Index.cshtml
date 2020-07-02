@@ -7,6 +7,7 @@
 }
 
 <link rel="stylesheet" href="/css/project-index.css" />
+<link rel="stylesheet" href="~/css/cards.css" />
 <!-- The project index container -->
 <!-- #region Info button:-->
 <section class="page-info">
@@ -18,15 +19,7 @@
         experience. Create your own projects to increase your marketability.
     </article>
 </section>
-
-@*<div>
-    <button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
-    <p id="hidden-info-blip">
-        
-    </p>
-</div>*@
 <!-- #endregion -->
-<br>
 <div class="project-index-container">
     <div class="project-index-bread-crumb">Home > Projects</div>
     <!-- search Bars -->
@@ -74,20 +67,14 @@
                 photoPath = "~/WebAssests/siteImages/projectsicon.png";
 
             }
-
             @*CSS RULES FOR INDIVIDUAL CARDS*@
-            <div class="card shadow-lg border-primary mt-1 mb-3 ml-2 mr-2">
-
-                @*Project Title*@
-                <h4 class="card-header bg-primary py-1 text-white text-center m-0">
-                    @*@Html.DisplayNameFor(modelItem => item.Title) :*@
-                    @Html.DisplayFor(modelItem => item.Title)
-                </h4>
+            <!-- Constellation Project Card -->
+        <div class="const-card-wrapper">
+            <div class="const-card">
+                <div class="project-title">@Html.DisplayFor(modelItem => item.Title)</div>
                 @*<img style="height: 300px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.Title)" asp-append-version="true" />*@
-
-                @*COLLABORATORS*@
-                <h5 class="card-header bg-light py-1 text-black text-center m-0">Collaborators</h5>
-                <section class="d-flex flex-wrap justify-content-center">
+                <h2>Collaborators</h2>
+                <div class="collaborators">
                     @{
                         bool isLoggedIn = false;
                         foreach (var collab in item.UserProjects)
@@ -104,7 +91,7 @@
                             }
                             var collabMemberPath = "../Users/Details/" + (collab.User.Id);
 
-                            <a href="@collabMemberPath"><img src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
+                            <a href="@collabMemberPath"><img style="width: 50px; height: 50px;" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
 
                             if (collab.UserID == currentUser)
                             {
@@ -112,40 +99,27 @@
                             }
                         }
                     }
-                </section>
-                @*Project Desccription*@
-                <div class="bg-light border-dark">
-                    <h6 class="card-header bg-light py-1 text-black text-center m-0">@Html.DisplayNameFor(modelItem => item.Description)</h6>
-                    <p class="description-text">@Html.DisplayFor(modelItem => item.Description)</p>
                 </div>
-
+                @*Description*@
+                <H2>@Html.DisplayNameFor(modelItem => item.Description)</H2>
+                <div class="description">@Html.DisplayFor(modelItem => item.Description)</div>
                 @*Project Dates*@
-                <div class="px-2">
-                    <p class="m-0">
-                        <strong class="text-black">@Html.DisplayNameFor(modelItem => item.StartDate) : </strong>
-                        @Html.DisplayFor(modelItem => item.StartDate)
-                    </p>
-                    <p class="m-0">
-                        <strong class="text-black">@Html.DisplayNameFor(modelItem => item.EndDate) : </strong>
-                        @Html.DisplayFor(modelItem => item.EndDate)
-                    </p>
-                    <p class="m-0">
-                        <strong class="text-black">@Html.DisplayNameFor(modelItem => item.CreationDate) : </strong>
-                        @Html.DisplayFor(modelItem => item.CreationDate)
-                    </p>
+                <h2>Project Dates</h2>
+                <div class="project-date">
+                    <p><strong>@Html.DisplayNameFor(modelItem => item.CreationDate) : </strong>@Html.DisplayFor(modelItem => item.CreationDate)</p>
+                    <p><strong>@Html.DisplayNameFor(modelItem => item.StartDate) : </strong>@Html.DisplayFor(modelItem => item.StartDate)</p>
+                    <p><strong>@Html.DisplayNameFor(modelItem => item.EndDate) : </strong>@Html.DisplayFor(modelItem => item.EndDate)</p>
                 </div>
-
                 @*Project Links*@
-                <div class="bg-light">
-                    <h5 class="card-header bg-light py-1 text-black text-center m-0">Project Links</h5>
+                <h2>Project Links</h2>
+                <div class="project-links">
                     @foreach (var link in item.ProjectLinks)
                     {
-                        <a class="text-primary px-2" href=" @link.ProjectLinkUrl" target="_blank">@link.ProjectLinkLabel</a>
+                        <a href=" @link.ProjectLinkUrl" target="_blank">@link.ProjectLinkLabel</a>
                     }
                 </div>
 
-                @*Card Footer*@
-                <section class="card-footer align-text-bottom px-2 py-2">
+                <div class="const-card-footer">
                     @{
 
                         if (isLoggedIn == true)
@@ -159,10 +133,10 @@
                             <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.ProjectID">Details</a>
                         }
                     }
-                </section>
+                </div>
             </div>
-
+        </div>
+            
         }
-        <div class="project-index-cards"></div>
     </div>
 </div>

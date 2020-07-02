@@ -3,17 +3,20 @@ html {
     width: 100%;
 }
 
+.form-group {
+    margin-bottom: 2px;
+}
 .project-details-body {
-    border: 2px solid black;
+   
 }
 
 .project-details-head {
-    border: 1px solid black;
-    background-color: #1b6ec2;
+    background-color: #457b9d;
     color: white;
     width: 100%;
     text-align: center;
     font-size: large;
+    
 }
 
 .project-picture {
@@ -27,10 +30,9 @@ html {
         box-shadow: azure;
     }
 
-.project-title {
-    background-color: gray;
+.project-content .project-title {
+    background-color: #457b9d;
     width: 100%;
-    border: 1px solid black;
     text-align: center;
     padding: 3px;
     font-size: medium;
@@ -40,10 +42,11 @@ html {
 
 .project-content h3 {
     text-align: center;
-    margin: 0;
-    padding: 5px;
+    margin-bottom: 0 !important;
+    padding: 8px;
     color: white;
-    background-color: #1b6ec2;
+    background-color: #457b9d;
+    border-top: 1px solid #fff;
 }
 
 .project-description {
@@ -89,32 +92,41 @@ html {
         .project-link a:hover {
             color: blue;
         }
+        .project-link a:active {
+            color: #e63946;
+        }
 
+.project-collaborators {
+    width: 20%;
+    border: 1px solid #1d3557;
+}
 .project-collaborators h4 {
     text-align: center;
     margin: 0;
-    padding: 5px;
+    padding: 8px;
     color: white;
-    background-color: #1b6ec2;
+    background-color: #457b9d;
 }
 
 .project-collaborators-picture {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
+    justify-content: flex-start;
 }
 
-    .project-collaborators-pictture img {
+    .project-collaborators-pictture a .small-pix {
         margin: 3px;
-        width: 4em;
-        height: 4em;
-        border: 2px solid whitesmoke;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 2px solid #1d3557;
     }
 
 .project-details-footer {
     display: flex;
     flex-wrap: nowrap;
-    background-color: lightgray;
+    border: 1px solid gray;
 }
 
     .project-details-footer a {
@@ -132,14 +144,10 @@ html {
     margin: auto;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 767px) {
     /* CSS for Job postings Relating to Project Details */
     .job-posting-field {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        overflow: scroll;
-        height: 40em;
+        height: 30em;
         width: 100%;
         margin: auto;
     }
@@ -159,36 +167,24 @@ html {
         .project-picture img {
             height: 100%;
             width: 100%;
-            border: 2px solid gray;
-            box-shadow: azure;
+           /* border: 2px solid gray;
+            box-shadow: azure;*/
         }
 
     .project-content {
-        border: 1px solid black;
         width: 50%;
     }
 
-    .project-title {
-        background-color: gray;
-        width: 100%;
-        border: 1px solid black;
-        text-align: center;
-        padding: 3px;
-        font-size: medium;
-        color: white;
-        margin: auto;
-    }
-
-    .project-description h3 {
+    /*.project-description h3 {
         text-align: center;
         margin: 0;
         padding: 5px;
         color: white;
-        background-color: #1b6ec2;
-    }
+        background-color: #457b9d;
+    }*/
 
     .project-collaborators {
         width: 20%;
-        border: 1px solid black;
+        border: 1px solid #1d3557;
     }
 }

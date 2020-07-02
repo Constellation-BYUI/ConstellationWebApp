@@ -42,10 +42,10 @@
     }
 
 .user-index-content {
-    align-items: start;
+   /* align-items: start;
     display: grid;
     grid-template-columns: 1fr;
-    column-gap: .7em;
+    column-gap: .7em;*/
     overflow: scroll;
     height: 30em;
     background-color: whitesmoke;
@@ -58,7 +58,7 @@
     }
 
     .user-index-content {
-        grid-template-columns: repeat(3, 1fr);
+       /* grid-template-columns: repeat(3, 1fr);*/
         height: 35em;
         margin: 0 2em 1em 2em;
     }
@@ -81,7 +81,7 @@
 
 @media screen and (min-width: 991px) {
     .user-index-content {
-        grid-template-columns: repeat(4, 1fr);
+       /* grid-template-columns: repeat(4, 1fr);*/
     }
 
     .user-index-search-bars {
@@ -92,7 +92,7 @@
 
 @media screen and (min-width: 1199px) {
     .user-index-content {
-        grid-template-columns: repeat(4, 1fr);
+       /* grid-template-columns: repeat(4, 1fr);*/
         height: 40em;
     }
 }

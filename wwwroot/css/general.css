@@ -4,7 +4,8 @@ body {
     background-color: rgba(0,0,0,0.1);
 }
 main {
-    overflow: hidden;
+/*    margin-top: 50px;*/
+    overflow:hidden;
 }
 
 .titleCard {
@@ -54,6 +55,15 @@ footer {
         background-color: #555; /* Add a dark-grey background on hover */
     }
 
+
+.big-thumbnail {
+    width: 30rem;
+    height: 30rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1.5em solid #ebeef8;
+    margin: 1em auto auto auto;
+}
 .small-thumbnail {
     width: 200px;
     height: 200px;

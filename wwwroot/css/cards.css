@@ -130,6 +130,82 @@ a {
         color: #869790;
     }
 
+
+/* constellation project card css */
+.project-title {
+    background-color: #457b9d;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    padding: .3em;
+    font-size: 2.3em;
+    font-weight: 500;
+}
+
+.const-card h2 {
+    margin: 0;
+    padding: .3em;
+    font-size: 2em;
+}
+
+.collaborators {
+    padding: .3em 0;
+}
+
+    .collaborators img {
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #ebeef8;
+    }
+
+.description {
+    padding: .3em .5em;
+    font-size: 1.7em;
+    line-height: 1.3em;
+    word-spacing: -2px;
+    text-align: justify;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.project-date {
+    width: 100%;
+}
+
+    .project-date p {
+        margin: 0;
+        padding: .2rem 1rem;
+        font-size: 1.5em;
+    }
+
+.project-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+    .project-links a {
+        text-decoration: none;
+        color: #000;
+        font-style: italic;
+        font-size: 1.5em;
+    }
+
+        .project-links a:hover {
+            color: blue;
+        }
+
+        .project-links a:visited {
+            color: green;
+        }
+
+        .project-links a:active {
+            color: #e63946;
+        }
+
 @media screen and (min-width: 767px) {
     .const-card {
         width: 95%;
@@ -147,23 +223,38 @@ a {
         }
     }
 
-    .const-card:nth-child(1) {
+    .const-card-wrapper:nth-child(1) {
         animation: fadeIn .5s .5s backwards;
     }
 
-    .const-card:nth-child(2) {
+    .const-card-wrapper:nth-child(2) {
         animation: fadeIn .5s .1s backwards;
     }
 
-    .const-card:nth-child(3) {
+    .const-card-wrapper:nth-child(3) {
         animation: fadeIn .5s 1.5s backwards;
     }
 
-    .const-card:nth-child(4) {
-        animation: fadeIn .5s 2s backwards;
+    .const-card-wrapper:nth-child(4) {
+        animation: fadeIn .5s 2.5s backwards;
+    }
+    .const-card-wrapper:nth-child(5) {
+        animation: fadeIn .5s 3s backwards;
+    }
+    .const-card-wrapper:nth-child(6) {
+        animation: fadeIn .5s 3.5s backwards;
+    }
+    .const-card-wrapper:nth-child(7) {
+        animation: fadeIn .5s 4s backwards;
+    }
+    .const-card-wrapperd:nth-child(8) {
+        animation: fadeIn .5s 4.5s backwards;
+    }
+    .const-card-wrapper:nth-child(9) {
+        animation: fadeIn .5s 5s backwards;
     }
 
-    .const-card:hover {
+    .const-card-wrapper:hover {
         transform: scale(1.05);
     }
 }

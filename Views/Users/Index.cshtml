@@ -98,7 +98,7 @@
                             photoPath = "~/WebAssests/siteImages/avataricon.png";
                         }
                         <!-- CSS RULES FOR INDIVIDUAL CARDS -->
-                        <div class="const-card-wrapper">
+                        @*<div class="const-card-wrapper">*@
                             <div class="const-card">
                                 <img class="const-card-image" src="/WebAssests/siteImages/constelation_image.webp" alt="card background">
                                 <a href="./Users/Details/@item.Id"><img class="const-profile-image" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.UserName)" asp-append-version="true" /></a>
@@ -160,7 +160,7 @@
                                 </div>
                             </div>
 
-                        </div>
+                        @*</div>*@
                     }
                 }
 
