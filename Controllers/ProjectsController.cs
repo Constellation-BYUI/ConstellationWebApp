@@ -176,7 +176,7 @@ namespace ConstellationWebApp.Controllers
         }
 
 
-        // POST: UserProjects/Delete/5
+        // UserProjects/Delete/5
         [HttpPost, ActionName("DeleteLink")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteLink(int projectID, int projectLinkID)
@@ -185,6 +185,49 @@ namespace ConstellationWebApp.Controllers
             _context.ProjectLinks.Remove(thisPL);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Projects");
+        }
+
+        private async Task CreateCollaborators(string[] selectedCollaborators, string currentUser, Project newProject)
+        {
+            if (selectedCollaborators != null)
+            {
+                foreach (var user in selectedCollaborators)
+                {
+                    if (string.IsNullOrEmpty(user))
+                    {
+                        continue;
+                    }
+                    try
+                    {
+                        User foundUser = _context.User.Where(i => i.UserName == user || i.Id == user).FirstOrDefault();
+                        UserProject userProjects = new UserProject
+                        {
+                            ProjectID = newProject.ProjectID,
+                            UserID = foundUser.Id
+                        };
+                        _context.Add(userProjects);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                }
+            }
+            //Add the current user to the list if they did not add themselves
+            UserProject currentUserProject = _context.UserProjects.Where(i => i.UserID == currentUser && i.ProjectID == newProject.ProjectID).FirstOrDefault();
+            if (currentUserProject == null)
+            {
+                UserProject loggedInuserProject = new UserProject
+                {
+                    ProjectID = newProject.ProjectID,
+                    UserID = currentUser
+                };
+                _context.Add(loggedInuserProject);
+                await _context.SaveChangesAsync();
+            }
+
+
         }
 
         #endregion
@@ -315,51 +358,19 @@ namespace ConstellationWebApp.Controllers
                     newProject = projectViewModelToProject(model);
                     await _context.SaveChangesAsync();
                 }
-                
-                if (selectedCollaborators != null)
+
+                await CreateCollaborators(selectedCollaborators, currentUser, newProject);
+
+                if (!createdLinkLabels.Any() && !createdLinkUrls.Any())
                 {
-                    //Add the current user to the list if they did not add themselves
-                    if (!(selectedCollaborators.Contains(currentUser)))
-                    {
-                        UserProject loggedInuserProject = new UserProject
-                        {
-                            ProjectID = newProject.ProjectID,
-                            UserID = currentUser
-                        };
-                        _context.Add(loggedInuserProject);
-                    }
-
-                    model.UserProjects = new List<UserProject>();
-                    foreach (var user in selectedCollaborators)
-                    {
-                        try
-                        {
-                            var userid = (from a in _context.User
-                                          where a.UserName == user
-                                          select a).First<User>().Id;
-
-                            UserProject userProjects = new UserProject
-                            {
-                                ProjectID = newProject.ProjectID,
-                                UserID = userid
-                            };
-
-                            _context.Add(userProjects);
-                        }
-                        catch
-                        {
-                            continue;
-                        }
-                    }
-                    CreateProjectLinks(createdLinkLabels, createdLinkUrls, newProject);
-
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                 CreateProjectLinks(createdLinkLabels, createdLinkUrls, newProject);
                 }
-                PopulateAssignedProjectData(newProject);
+                return RedirectToAction(nameof(Index));
             }
             return View();
         }
+
+      
 
         // GET: Projects/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -394,6 +405,7 @@ namespace ConstellationWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, ProjectEditViewModel model, string[] selectedCollaborators, string[] createdLinkLabels, string[] createdLinkUrls, string OldPhotoPath)
         {
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var project = await _context.Projects.FindAsync(id);
 
             if (id != model.ProjectID)
@@ -418,30 +430,7 @@ namespace ConstellationWebApp.Controllers
                 _context.Update(project);
                 await _context.SaveChangesAsync();
 
-                if (selectedCollaborators != null)
-                {
-                    model.UserProjects = new List<UserProject>();
-                    foreach (var user in selectedCollaborators)
-                    {
-                        try
-                        {
-                            var userid = (from a in _context.User
-                                          where a.UserName == user
-                                          select a).First<User>().Id;
-
-                            UserProject userProjects = new UserProject
-                            {
-                                ProjectID = project.ProjectID,
-                                UserID = userid
-                            };
-
-                            _context.Add(userProjects);
-                        }
-                        catch (InvalidOperationException e)
-                        {
-                            Console.WriteLine($"The user was not found: '{e}'");
-                        }
-                    }
+                await CreateCollaborators(selectedCollaborators, currentUser, project);               
 
                     if (!(createdLinkLabels[0] == null))
                     {
@@ -450,8 +439,6 @@ namespace ConstellationWebApp.Controllers
 
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
-                }
-                PopulateAssignedProjectData(project);
             }
             return View();
         }
