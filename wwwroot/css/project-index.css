@@ -24,13 +24,7 @@
     font-size: .9em;
     padding: 8px 1.5px;
 }
-.project-index-search-bars {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 1em;
-    margin: 0 5px;
-    padding: 5px 0;
-}
+
 /*.project-index-search-bars {
     display: flex;
     justify-content: space-between;
@@ -107,6 +101,7 @@
     .project-index-bread-crumb {
         display: block;
     }
+   
     .sort-button1, .sort-button2 {
         font-size: 1em;
         padding: 7px;

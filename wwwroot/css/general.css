@@ -4,7 +4,7 @@ body {
     background-color: rgba(0,0,0,0.1);
 }
 main {
-/*    margin-top: 50px;*/
+    margin-top: 50px;
     overflow:hidden;
 }
 
@@ -27,6 +27,30 @@ main {
     width: 100%;
     padding: 0.3em;
 }
+
+.general-search-bars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1em;
+    margin: 25px 5px 0 5px;
+    padding: 5px 0;
+}
+
+.general-index-head {
+    background-color: #1d3557; /* For browsers that do not support gradients */
+    background-image: linear-gradient(to right, #1d3557, #e63946);
+    color: white;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 3px;
+    
+}
+
+    .general-index-head h2 {
+        margin: 0;
+        font-size: 1.5em;
+        padding: 5px;
+    }
 
 footer {
     background-color: #1d3557;
@@ -72,4 +96,16 @@ footer {
     border-radius: 3px;
 }
 
+@media screen and (min-width: 767px) {
+    .general-search-bars {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        margin: 0 5px;
+    }
+
+    .general-index-head h2 {
+        font-size: 2em;
+        font-weight: 600;
+       
+    }
+}
 

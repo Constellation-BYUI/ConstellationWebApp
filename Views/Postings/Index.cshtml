@@ -20,9 +20,9 @@
 <div class="posting-index-container">
     <div class="posting-index-bread-crumb">Home > Postings</div>
     <!-- search Bars -->
-    <div class="posting-index-search-bars">
+    <div class="general-search-bars">
         <!-- Create Job Postings button -->
-        <a asp-action="Create"><div class="create-posting btn btn-md btn-success">Create&nbsp;a&nbsp;Job&nbsp;Posting</div></a>
+        <a asp-action="Create"><div class="create-posting btn btn-md btn-success">Create&nbsp;Job&nbsp;Posting</div></a>
         <form action="" class="search-bar0">
             <div class="input-group">
                 <input type="search" placeholder="Search.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
@@ -58,7 +58,7 @@
     </div>
 
     <!-- Postings contents goes in here -->
-    <div class="posting-index-head"><h2>Job Postings</h2></div>
+    <div class="general-index-head"><h2>Job Postings</h2></div>
     <div class="posting-index-content">
         <datalist id="postingTypes-List">
             @{
@@ -134,6 +134,5 @@
                                 </div>
                             }
                 }
-            }
         </div>
     </div>

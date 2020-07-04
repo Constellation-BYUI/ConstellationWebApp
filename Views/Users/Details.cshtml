@@ -29,6 +29,15 @@
 }
 
 <link rel="stylesheet" href="~/css/user-details.css" />
+<!-- #region Info button:-->
+<section class="page-info">
+    <div class="info-button" id="button-info">View&nbsp;Page&nbsp;Info</div>
+    <article>
+        These options are available because you are a job posting owner. You can easily add or remove this user and
+        other users from these roles by using these actions below.
+    </article>
+</section>
+<!-- #endregion -->
 <div class="user-details-container">
     <section class="optional-buttons">
         @* Add a user to the my starred users list *@
@@ -75,18 +84,8 @@
             if (postings.Any() && @Model.Id != currentUser)
             {
                 <button class="btn btn-sm btn-outline-dark mb-1 mx-auto" id="pickButton" onclick="showRecuiterDiv()">Add/Remove from Picks</button>
-                <!-- #region Info button:-->
-                <div style="display:inline;">
-                    <button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
-                    <p id="hidden-info-blip">
-                        These options are available because you are a job posting owner. You can easily add or remove this user and
-                        other users from these roles by using these actions below.
-                    </p>
-                </div>
                 <div id="recuiterPosting">
-                    <div tyle="display:block;">
-
-                        <!-- #endregion -->
+                    <div style="display:block;">
                         @*<h4>Add this User to your picks</h4>*@
                         <form class="user-check-box" asp-action="CreateManyPicks" asp-controller="IntrestedCandidates">
                             @{
