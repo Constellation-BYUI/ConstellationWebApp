@@ -21,19 +21,6 @@
         width: 70% !important;
     }
 
-.user-index-head {
-    background-color: #1b6ec2;
-    color: white;
-    width: 100%;
-    text-align: center;
-    font-size: large;
-    font-weight: 400;
-    margin-bottom: 3px;
-    padding: 5px;
-}
-    .user-index-head h2 {
-        margin: 0;
-    }
 
 .user-index-content {
     display: grid;

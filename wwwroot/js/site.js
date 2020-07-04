@@ -1,6 +1,4 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-
+﻿
 //BurgarMenu Control on Small screeens
 //NavBar, MyVolt, and avatar 
 $(document).ready(function () {
@@ -12,25 +10,43 @@ $(document).ready(function () {
 $(document).ready(function () {
     $('#my-volt').click(function () {
         $('.volt-down').toggleClass('show')
-    })
-})
-$(document).ready(function () {
-    $('.avatar').click(function () {
+    });
+
+    $('#drop-down-avatar').click(function () {
         $('.avatar-down').toggleClass('show')
-    })
+    });
+
+    $(document).on('click', function (e) {
+        if (!(($(e.target).closest('.sub-menu-1').length > 0) || ($(e.target).closest('.sub-menu-2').length > 0) || ($(e.target).closest('#drop-down-avatar').length > 0) || ($(e.target).closest('#my-volt').length > 0))) {
+            $('.volt-down').removeClass('show');
+            $('.avatar-down').removeClass('show');
+        }
+    });
 })
 
-
+ 
 //Hide or show page information
 $(document).ready(function () {
     $('#button-info').click(function () {
-        $('article').addClass('display')
+        $('article').toggleClass('display')
     });
-    $('body').click(function (){
-        $('article').removeClass('display')
-    })
-   
+    $(document).on('click', function (e) {
+        if (!(($(e.target).closest('.page-info').length > 0) || ($(e.target).closest('#button-info').length > 0))) {
+            $('article').removeClass('display');
+        }
+    });
 })
+
+
+
+// close modal on click outside at anywhere
+$(document).on('click', function (e) {
+    if (!(($(e.target).closest("#modalBox").length > 0) || ($(e.target).closest("#modal-btn").length > 0))) {
+        $("#modalBox").hide();
+    }
+});
+
+
 
 
 //Posting adding show/hide

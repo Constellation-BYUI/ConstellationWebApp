@@ -32,9 +32,13 @@
     }
 .input-group {
     width: 104%;
+<<<<<<< Updated upstream
 }
 
 
+=======
+} 
+>>>>>>> Stashed changes
 
     .posting-index-content {
         display: grid;
