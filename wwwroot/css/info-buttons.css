@@ -17,7 +17,7 @@
     cursor: pointer;
     border-radius: 3px;
     background-color: #fd7e14;
-    z-index: 999;
+    z-index: 1024;
 }
     .info-button:hover {
         right: 0;
@@ -40,7 +40,7 @@ section article {
     margin: 0 10px;
     border-radius: 5px;
     width: 90%;
-    z-index: 999;
+    z-index: 1024;
 }
     section article.display {
         left: 0;
