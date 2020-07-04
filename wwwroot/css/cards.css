@@ -67,6 +67,17 @@ a {
     margin: .3em 0 1em 0;
 }
 
+
+/*This section reveals form hide more info of the user*/
+.more-info {
+    width: 100%;
+    display: none;
+    transform: scale(1s);
+    transition: transform .5s;
+}
+
+
+
 .discipline {
     font-size: 1.5em;
     color: #777;
@@ -90,7 +101,7 @@ a {
     text-align: left;
     padding: .5em;
     border-top: 1px solid rgba(0,0,0,.1);
-    background-color: #242b41;
+/*    background-color: #242b41;*/
 }
 
 .social-media {
@@ -133,7 +144,8 @@ a {
 
 /* constellation project card css */
 .project-title {
-    background-color: #457b9d;
+    background-color: #1d3557; /* For browsers that do not support gradients */
+    background-image: linear-gradient(to right, #1d3557, #457b9d);
     color: #fff;
     width: 100%;
     text-align: center;
@@ -206,11 +218,89 @@ a {
             color: #e63946;
         }
 
+/* Constellation Job Postings Cards Css */
+.postings-title {
+    background-color: #1d3557; /* For browsers that do not support gradients */
+    background-image: linear-gradient(to right, #1d3557, #457b9d);
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    font-size: 2em;
+    font-weight: 600;
+}
+
+.postings-info {
+    width: 100%;
+}
+.position {
+    border-bottom: 2px solid #e63946;
+    width: 100%;
+    text-align: center;
+    padding: 3px;
+    font-size: 1.7em;
+}
+
+    .position strong {
+        color: green;
+    }
+
+.owners-box {
+    padding: 5px;
+}
+
+    .owners-box img {
+        margin-left: 50%;
+        transform: translate(-50%);
+        border-radius: 50%;
+        padding: 2px 2px 5px 2px;
+        border: 2px solid #457b9d;
+    }
+
+.job-owners-name {
+    color: #000;
+    text-align: center;
+    color: green;
+    font-size: 18px;
+}
+
+.postings-type p {
+    text-align: center;
+    margin-bottom: 0;
+    font-size: 13px;
+}
+
+.postings-type h2, .postings-description h2 {
+    background: #457b9d;
+    color: #fff;
+    font-size: 18px;
+}
+
+.postings-description p {
+    padding: 0 1rem;
+    word-spacing: -2px;
+    text-align: justify;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 13px;
+}
+
 @media screen and (min-width: 767px) {
     .const-card {
         width: 95%;
-        margin: 1em 0 ;
-/*        transition: transform .5s;*/
+        margin: 1em 0;
+        transition: transform .5s;
+       
+    }
+    .const-card:hover {
+        transform: scale(1.05);
+        transition: transform .5s;
+    }
+    .const-card:hover .more-info {
+        display: block;
+        transition: transform 1s;
     }
 
     @keyframes fadeIn {
@@ -228,7 +318,7 @@ a {
     }
 
     .const-card-wrapper:nth-child(2) {
-        animation: fadeIn .5s .1s backwards;
+        animation: fadeIn .5s 1s backwards;
     }
 
     .const-card-wrapper:nth-child(3) {
@@ -236,25 +326,23 @@ a {
     }
 
     .const-card-wrapper:nth-child(4) {
-        animation: fadeIn .5s 2.5s backwards;
+        animation: fadeIn .5s 2s backwards;
     }
     .const-card-wrapper:nth-child(5) {
-        animation: fadeIn .5s 3s backwards;
+        animation: fadeIn .5s 2.5s backwards;
     }
     .const-card-wrapper:nth-child(6) {
-        animation: fadeIn .5s 3.5s backwards;
+        animation: fadeIn .5s 3s backwards;
     }
     .const-card-wrapper:nth-child(7) {
-        animation: fadeIn .5s 4s backwards;
+        animation: fadeIn .5s 3.5s backwards;
     }
     .const-card-wrapperd:nth-child(8) {
-        animation: fadeIn .5s 4.5s backwards;
+        animation: fadeIn .5s 4s backwards;
     }
     .const-card-wrapper:nth-child(9) {
-        animation: fadeIn .5s 5s backwards;
+        animation: fadeIn .5s 4.5s backwards;
     }
 
-    .const-card-wrapper:hover {
-        transform: scale(1.05);
-    }
+  
 }

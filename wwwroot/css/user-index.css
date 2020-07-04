@@ -10,12 +10,6 @@
     text-align: left;
     color: blue;
 }
-.user-index-search-bars {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 1em;
-    margin: 3.8em 5px 5px 5px;
-}
 
 .search-bar3, .search-bar0 {
     display: none;
@@ -27,19 +21,6 @@
         width: 70% !important;
     }
 
-.user-index-head {
-    background-color: #1b6ec2;
-    color: white;
-    width: 100%;
-    text-align: center;
-    font-size: large;
-    font-weight: 400;
-    margin-bottom: 3px;
-    padding: 5px;
-}
-    .user-index-head h2 {
-        margin: 0;
-    }
 
 .user-index-content {
     display: grid;
@@ -65,12 +46,7 @@
         .user-index-content {
             height: 35em;
         }
-    .user-index-search-bars {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        column-gap: 1em;
-        margin: 0 5px;
-    }
+ 
 
     .search-bar1, .search-bar2, .search-bar3 {
         display: block;
@@ -87,10 +63,6 @@
         grid-template-columns: repeat(4, 1fr);
     }
 
-    .user-index-search-bars {
-        grid-template-columns: 1fr 1fr 1fr;
-        margin-bottom: 6px;
-    }
 }
 
 @media screen and (min-width: 1199px) {

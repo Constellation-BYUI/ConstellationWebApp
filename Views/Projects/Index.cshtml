@@ -23,7 +23,7 @@
 <div class="project-index-container">
     <div class="project-index-bread-crumb">Home > Projects</div>
     <!-- search Bars -->
-    <div class="project-index-search-bars">
+    <div class="general-search-bars">
         <!-- Create project button -->
         <a asp-action="Create"><div class="create-project btn btn-md btn-success">Create&nbsp;Project</div></a>
         <form action="" class="search-bar0">
@@ -53,7 +53,7 @@
     </div>
 
     <!-- Project contents goes in here -->
-    <div class="project-index-head"><h2>Projects</h2></div>
+    <div class="general-index-head"><h2>Projects</h2></div>
     <div class="project-index-content">
         @foreach (var item in Model.Projects)
         {

@@ -1,20 +1,20 @@
 ﻿
 
 .user-details-container {
-    margin-top: 50px;
+/*    margin-top: 50px;*/
 }
 
 .optional-buttons {
-    z-index:99;
-    margin-top: 3.8em;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-column-gap: .5em;
+    margin: 5px !important;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
 }
     .optional-buttons input, .optional-buttons .check {
         width: 100%;
         font-size: .7em;
-        display:block;
+/*        display:inherit;*/
     }
     .user-check-box {
         display: flex;
