@@ -105,34 +105,35 @@
             <a href="./Users/Details/@item.Id"><img class="const-profile-image" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.UserName)" asp-append-version="true" /></a>
             <h1> @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)</h1>
             <h3><strong>User Name : </strong>@Html.DisplayFor(modelItem => item.UserName)</h3>
-            <!--Area of Discipline-->
-            @if (!(string.IsNullOrEmpty(item.AreaOfDiscipline)))
-            {
-                <h2>@Html.DisplayNameFor(modelItem => item.AreaOfDiscipline)</h2>
-                <div class="discipline">@Html.DisplayFor(modelItem => item.AreaOfDiscipline)</div>
-            }
+            <div class="more-info">
+                <!--Area of Discipline-->
+                @if (!(string.IsNullOrEmpty(item.AreaOfDiscipline)))
+                {
+                    <h2>@Html.DisplayNameFor(modelItem => item.AreaOfDiscipline)</h2>
+                    <div class="discipline">@Html.DisplayFor(modelItem => item.AreaOfDiscipline)</div>
+                }
 
-            <!--Seeking-->
-            @if (!(string.IsNullOrEmpty(item.Seeking)))
-            {
-                <h2> @Html.DisplayNameFor(modelItem => item.Seeking)</h2>
-                <div class="discipline">@Html.DisplayFor(modelItem => @item.Seeking)</div>
-            }
-
-
-            @*Contact Links*@
-            @if (item.ContactLinks.Any())
-            {
-                <h2>Contact Links</h2>
-                <div class="discipline">
-                    @foreach (var link in item.ContactLinks)
-                    {
-                        <a href="@link.ContactLinkUrl" target="_blank">@link.ContactLinkLabel</a>
-                    }
-                </div>
-            }
+                <!--Seeking-->
+                @if (!(string.IsNullOrEmpty(item.Seeking)))
+                {
+                    <h2> @Html.DisplayNameFor(modelItem => item.Seeking)</h2>
+                    <div class="discipline">@Html.DisplayFor(modelItem => @item.Seeking)</div>
+                }
 
 
+                @*Contact Links*@
+                @if (item.ContactLinks.Any())
+                {
+                    <h2>Contact Links</h2>
+                    <div class="discipline">
+                        @foreach (var link in item.ContactLinks)
+                        {
+                            <a href="@link.ContactLinkUrl" target="_blank">@link.ContactLinkLabel</a>
+                        }
+                    </div>
+                }
+
+            </div>
             @*<div>
                 <strong class="text-warning">
                     @Html.DisplayNameFor(modelItem => item.UserName) :
