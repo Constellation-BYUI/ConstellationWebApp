@@ -9,7 +9,7 @@ section {
 
 .info-button {
     position: absolute;
-    right: -65px;
+    right: -160px;
     transition: 0.3s;
     font-size: .9rem;
     padding: .5rem 4px;
@@ -24,7 +24,7 @@ section {
     z-index: 999;
 }
     .info-button:hover {
-        right: 0;
+        right: -95px;
     }
 
     .info-button:hover {
@@ -34,7 +34,7 @@ section {
 section article {
     position: absolute;
     top: 2.2rem;
-    left: -100%;
+    left: -120%;
     color: rgb(223, 178, 29);
     background-color: rgba(0,0,0,.8);
     text-align: justify;

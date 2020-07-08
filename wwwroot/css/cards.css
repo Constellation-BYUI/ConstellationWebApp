@@ -7,7 +7,7 @@ a {
 
 .const-card-wrapper {
     font-size: 8px !important;
-    font-family: "Roboto", sans-serif !important;
+    /*font-family: "Roboto", sans-serif !important;*/
     display: flex;
     align-items: center;
     align-content: center;
@@ -16,7 +16,7 @@ a {
 
 .const-card {
     font-size: 10px !important;
-    font-family: "Roboto", sans-serif !important;
+    /*font-family: "Roboto" !important;*/
     border: 1px solid #cbd4f1;
     width: 80%;
     background-color: #fff;
