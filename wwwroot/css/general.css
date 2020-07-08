@@ -1,7 +1,7 @@
 ﻿@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 /*BODY*/
 body {
-    background-color: rgba(0,0,0,0.1);
+/*    background-color: rgba(0,0,0,0.1);*/
 }
 main {
     margin-top: 50px;
@@ -38,7 +38,7 @@ main {
 
 .general-index-head {
     background-color: #1d3557; /* For browsers that do not support gradients */
-    background-image: linear-gradient(to right, #242b41, #1d3557, #457b9d, #e63946);
+    background-image: linear-gradient(to right, #242b41, #1d3557, #e63946);
     color: white;
     width: 100%;
     text-align: center;
