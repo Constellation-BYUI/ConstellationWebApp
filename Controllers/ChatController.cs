@@ -169,7 +169,7 @@ namespace ConstellationWebApp.Controllers
         public async Task<ActionResult> CreateChat(string[] selectedCollaborators, string StartingMessage, bool IgnoreExistence)
         {
             //#0 eval if there is already an existing chat with the same members
-            if(IgnoreExistence == false)
+          /*  if(IgnoreExistence == false)
             {
 
                 //First go through list of the selected collaborators and ensure that all values are the PK ID
@@ -190,7 +190,7 @@ namespace ConstellationWebApp.Controllers
                      }
                 }
                 Chat lookupChat = _context.Chats.Where(i => i.ChatUsers.)
-            }
+            }*/
 
 
             //#1 Create the Chat
