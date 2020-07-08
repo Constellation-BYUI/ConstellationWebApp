@@ -30,7 +30,7 @@
 }
 .user-index-content {
     overflow: auto;
-    height: inherit;
+    height: 30em;
 }
 
 

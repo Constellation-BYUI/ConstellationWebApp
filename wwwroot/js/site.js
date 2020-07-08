@@ -1,13 +1,12 @@
 ﻿
 //BurgarMenu Control on Small screeens
 //NavBar, MyVolt, and avatar 
-$(document).ready(function () {
+$(function () {
+    'use strict';
     $('.menu-toggle').click(function () {
         $('nav').toggleClass('active')
     })
-})
 
-$(document).ready(function () {
     $('#my-volt').click(function () {
         $('.volt-down').toggleClass('show')
     });

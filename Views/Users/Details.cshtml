@@ -29,6 +29,7 @@
 }
 
 <link rel="stylesheet" href="~/css/user-details.css" />
+<link rel="stylesheet" href="~/css/cards.css" />
 <!-- #region Info button:-->
 <section class="page-info">
     <div class="info-button" id="button-info">View&nbsp;Page&nbsp;Info</div>
@@ -38,128 +39,134 @@
     </article>
 </section>
 <!-- #endregion -->
-<div class="user-details-container">
-    <section class="optional-buttons">
-        @* Add a user to the my starred users list *@
-        @if (currentUser != null && currentUser != Model.Id)
+@* #######################################
+     Section Containing Optional Buttons
+    ###################################### *@
+<div class="optional-buttons">
+    @* Add a user to the my starred users list *@
+    @if (currentUser != null && currentUser != Model.Id)
+    {
+        List<ConstellationWebApp.Models.StarredUser> starredData = ViewBag.StarredUsers;
+        foreach (var starred in starredData)
         {
-            List<ConstellationWebApp.Models.StarredUser> starredData = ViewBag.StarredUsers;
-            foreach (var starred in starredData)
+            if (starred.StarredOwnerID == currentUser && starred.UserStarredID == @Model.Id)
             {
-                if (starred.StarredOwnerID == currentUser && starred.UserStarredID == @Model.Id)
-                {
-                    <div style="display:block;">
-                        @{
-                            <form asp-action="Delete" asp-controller="StarredUsers">
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div>
+                    @{
+                        <form asp-action="Delete" asp-controller="StarredUsers">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                                <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id" />
+                            <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id" />
 
-                                <input class="btn btn-sm btn-outline-danger mb-1 mx-auto" type="submit" value="Remove from MyStarred Users" />
+                            <input class="remove btn btn-sm btn-outline-danger" type="submit" value="Remove from MyStarred Users" />
 
-                            </form>
-                            allReadyStarred = true;
-                        }
-                    </div>
-                }
-            }
-            @* Remove a user to the my starred users list *@
-            if (allReadyStarred == false)
-            {
-                <div style="display:block;">
-
-                    <form asp-action="Create" asp-controller="StarredUsers">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                        <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id" />
-
-
-                        <input class="btn btn-sm btn-outline-primary mb-1 mx-auto" type="submit" value="Add to MyStarred Users" />
-
-                    </form>
-                </div>
-            }
-
-            @*Recuiter can add user to many "Picks" that the user is not already part of *@
-            if (postings.Any() && @Model.Id != currentUser)
-            {
-                <button class="btn btn-sm btn-outline-dark mb-1 mx-auto" id="pickButton" onclick="showRecuiterDiv()">Add/Remove from Picks</button>
-                <div id="recuiterPosting">
-                    <div style="display:block;">
-                        @*<h4>Add this User to your picks</h4>*@
-                        <form class="user-check-box" asp-action="CreateManyPicks" asp-controller="IntrestedCandidates">
-                            @{
-                                int cnt = 0;
-                                List<int> shown = new List<int>();
-                                foreach (var posting in postings.Where(i => !(shown.Contains(i.PostingID))))
-                                {
-                                    var assigned = false;
-                                    foreach (var pick in picks.Where(i => i.CandidateID == Model.Id && i.RecuiterID == currentUser && i.PostingID == posting.PostingID))
-                                    {
-                                        assigned = true;
-                                    }
-                                    if (assigned == false)
-                                    {
-                                        if (cnt++ % 3 == 0)
-                                        {
-                                            @:<div>
-                                            }
-
-                                            @:<div class="check">
-                                                <input type="checkbox" name="postings" value="@posting.PostingID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @:  @posting.PostingTitle
-                                            @:</div>
-                                            shown.Add(posting.PostingID);
-                                        }
-                                    }
-                                @:</div>
-                            }
-                            <div class="form-group mb-0">
-                                <input type="hidden" class="form-control" value="@currentUser" name="recruiterID" />
-                            </div>
-                            <div class="form-group mb-0">
-                                <input type="hidden" class="form-control" value="@Model.Id" name="candidateID" />
-                            </div>
-
-                            <div class="form-group">
-                                <input type="submit" value="Add to Picks" class="btn btn-sm btn-outline-primary picks" />
-                            </div>
                         </form>
-
-                        @*Remove a user from many picks that the user is already part of*@
-                        @*<h4>Remove this User from your picks</h4>*@
-                        <form class="user-check-box" asp-action="DeleteManyPick" asp-controller="IntrestedCandidates">
-                            @{
-                                int count = 0;
-                                List<int> showndeleted = new List<int>();
-                                foreach (var posting in postings.Where(i => !(showndeleted.Contains(i.PostingID))))
-                                {
-                                    var assigned = false;
-                                    foreach (var pick in picks.Where(i => i.CandidateID == Model.Id && i.RecuiterID == currentUser && i.PostingID == posting.PostingID))
-                                    {
-                                        if (count++ % 3 == 0)
-                                        {
-                                            @:<div>
-                                            }
-                                            @:<div class="check">
-                                                <input type="checkbox" name="recuiterPicks" value="@pick.RecuiterPicksID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @:  @posting.PostingTitle
-                                            @:</div>
-                                            showndeleted.Add(posting.PostingID);
-                                        }
-                                    }
-                                @:</div>
-                            }
-                            <div class="form-group">
-                                <input type="submit" value="Remove from picks" class="btn btn-sm btn-outline-danger" />
-                            </div>
-                        </form>
-                    </div>
+                        allReadyStarred = true;
+                    }
                 </div>
             }
         }
-    </section>
+        @* Remove a user to the my starred users list *@
+        if (allReadyStarred == false)
+        {
+            <div>
+                <form asp-action="Create" asp-controller="StarredUsers">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <input type="hidden" asp-for="Id" class="form-control" value="@Model.Id" />
+
+
+                    <input class="add btn btn-sm btn-outline-primary" type="submit" value="Add to MyStarred Users" />
+
+                </form>
+            </div>
+        }
+        @*Recuiter can add user to many "Picks" that the user is not already part of *@
+        if (postings.Any() && @Model.Id != currentUser)
+        {
+            <button class="btn btn-sm btn-outline-dark" id="pickButton" onclick="showRecuiterDiv()">Add/Remove from Picks</button>
+            <div id="recuiterPosting">
+                <div>
+                    @*<h4>Add this User to your picks</h4>*@
+                    <form class="user-check-box" asp-action="CreateManyPicks" asp-controller="IntrestedCandidates">
+                        @{
+                            int cnt = 0;
+                            List<int> shown = new List<int>();
+                            foreach (var posting in postings.Where(i => !(shown.Contains(i.PostingID))))
+                            {
+                                var assigned = false;
+                                foreach (var pick in picks.Where(i => i.CandidateID == Model.Id && i.RecuiterID == currentUser && i.PostingID == posting.PostingID))
+                                {
+                                    assigned = true;
+                                }
+                                if (assigned == false)
+                                {
+                                    if (cnt++ % 3 == 0)
+                                    {
+                                        @:<div>
+                                        }
+
+                                        @:<div class="check">
+                                            <input type="checkbox" name="postings" value="@posting.PostingID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @:  @posting.PostingTitle
+                                        @:</div>
+                                        shown.Add(posting.PostingID);
+                                    }
+                                }
+                            @:</div>
+                        }
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" value="@currentUser" name="recruiterID" />
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" value="@Model.Id" name="candidateID" />
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" value="Add to Picks" class="btn btn-sm btn-outline-primary picks" />
+                        </div>
+                    </form>
+
+                    @*Remove a user from many picks that the user is already part of*@
+                    @*<h4>Remove this User from your picks</h4>*@
+                    <form class="user-check-box" asp-action="DeleteManyPick" asp-controller="IntrestedCandidates">
+                        @{
+                            int count = 0;
+                            List<int> showndeleted = new List<int>();
+                            foreach (var posting in postings.Where(i => !(showndeleted.Contains(i.PostingID))))
+                            {
+                                var assigned = false;
+                                foreach (var pick in picks.Where(i => i.CandidateID == Model.Id && i.RecuiterID == currentUser && i.PostingID == posting.PostingID))
+                                {
+                                    if (count++ % 3 == 0)
+                                    {
+                                        @:<div>
+                                        }
+                                        @:<div class="check">
+                                            <input type="checkbox" name="recuiterPicks" value="@pick.RecuiterPicksID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @:  @posting.PostingTitle
+                                        @:</div>
+                                        showndeleted.Add(posting.PostingID);
+                                    }
+                                }
+                            @:</div>
+                        }
+                        <div class="form-group">
+                            <input type="submit" value="Remove from picks" class="btn btn-sm btn-outline-danger" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+
+@* #######################################
+     Section Containing User Information
+    ###################################### *@
+<div class="user-details-container">
     @*Main content of the user details page*@
     <div class="user-details-content shadow">
-        <div class="user-details-head"><h2>@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Profile</h2></div>
+        <div class="general-index-head"><h2>@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Profile</h2></div>
         <div class="user-details-image"><img src="@photoPath" asp-append-version="true" /></div>
         <div class="user-details-info">
             <p>
@@ -188,79 +195,77 @@
             </div>
             <h4><strong> @Html.DisplayNameFor(model => model.AreaOfDiscipline)</strong></h4>
             <h6> @Html.DisplayFor(model => model.AreaOfDiscipline)</h6>
-            <p>
-                <stong> @Html.DisplayNameFor(model => model.Seeking) : </stong>
-                @Html.DisplayFor(model => model.Seeking)
-            </p>
+
+            <h4><strong>@Html.DisplayNameFor(model => model.Seeking)</strong></h4>
+            <h6>@Html.DisplayFor(model => model.Seeking)</h6>
+
             @if (Model.ResumePhotoPath != null)
             {
                 <div>
                     <h4><strong> Resume</strong></h4>
-                    <a href="@resumePath">  View Members Resume</a>
+                    <a href="@resumePath">View Members Resume</a>
                 </div>
             }
+            <h4><strong>Contact Links</strong></h4>
+            @foreach (var contactLink in Model.ContactLinks)
+            {
+                <div class="my-links">
 
-            <div class="Contact-Links">
-                <h4>Contact Links</h4>
-                @foreach (var contactLink in Model.ContactLinks)
-                {
-                    <div class="card-link">
-                        @Html.DisplayFor(modelItem => contactLink.ContactLinkLabel) :
-                        @Html.DisplayFor(modelItem => contactLink.ContactLinkUrl)
-                    </div>
-                }
-                <div class="card-footer">
-                    @if (currentUser == Model.Id)
-                    {
-
-                        <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-                        <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
-
-                    }
-                    else
-                    {
-
-                        <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
-
-                    }
+                    <strong>@Html.DisplayFor(modelItem => contactLink.ContactLinkLabel)</strong>
+                    @*@Html.DisplayFor(modelItem => contactLink.ContactLinkUrl)*@
                 </div>
+            }
+            <div class="const-card-footer">
+                @if (currentUser == Model.Id)
+                {
+                    <a class="btn btn-md btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                    <a class="btn btn-md  btn-secondary" asp-action="Index">Back to List</a>
+                }
+                else
+                {
+                    <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
+                }
             </div>
         </div>
     </div>
 
+
+    <hr class="const-hr" />
+
+    @* ###########################################################
+         Section Containing User skills and Project Information
+        ########################################################### *@
     <div class="user-project-container">
-
-        <!--#region User SKills-->
-        <section class="skills-sections">
-            @{
-                @if (disciplines.Any() && skills.Any())
+        @* Section Containing User skills and Discipline *@
+        @{
+            @if (disciplines.Any() && skills.Any())
+            {
+                @* SKILLS & DISCIPLINES: Because of Backend processing this is all that is needed for the users disciplines and skill to show*@
+                @if ((!string.IsNullOrWhiteSpace(Model.FirstName) && !string.IsNullOrWhiteSpace(Model.LastName)))
                 {
-                    <div class="skills-and-links">
-                        @* SKILLS & DISCIPLINES: Because of Backend processing this is all that is needed for the users disciplines and skill to show*@
+                    <div class="general-index-head"><h2>@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Skills</h2></div>
+                }
+                else
+                {
+                    <div class="general-index-head"><h2>Users Skills</h2></div>
+                }
 
-                        @if ((!string.IsNullOrWhiteSpace(Model.FirstName) && !string.IsNullOrWhiteSpace(Model.LastName)))
-                        {
-                            <div class="user-skill-and-link-head"><h2>@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Skills</h2></div>
-                        }
-                        else
-                        {
-                            <div class=".user-skill-and-link-head-h2"><h2>Users Skills</h2></div>
-                        }
-
-                        <section class="Discipline_Skills">
+                <!-- user skills and links for those skill -->
+                <div class="const-card-wrapper ">
+                    <div class="const-skills-card">
+                        <div class="skills-discipline">
                             @{
-                                <h4 class="m-0 bg-light text-center text-black p-1">Disciplines & Skills</h4>
                                 @:<div>
                                     foreach (var discipline in disciplines)
                                     {
                                         @:<div>
-                                            <h6 class="m-0 bg-light text-center text-black p-1">@discipline.DisciplineName</h6>
+                                            <h6>Discipline : @discipline.DisciplineName</h6>
                                             foreach (var skill in skills)
                                             {
                                                 var sd = skillDisciplines.Where(i => i.DisciplineID == discipline.DisciplineID && i.SkillID == skill.SkillID).FirstOrDefault();
                                                 if (sd != null)
                                                 {
-                                                    <p style="opacity:1;">@skill.SkillName</p>
+                                                    @*<p style="opacity:1;">@skill.SkillName</p>*@
                                                 }
                                                 else
                                                 {
@@ -271,41 +276,131 @@
                                     }
                                 @:</div>
                             }
-
-                        </section>
-                        @* SKILLS LINKSS: Because of Backend processing this is all that is needed for the users disciplines and skill to show*@
-                        <section class="skillLink_skills">
-                            @{
-                                <h4 class="m-0 bg-light text-center text-black p-1">Links Showcasing Skills</h4>
-                                foreach (var link in skillLinks)
-                                {
-                                    <a href="@link.SkillLinkUrl" target="_blank">@link.SkilLinkLabel</a>
-                                    <div><p style="opacity:1; font-size:12px">Skills Displayed</p></div>
-                                    @:<div>
-                                        List<UserSkillLink> uSkills = userSkillLinks.Where(i => i.LinkID == link.SkillLinkID).ToList();
-                                        foreach (var uskill in uSkills)
+                        </div>
+                        <table class="const-table">
+                            <tr>
+                                <th>Skills</th>
+                                <th>Links</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @{
+                                        @:<div>
+                                            foreach (var discipline in disciplines)
+                                            {
+                                                @:<div>
+                                                    foreach (var skill in skills)
+                                                    {
+                                                        var sd = skillDisciplines.Where(i => i.DisciplineID == discipline.DisciplineID && i.SkillID == skill.SkillID).FirstOrDefault();
+                                                        if (sd != null)
+                                                        {
+                                                            <p>@skill.SkillName</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            continue;
+                                                        }
+                                                    }
+                                                @:</div>
+                                            }
+                                        @:</div>
+                                    }
+                                </td>
+                                <td>
+                                    @{
+                                        @*<h4 class="m-0 bg-light text-center text-black p-1">Links Showcasing Skills</h4>*@
+                                        foreach (var link in skillLinks)
                                         {
-                                            UserSkill thisUserSkill = userSkills.Where(i => i.UserSkillID == uskill.UserSkillID).FirstOrDefault();
-                                            Skill SkillLinked = skills.Where(i => i.SkillID == thisUserSkill.SkillID).First();
-                                            <p style="opacity:1;">@SkillLinked.SkillName</p>
+                                            <a href="@link.SkillLinkUrl" target="_blank">@link.SkilLinkLabel</a>
+                                            @*<div><p>Skills Displayed</p></div>*@
+                                            @:<div>
+                                                List<UserSkillLink> uSkills = userSkillLinks.Where(i => i.LinkID == link.SkillLinkID).ToList();
+                                                foreach (var uskill in uSkills)
+                                                {
+                                                    UserSkill thisUserSkill = userSkills.Where(i => i.UserSkillID == uskill.UserSkillID).FirstOrDefault();
+                                                    Skill SkillLinked = skills.Where(i => i.SkillID == thisUserSkill.SkillID).First();
+                                                    <p>@SkillLinked.SkillName</p>
 
+                                                }
+                                            @:</div>
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Installation</td>
+                                <td>installed</td>
+                            </tr>
+                            <tr>
+                                <td>Installation</td>
+                                <td>installed</td>
+                            </tr>
+                            <tr>
+                                <td>Installation</td>
+                                <td>installed</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+
+                <div class="skills-and-links">
+
+
+                    <section class="Discipline_Skills">
+                        @{
+                            <h4 class="m-0 bg-light text-center text-black p-1">Disciplines & Skills</h4>
+                            @:<div>
+                                foreach (var discipline in disciplines)
+                                {
+                                    @:<div>
+                                        <h6 class="m-0 bg-light text-center text-black p-1">@discipline.DisciplineName</h6>
+                                        foreach (var skill in skills)
+                                        {
+                                            var sd = skillDisciplines.Where(i => i.DisciplineID == discipline.DisciplineID && i.SkillID == skill.SkillID).FirstOrDefault();
+                                            if (sd != null)
+                                            {
+                                                <p style="opacity:1;">@skill.SkillName</p>
+                                            }
+                                            else
+                                            {
+                                                continue;
+                                            }
                                         }
                                     @:</div>
-                                    <br />
                                 }
+                            @:</div>
+                        }
+
+                    </section>
+                    @* SKILLS LINKSS: Because of Backend processing this is all that is needed for the users disciplines and skill to show*@
+                    <section class="skillLink_skills">
+                        @{
+                            <h4 class="m-0 bg-light text-center text-black p-1">Links Showcasing Skills</h4>
+                            foreach (var link in skillLinks)
+                            {
+                                <a href="@link.SkillLinkUrl" target="_blank">@link.SkilLinkLabel</a>
+                                <div><p style="opacity:1; font-size:12px">Skills Displayed</p></div>
+                                @:<div>
+                                    List<UserSkillLink> uSkills = userSkillLinks.Where(i => i.LinkID == link.SkillLinkID).ToList();
+                                    foreach (var uskill in uSkills)
+                                    {
+                                        UserSkill thisUserSkill = userSkills.Where(i => i.UserSkillID == uskill.UserSkillID).FirstOrDefault();
+                                        Skill SkillLinked = skills.Where(i => i.SkillID == thisUserSkill.SkillID).First();
+                                        <p style="opacity:1;">@SkillLinked.SkillName</p>
+
+                                    }
+                                @:</div>
                             }
-                        </section>
-                    </div>
-                }
-
+                        }
+                    </section>
+                </div>
             }
-        </section>
-        <!--#endregion User SKills-->
+        }
 
-        <div class="user-project-head"><h2>@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Projects</h2></div>
+        @*Section Containing Projects information*@
+        <div class="general-index-head"><h2>@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Projects</h2></div>
         <div class="user-project-content">
-
-
 
             @*User Project Card Display*@
             @foreach (var userProject in Model.UserProjects)
@@ -321,77 +416,66 @@
                 }
                 var projectId = (userProject.Project.ProjectID);
                 var projectPath = "../../../Projects/" + projectId;
-
-
-
-                <div class="card shadow m-1">
-                    @*Note: We do not want to display the PhotoPath Path but the image itself*@
-                    <div>
+                <div class="const-card-wrapper">
+                    <div class="const-card">
+                        <div class="project-title">@Html.DisplayFor(modelItem => userProject.Project.Title)</div>
                         @*<a href="@projectPath"><img class="img-thumbnail mx-auto d-block" src=" @projectPhotoPath" alt="@Html.DisplayFor(modelItem => userProject.Project.Title)" asp-append-version="true" /></a>*@
-                    </div>
-                    <h4><strong> @Html.DisplayFor(modelItem => userProject.Project.Title)</strong></h4>
-                    @*<div>
-                            @Html.DisplayNameFor(modelItem => userProject.Project.Title) :
-
-                        </div>*@
-
-                    <h4><strong> @Html.DisplayNameFor(modelItem => userProject.Project.Description)</strong></h4>
-                    <div class="user-bio">@Html.DisplayFor(modelItem => userProject.Project.Description)</div>
-
-                    <div>
-                        @Html.DisplayNameFor(modelItem => userProject.Project.StartDate) :
-                        @Html.DisplayFor(modelItem => userProject.Project.StartDate)
-                    </div>
-                    <div>
-                        @Html.DisplayNameFor(modelItem => userProject.Project.EndDate) :
-                        @Html.DisplayFor(modelItem => userProject.Project.EndDate)
-                    </div>
-                    <div>
-                        @Html.DisplayNameFor(modelItem => userProject.Project.CreationDate) :
-                        @Html.DisplayFor(modelItem => userProject.Project.CreationDate)
-                    </div>
-
-                    <h4><strong>Collaborators</strong></h4>
-                    <div class="d-flex">
-                        @foreach (var collab in ViewBag.collaborators)
-                        {
-                            if ((userProject.UserID != collab.UserID) && (userProject.ProjectID == collab.ProjectID))
+                        <h2>Collaborators</h2>
+                        <div class="collaborators">
+                            @foreach (var collab in ViewBag.collaborators)
                             {
-
-                                var collabPath = "";
-
-                                if (userProject.Project.PhotoPath != null)
+                                if ((userProject.UserID != collab.UserID) && (userProject.ProjectID == collab.ProjectID))
                                 {
-                                    collabPath = "~/image/" + (collab.User.PhotoPath);
-                                }
-                                else
-                                {
-                                    collabPath = "~/WebAssests/siteImages/avataricon.png";
+
+                                    var collabPath = "";
+
+                                    if (userProject.Project.PhotoPath != null)
+                                    {
+                                        collabPath = "~/image/" + (collab.User.PhotoPath);
+                                    }
+                                    else
+                                    {
+                                        collabPath = "~/WebAssests/siteImages/avataricon.png";
+                                    }
+
+                                    var collabMemberPath = "../../Users/Details/" + (collab.UserID);
+
+                                    <a href="@collabMemberPath"><img style="width: 50px; height: 50px;" src=" @collabPath" asp-append-version="true" /></a>
                                 }
 
-                                var collabMemberPath = "../../Users/Details/" + (collab.UserID);
-
-                                <a href="@collabMemberPath"><img class="collaborators-picture" src=" @collabPath" asp-append-version="true" /></a>
                             }
+                        </div>
 
-                        }
-                    </div>
-
-                    <h4><strong>Project Links</strong></h4>
-                    @foreach (var link in userProject.Project.ProjectLinks)
-                    {
-                        <a class="card-link" href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
-                        <br />
-                    }
-
-                    <div class="card-footer">
-                        <a class="btn btn-md btn-primary" href="@projectPath">View&nbsp;Project</a>
+                        @*Description*@
+                        <H2>@Html.DisplayNameFor(modelItem => userProject.Project.Description)</H2>
+                        <div class="description">@Html.DisplayFor(modelItem => userProject.Project.Description)</div>
+                        @*Project Dates*@
+                        <h2>Project Dates</h2>
+                        <div class="project-date">
+                            <p><strong>@Html.DisplayNameFor(modelItem => userProject.Project.CreationDate) : </strong>@Html.DisplayFor(modelItem => userProject.Project.CreationDate)</p>
+                            <p><strong> @Html.DisplayNameFor(modelItem => userProject.Project.StartDate) : </strong>@Html.DisplayFor(modelItem => userProject.Project.StartDate)</p>
+                            <p><strong>@Html.DisplayNameFor(modelItem => userProject.Project.EndDate) : </strong>@Html.DisplayFor(modelItem => userProject.Project.EndDate)</p>
+                        </div>
+                        @*Project Links*@
+                        <h2>Project Links</h2>
+                        <div class="project-links">
+                            @foreach (var link in userProject.Project.ProjectLinks)
+                            {
+                                <a href=" @link.ProjectLinkUrl" target="_blank">@link.ProjectLinkLabel</a>
+                            }
+                        </div>
+                        @*Card Footer*@
+                        <div class="const-card-footer">
+                            <a class="btn btn-md btn-primary" href="@projectPath">View&nbsp;Project</a>
+                        </div>
                     </div>
                 </div>
             }
         </div>
     </div>
 </div>
+
+
 
 
 
