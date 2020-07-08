@@ -29,6 +29,11 @@ namespace ConstellationWebApp.Models
         public Discipline currentDiscipline { get; set; }
         public IEnumerable<UserSkillLink> UserSkillLinks { get; set; }
 
+        public IEnumerable<ChatUser> ChatUsers { get; set; }
+        public IEnumerable<Chat> Chats { get; set; }
+        public IEnumerable<ChatMessage> ChatMessages { get; set; }
+        public IEnumerable<Message> Messages { get; set; }
+        public Chat SelectedChat { get; set; }
 
     }
 }
