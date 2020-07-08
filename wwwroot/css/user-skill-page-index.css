@@ -1,0 +1,110 @@
+.skill-user-profile-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+}
+
+.skill-user-profile-picture {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+}
+
+.skill-user-profile-display h1 {
+    margin-left: 20px;
+    font-size: 30px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+body,
+html {
+    height: 100%;
+    margin: 0;
+}
+
+.Split-forms {
+    display: grid;
+    grid-template-columns: 5% 40% 10% 40% 5%;
+    grid-template-rows: 500px;
+    background-color: rgba(245, 245, 245, 1);
+    height: 800px;
+    padding: 2.5em 1em 2.5em;
+    margin: 1.5em;
+    border-radius: 7px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.Skill-form {
+    grid-column: 2/3;
+}
+
+.Link-form {
+    grid-column: 4/5;
+}
+
+
+/* Style tab links */
+
+.tablink {
+    background-color: #555;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    font-size: 17px;
+    width: 50%;
+}
+
+.tablink:hover {
+    background-color: #777;
+}
+
+
+/* Style the tab content (and add height:100% for full page content) */
+
+.tabcontent {
+    color: white;
+    display: none;
+    padding: 100px 20px;
+    max-height: 1000px;
+}
+
+.linktabcontent {
+    color: white;
+    display: none;
+    padding: 100px 20px;
+    max-height: 500px;
+}
+
+#AddSkills {
+    background-color: lightblue;
+}
+
+#RemoveSkills {
+    background-color: red;
+}
+
+#AddSkillLink {
+    background-color: rgba(26, 110, 193, 0.19);
+}
+
+#RemoveSkillLink {
+    background-color: red;
+}
+
+@media only screen and (max-width: 800px) {
+    .Split-forms {
+        display: block;
+        height: 100%;
+    }
+    .Skill-form {
+        display: block;
+    }
+    .Link-form {
+        display: block;
+    }
+}
