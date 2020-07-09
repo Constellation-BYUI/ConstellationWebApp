@@ -85,9 +85,9 @@
                     }
 
                     var collabMemberPath = "../Users/Details/" + (item.PostingOwner.Id);
-
+                    var postingPath = " ../Postings/Details/" + (item.PostingID);
                     <!-- Job postings card -->
-                    <div class="const-card-wrapper">
+                    <div class="const-card-wrapper" style="cursor: pointer;" onclick="window.location='@postingPath';">
                         <div class="const-card">
                             <div class="postings-title">@Html.DisplayFor(modelItem => item.PostingFor)</div>
                             <div class="position"><strong>Position : </strong>@Html.DisplayFor(modelItem => item.PostingTitle)</div>

@@ -123,12 +123,13 @@ namespace ConstellationWebApp.Controllers
             RecruiterPicks thisRP = (_context.RecruiterPicks.Where(i => i.RecuiterPicksID == recuiterPicksID).FirstOrDefault());
 
             var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var returnPath = "../IntrestedCandidates";
+
             if (thisRP.RecuiterID == currentUser)
             {
                 _context.RecruiterPicks.Remove(thisRP);
                 await _context.SaveChangesAsync();
             }
-            var returnPath = "../Postings/Details/" + thisRP.CandidateID.ToString();
             return Redirect(returnPath);
         }
 
