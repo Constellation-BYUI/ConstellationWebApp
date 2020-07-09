@@ -33,6 +33,7 @@
                 <li><a asp-area="" asp-controller="Users" asp-action="Index"><i class="fas fa-users"></i>Users</a></li>
                 <li><a asp-area="" asp-controller="Projects" asp-action="Index"><i class="fas fa-project-diagram"></i>Projects</a></li>
                 <li><a asp-area="" asp-controller="Postings" asp-action="Index"><i class="fas fa-briefcase"></i>Job Postings</a></li>
+                <li><a asp-area="" asp-controller="Chat" asp-action="Index"><i class="fas fa-briefcase"></i>Chat</a></li>
 
                 @if (signInManager.IsSignedIn(User))
                 {
@@ -48,7 +49,7 @@
                         </form>
                     </li>
                     <li>
-                        <a href="#" id="my-volt">My Volt<i class="fas fa-caret-down"></i></a>
+                        <a href="#" id="my-volt">My Stuff<i class="fas fa-caret-down"></i></a>
                         <div class="sub-menu-1">
                             <ul class="volt-down">
                                 <li><a asp-controller="StarredProjects" asp-action="Index">Starred Projects</a></li>

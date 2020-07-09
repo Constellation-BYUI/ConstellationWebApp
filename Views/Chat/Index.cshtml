@@ -1,0 +1,284 @@
+﻿@model ConstellationWebApp.Models.ViewModel
+@using System.Security.Claims;
+
+@{
+    ViewData["Title"] = "Chat Index";
+    var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+}
+<script>
+    window.onload = function () {
+        var objDiv = document.getElementById("chat-message-container");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
+</script>
+<style>
+    .Chat-Container {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    }
+
+    .create-chat-section {
+        grid-column: 1/3;
+    }
+
+    .left-chat-content {
+        grid-column: 1/3;
+        max-height: 550px;
+        overflow-y: scroll;
+        border-color: black;
+    }
+
+    .chat-card {
+        border-color: black;
+    }
+
+    #chat-message-container {
+        grid-column: 3/9;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        max-height: 550px;
+        overflow-y: scroll;
+    }
+
+    .ChatUser-showcase {
+        grid-column: 1/6;
+    }
+
+    .messages-container{
+        grid-column: 1/6;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    }
+
+    .from-you {
+        grid-column: 3/6;
+        margin-left: 3em;
+    }
+
+    .your-message {
+        background-color: lightblue;
+        border-radius: 5px;
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+
+    .from-someOneElse {
+        background-color: lightgreen;
+        grid-column: 1/4;
+        text-align: left;
+        border-radius: 5px;
+        margin-right: 3em;
+    }
+
+    .new-message {
+        grid-column: 1/6;
+    }
+
+    .m-right {
+        text-align: right;
+    }
+
+    .m-middle {
+        text-align: center;
+    }
+
+    .m-left {
+        text-align: left;
+    }
+
+    .message-images {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        margin: 3px;
+        border: 2px solid #1d3557
+    }
+</style>
+<!-- #region Info button:-->
+<section class="page-info">
+    <div class="info-button" id="button-info">View&nbsp;Page&nbsp;Info</div>
+    <article>
+        Message others here!
+    </article>
+</section>
+<!-- #endregion -->
+
+<div class="Chat-Container">
+
+    <div class="left-chat-content">
+        @*Button to create a new chat with one or more people*@
+        <section class="create-chat-section">
+            <h2> Create a New Chat</h2>
+            <form asp-action="createChat" asp-controller="Chat">
+                <div class="form-group add-collab">
+                    <div class="col-md-offset-2 col-md-12">
+                        <datalist id="user-list">
+                            @{
+                                List<ConstellationWebApp.Models.User> usersCollab = Model.Users.ToList();
+
+                                foreach (var user in usersCollab)
+                                {
+                                    <option value="@user.UserName" data-id="@user.Id"></option>
+                                }
+                            @:</datalist>
+                        @:</div>
+                            }
+                        </div>
+                        <div id="userChat-display"></div>
+                        <input id="chatUser-input" class="input-group rounded border-light col-md-12" list="user-list" name="selectedChatUsers" placeholder="Add people to a new chat...">
+                        <div id="userChat-hidden-holder"></div>
+                        <input class="btn btn-sm btn-outline-dark mb-1 mx-auto" type="button" id="more_collab" onclick="add_chatUser();" value="Add Chat Member" />
+                        <input class="input-group rounded border-light col-md-12" name="StartingMessage" placeholder="Enter your starting message here...">
+                        <input type="submit" value="Create Chat" class="btn btn-sm btn-outline-primary mb-1 mx-auto" />
+                    </form>
+                </section>
+                <br />
+                <br />
+                @*List out all the Chats the person has in none then display none*@
+                @*Left aligned chat List*@
+
+                @{
+                    if (Model.Chats.Any())
+                    {
+                        @:<div class="chat-card">
+    foreach (var chat in Model.Chats.OrderByDescending(i => i.LastActivity))
+    {
+        //Need an onclick even of the show-chat-messages that will display the message body for that chat
+        <form asp-action="Index" asp-controller="Chat">
+            <div class="messages-scrollable">
+                @foreach (var chatUser in chat.ChatUsers)
+                {
+                    var chatUserPath = "";
+                    if (chatUser.User.PhotoPath != null)
+                    {
+                        chatUserPath = "~/image/" + (chatUser.User.PhotoPath);
+                    }
+                    else
+                    {
+                        chatUserPath = "~/WebAssests/siteImages/avataricon.png";
+                    }
+                    var chatUserMemberPath = "../../Users/Details/" + (chatUser.User.Id);
+                    <a href="@chatUserMemberPath">
+                        <img class="message-images" src=" @chatUserPath" alt="@Html.DisplayFor(modelItem => chatUser.User.UserName)" asp-append-version="true" />
+                    </a>
+                }
+            </div>
+            <p>@chat.LastActivity</p>
+            <input type="hidden" class="input-group rounded border-light col-md-12" name="selectedChat" value="@chat.ChatID">
+            <input type="submit" value="View Chat Details" class="btn btn-sm btn-outline-primary mb-1 mx-auto" />
+        </form>
+        @if (chat.ChatUsers.Count > 2)
+        {
+         <form asp-action="DeleteChatUser" asp-controller="Chat">
+             <input type="hidden" class="input-group rounded border-light col-md-12" name="ChatID" value="@chat.ChatID">
+             <input type="hidden" class="input-group rounded border-light col-md-12" name="UserID" value="@currentUser">
+             <input type="submit" value="Leave Chat" class="btn btn-sm btn-outline-danger mb-1 mx-auto" />
+         </form>
+        }
+        else
+        {
+            <form asp-action="DeleteChat" asp-controller="Chat">
+                <input type="hidden" class="input-group rounded border-light col-md-12" name="chatID" value="@chat.ChatID">
+                <input type="submit" value="Leave Chat" class="btn btn-sm btn-outline-danger mb-1 mx-auto" />
+            </form>
+        }
+        <br />
+    }
+@:</div>
+                    }
+
+                @:</div>
+                @*Main right aligned chat area*@
+                @:<div id="chat-message-container">
+
+
+    @if (Model.SelectedChat != null)
+    {
+
+        var chat = Model.SelectedChat;
+                      <div class="ChatUser-showcase">
+                    
+                          <form asp-action="DeleteChatUser" asp-controller="Chat">
+                              <input type="hidden" class="input-group rounded border-light col-md-12" name="ChatID" value="@Model.SelectedChat.ChatID">
+                              <input type="hidden" class="input-group rounded border-light col-md-12" name="UserID" value="@currentUser">
+                              <input type="submit" value="Leave Chat" class="btn btn-sm btn-outline-danger mb-1 mx-auto" />
+                          </form>
+                          
+                          @foreach (var chatUser in chat.ChatUsers)
+                          {
+                              var chatUserPath = "";
+                              if (chatUser.User.PhotoPath != null)
+                              {
+                                  chatUserPath = "~/image/" + (chatUser.User.PhotoPath);
+                              }
+                              else
+                              {
+                                  chatUserPath = "~/WebAssests/siteImages/avataricon.png";
+                              }
+                              var chatUserMemberPath = "../../Users/Details/" + (chatUser.User.Id);
+                              <a href="@chatUserMemberPath">
+                                  <img class="message-images" src=" @chatUserPath" alt="@Html.DisplayFor(modelItem => chatUser.User.UserName)" asp-append-version="true" />
+                              </a>
+                              @* Eventual admin intergration : Delete any members of this group
+                                 if (currentUser == chatUser.UserID)
+                                 {
+                                 <form asp-action="DeleteChatUsers" asp-controller="Chat">
+                                     <input type="hidden" class="input-group rounded border-light col-md-12" name="ChatID" value="@chatUser.ChatID">
+                                     <input type="hidden" class="input-group rounded border-light col-md-12" name="UserID" value="@chatUser.UserID">
+                                     <input type="submit" value="Leave Chat" class="btn btn-sm btn-outline-danger mb-1 mx-auto" />
+                                 </form>
+                                 }*@
+                          }
+                          <form asp-action="AddChatUsers" asp-controller="Chat">
+                              <div id="collab-Display"></div>
+                              <input id="collab-input" class="input-group rounded border-light col-md-12" list="user-list" name="selectedCollaborators" placeholder="Select a new chat member...">
+                              <div id="userCollab-demo"></div>
+                              <input class="btn btn-sm btn-outline-dark mb-1 mx-auto" type="button" id="more_collab" onclick="add_collab();" value="Add Another Chat Member" />
+                              <input type="hidden" class="input-group rounded border-light col-md-12" name="ChatID" value="@chat.ChatID">
+                              <input type="submit" value="Update Chat Members" class="btn btn-sm btn-outline-primary mb-1 mx-auto" />
+                          </form>
+                      </div>
+        <br /> <br /> <br />
+
+                      <div class="messages-container">
+                          @foreach (var message in Model.Messages.OrderBy(i => i.SentTime))
+                          {
+                              var messageList = Model.ChatMessages.Where(i => i.ChatID == Model.SelectedChat.ChatID && i.MessageID == message.MessageID).FirstOrDefault();
+                              if (messageList != null)
+                              {
+                                  //make this a one color
+                                  if (message.SenderID == currentUser)
+                                  {
+                                      <div class="from-you">
+                                          <div class="your-message">
+                                              <p class="m-left"> @message.Sender.UserName</p>
+                                              <p class="m-left">@message.MessageText</p>
+                                              <p class="m-right">@message.SentTime</p>
+                                          </div>
+                                      </div>
+                                  }
+                                  //make this a another color
+                                  else
+                                  {
+                                      <div class="from-someOneElse">
+                                          <p class="m-left"> @message.Sender.UserName</p>
+                                          <p class="m-left">@message.MessageText</p>
+                                          <p class="m-right">@message.SentTime</p>
+                                      </div>
+                                  }
+                                  <br />
+                              }
+                              //this form will create the message && chatMessage
+                          }
+                          <div class="new-message">
+                              <form asp-action="createMessage" asp-controller="Chat">
+                                  <input type="hidden" class="input-group rounded border-light col-md-12" name="chatID" value="@Model.SelectedChat.ChatID">
+                                  <input class="input-group rounded border-light col-md-12" name="messageText">
+                                  <input type="submit" value="Send Message" class="btn btn-sm btn-primary" />
+                              </form>
+                          </div>
+                      </div>
+    }
+                }
+            </div>
+        </div>

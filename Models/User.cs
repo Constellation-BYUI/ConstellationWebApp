@@ -59,6 +59,9 @@
         public virtual ICollection<ContactLink> ContactLinks { get; set; }
         public ICollection<UserProject> UserProjects { get; set; }
         public ICollection<UserSkill> UserSkills { get; set; }
+        public ICollection<ChatUser> ChatUser { get; set; }
+        public ICollection<Message> Messsages { get; set; }
+
 
     }
 

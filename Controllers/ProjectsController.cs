@@ -237,9 +237,7 @@ namespace ConstellationWebApp.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index(string titleSearch, string personSearch, string sortOrderOld, string sortOrderNew)
         {         
-
             var viewModel = new ViewModel();
-
             if (titleSearch != null)
             {
                 viewModel.Projects = await _context.Projects.Where(i => i.Title.Contains(titleSearch))
@@ -250,7 +248,6 @@ namespace ConstellationWebApp.Controllers
                  .OrderBy(i => i.CreationDate)
                  .ToListAsync();
                 return View(viewModel);
-
             }
             else if(sortOrderOld != null)
             {
@@ -262,7 +259,6 @@ namespace ConstellationWebApp.Controllers
                        .OrderBy(i => i.CreationDate)
                        .ToListAsync();
                 return View(viewModel);
-
             }
             else if (sortOrderNew != null)
             {
@@ -274,7 +270,6 @@ namespace ConstellationWebApp.Controllers
                        .OrderByDescending(i => i.CreationDate)
                        .ToListAsync();
                 return View(viewModel);
-
             }
             else {
                     viewModel.Projects = await _context.Projects
