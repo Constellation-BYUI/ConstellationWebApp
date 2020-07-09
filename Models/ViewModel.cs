@@ -34,6 +34,11 @@ namespace ConstellationWebApp.Models
         public IEnumerable<ChatMessage> ChatMessages { get; set; }
         public IEnumerable<Message> Messages { get; set; }
         public Chat SelectedChat { get; set; }
+        public IEnumerable<ChatUser> SelectedChatUsers { get; set; }
+
+        public IEnumerable<User> NonSelectedChatUsers { get; set; }
+
+
 
     }
 }
