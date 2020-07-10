@@ -36,9 +36,9 @@
             {
                 photoPath = "~/WebAssests/siteImages/avataricon.png";
             }
+            var collabMemberPath = "../Users/Details/" + (item.UserStarredID);
 
-
-            <div class="col-md-12 card shadow text-black-50 bg-light m-2 padding">
+            <div class="col-md-12 card shadow text-black-50 bg-light m-2 padding" style="cursor: pointer;" onclick="window.location='@collabMemberPath';">
                 @*Note: We do not want to display the PhotoPath Path but the image itself*@
                 <div>
                     <img style="height: 300px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.StarredPerson.UserName)" asp-append-version="true" />

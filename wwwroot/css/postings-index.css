@@ -32,20 +32,15 @@
     }
 .input-group {
     width: 104%;
-<<<<<<< Updated upstream
 }
 
-
-=======
-} 
->>>>>>> Stashed changes
-
-    .posting-index-content {
-        display: grid;
-        grid-template-columns: 1fr;
-        column-gap: 1em;
-        margin: 0 1em 1em 1em;
-    }
+.posting-index-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: 1em;
+    margin: 0 1em 1em 1em;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 
 .posting-index-content {
     overflow: scroll;

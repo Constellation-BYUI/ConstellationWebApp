@@ -98,7 +98,7 @@ footer {
 
 @media screen and (min-width: 767px) {
     main {
-        padding: 0 95px;
+        padding: 2px 95px 100px 95px;
     }
     .general-search-bars {
         grid-template-columns: 1fr 1fr 1fr 1fr;

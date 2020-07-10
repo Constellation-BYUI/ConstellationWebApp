@@ -58,6 +58,7 @@ function showRecuiterDiv() {
     }
 }
 
+//Add Collaborators or UserProjects
 function add_collab() {
     var collabInput = document.getElementById("collab-input").value;
     var userList = document.getElementById("user-list");
@@ -68,6 +69,27 @@ function add_collab() {
 
 }
 
+//Add a new chat with chat users
+function add_chatUser() {
+    var chatuserInput = document.getElementById("chatUser-input").value;
+    var userList = document.getElementById("user-list");
+    var hiddenChatUserInput = userList.querySelector('option[value="' + chatuserInput + '"]').getAttribute("data-id");
+    document.getElementById("userChat-hidden-holder").innerHTML += "<input type='hidden' name='selectedChatUsersInitalCreate' value='" + hiddenChatUserInput + "'>";
+    document.getElementById("userChat-display").innerHTML += '<h6>' + chatuserInput + '</h6>';
+    document.getElementById("chatUser-input").value = '';
+
+}
+
+//adding new chat users to existing chat
+function add_chatUser_append() {
+    var chatuserInput = document.getElementById("chatUser-appended-input").value;
+    var userList = document.getElementById("user-list");
+    var hiddenAppendingInput = userList.querySelector('option[value="' + chatuserInput + '"]').getAttribute("data-id");
+    document.getElementById("userChat-append-hidden-holder").innerHTML += "<input type='hidden' name='selectedAppendingChatUsers' value='" + hiddenAppendingInput + "'>";
+    document.getElementById("userChat-append-display").innerHTML += '<h6>' + chatuserInput + '</h6>';
+    document.getElementById("chatUser-appended-input").value = '';
+
+}
 
 //JavaScript to control the Scroll-To-Top Button
 //Get the button:

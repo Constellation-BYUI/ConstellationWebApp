@@ -12,6 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200706193323_RemoveDemoMessaging.cs" />
+    <Compile Remove="Migrations\20200706193323_RemoveDemoMessaging.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\css\cards.css" />
   </ItemGroup>
 
