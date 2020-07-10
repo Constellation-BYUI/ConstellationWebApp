@@ -242,7 +242,7 @@
         <section class="Link-form">
             <button class="tablink" onclick="openLinkPage('projectDisplayPage', this, 'red')" id="defaultLinkOpen">Projects</button>
             <button class="tablink" onclick="openLinkPage('skillsDisplayPage', this, 'lightgreen')">Skills</button>
-            @if (currentUser != Model.Id)
+            @if (currentUser != Model.Id && currentUser != null)
             {
                 <button class="tablink" onclick="openLinkPage('ChatDisplayPage', this, 'lightblue')">Chat</button>
             }
@@ -326,7 +326,7 @@
                     </div>
                 </div>
             </div>
-            @if (currentUser != Model.Id)
+            @if (currentUser != Model.Id && currentUser != null)
             {
                 <div id="ChatDisplayPage" class="linktabcontent">
                     <div class="chatTab-content">
@@ -347,13 +347,7 @@
                         }
                         else
                         {
-                            <div id="chat-message-container">
-                                <form asp-action="DeleteChatUser" asp-controller="Chat">
-                                    <input type="hidden" class="input-group rounded border-light col-md-12" name="ChatID" value="@SelectedChat.ChatID">
-                                    <input type="hidden" class="input-group rounded border-light col-md-12" name="UserID" value="@currentUser">
-                                    <input type="submit" value="Leave Chat" class="btn btn-sm btn-outline-danger mb-1 mx-auto" />
-                                </form>
-                                <br /> <br /> <br />
+                            <div id="chat-message-container">                            
 
                                 <div class="messages-container">
                                     @foreach (var message in messages.OrderBy(i => i.SentTime))
