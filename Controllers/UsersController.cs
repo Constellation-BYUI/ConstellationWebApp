@@ -247,7 +247,7 @@ namespace ConstellationWebApp.Controllers
 
 
         // Post & Get Functions (includeing the starredUsers index Get)
-        #region UserGets&PostsFunctions
+        #region UserEndpoints
         // GET: Users/Index
         [AllowAnonymous]
         public async Task<IActionResult> Index(string discplineSearch, string nameSearch, string skillSearch)
@@ -299,6 +299,19 @@ namespace ConstellationWebApp.Controllers
             }           
         }
 
+        private List<Message> MessagesLookup(List<ChatMessage> chatMessages)
+        {
+            List<Message> messages = new List<Message>();
+            foreach (var chatMessage in chatMessages)
+            {
+                List<Message> messageHolder = _context.Messages.Where(i => i.MessageID == chatMessage.MessageID).ToList();
+                foreach (var message in messageHolder)
+                {
+                    messages.Add(message);
+                }
+            }
+            return (messages);
+        }
         // GET: User/Details/5
         [AllowAnonymous]
         public async Task<IActionResult> Details(string? id)
@@ -341,7 +354,16 @@ namespace ConstellationWebApp.Controllers
             List<Skill> skills = UserSkillsLookup(id);
             List<SkillDiscipline> skillDisciplines = SkillDisciplineLookup(skills);
             List<Discipline> disciplines = UserDisciplineLookup(skillDisciplines);
-            
+
+            //find the messages between the current user and the user being viewed
+            Chat selectedChat = _context.Chats.Where(i => i.ChatUsers.Any(c => c.UserID == currentUser) && i.ChatUsers.Any(c => c.UserID == id) && i.ChatUsers.Count() == 2).FirstOrDefault();
+            if (selectedChat != null)
+            {
+                List<ChatMessage> chatmessageThread = (_context.ChatMessages.Where(m => m.ChatID == selectedChat.ChatID)).ToList();
+                List<Message> messages = MessagesLookup(chatmessageThread);
+                ViewBag.selectedChat = selectedChat;
+                ViewBag.Messages = messages;
+            }
             ViewBag.collaborators = userProjectList;
             ViewBag.allUsers = usersList;
             ViewBag.allNeededDisciplines = disciplines;
@@ -354,13 +376,12 @@ namespace ConstellationWebApp.Controllers
             ViewBag.thisUserSkillLinks = userSkillLinks;
             ViewBag.thisSkillLinks = skillLinks;
 
+          
+
             List<StarredUser> thisSU = _context.StarredUsers.Where(i => i.StarredOwnerID == currentUser).ToList();
             ViewBag.StarredUsers = thisSU;
             return View(user);
         }
-
- 
-      
         
         // POST: Users/Create is handeled by the Account controller
 
@@ -571,8 +592,88 @@ namespace ConstellationWebApp.Controllers
         {
             return _context.User.Any(e => e.Id == id);
         }
-        
 
+        public async Task<IActionResult> CreateChat(string StartingMessage, string recipientID)
+        {
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            User theUser = _context.User.Where(i => i.Id == currentUser).FirstOrDefault();           
+
+            //#1 Create the Chat. Only when there was not chat with the specified user list OR the user chose to ignore the default
+            if (ModelState.IsValid)
+            {
+                Chat newChat = new Chat();
+                newChat.CreationDate = DateTime.Now;
+                newChat.LastActivity = DateTime.Now;
+                _context.Add(newChat);
+                await _context.SaveChangesAsync();
+
+                //#2 append the ChatUsers
+                ChatUser chatUser1 = new ChatUser
+                {
+                    ChatID = newChat.ChatID,
+                    UserID = currentUser
+                };
+                _context.Add(chatUser1);
+                await _context.SaveChangesAsync();
+
+                ChatUser chatUser2 = new ChatUser
+                {
+                    ChatID = newChat.ChatID,
+                    UserID = recipientID
+                };
+                _context.Add(chatUser2);
+                await _context.SaveChangesAsync();
+
+                //#3 include a chat message if entered
+                if (StartingMessage != null)
+                {
+                    Message newMessage = new Message();
+                    newMessage.MessageText = StartingMessage;
+                    newMessage.SenderID = currentUser;
+                    newMessage.SentTime = DateTime.Now;
+                    _context.Add(newMessage);
+                    await _context.SaveChangesAsync();
+
+                    ChatMessage newChatMesssage = new ChatMessage();
+                    newChatMesssage.ChatID = newChat.ChatID;
+                    newChatMesssage.MessageID = newMessage.MessageID;
+                    _context.Add(newChatMesssage);
+                    await _context.SaveChangesAsync();
+                }
+                return RedirectToAction("Details", "USers", new { @id = recipientID });
+            }
+            return RedirectToAction("Details", "USers", new { @id = recipientID });
+        }
+
+        public async Task<IActionResult> CreateMessage(string messageText, int chatID, string detailsID)
+        {
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (currentUser != null && ModelState.IsValid) { 
+            Message newMessage = new Message();
+            newMessage.MessageText = messageText;
+            newMessage.SenderID = currentUser;
+            newMessage.SentTime = DateTime.Now;
+            _context.Add(newMessage);
+            await _context.SaveChangesAsync();
+
+            ChatMessage newChatMesssage = new ChatMessage();
+            newChatMesssage.ChatID = chatID;
+            newChatMesssage.MessageID = newMessage.MessageID;
+            _context.Add(newChatMesssage);
+            await _context.SaveChangesAsync();
+
+            Chat updateChat = _context.Chats.Where(i => i.ChatID == chatID).FirstOrDefault();
+            updateChat.LastActivity = DateTime.Now;
+            _context.Update(updateChat);
+            await _context.SaveChangesAsync();
+
+            int selectedChat = chatID;
+
+            return RedirectToAction("Details", "Users", new { @id = detailsID });
+        }
+            return RedirectToAction("Details", "Users", new { @id = detailsID });
+
+        }
         #endregion
 
     }
