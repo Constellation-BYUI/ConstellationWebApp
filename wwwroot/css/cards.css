@@ -25,8 +25,66 @@ a {
     align-items: center;
     justify-content: center;
     margin: 0 auto 1rem auto;
-    box-shadow: .5em .3em .5em rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+/*Hovering over User cards, these html elements and events takes place*/
+.name-drop {
+    position: absolute;
+    top: 0;
+    visibility: hidden;
+    transition: visibility 0s, opacity .5s linear;
+    opacity: 0;
+    width: 100%;
+    height: 150px;
+    background: rgba(0,0,0,0.4);
+    color: #fff;
+    text-align: center;
+    z-index: 888 !important;
+}
+.name-drop .const-user-name {
+    background-color: #fff;
+    color: green;
+    font-size: 18px;
+    padding: 5px;
+}
+
+.more-info {
+    visibility: hidden;
+    transition: visibility 0s, opacity .5s linear;
+    opacity: 0;
+    width: 200px;
+    position: absolute;
+    top: 35px;
+    left: 5px;
+    z-index: 1000;
+    background: rgba(0,0,0,.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.more-info h2 {
+   background-color: gray !important;
+   color: #fff !important;
+   font-size: 17px !important;
+   padding: 5px;
+}
+.more-info .description {
+    font-size: 15px;
+    color: #777;
+    text-align: center;
+    background-color: #fff;
+    padding: .5em;
+}
+   .more-info .description .a-link {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: space-around !important;
+       
+    }
+    .more-info .description a {
+        color: #333;
+        text-decoration: none;
+    }
+
 
     .const-card .const-card-image {
         width: 100%;
@@ -54,7 +112,7 @@ a {
 }
 
 .const-card h2 {
-    font-size: 1.5em;
+    font-size: 20px;
     width: 100%;
     text-align: center;
     background-color: #ebeef8;
@@ -63,37 +121,19 @@ a {
 }
 
 .const-card h3 {
-    font-size: 1.2em;
+    font-size: 1.5em;
     margin: .3em 0 1em 0;
 }
 
 
-/*This section reveals form hide more info of the user*/
-.more-info {
-    width: 100%;
-    display: none;
-    transform: scale(1s);
-    transition: transform .5s;
-}
 
 
 
-.discipline {
-    font-size: 1.5em;
-    color: #777;
-    font-weight: 300;
-    width: 100%;
-    text-align: center;
-    background-color: #fff;
-    padding: .5em;
-}
-    .discipline a {
-        color: #333;
-        text-decoration: none;
-    }
+
+
     .const-card .const-btn:hover {
         transform: translateY(-2px);
-        box-shadow: .5rem .5em .2em rgba(0,0,0,.2);
+        
     }
 
 .const-card-footer {
@@ -103,7 +143,7 @@ a {
     border-top: 1px solid rgba(0,0,0,.1);
 /*    background-color: #242b41;*/
 }
-
+/*The social media properties will embed implimented in the future*/
 .social-media {
     width: 100%;
     list-style: none;
@@ -152,12 +192,6 @@ a {
     padding: .3em;
     font-size: 2.3em;
     font-weight: 500;
-}
-
-.const-card h2 {
-    margin: 0;
-    padding: .3em;
-    font-size: 2em;
 }
 
 .collaborators {
@@ -225,8 +259,8 @@ a {
     color: #fff;
     width: 100%;
     text-align: center;
-    padding: 10px;
-    font-size: 2em;
+    padding: 5px;
+    font-size: 1.7em;
     font-weight: 600;
 }
 
@@ -234,7 +268,7 @@ a {
     width: 100%;
 }
 .position {
-    border-bottom: 2px solid #e63946;
+    border-bottom: 1px solid #e63946;
     width: 100%;
     text-align: center;
     padding: 3px;
@@ -263,17 +297,28 @@ a {
     color: green;
     font-size: 18px;
 }
-
-.postings-type p {
-    text-align: center;
-    margin-bottom: 0;
-    font-size: 13px;
+.postings-type {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+/*    padding: 5px;*/
 }
+    .postings-type p {
+        padding: 1px 3px;
+        margin: 5px;
+        /*    background: rgba(0,0,0,.5);*/
+        color: #000;
+        border-radius: 4px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+/*        margin-bottom: 0;*/
+        font-size: 15px;
+    }
 
 .postings-type h2, .postings-description h2 {
     background: #457b9d;
     color: #fff;
-    font-size: 18px;
+    font-size: 15px;
 }
 
 .postings-description p {
@@ -284,7 +329,8 @@ a {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    font-size: 13px;
+    font-size: 15px;
+    margin-bottom: 0;
 }
 
 @media screen and (min-width: 767px) {
@@ -296,11 +342,16 @@ a {
     }
     .const-card:hover {
         transform: scale(1.05);
-        transition: transform .5s;
+       /* transition: transform .5s;*/
     }
-    .const-card:hover .more-info {
-        display: block;
-        transition: transform 1s;
+        /*Hovering over User cards, these html elements and events takes place*/
+    .const-card:hover .name-drop {
+        visibility: visible;
+        opacity: 1;
+    }
+    .name-drop .const-user-name:hover .more-info {
+        visibility: visible;
+        opacity: 1;
     }
 
     @keyframes fadeIn {
@@ -314,7 +365,7 @@ a {
     }
 
     .const-card-wrapper:nth-child(1) {
-        animation: fadeIn .5s .5s backwards;
+        animation: fadeIn 0.5s 0.5s backwards;
     }
 
     .const-card-wrapper:nth-child(2) {
