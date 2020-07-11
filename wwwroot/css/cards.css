@@ -190,12 +190,12 @@ a {
     width: 100%;
     text-align: center;
     padding: .3em;
-    font-size: 2.3em;
+    font-size: 1.8em;
     font-weight: 500;
 }
 
 .collaborators {
-    padding: .3em 0;
+/*    padding: .3em 0;*/
 }
 
     .collaborators img {
@@ -280,7 +280,7 @@ a {
     }
 
 .owners-box {
-    padding: 5px;
+    padding: 2px;
 }
 
     .owners-box img {
@@ -340,6 +340,11 @@ a {
         transition: transform .5s;
        
     }
+/*    css form project cards*/
+    .project-title {
+        
+    }
+
     .const-card:hover {
         transform: scale(1.05);
        /* transition: transform .5s;*/

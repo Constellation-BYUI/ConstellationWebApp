@@ -168,7 +168,7 @@
     ###################################### *@
 <div class="user-details-container">
     @*Main content of the user details page*@
-    <div class="user-details-content shadow">
+    <div class="user-details-content">
         <div class="general-index-head"><h2>@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Profile</h2></div>
         <div class="user-details-image"><img src="@photoPath" asp-append-version="true" /></div>
         <div class="user-details-info">
@@ -240,8 +240,8 @@
         ########################################################### *@
     <div class="user-project-container">
         <section class="Link-form">
-            <button class="tablink" onclick="openLinkPage('projectDisplayPage', this, 'red')" id="defaultLinkOpen">Projects</button>
-            <button class="tablink" onclick="openLinkPage('skillsDisplayPage', this, 'lightgreen')">Skills</button>
+            <button class="tablink" onclick="openLinkPage('projectDisplayPage', this, '#1d3557')" id="defaultLinkOpen">Projects</button>
+            <button class="tablink" onclick="openLinkPage('skillsDisplayPage', this, '#1d3557')">Skills</button>
             @if (currentUser != Model.Id && currentUser != null)
             {
                 <button class="tablink" onclick="openLinkPage('ChatDisplayPage', this, 'lightblue')">Chat</button>
@@ -302,12 +302,12 @@
                                     <H2>@Html.DisplayNameFor(modelItem => userProject.Project.Description)</H2>
                                     <div class="description">@Html.DisplayFor(modelItem => userProject.Project.Description)</div>
                                     @*Project Dates*@
-                                    <h2>Project Dates</h2>
+                                    @*<h2>Project Dates</h2>
                                     <div class="project-date">
                                         <p><strong>@Html.DisplayNameFor(modelItem => userProject.Project.CreationDate) : </strong>@Html.DisplayFor(modelItem => userProject.Project.CreationDate)</p>
                                         <p><strong> @Html.DisplayNameFor(modelItem => userProject.Project.StartDate) : </strong>@Html.DisplayFor(modelItem => userProject.Project.StartDate)</p>
                                         <p><strong>@Html.DisplayNameFor(modelItem => userProject.Project.EndDate) : </strong>@Html.DisplayFor(modelItem => userProject.Project.EndDate)</p>
-                                    </div>
+                                    </div>*@
                                     @*Project Links*@
                                     <h2>Project Links</h2>
                                     <div class="project-links">
@@ -318,7 +318,7 @@
                                     </div>
                                     @*Card Footer*@
                                     <div class="const-card-footer">
-                                        <a class="btn btn-md btn-primary" href="@projectPath">View&nbsp;Project</a>
+                                        <a class="btn btn-sm btn-primary" href="@projectPath">View&nbsp;Project</a>
                                     </div>
                                 </div>
                             </div>
@@ -408,7 +408,7 @@
                                 }
 
                                 <!-- user skills and links for those skill -->
-                                <div class="const-card-wrapper ">
+                                @*<div class="const-card-wrapper ">
                                     <div class="const-skills-card">
                                         <div class="skills-discipline">
                                             @{
@@ -422,7 +422,7 @@
                                                                 var sd = skillDisciplines.Where(i => i.DisciplineID == discipline.DisciplineID && i.SkillID == skill.SkillID).FirstOrDefault();
                                                                 if (sd != null)
                                                                 {
-                                                                    @*<p style="opacity:1;">@skill.SkillName</p>*@
+                                                                    <p style="opacity:1;">@skill.SkillName</p>
                                                                 }
                                                                 else
                                                                 {
@@ -465,11 +465,11 @@
                                                 </td>
                                                 <td>
                                                     @{
-                                                        @*<h4 class="m-0 bg-light text-center text-black p-1">Links Showcasing Skills</h4>*@
+                                                        <h4 class="m-0 bg-light text-center text-black p-1">Links Showcasing Skills</h4>
                                                         foreach (var link in skillLinks)
                                                         {
                                                             <a href="@link.SkillLinkUrl" target="_blank">@link.SkilLinkLabel</a>
-                                                            @*<div><p>Skills Displayed</p></div>*@
+                                                            <div><p>Skills Displayed</p></div>
                                                             @:<div>
                                                                 List<UserSkillLink> uSkills = userSkillLinks.Where(i => i.LinkID == link.SkillLinkID).ToList();
                                                                 foreach (var uskill in uSkills)
@@ -498,7 +498,7 @@
                                             </tr>
                                         </table>
                                     </div>
-                                </div>
+                                </div>*@
 
 
                                 <div class="skills-and-links">

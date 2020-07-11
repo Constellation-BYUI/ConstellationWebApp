@@ -22,20 +22,34 @@
         .user-check-box picks {
 /*            width: 100%;*/
         }
-.user-details-head, .user-project-head {
-    background-color: #1d3557; /* For browsers that do not support gradients */
-    background-image: linear-gradient(to right, #1d3557, #457b9d);
+/*.user-details-head, .user-project-head {
+    background-color: #1d3557;
     color: white;
     width: 100%;
     text-align: center;
     font-size: large;
     font-weight: 400;
     padding: 5px;
-}
+}*/
 
     .user-details-head h2, .user-project-head h2 {
         margin: 0;
     }
+
+/********************
+    css for tablink
+***********************/
+.tablink {
+    color: #fff;
+    background: #1d3557;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #fff;
+}
+    .tablink:hover {
+        background: #e63946;
+    }
+/*    Ends here*/
 
 #recuiterPosting {
     display: none;
@@ -110,7 +124,9 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     overflow: scroll;
-    max-height: 150px;
+    overflow-x: hidden;
+    height: 70vh;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .user-skill-and-link-head {
@@ -202,7 +218,9 @@
         display: grid;
         grid-template-columns: 1fr;
         overflow: scroll;
-        max-height: 750px;
+        overflow-x: hidden;
+        padding-bottom: 10px;
+        max-height: 100vh;
         /* width: 100%; */
     }
 .collaborators-picture {
@@ -214,8 +232,8 @@
         height: 25em;
         width: 90%;
         margin: auto;
-        margin-bottom: 1em;
-        margin-top: .5em;
+/*        margin-bottom: 1em;*/
+/*        margin-top: .5em;*/
     }
 
 @media screen and (min-width: 320px) {
@@ -235,32 +253,35 @@
     }
 
     .user-details-content {
-        height: 100vh;
+        height: 50rem;
         width: 30%;
         margin: .5em;
+        padding: 1.5px;
+        box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
     }
     .user-details-content .general-index-head h2 {
         font-size: 1.2em;
     }
     .user-details-image img {
-        height: 15em;
-        width: 15em;
+        height: 10em;
+        width: 10em;
 
     }
 /*    CSS form User project container*/
     .user-project-container {
-        width: 65%;
+        width: 63%;
         height: 60rem;
         margin: .5em;
     }
 
     .user-project-content {
-        border: 1px solid black;
         display: grid;
         grid-template-columns: 1fr 1fr;
         overflow: scroll;
+        overflow-x: hidden;
         width: 100%;
-        height: 17em;
+        height: 70vh;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
     .user-project-content .project-title {
         font-size: 1.5em;
@@ -274,13 +295,13 @@
 @media screen and (min-width: 991px) {
     .user-project-content {
         grid-template-columns: 1fr 1fr 1fr;
-        height: 20em;
+/*        height: 40em;*/
     }
     /*.user-details-image img {
         height: 30em;
         width: 100%;
     }*/
-        .user-project-content img {
+        /*.user-project-content img {
             height: 30em;
-        }
+        }*/
 }
