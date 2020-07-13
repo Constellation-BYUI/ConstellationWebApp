@@ -38,8 +38,7 @@ main {
 }
 
 .general-index-head {
-    background-color: #1d3557; /* For browsers that do not support gradients */
-    background-image: linear-gradient(to right, #242b41, #1d3557, #e63946);
+    background-color: #1d3557;
     color: white;
     width: 100%;
     text-align: center;
@@ -106,7 +105,7 @@ footer {
     }
 
     .general-index-head h2 {
-        font-size: 2em;
+        font-size: 1.5em;
         font-weight: 600;
        
     }
