@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\css\cards.css" />
+    <_ContentIncludedByDefault Remove="wwwroot\css\postings-create.css" />
   </ItemGroup>
 
   <ItemGroup>
