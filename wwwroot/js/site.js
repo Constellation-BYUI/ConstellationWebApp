@@ -80,6 +80,15 @@ function add_chatUser() {
 
 }
 
+function add_fields() {
+    var skillInputLabel = document.getElementById("skillInputLabel").value;
+    var userSkills = document.getElementById("userSkills");
+    var hiddenSkillInput = userSkills.querySelector('option[value="' + skillInputLabel + '"]').getAttribute("data-id");
+    document.getElementById("linkDemo").innerHTML += "<input type='hidden' name='skills' value='" + hiddenSkillInput + "'>";
+    document.getElementById("enteredSkills").innerHTML += '<h6>' + skillInputLabel + '</h6>';
+    document.getElementById("skillInputLabel").value = '';
+}
+
 //adding new chat users to existing chat
 function add_chatUser_append() {
     var chatuserInput = document.getElementById("chatUser-appended-input").value;
