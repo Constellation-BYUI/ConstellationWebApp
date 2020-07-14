@@ -5,6 +5,7 @@
     ViewData["Title"] = "Postings Create";
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
+<link rel="stylesheet" href="/css/postings-create.css" />
 
 <!-- Page info -->
 <section class="page-info">
@@ -20,37 +21,40 @@
     </article>
 </section>
 <!-- #endregion -->
+<div class="postings-create-container">
 
 
-<h1>Create</h1>
-<h4>Posting</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+    <div class="postings-header">Create Postings</div>
+
+    <div class="postings-create-content">
         <form asp-action="Create">
-
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <!--Postings Title-->
             <div class="form-group">
                 <label asp-for="PostingTitle" class="control-label"></label>
                 <input asp-for="PostingTitle" class="form-control" />
                 <span asp-validation-for="PostingTitle" class="text-danger"></span>
             </div>
+            <!--Postings Description-->
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <textarea asp-for="Description" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
+            <!--Postings Categories-->
             <div class="form-group">
                 <label asp-for="PostingFor" class="control-label"></label>
                 <input asp-for="PostingFor" class="form-control" />
                 <span asp-validation-for="PostingFor" class="text-danger"></span>
             </div>
+            <!--Linking to postings-->
             <div class="form-group">
                 <label asp-for="SharableToTeam" class="control-label">Allow projects, where you're a collaborator, to Link to this posting?</label>
                 <div>
                     @Html.CheckBoxFor(m => m.SharableToTeam) Yes
                 </div>
             </div>
+            <!--Hide Postings From People-->
             @* Need to say reasoning: Hold off on showing all people this posting, save it for later, or maybe reuse it next time you recuit for a similar posiiton*@
             <div class="form-group">
                 <label asp-for="HidePosting" class="control-label">Do you want your Posting hidden to others?</label>
@@ -58,8 +62,8 @@
                     @Html.CheckBoxFor(m => m.HidePosting) Yes
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
+            <!--Type of postings with lists-->
+            <div class="form-group postings-create-type">
                     <table>
                         <tr>
                             @{
@@ -83,18 +87,16 @@
                             @:</tr>
                             }
                         </table>
-                    </div>
                 </div>
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+                <div class="const-card-footer">
+                    <input type="submit" value="Create" class="btn btn-md btn-primary" />
+                    <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
                 </div>
             </form>
         </div>
+
     </div>
 
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
 
     @section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
