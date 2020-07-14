@@ -57,21 +57,26 @@ a {
     top: 35px;
     left: 5px;
     z-index: 1000;
-    background: rgba(0,0,0,.2);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background: #fff;
+    color: #555;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
+}
+.more-info h2:hover {
+    background: #333;
+    color: #fff;
 }
 .more-info h2 {
-   background-color: gray !important;
-   color: #fff !important;
+   background-color: #fff !important;
+   color: #1d3557 !important;
    font-size: 17px !important;
-   padding: 5px;
+   padding: 3px;
 }
 .more-info .description {
     font-size: 15px;
-    color: #777;
+/*    color: #777;*/
     text-align: center;
     background-color: #fff;
-    padding: .5em;
+/*    padding: .5em;*/
 }
    .more-info .description .a-link {
         display: flex !important;
@@ -268,7 +273,7 @@ a {
     width: 100%;
 }
 .position {
-    border-bottom: 1px solid #e63946;
+    border-bottom: 1px solid #555;
     width: 100%;
     text-align: center;
     padding: 3px;
@@ -308,10 +313,10 @@ a {
         padding: 1px 3px;
         margin: 5px;
         /*    background: rgba(0,0,0,.5);*/
-        color: #000;
+        color: #555;
         border-radius: 4px;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-/*        margin-bottom: 0;*/
+        box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
+        /*        margin-bottom: 0;*/
         font-size: 15px;
     }
 

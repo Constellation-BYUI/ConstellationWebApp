@@ -30,7 +30,6 @@
     List<ConstellationWebApp.Models.Message> messages = ViewBag.messages;
 
 }
-<script src="~/js/tabSwitch.js" asp-append-version="true"></script>
 <link rel="stylesheet" href="~/css/user-details.css" />
 <link rel="stylesheet" href="~/css/cards.css" />
 <!-- #region Info button:-->
@@ -169,16 +168,13 @@
 <div class="user-details-container">
     @*Main content of the user details page*@
     <div class="user-details-content">
-        <div class="general-index-head"><h2>@Html.DisplayFor(model => model.FirstName)  @Html.DisplayFor(model => model.LastName)'s Profile</h2></div>
-        <div class="user-details-image"><img src="@photoPath" asp-append-version="true" /></div>
         <div class="user-details-info">
-            <p>
-                <strong>
-                    @Html.DisplayNameFor(model => model.UserName) :
-                </strong>
-                @Html.DisplayFor(model => model.UserName)
-            </p>
-            <p>
+            <div class="general-index-head"><h2>@Html.DisplayFor(model => model.FirstName)&nbsp;@Html.DisplayFor(model => model.LastName)'s&nbsp;Profile</h2></div>
+            <img class="user-details-back-img" src="/WebAssests/siteImages/constelation_image.webp" alt="card background">
+            <div class="user-details-image"><img src="@photoPath" asp-append-version="true" /></div>
+
+            <p> @Html.DisplayNameFor(model => model.UserName) : @Html.DisplayFor(model => model.UserName)</p>
+            @*<p>
                 <strong>
                     @Html.DisplayNameFor(model => model.FirstName) :
                 </strong>
@@ -189,13 +185,21 @@
                     @Html.DisplayNameFor(model => model.LastName) :
                 </strong>
                 @Html.DisplayFor(model => model.LastName)
-            </p>
-            <h4><strong> @Html.DisplayNameFor(model => model.Bio)</strong></h4>
+            </p>*@
+            <hr />
+            <h4><strong>Biography</strong></h4>
+            <hr />
             <div class="user-bio">
                 <p>
                     @Html.DisplayFor(model => model.Bio)
                 </p>
             </div>
+
+        </div>
+
+
+
+        <div class="user-details-info">
             <h4><strong> @Html.DisplayNameFor(model => model.AreaOfDiscipline)</strong></h4>
             <h6> @Html.DisplayFor(model => model.AreaOfDiscipline)</h6>
 
@@ -204,16 +208,15 @@
 
             @if (Model.ResumePhotoPath != null)
             {
-                <div>
+                <div class="my-links">
                     <h4><strong> Resume</strong></h4>
-                    <a href="@resumePath">View Members Resume</a>
+                    <a  href="@resumePath">View my resume</a>
                 </div>
             }
             <h4><strong>Contact Links</strong></h4>
             @foreach (var contactLink in Model.ContactLinks)
             {
                 <div class="my-links">
-
                     <strong>@Html.DisplayFor(modelItem => contactLink.ContactLinkLabel)</strong>
                     @*@Html.DisplayFor(modelItem => contactLink.ContactLinkUrl)*@
                 </div>
@@ -656,6 +659,7 @@
         border: 2px solid #1d3557
     }
 </style>
+<script src="~/js/tabSwitch.js" asp-append-version="true"></script>
 <script>
     function openPage(pageName, elmnt, color) {
         // Hide all elements with class="tabcontent" by default */

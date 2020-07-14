@@ -26,14 +26,7 @@
     <div class="general-search-bars">
         <!-- Create project button -->
         <a asp-action="Create"><div class="create-project btn btn-md btn-success">Create&nbsp;Project</div></a>
-        <form action="" class="search-bar0">
-            <div class="input-group">
-                <input type="search" placeholder="Search.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
-                <div class="input-group-append">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                </div>
-            </div>
-        </form>
+            <!--Sort Button-->
         <form asp-action="Index" asp-controller="Projects" class="">
             <input value="filterByNew" type="hidden" name="sortOrderNew">
             <button type="submit" class="btn btn-primary sort-button1">Sort&nbsp;by&nbsp;Newest&nbsp;Projects</button>
