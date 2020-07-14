@@ -1,44 +1,94 @@
 ﻿
-.user-details-container {
-    display: block;
-}
-
+/*###################
+  OPTIONAL BUTTONS
+####################*/
 .optional-buttons {
-/*    margin: 5px !important;*/
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: flex-start;
 }
-    .optional-buttons input, .optional-buttons .check {
-/*        width: 100%;*/
-/*        font-size: .7em;*/
-/*        display:inherit;*/
-    }
-    .user-check-box {
-/*        display: flex;*/
-/*        justify-content: start;*/
-    }
-        .user-check-box picks {
-/*            width: 100%;*/
-        }
-/*.user-details-head, .user-project-head {
-    background-color: #1d3557;
-    color: white;
-    width: 100%;
-    text-align: center;
-    font-size: large;
-    font-weight: 400;
-    padding: 5px;
-}*/
 
     .user-details-head h2, .user-project-head h2 {
         margin: 0;
     }
 
-/********************
-    css for tablink
-***********************/
+/*########################################
+    USER DETAILS PROPERTIES AND VALUES
+########################################*/
+.user-details-container {
+    display: block;
+}
+
+.user-details-info {
+    box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
+    margin-bottom: 30px;
+}
+.user-details-content .user-details-back-img {
+    width: 100%;
+    height: 10em;
+    object-fit: cover;
+}
+
+.user-details-image img {
+    margin: .2em 0;
+    margin-left: 50%;
+    transform: translate(-50%);
+    margin-top: -100px;
+    height: 13rem;
+    width: 13rem;
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+
+.user-details-info p {
+    padding: 5px 10px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.user-details-info hr {
+    margin: 0;
+}
+.user-details-info h4, .contact-links h4, .user-project-content h4 {
+    color: #1d3557;
+    width: 100%;
+    text-align: center;
+    font-size: large;
+    font-weight: 400;
+    padding: 8px;
+    margin-bottom: 0;
+}
+
+.user-bio {
+    overflow: auto;
+    height: 7em;
+    width: 100%;
+    text-align: justify;
+}
+
+.user-details-info h6{
+    padding: 0 10px;
+    text-align: center;
+    color: rgba(0,0,0,.6);
+}
+
+.my-links, .user-details-info a {
+    color: #007bff;
+    text-decoration: none;
+    padding: 0 10px;
+    text-align: center;
+}
+.const-card-footer {
+    padding: .4em !important;
+}
+.const-card-footer a {
+    color: white;
+}
+
+/* ###############################
+   TAB LINK PROPERTIES AND VALUES
+################################## */
 .tablink {
     color: #fff;
     background: #1d3557;
@@ -62,11 +112,38 @@
     border: 2px solid #1d5567;
 }
 
-/* CSS for skills and Deiscipline tabel */
-/*.skills-content {
-    overflow: auto;
-    height: 500px;
-}*/
+/*########################################
+    PROJECT PROPERTIES AND VALUES
+ #####################################   */
+.user-project-container .const-card-wrapper {
+    border-radius: 0 0 15px 15px;
+}
+
+.user-project-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    overflow: scroll;
+    overflow-x: hidden;
+    padding-bottom: 10px;
+    max-height: 100vh;
+    /* width: 100%; */
+}
+
+.collaborators-picture {
+    margin: .2em .3em;
+    width: 3em !important;
+    height: 3em !important;
+}
+
+.user-project-content img {
+    height: 25em;
+    width: 90%;
+    margin: auto;
+}
+
+/* ##############################
+   SKILLS PROPERTIES AND VALUES
+################################# */
 .const-skills-card {
     border: 1px solid #cbd4f1;
     width: 100%;
@@ -152,89 +229,9 @@
     grid-column: 1/2;
     padding: 1em;
 }
-.user-details-image {
-/*    width: 90%;*/
-    /*margin: auto;*/
-}
-.user-details-image {
-    background: #ebeef8;
-    width: 100%;
-/*    border-bottom: 1px solid #1d3557;*/
-}
-
-    .user-details-image img {
-        margin: .2em 0;
-        margin-left: 50%;
-        transform: translate(-50%);
-        height: 13rem;
-        width: 13rem;
-        border-radius: 50%;
-        border: 2px solid #1d3557;
-    }
-
-.user-details-info p {
-    padding: 5px 10px;
-    margin-bottom: 0;
-}
-
-.user-details-info h4, .contact-links h4, .user-project-content h4 {
-    background-color: #ebeef8;
-    color: #000;
-    width: 100%;
-    text-align: center;
-    font-size: large;
-    font-weight: 400;
-    padding: 8px;
-    margin-bottom: 0;
-}
-
-.user-bio {
-    overflow: auto;
-    height: 7em;
-    width: 100%;
-    text-align: justify;
-}
-.user-details-info h6, .user-details-info a {
-    padding: 0 10px;
-    text-align: center;
-    color: #333;
-}
- 
-    .my-links, .user-details-info a {
-        color: #007bff;
-        text-decoration: none;
-        padding: 0 10px;
-    }
-
-    .const-card-footer a {
-        color: white;
-    }
 
 
-    .user-project-container .const-card-wrapper {
-        border-radius: 0 0 15px 15px;
-    }
-    .user-project-content {
-        display: grid;
-        grid-template-columns: 1fr;
-        overflow: scroll;
-        overflow-x: hidden;
-        padding-bottom: 10px;
-        max-height: 100vh;
-        /* width: 100%; */
-    }
-.collaborators-picture {
-    margin: .2em .3em;
-    width: 3em !important;
-    height: 3em !important;
-}
-    .user-project-content img {
-        height: 25em;
-        width: 90%;
-        margin: auto;
-/*        margin-bottom: 1em;*/
-/*        margin-top: .5em;*/
-    }
+
 
 @media screen and (min-width: 320px) {
     .user-details-head h2, .user-project-head h2 {
@@ -253,18 +250,24 @@
     }
 
     .user-details-content {
-        height: 50rem;
+        /*height: 50rem;*/
         width: 30%;
         margin: .5em;
         padding: 1.5px;
-        box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
+        
     }
     .user-details-content .general-index-head h2 {
         font-size: 1.2em;
     }
+    .user-details-content .user-details-back-img {
+    width: 100%;
+    height: 8em;
+    object-fit: cover;
+}
     .user-details-image img {
-        height: 10em;
-        width: 10em;
+        height: 8em;
+        width: 8em;
+        margin-top: -70px;
 
     }
 /*    CSS form User project container*/

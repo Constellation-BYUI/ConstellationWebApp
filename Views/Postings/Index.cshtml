@@ -23,14 +23,7 @@
     <div class="general-search-bars">
         <!-- Create Job Postings button -->
         <a asp-action="Create"><div class="create-posting btn btn-md btn-success">Create&nbsp;Job&nbsp;Posting</div></a>
-        <form action="" class="search-bar0">
-            <div class="input-group">
-                <input type="search" placeholder="Search.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
-                <div class="input-group-append">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                </div>
-            </div>
-        </form>
+        <!--Search Boxes-->
         <form asp-action="Index" asp-controller="Postings" class="search-bar1">
             <div class="input-group">
                 <input type="search" name="titleSearch" placeholder="Search by title.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
@@ -41,7 +34,7 @@
         </form>
         <form asp-action="Index" asp-controller="Postings" class="search-bar2">
             <div class="input-group">
-                <input list="postingTypes-List" name="typeSearch" placeholder="Seach by a posting type.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
+                <input list="postingTypes-List" name="typeSearch" placeholder="Seach by post type.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
                 </div>
@@ -49,7 +42,7 @@
         </form>
         <form asp-action="Index" asp-controller="Postings" class="search-bar3">
             <div class="input-group">
-                <input type="search" name="postingBySearch" placeholder="Search by posting Owner.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
+                <input type="search" name="postingBySearch" placeholder="Search by post Owner.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
                 </div>
@@ -106,10 +99,10 @@
                                             </p>
                                         }
                                     </div>
-                                    <div class="postings-description">
+                                    @*<div class="postings-description">
                                         <h2>Description</h2>
                                         <p>@Html.DisplayFor(modelItem => item.Description)</p>
-                                    </div>
+                                    </div>*@
                                 </div>
                             </div>
                             <div class="const-card-footer">

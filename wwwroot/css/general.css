@@ -32,17 +32,16 @@ main {
 .general-search-bars {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    column-gap: 1em;
+    column-gap: 15px;
     margin: 25px 5px 0 5px;
     padding: 5px 0;
 }
-
 .general-index-head {
     background-color: #1d3557;
     color: white;
     width: 100%;
     text-align: center;
-    margin-bottom: 3px;
+    /*margin-bottom: 3px;*/
 }
 
     .general-index-head h2 {
@@ -97,10 +96,10 @@ footer {
 
 @media screen and (min-width: 767px) {
     main {
-        padding: 2px 95px 100px 95px;
+        padding: 2px 5px;
     }
     .general-search-bars {
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
         margin: 0 5px;
     }
 
@@ -119,4 +118,11 @@ footer {
         margin: 1em auto auto auto;
     }
 }
-
+ @media screen and (min-width: 991px) {
+    main {
+        padding: 2px 95px 100px 95px;
+    }
+    .general-search-bars {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+ }

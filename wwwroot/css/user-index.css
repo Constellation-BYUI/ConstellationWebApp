@@ -10,8 +10,14 @@
     text-align: left;
     color: blue;
 }
-
-.search-bar3, .search-bar0 {
+.user-index-search-bars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1em;
+    margin: 25px 5px 0 5px;
+    padding: 5px 0;
+}
+.search-bar3 {
     display: none;
     margin: 3px 3px;
 }
@@ -47,7 +53,14 @@
         .user-index-content {
             height: 35em;
         }
- 
+
+    .user-index-search-bars {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 1em;
+        margin: 0 5px;
+        padding: 5px 0;
+    }
 
     .search-bar1, .search-bar2, .search-bar3 {
         display: block;

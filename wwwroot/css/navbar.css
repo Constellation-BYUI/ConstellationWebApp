@@ -48,7 +48,7 @@ header nav ul {
 
 header nav ul li {
                 list-style: none;
-                font-size: 16px;
+                font-size: 15px;
             }
 
     header nav ul li a {
@@ -138,7 +138,7 @@ header nav ul li {
         z-index: 99;
     }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 576px) {
     header {
         padding: 0 20px;
     }
@@ -160,12 +160,17 @@ header nav ul li {
             left: 0;
             z-index: 99;
         }
-
+  /*  header .logo a {
+        font-size: 20px !important;
+    }*/
         header nav ul {
             background-color: rgba(0,0,0,.8);
             display: block;
             text-align: center;
         }
+      /*  header nav ul li {
+                font-size: 13px;
+            }*/
 
             header nav ul li a {
                 border-bottom: 1px solid whitesmoke;
@@ -214,5 +219,10 @@ header nav ul li {
 
     #drop-down-avatar {
         display: none;
+    }
+}
+@media screen and (max-width: 768px) {
+    header {
+        padding: 0 20px;
     }
 }

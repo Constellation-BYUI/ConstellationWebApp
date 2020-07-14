@@ -51,10 +51,17 @@ section article {
         transition: .5s;
     }
 /*Ends here*/
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 768px) {
     .info-button {
         top: 0;
         right: 0;
         padding: 5px;
     }
 }
+/*@media screen and (max-width: 768px) {
+    .info-button {
+        top: 0;
+        right: -69px;
+        padding: 5px;
+    }
+}*/
