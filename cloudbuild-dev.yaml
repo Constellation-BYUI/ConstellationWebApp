@@ -44,6 +44,7 @@ steps:
   - 'triggers'
   - 'run'
   - 'a2b3e35c-62d3-479c-8385-c41d5b8e0228'
+  - '--branch=master'
 
 # # This step deploys the stage application in Kubernetes
 # - name: 'gcr.io/cloud-builders/gcloud'
