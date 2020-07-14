@@ -123,6 +123,7 @@
                                     <div class="form-group mb-0">
                                         <input type="hidden" value="@currentUser" class="form-control" name="userID" />
                                     </div>
+                                    <input type="hidden" name="disciplineSearchString" value="@Model.currentDiscipline.DisciplineName">
                                     <div class="form-group">
                                         <input type="submit" value="Link selected skills" class="btn btn-sm btn-info" />
                                     </div>
@@ -147,11 +148,11 @@
                                             @:</div>
                                         }
                                     }
-                                    <div class="form-group mb-0">
-                                        <input type="hidden" value="@currentUser" class="form-control" name="userID" />
-                                        <input type="hidden" value="@Model.currentDiscipline.DisciplineID" class="form-control" name="disciplineID" />
-
-                                    </div>
+                            <div class="form-group mb-0">
+                                <input type="hidden" value="@currentUser" class="form-control" name="userID" />
+                                <input type="hidden" value="@Model.currentDiscipline.DisciplineID" class="form-control" name="disciplineID" />
+                                <input type="hidden" name="disciplineSearchString" value="@Model.currentDiscipline.DisciplineName">
+                            </div>
                                     <div class="form-group">
                                         <input type="submit" value="Remove selected skills" class="btn btn-sm btn-info" />
                                     </div>
@@ -181,33 +182,35 @@
                                 Discipline disciplineForSkill = Model.Disciplines.Where(i => i.DisciplineID == skillDisciplineForSkill.DisciplineID).FirstOrDefault();
 
                                 Skill skillName = Model.Skills.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
-                                <option value=@skill.UserSkillID>@skillName.SkillName - @disciplineForSkill.DisciplineName</option>
+                                <option value ="@skillName.SkillName - @disciplineForSkill.DisciplineName" data-id="@skill.UserSkillID"></option>
                             }
                         }
                     </datalist>
 
                     @* Form that contains all discpline drop down lists and the Link Label/URL Fields*@
-                    <form asp-action="CreateSkillLink" asp-controller="UserSkills">
-                        <h3>Select from you Skills</h3>
-                        <div class="form-group">
-                            <input name="skills" id="skill-label" list="userSkills">
-                            <input type="button" onclick="add_fields();" value="Select another skill from this List" class="btn btn-md btn-secondary" />
-                        </div>
+            <form asp-action="CreateSkillLink" asp-controller="UserSkills">
+                <h3>Select from you Skills</h3>
+                <div class="form-group">
+                    <input name="skillString" id="skillInputLabel" list="userSkills">
+                    <input type="button" onclick="add_fields();" value="Select another skill from this List" class="btn btn-md btn-secondary" />
+                </div>
 
-                        @*Container for the entered Skills*@
-                        <div id="enteredSkills"></div><br />
-                        <div id="linkDemo"></div><br />
+                @*Container for the entered Skills*@
+                <div id="enteredSkills"></div><br />
+                <div id="linkDemo"></div><br />
 
-                        @*Link&label are need to created the SkillLInk the id derived will be used for the UserSkillLink entity selected*@
-                        <h4>Link Label</h4>
-                        <input type='text' name='linkLabel'>
-                        <h4>Link URL</h4>
-                        <input type='text' name='linkUrl'>
+                @*Link&label are need to created the SkillLInk the id derived will be used for the UserSkillLink entity selected*@
+                <h4>Link Label</h4>
+                <input type='text' name='linkLabel'>
+                <h4>Link URL</h4>
+                <input type='text' name='linkUrl'>
 
-                        <div class="form-group">
-                            <input type="submit" value="Add Link to selected skills" class="btn btn-sm btn-info" />
-                        </div>
-                    </form>
+                <div class="form-group">
+                    <input type="hidden" name="disciplineSearchString" value="@Model.currentDiscipline.DisciplineName">
+
+                    <input type="submit" value="Add Link to selected skills" class="btn btn-sm btn-info" />
+                </div>
+            </form>
                 }
             </div>
         </section>
@@ -226,7 +229,9 @@
                         <div>
                             <a href="@link.SkillLinkUrl"><p style="opacity:1; color:black; background-color:none;">@link.SkilLinkLabel</p></a>
                             <form asp-action="DeleteSkillLink" asp-controller="UserSkills">
-                                <input type="hidden" name="link" value="@link.SkillLinkID" list="userSkills">
+                                <input type="hidden" name="link" value="@link.SkillLinkID">
+                                <input type="hidden" name="disciplineSearchString" value="@Model.currentDiscipline.DisciplineName">
+
                                 <div class="form-group">
                                     <input type="submit" value="Remove" class="btn btn-sm btn-info" />
                                 </div>
@@ -239,14 +244,7 @@
     </section>
 </div>
 <script>
-    function add_fields() {
-        //Add the selected Skill above the input so the user knows that it was added
-        document.getElementById("enteredSkills").innerHTML += `<h6 style="text-decoration: underline">${document.getElementById("skill-label").value}</h6>`;
-        //Add the hidden select below the input to be added later
-        document.getElementById("linkDemo").innerHTML += `<input type='hidden' class='input-group' name='skills' value=${document.getElementById("skill-label").value}>`;
-        //clear the input field for the user
-        document.getElementById("skill-label").value = "";
-    }
+
 </script>
 
 <script>
