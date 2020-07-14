@@ -35,7 +35,7 @@ namespace ConstellationWebApp.Data
                 context.SaveChanges();
             }
 
-            if (!context.PostingTypes.Any())
+            if (!context.Disciplines.Any())
             {
                 var disciplines = new Discipline[]
            {
