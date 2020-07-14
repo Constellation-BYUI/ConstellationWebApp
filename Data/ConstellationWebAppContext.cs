@@ -40,6 +40,9 @@ namespace ConstellationWebApp.Data
         public DbSet<ConstellationWebApp.Models.ChatMessage> ChatMessages { get; set; }
         public DbSet<ConstellationWebApp.Models.Message> Messages { get; set; }
 
+        public DbSet<ConstellationWebApp.Models.ProjectSkills> ProjectSkills { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -210,6 +213,28 @@ namespace ConstellationWebApp.Data
                 .HasOne(bc => bc.Chat)
                 .WithMany(c => c.ChatUsers)
                 .HasForeignKey(bc => bc.ChatID);
+
+            modelBuilder.Entity<ProjectSkills>()
+      .HasKey(bc => new { bc.SkillID, bc.ProjectID });
+            modelBuilder.Entity<ProjectSkills>()
+                .HasOne(bc => bc.Skill)
+                .WithMany(b => b.ProjectSkills)
+                .HasForeignKey(bc => bc.SkillID);
+            modelBuilder.Entity<ProjectSkills>()
+                .HasOne(bc => bc.Project)
+                .WithMany(c => c.ProjectSkills)
+                .HasForeignKey(bc => bc.ProjectID);
+
+            modelBuilder.Entity<PostingSkills>()
+  .HasKey(bc => new { bc.SkillID, bc.PostingID });
+            modelBuilder.Entity<PostingSkills>()
+                .HasOne(bc => bc.Skill)
+                .WithMany(b => b.PostingSkills)
+                .HasForeignKey(bc => bc.SkillID);
+            modelBuilder.Entity<PostingSkills>()
+                .HasOne(bc => bc.Posting)
+                .WithMany(c => c.PostingSkills)
+                .HasForeignKey(bc => bc.PostingID);
 
             modelBuilder.Entity<ChatMessage>().ToTable("ChatMessage");
             modelBuilder.Entity<ChatMessage>()

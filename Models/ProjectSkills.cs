@@ -5,13 +5,12 @@ using System.Threading.Tasks;
 
 namespace ConstellationWebApp.Models
 {
-    //comment to make a new branch possible
-    public class UserProject
+    public class ProjectSkills
     {
-        public string UserID { get; set; }
-        public User User { get; set; }
+        public int SkillID { get; set; }
+        public Skill Skill { get; set; }
         public int ProjectID { get; set; }
         public Project Project { get; set; }
-        public string CollaborationTitle { get; set; }
+
     }
 }
