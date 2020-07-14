@@ -5,7 +5,7 @@
     ViewData["Title"] = "Postings Create";
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 }
-<link rel="stylesheet" href="/css/postings-create.css" />
+<link rel="stylesheet" href="~/css/postings-general.css" />
 
 <!-- Page info -->
 <section class="page-info">
@@ -21,12 +21,11 @@
     </article>
 </section>
 <!-- #endregion -->
-<div class="postings-create-container">
-
+<div class="postings-general-container">
 
     <div class="postings-header">Create Postings</div>
 
-    <div class="postings-create-content">
+    <div class="postings-general-content">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <!--Postings Title-->
