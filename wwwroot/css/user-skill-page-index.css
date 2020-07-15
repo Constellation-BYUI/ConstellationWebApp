@@ -23,16 +23,19 @@ html {
     margin: 0;
 }
 
-.Split-forms {
-    display: grid;
-    grid-template-columns: 5% 40% 10% 40% 5%;
-    grid-template-rows: 500px;
+.Form-Area {
     background-color: rgba(245, 245, 245, 1);
     height: 800px;
     padding: 2.5em 1em 2.5em;
     margin: 1.5em;
     border-radius: 7px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.Split-forms {
+    display: grid;
+    grid-template-columns: 5% 40% 10% 40% 5%;
+    grid-template-rows: 500px;
 }
 
 

@@ -44,186 +44,186 @@
         d. The SkillLink form removing the link from a set/Individual skill
             - will list the skills of the respective link and have a remove button*@
 <!-- #endregion-->
-<div class="Split-forms">
+<div class="Form-Area">
+    <div class="Split-forms">
 
-    @{
-        <section class="Skill-form">
+        @{
+            <section class="Skill-form">
 
-            @* Discipline Name *@
-            <h3>@Model.currentDiscipline.DisciplineName</h3>
+                @* Discipline Name *@
+                <h3>@Model.currentDiscipline.DisciplineName</h3>
 
-            @* this is to seach by a specific discipline *@
-            <form asp-action="Index" asp-controller="UserSkills">
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <datalist id="AreaOfDiscipline-List">
-                            @{
-                                List<ConstellationWebApp.Models.Discipline> disciplines = Model.Disciplines.ToList();
+                @* this is to seach by a specific discipline *@
+                <form asp-action="Index" asp-controller="UserSkills">
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <datalist id="AreaOfDiscipline-List">
+                                @{
+                                    List<ConstellationWebApp.Models.Discipline> disciplines = Model.Disciplines.ToList();
 
-                                foreach (var discipline in disciplines)
-                                {
-                                    <option value="@discipline.DisciplineName" data-id="@discipline.DisciplineName"></option>
+                                    foreach (var discipline in disciplines)
+                                    {
+                                        <option value="@discipline.DisciplineName" data-id="@discipline.DisciplineName"></option>
+                                    }
+                                @:</datalist>
+                            @:</div>
                                 }
-                            @:</datalist>
-                        @:</div>
-                            }
-                        </div>
-
-                        <div class="form-inline">
-                            <label for="disciplineSearchString" class="sr-only">Search by Discipline</label><!--WORKING HERE AND ON THE HEIGHT OF THE PAGE-->
-                            <input id="disciplineSearchString" name="disciplineSearchString" list="AreaOfDiscipline-List">
-                            <div class="form-group mx-auto mb-0">
-                                <input class="btn btn-md btn-primary mb-1 mx-auto" type="submit" value="Find Discipline" />
                             </div>
-                        </div>
-                    </form>
-                    <br />
-                    <section>
-                        <button class="tablink" onclick="openPage('AddSkills', this, 'lightblue')" id="defaultOpen">Add Skills</button>
-                        <button class="tablink" onclick="openPage('RemoveSkills', this, 'red')">Remove Skills</button>
 
-                        @*Adding UserSKills*@
-                        <div id="AddSkills" class="tabcontent">
-                            <h3>@Model.currentDiscipline.DisciplineName related skills not added to your profile</h3>
-                            <form asp-action="CreateManyUserSkills" asp-controller="UserSkills">
-                                @{
-                                    foreach (var skill in Model.SkillDisciplines.Where(i => i.DisciplineID == Model.currentDiscipline.DisciplineID))
-                                    {
-                                        Skill skillName = Model.Skills.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
-                                        kickout = false;
-                                        foreach (var uSkill in Model.UserSkills.Where(i => i.UserID == currentUser && i.SkillID == skill.SkillID))
-                                        {
-                                            kickout = true;
-                                        }
-                                        if (kickout == true)
-                                        {
-                                            continue;
-                                        }
-                                        else
-                                        {
-                                            assigned = false;
-                                            @:<div>
-                                                <input type="checkbox" name="skills" value="@skill.SkillID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @skillName.SkillName;
-                                            @:</div>
-                                        }
-                                    }
-                                    <div class="form-group mb-0">
-                                        <input type="hidden" value="@currentUser" class="form-control" name="userID" />
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="submit" value="Link selected skills" class="btn btn-sm btn-info" />
-                                    </div>
-                                }
-                            </form>
-                        </div>
-
-                        @*Removing UserSKills*@
-                        <div id="RemoveSkills" class="tabcontent">
-                            <h3>@Model.currentDiscipline.DisciplineName related skills added to your profile</h3>
-                            <form asp-action="RemoveManyUserSkills" asp-controller="UserSkills">
-                                @{
-                                    foreach (var skill in Model.SkillDisciplines.Where(i => i.DisciplineID == Model.currentDiscipline.DisciplineID))
-                                    {
-                                        Skill skillName = Model.Skills.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
-                                        kickout = false;
-                                        foreach (var uSkill in Model.UserSkills.Where(i => i.UserID == currentUser && i.SkillID == skill.SkillID))
-                                        {
-                                            assigned = false;
-                                            @:<div>
-                                                <input type="checkbox" name="skills" value="@skill.SkillID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @skillName.SkillName;
-                                            @:</div>
-                                        }
-                                    }
-                                    <div class="form-group mb-0">
-                                        <input type="hidden" value="@currentUser" class="form-control" name="userID" />
-                                        <input type="hidden" value="@Model.currentDiscipline.DisciplineID" class="form-control" name="disciplineID" />
-
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="submit" value="Remove selected skills" class="btn btn-sm btn-info" />
-                                    </div>
-                                }
-                            </form>
-                        </div>
-                    </section>
-                </section>
-    }
-    <section class="Link-form">
-        <section>
-            <h3>Linking Skills</h3>
-            <br />
-            <p>Add a link to prove your competency for a set or individuals skill.</p>
-            <br />
-            <br />
-            <button class="tablink" onclick="openLinkPage('AddSkillLink', this, 'lightblue')" id="defaultLinkOpen">Add Skill(s) Link</button>
-            <button class="tablink" onclick="openLinkPage('RemoveSkillLink', this, 'red')">Remove Skill(s) Link</button>
-
-            <div id="AddSkillLink" class="linktabcontent">
-                @{
-                    <datalist id="userSkills">
-                        @{
-                            foreach (var skill in Model.UserSkills.Where(i => i.UserID == currentUser))
-                            {
-                                SkillDiscipline skillDisciplineForSkill = Model.SkillDisciplines.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
-                                Discipline disciplineForSkill = Model.Disciplines.Where(i => i.DisciplineID == skillDisciplineForSkill.DisciplineID).FirstOrDefault();
-
-                                Skill skillName = Model.Skills.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
-                                <option value=@skill.UserSkillID>@skillName.SkillName - @disciplineForSkill.DisciplineName</option>
-                            }
-                        }
-                    </datalist>
-
-                    @* Form that contains all discpline drop down lists and the Link Label/URL Fields*@
-                    <form asp-action="CreateSkillLink" asp-controller="UserSkills">
-                        <h3>Select from you Skills</h3>
-                        <div class="form-group">
-                            <input name="skills" id="skill-label" list="userSkills">
-                            <input type="button" onclick="add_fields();" value="Select another skill from this List" class="btn btn-md btn-secondary" />
-                        </div>
-
-                        @*Container for the entered Skills*@
-                        <div id="enteredSkills"></div><br />
-                        <div id="linkDemo"></div><br />
-
-                        @*Link&label are need to created the SkillLInk the id derived will be used for the UserSkillLink entity selected*@
-                        <h4>Link Label</h4>
-                        <input type='text' name='linkLabel'>
-                        <h4>Link URL</h4>
-                        <input type='text' name='linkUrl'>
-
-                        <div class="form-group">
-                            <input type="submit" value="Add Link to selected skills" class="btn btn-sm btn-info" />
-                        </div>
-                    </form>
-                }
-            </div>
-        </section>
-        <section>
-            <div id="RemoveSkillLink" class="linktabcontent">
-                <h3>Remove SKill Links</h3>
-                <p style="opacity:1; color:black; background-color:none;">
-                    You can remove a link and
-                    its URL. Your skills will not be removed from
-                    this action but the you will not showcase the
-                    skill with this link on your profile any longer.
-                </p>
-                @{
-                    foreach (var link in Model.SkillLinks.Where(i => i.SkillLinkOwner == currentUser))
-                    {
-                        <div>
-                            <a href="@link.SkillLinkUrl"><p style="opacity:1; color:black; background-color:none;">@link.SkilLinkLabel</p></a>
-                            <form asp-action="DeleteSkillLink" asp-controller="UserSkills">
-                                <input type="hidden" name="link" value="@link.SkillLinkID" list="userSkills">
-                                <div class="form-group">
-                                    <input type="submit" value="Remove" class="btn btn-sm btn-info" />
+                            <div class="form-inline">
+                                <label for="disciplineSearchString" class="sr-only">Search by Discipline</label><!--WORKING HERE AND ON THE HEIGHT OF THE PAGE-->
+                                <input id="disciplineSearchString" name="disciplineSearchString" list="AreaOfDiscipline-List">
+                                <div class="form-group mx-auto mb-0">
+                                    <input class="btn btn-md btn-primary mb-1 mx-auto" type="submit" value="Find Discipline" />
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
+                        <br />
+                        <section>
+                            <button class="tablink" onclick="openPage('AddSkills', this, 'lightblue')" id="defaultOpen">Add Skills</button>
+                            <button class="tablink" onclick="openPage('RemoveSkills', this, 'red')">Remove Skills</button>
+
+                            @*Adding UserSKills*@
+                            <div id="AddSkills" class="tabcontent">
+                                <h3>@Model.currentDiscipline.DisciplineName related skills not added to your profile</h3>
+                                <form asp-action="CreateManyUserSkills" asp-controller="UserSkills">
+                                    @{
+                                        foreach (var skill in Model.SkillDisciplines.Where(i => i.DisciplineID == Model.currentDiscipline.DisciplineID))
+                                        {
+                                            Skill skillName = Model.Skills.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
+                                            kickout = false;
+                                            foreach (var uSkill in Model.UserSkills.Where(i => i.UserID == currentUser && i.SkillID == skill.SkillID))
+                                            {
+                                                kickout = true;
+                                            }
+                                            if (kickout == true)
+                                            {
+                                                continue;
+                                            }
+                                            else
+                                            {
+                                                assigned = false;
+                                                @:<div>
+                                                    <input type="checkbox" name="skills" value="@skill.SkillID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @skillName.SkillName;
+                                                @:</div>
+                                            }
+                                        }
+                                        <div class="form-group mb-0">
+                                            <input type="hidden" value="@currentUser" class="form-control" name="userID" />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Link selected skills" class="btn btn-sm btn-info" />
+                                        </div>
+                                    }
+                                </form>
+                            </div>
+
+                            @*Removing UserSKills*@
+                            <div id="RemoveSkills" class="tabcontent">
+                                <h3>@Model.currentDiscipline.DisciplineName related skills added to your profile</h3>
+                                <form asp-action="RemoveManyUserSkills" asp-controller="UserSkills">
+                                    @{
+                                        foreach (var skill in Model.SkillDisciplines.Where(i => i.DisciplineID == Model.currentDiscipline.DisciplineID))
+                                        {
+                                            Skill skillName = Model.Skills.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
+                                            kickout = false;
+                                            foreach (var uSkill in Model.UserSkills.Where(i => i.UserID == currentUser && i.SkillID == skill.SkillID))
+                                            {
+                                                assigned = false;
+                                                @:<div>
+                                                    <input type="checkbox" name="skills" value="@skill.SkillID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @skillName.SkillName;
+                                                @:</div>
+                                            }
+                                        }
+                                        <div class="form-group mb-0">
+                                            <input type="hidden" value="@currentUser" class="form-control" name="userID" />
+                                            <input type="hidden" value="@Model.currentDiscipline.DisciplineID" class="form-control" name="disciplineID" />
+
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Remove selected skills" class="btn btn-sm btn-info" />
+                                        </div>
+                                    }
+                                </form>
+                            </div>
+                        </section>
+                    </section>
+        }
+        <section class="Link-form">
+            <section>
+                <h3>Linking Skills</h3>
+                <p>Add a link to prove your competency for a set or individuals skill.</p>
+                <br />
+                <button class="tablink" onclick="openLinkPage('AddSkillLink', this, 'lightblue')" id="defaultLinkOpen">Add Skill(s) Link</button>
+                <button class="tablink" onclick="openLinkPage('RemoveSkillLink', this, 'red')">Remove Skill(s) Link</button>
+
+                <div id="AddSkillLink" class="linktabcontent">
+                    @{
+                        <datalist id="userSkills">
+                            @{
+                                foreach (var skill in Model.UserSkills.Where(i => i.UserID == currentUser))
+                                {
+                                    SkillDiscipline skillDisciplineForSkill = Model.SkillDisciplines.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
+                                    Discipline disciplineForSkill = Model.Disciplines.Where(i => i.DisciplineID == skillDisciplineForSkill.DisciplineID).FirstOrDefault();
+
+                                    Skill skillName = Model.Skills.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
+                                    <option value=@skill.UserSkillID>@skillName.SkillName - @disciplineForSkill.DisciplineName</option>
+                                }
+                            }
+                        </datalist>
+
+                        @* Form that contains all discpline drop down lists and the Link Label/URL Fields*@
+                        <form asp-action="CreateSkillLink" asp-controller="UserSkills">
+                            <h3>Select from you Skills</h3>
+                            <div class="form-group">
+                                <input name="skills" id="skill-label" list="userSkills">
+                                <input type="button" onclick="add_fields();" value="Select another skill from this List" class="btn btn-md btn-secondary" />
+                            </div>
+
+                            @*Container for the entered Skills*@
+                            <div id="enteredSkills"></div><br />
+                            <div id="linkDemo"></div><br />
+
+                            @*Link&label are need to created the SkillLInk the id derived will be used for the UserSkillLink entity selected*@
+                            <h4>Link Label</h4>
+                            <input type='text' name='linkLabel'>
+                            <h4>Link URL</h4>
+                            <input type='text' name='linkUrl'>
+
+                            <div class="form-group">
+                                <input type="submit" value="Add Link to selected skills" class="btn btn-sm btn-info" />
+                            </div>
+                        </form>
                     }
-                }
-            </div>
+                </div>
+            </section>
+            <section>
+                <div id="RemoveSkillLink" class="linktabcontent">
+                    <h3>Remove SKill Links</h3>
+                    <p style="opacity:1; color:black; background-color:none;">
+                        You can remove a link and
+                        its URL. Your skills will not be removed from
+                        this action but the you will not showcase the
+                        skill with this link on your profile any longer.
+                    </p>
+                    @{
+                        foreach (var link in Model.SkillLinks.Where(i => i.SkillLinkOwner == currentUser))
+                        {
+                            <div>
+                                <a href="@link.SkillLinkUrl"><p style="opacity:1; color:black; background-color:none;">@link.SkilLinkLabel</p></a>
+                                <form asp-action="DeleteSkillLink" asp-controller="UserSkills">
+                                    <input type="hidden" name="link" value="@link.SkillLinkID" list="userSkills">
+                                    <div class="form-group">
+                                        <input type="submit" value="Remove" class="btn btn-sm btn-info" />
+                                    </div>
+                                </form>
+                            </div>
+                        }
+                    }
+                </div>
+            </section>
         </section>
-    </section>
+    </div>
 </div>
 <script>
     function add_fields() {
