@@ -23,6 +23,8 @@
 }
 
 <link rel="stylesheet" href="~/css/project-create-edit.css" />
+<link rel="stylesheet" href="~/css/user-skill-page-index.css">
+
 
 <!-- Page info -->
 <section class="page-info">
@@ -296,40 +298,143 @@
                         </section>
 
                         <!--#endregion-->
-                    </div>
-                </div>
-            </div>
-        }
-        @*CSS CODE FOR INDIVISUAL CARDS ENDS HERE*@
-        else
-        {
-            <!-- #region not a collaborator-->
-            <div class="container padding">
-                <div class="col-md-8 mx-auto p-0">
-                    <div class="card text-black shadow-lg my-2 mt-0 padding">
-                        <h6 class="titleBorder border-bottom my-0">
-                            You are not part of this
-                            project and do not have permission to Edit it. Connect with the
-                            members of the project if you want to be part of it.
-                        </h6>
+                        <!-- #region Relation: Project Skills-->
+                        <section class="Skill-form">
+                            @* Discipline Name *@
+                            <h3>@Model.currentDiscipline.DisciplineName</h3>
 
-                        @foreach (var collab in Model.currentProject.UserProjects)
-                        {
-                            var collabPath = "~/image/" + (collab.User.PhotoPath);
-                            var collabMemberPath = "../../Users/Details/" + (collab.User.Id);
-                            <div>
-                                <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
-                                <a href="@collabMemberPath">@Html.DisplayFor(modelItem => collab.User.FirstName)  @Html.DisplayFor(modelItem => collab.User.LastName)  : @Html.DisplayFor(modelItem => collab.User.UserName)</a>
+                            @* this is to seach by a specific discipline *@
+                            <form asp-action="Index" asp-controller="UserSkills">
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <datalist id="AreaOfDiscipline-List">
+                                            @{
+                                                List<ConstellationWebApp.Models.Discipline> disciplines = Model.Disciplines.ToList();
+
+                                                foreach (var discipline in disciplines)
+                                                {
+                                                    <option value="@discipline.DisciplineName" data-id="@discipline.DisciplineName"></option>
+                                                }
+                                            @:</datalist>
+                                        @:</div>
+                                            }
+                                        </div>
+
+                                        <div class="form-inline">
+                                            <label for="disciplineSearchString" class="sr-only">Search by Discipline</label><!--WORKING HERE AND ON THE HEIGHT OF THE PAGE-->
+                                            <input id="disciplineSearchString" name="disciplineSearchString" list="AreaOfDiscipline-List">
+                                            <div class="form-group mx-auto mb-0">
+                                                <input class="btn btn-md btn-primary mb-1 mx-auto" type="submit" value="Find Discipline" />
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <br />
+                                    <section>
+                                        <button class="tablink" onclick="openPage('AddSkills', this, 'lightblue')" id="defaultOpen">Add Skills</button>
+                                        <button class="tablink" onclick="openPage('RemoveSkills', this, 'red')">Remove Skills</button>
+
+                                        @*Adding UserSKills*@
+                                        <div id="AddSkills" class="tabcontent">
+                                            <h3>@Model.currentDiscipline.DisciplineName related skills not added to Project</h3>
+                                            <form asp-action="CreateManyProjectSkills" asp-controller="Projects">
+                                                @{
+                                                    foreach (var skill in Model.SkillDisciplines.Where(i => i.DisciplineID == Model.currentDiscipline.DisciplineID))
+                                                    {
+                                                        Skill skillName = Model.Skills.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
+                                                        var kickout = false;
+                                                        foreach (var uSkill in Model.ProjectSkills.Where(i => i.SkillID == skill.SkillID))
+                                                        {
+                                                            kickout = true;
+                                                        }
+                                                        if (kickout == true)
+                                                        {
+                                                            continue;
+                                                        }
+                                                        else
+                                                        {
+                                                            assigned = false;
+                                                            @:<div>
+                                                                <input type="checkbox" name="skills" value="@skill.SkillID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @skillName.SkillName;
+                                                            @:</div>
+                                                        }
+                                                    }
+                                                    <div class="form-group mb-0">
+                                                        <input type="hidden" value="@currentUser" name="userID" />
+                                                        <input type="hidden" value="@Model.ProjectID" name="ProjectID" />
+
+                                                    </div>
+                                                    <input type="hidden" name="disciplineSearchString" value="@Model.currentDiscipline.DisciplineName">
+                                                    <div class="form-group">
+                                                        <input type="submit" value="Link selected skills" class="btn btn-sm btn-info" />
+                                                    </div>
+                                                }
+                                            </form>
+                                        </div>
+
+                                        @*Removing UserSKills*@
+                                        <div id="RemoveSkills" class="tabcontent">
+                                            <h3>@Model.currentDiscipline.DisciplineName related skills added to Project</h3>
+                                            <form asp-action="RemoveManyProjectSkills" asp-controller="Projects">
+                                                @{
+                                                    foreach (var skill in Model.SkillDisciplines.Where(i => i.DisciplineID == Model.currentDiscipline.DisciplineID))
+                                                    {
+                                                        Skill skillName = Model.Skills.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
+                                                        foreach (var uSkill in Model.ProjectSkills.Where(i => i.ProjectID == Model.ProjectID && i.SkillID == skill.SkillID))
+                                                        {
+                                                            assigned = false;
+                                                            @:<div>
+                                                                <input type="checkbox" name="skills" value="@skill.SkillID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @skillName.SkillName;
+                                                            @:</div>
+                                                        }
+                                                    }
+                                                    <div class="form-group mb-0">
+                                                        <input type="hidden" value="@Model.ProjectID" class="form-control" name="projectID" />
+                                                        <input type="hidden" value="@Model.currentDiscipline.DisciplineID" class="form-control" name="disciplineID" />
+                                                        <input type="hidden" name="disciplineSearchString" value="@Model.currentDiscipline.DisciplineName">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="submit" value="Remove selected skills" class="btn btn-sm btn-info" />
+                                                    </div>
+                                                }
+                                            </form>
+                                        </div>
+                                    </section>
+                                </section>
+                                <!-- #endregion-->
                             </div>
-                        }
-                        <div class="card-footer">
-                            <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
                         </div>
-                        <!-- #endregion -->
                     </div>
-                </div>
-            </div>
-        }
+                }
+                @*CSS CODE FOR INDIVISUAL CARDS ENDS HERE*@
+                else
+                {
+                    <!-- #region not a collaborator-->
+                    <div class="container padding">
+                        <div class="col-md-8 mx-auto p-0">
+                            <div class="card text-black shadow-lg my-2 mt-0 padding">
+                                <h6 class="titleBorder border-bottom my-0">
+                                    You are not part of this
+                                    project and do not have permission to Edit it. Connect with the
+                                    members of the project if you want to be part of it.
+                                </h6>
+
+                                @foreach (var collab in Model.currentProject.UserProjects)
+                                {
+                                    var collabPath = "~/image/" + (collab.User.PhotoPath);
+                                    var collabMemberPath = "../../Users/Details/" + (collab.User.Id);
+                                    <div>
+                                        <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
+                                        <a href="@collabMemberPath">@Html.DisplayFor(modelItem => collab.User.FirstName)  @Html.DisplayFor(modelItem => collab.User.LastName)  : @Html.DisplayFor(modelItem => collab.User.UserName)</a>
+                                    </div>
+                                }
+                                <div class="card-footer">
+                                    <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
+                                </div>
+                                <!-- #endregion -->
+                            </div>
+                        </div>
+                    </div>
+                }
 
 <!--#region Javascript-->
 @section Scripts {
@@ -352,6 +457,57 @@
             (document.getElementById("link-url").innerHTML).value = "";
 
         }
+    </script>
+
+
+    <script>
+        function openPage(pageName, elmnt, color) {
+            // Hide all elements with class="tabcontent" by default */
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Remove the background color of all tablinks/buttons
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].style.backgroundColor = "";
+            }
+
+            // Show the specific tab content
+            document.getElementById(pageName).style.display = "block";
+
+            // Add the specific color to the button used to open the tab content
+            elmnt.style.backgroundColor = color;
+        }
+
+        function openLinkPage(pageName, elmnt, color) {
+            // Hide all elements with class="tabcontent" by default */
+            var i, linktabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("linktabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Remove the background color of all tablinks/buttons
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].style.backgroundColor = "";
+            }
+
+            // Show the specific tab content
+            document.getElementById(pageName).style.display = "block";
+
+            // Add the specific color to the button used to open the tab content
+            elmnt.style.backgroundColor = color;
+        }
+
+
+        // Get the element with id="defaultOpen" and click on it
+        document.getElementById("defaultLinkOpen").click();
+        document.getElementById("defaultOpen").click();
+
     </script>
 
     @*@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@

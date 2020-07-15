@@ -15,5 +15,10 @@ namespace ConstellationWebApp.Models
 
         public ICollection<UserSkill> UserSkills { get; set; }
 
+        public ICollection<ProjectSkills> ProjectSkills { get; set; }
+
+        public ICollection<PostingSkills> PostingSkills { get; set; }
+
+
     }
 }

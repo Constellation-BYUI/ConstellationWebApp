@@ -232,7 +232,7 @@ namespace ConstellationWebApp.Controllers
 
         #endregion
 
-        #region ProjectGets&PostsFunctions
+        #region ProjectEndPoints
         // GET: Projects/Index
         [AllowAnonymous]
         public async Task<IActionResult> Index(string titleSearch, string personSearch, string sortOrderOld, string sortOrderNew)
@@ -368,7 +368,7 @@ namespace ConstellationWebApp.Controllers
       
 
         // GET: Projects/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, string disciplineSearchString)
         {
             if (id == null)
             {
@@ -386,10 +386,23 @@ namespace ConstellationWebApp.Controllers
                 return NotFound();
             }
             PopulateAssignedProjectData(entityProjectModel);
-            ProjectCreateViewModel viewModel = projectToViewModel(entityProjectModel);
+            ProjectEditViewModel viewModel = projectToViewModel(entityProjectModel);
             viewModel.Postings = _context.Postings.Where(i => i.SharableToTeam == true).ToList();
             viewModel.ProjectPostings = _context.ProjectPosting.Where(i => i.ProjectID == id).ToList();
+            viewModel.Disciplines = _context.Disciplines.ToList();
+            viewModel.Skills = _context.Skills.ToList();
+            if (disciplineSearchString != null)
+            {
+                viewModel.currentDiscipline = _context.Disciplines.Where(i => i.DisciplineName == disciplineSearchString).FirstOrDefault();
 
+            }
+            else
+            {
+             viewModel.currentDiscipline = _context.Disciplines.FirstOrDefault();
+            }
+
+            viewModel.SkillDisciplines = _context.SkillDisciplines.ToList();
+            viewModel.ProjectSkills = _context.ProjectSkills.Where(i => i.ProjectID == id).ToList();
             return View(viewModel);
         }
 
@@ -474,7 +487,52 @@ namespace ConstellationWebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateManyProjectSkills(int[] skills, int projectID, string disciplineSearchString)
+        {
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+            if (currentUser != null)
+            {
+                foreach (var skill in skills)
+                {
+                    ProjectSkills userSkill = (_context.ProjectSkills.Where(i => i.ProjectID == projectID && i.SkillID == skill).FirstOrDefault());
+                    if (userSkill == null)
+                    {
+                        ProjectSkills thisPS = new ProjectSkills();
+                        thisPS.ProjectID = projectID;
+                        thisPS.SkillID = skill;
+                        _context.Add(thisPS);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+            }
+
+            return RedirectToAction("Edit", "Projects", new { disciplineSearchString = disciplineSearchString, id = projectID });
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveManyProjectSkills(int[] skills, int projectID, string disciplineSearchString)
+        {
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (currentUser != null)
+            {
+                foreach (var skill in skills)
+                {
+                    ProjectSkills projectSkills = (_context.ProjectSkills.Where(i => i.ProjectID == projectID && i.SkillID == skill).FirstOrDefault());
+                    if (projectSkills != null)
+                    {
+                        _context.Remove(projectSkills);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+            }
+            return RedirectToAction("Edit", "Projects", new { disciplineSearchString = disciplineSearchString, id = projectID });
+
+        }
 
         private bool ProjectExists(int id)
         {
