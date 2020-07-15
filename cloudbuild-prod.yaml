@@ -11,5 +11,13 @@ steps:
   - --cluster=cluster-1  
 
 
-
+  - name: 'gcr.io/cloud-builders/gcloud'
+  id: Trigger Dev Integration Tests
+  args:
+  - 'beta'
+  - 'builds'
+  - 'triggers'
+  - 'run'
+  - 'a2b3e35c-62d3-479c-8385-c41d5b8e0228'
+  - '--branch=master'
 
