@@ -36,6 +36,7 @@ steps:
   - --location=us-east1-b
   - --cluster=cluster-1  
 
+# This step runs the integration tests in the Development environment
 - name: 'gcr.io/cloud-builders/gcloud'
   id: Trigger Dev Integration Tests
   args:
@@ -46,15 +47,16 @@ steps:
   - '2b1c6bb1-5cef-467e-b889-4a0f618e4299'
   - '--branch=master'
 
-# # This step deploys the stage application in Kubernetes
-# - name: 'gcr.io/cloud-builders/gcloud'
-#   args:
-#   - builds
-#   - submit
-#   - --config
-#   - cloudbuild-stage.yaml
-#   - --substitutions
-#   - _SHORT_SHA=$SHORT_SHA
-#   - .
+ # This step deploys the stage application in Kubernetes
+- name: 'gcr.io/cloud-builders/gcloud'
+  id: Start Stage Deployment
+  args:
+  - builds
+  - submit
+  - --config
+  - cloudbuild-stage.yaml
+  - --substitutions
+  - _SHORT_SHA=$SHORT_SHA
+  - .
 
 
