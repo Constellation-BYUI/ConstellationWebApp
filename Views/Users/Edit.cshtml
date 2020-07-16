@@ -77,76 +77,79 @@
                                     }
                                 </div>
 
-                                <div class="form-group">
-                                    <label asp-for="AreaOfDiscipline" class="control-label"></label>
-                                    <input asp-for="AreaOfDiscipline" list="AreaOfDiscipline-List">
-                                    <span asp-validation-for="AreaOfDiscipline" class="text-danger"></span>
-                                </div>
+               
 
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-10">
-                                        <datalist id="postingTypes-List">
-                                            @{
-                                                List<ConstellationWebApp.Models.PostingType> postingTypes = Model.PostingTypes.ToList();
 
-                                                foreach (var postingType in postingTypes)
-                                                {
-                                                    <option value="@postingType.PostingTypeName" data-id="@postingType.PostingTypeName"></option>
+                                    <div class="form-group">
+                                        <label class="control-label">Area Of Discipline</label>kam18005azmurandre
+                                        <input asp-for="AreaOfDiscipline" list="AreaOfDiscipline-List">
+                                        <span asp-validation-for="AreaOfDiscipline" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <datalist id="postingTypes-List">
+                                                @{
+                                                    List<ConstellationWebApp.Models.PostingType> postingTypes = Model.PostingTypes.ToList();
+
+                                                    foreach (var postingType in postingTypes)
+                                                    {
+                                                        <option value="@postingType.PostingTypeName" data-id="@postingType.PostingTypeName"></option>
+                                                    }
+                                                @:</datalist>
+                                            @:</div>
                                                 }
-                                            @:</datalist>
-                                        @:</div>
-                                            }
-                                        </div>
+                                            </div>
 
-                                        <div class="form-group">
-                                            <label asp-for="Seeking" class="control-label"></label>
-                                            <input asp-for="Seeking" list="postingTypes-List">
-                                            <span asp-validation-for="Seeking" class="text-danger"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label asp-for="displayMyProfile" class="control-label">Do you want your Profile visible to others?</label>
-                                            @Html.CheckBoxFor(m => m.displayMyProfile)
-                                        </div>
-                                        <div class="form-group row">
-                                            <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
-                                            <div class="col-sm-10">
-                                                <div class="custom-file">
-                                                    <input asp-for="Photo" class="form-control custom-file-input" />
-                                                    <label class="custom-file-label">Choose File ...</label>
+                                            <div class="form-group">
+                                                <label asp-for="Seeking" class="control-label"></label>
+                                                <input asp-for="Seeking" list="postingTypes-List">
+                                                <span asp-validation-for="Seeking" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label asp-for="displayMyProfile" class="control-label">Do you want your Profile visible to others?</label>
+                                                @Html.CheckBoxFor(m => m.displayMyProfile)
+                                            </div>
+                                            <div class="form-group row">
+                                                <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
+                                                <div class="col-sm-10">
+                                                    <div class="custom-file">
+                                                        <input asp-for="Photo" class="form-control custom-file-input" />
+                                                        <label class="custom-file-label">Choose File ...</label>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        @*Resume Upload Codes*@
-                                        <div class="form-group row">
-                                            <label asp-for="ResumeUpload" class="col-sm-2 col-form-label"></label>
-                                            <div class="col-sm-10">
-                                                <div class="custom-file">
-                                                    <input asp-for="ResumeUpload" class="form-control custom-file-input" />
-                                                    <label class="custom-file-label">Upload Resume (pdf)...</label>
+                                            @*Resume Upload Codes*@
+                                            <div class="form-group row">
+                                                <label asp-for="ResumeUpload" class="col-sm-2 col-form-label"></label>
+                                                <div class="col-sm-10">
+                                                    <div class="custom-file">
+                                                        <input asp-for="ResumeUpload" class="form-control custom-file-input" />
+                                                        <label class="custom-file-label">Upload Resume (pdf)...</label>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        @* Create the Contact Links for the User *@
-                                       
-                                        <div class="form-group">
-                                            <div id="created-links"></div>
-                                            <div class="col-md-8 p-0 small_lable">
-                                                <p class="mb-0 mt-1">Add Link Label</p>
-                                                <input id="link-label" class="input-group rounded border-light" list='contact-link-label' name='createdLinkLabels'>
-                                                <p class="mb-0 mt-1">Add Url Link</p>
-                                                <input id="link-url" class="input-group rounded border-light" list='contact-link-url' name='createdLinkUrls'>
-                                                <div id="demo"></div>
-                                                <input class="text-light bg-secondary border-white rounded mt-1" type="button" id="more_fields" onclick="add_fields();" value="Add Link" />
-                                                <div id="demo"></div>
+                                            @* Create the Contact Links for the User *@
+
+                                            <div class="form-group">
+                                                <div id="created-links"></div>
+                                                <div class="col-md-8 p-0 small_lable">
+                                                    <p class="mb-0 mt-1">Add Link Label</p>
+                                                    <input id="link-label" class="input-group rounded border-light" list='contact-link-label' name='createdLinkLabels'>
+                                                    <p class="mb-0 mt-1">Add Url Link</p>
+                                                    <input id="link-url" class="input-group rounded border-light" list='contact-link-url' name='createdLinkUrls'>
+                                                    <div id="demo"></div>
+                                                    <input class="text-light bg-secondary border-white rounded mt-1" type="button" id="more_fields" onclick="add_fields();" value="Add Link" />
+                                                    <div id="demo"></div>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <section class="card-footer">
-                                            <button type="submit" value="Update" class="btn btn-sm btn-primary">Update</button>
-                                            <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
-                                            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@Model.UserID">Delete</a>
-                                        </section>
-                                    </form>
+                                            <section class="card-footer">
+                                                <button type="submit" value="Update" class="btn btn-sm btn-primary">Update</button>
+                                                <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
+                                                <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@Model.UserID">Delete</a>
+                                            </section>
+                                        </form>
 
 
                                     @*Delete Links*@

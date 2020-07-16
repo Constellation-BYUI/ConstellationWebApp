@@ -17,6 +17,11 @@
     var allReadyStarred = false;
     var allReadyIntrested = false;
 
+    List<ConstellationWebApp.Models.Skill> skills = ViewBag.Skills;
+    List<ConstellationWebApp.Models.Discipline> disciplines = ViewBag.disciplines;
+    List<ConstellationWebApp.Models.SkillDiscipline> skillDisciplines = ViewBag.skillDisciplines;
+    List<ConstellationWebApp.Models.PostingSkills> postingSkills = ViewBag.postingSkills;
+
 }
 <link rel="stylesheet" href="~/css/postings-details.css" />
 
@@ -42,7 +47,7 @@
         that static for posting detail page to uses it just use src="../../../Thenwhateverthenameis.png this way it will be from our
         local images and not have to reach out"*@
 
-   
+
 
     <!--
         #####################################################################################################################################
@@ -248,8 +253,94 @@
         }
     </div>
 
+
+    <!-- Posting Skills -->
+    @*Removing UserSKills*@
+
+    <style>
+        .posting-skills{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            text-align: center;
+        }
+        .required-skills {
+            grid-column: 1/2;
+            grid-row: 1/2;
+            padding: 1em;
+            text-align: center;
+        }
+
+        .wanted-skills {
+            grid-column: 2/3;
+            grid-row: 1/2;
+            padding: 1em;
+            text-align: center;
+        }
+
+        .desired-skills {
+            grid-column: 3/4;
+            grid-row: 1/2;
+            padding: 1em;
+            text-align: center;
+        }
+    </style>
+    @if (postingSkills.Any())
+    {
+<div class="posting-skills">
+
+    @{
+        <div class="required-skills">
+
+            <h4>Required Skills</h4>
+            <p><i>Have these Skill to Apply</i></p>
+            @foreach (var uSkill in postingSkills.Where(i => i.PriorityLevel == 1))
+            {
+                var skillTitle = skills.Where(i => i.SkillID == uSkill.SkillID).FirstOrDefault();
+                var skillDiscpline = skillDisciplines.Where(i => i.SkillID == uSkill.SkillID).FirstOrDefault();
+                var discipline = disciplines.Where(i => i.DisciplineID == skillDiscpline.DisciplineID).FirstOrDefault();
+
+
+                <p><span>@discipline.DisciplineName - </span><span>@skillTitle.SkillName</span></p>
+            }
+        </div>
+
+
+        <div class="wanted-skills">
+            <h4>Needed Skills</h4>
+            <p><i>Necessary but Negotiable</i></p>
+
+
+            @foreach (var uSkill in postingSkills.Where(i => i.PriorityLevel == 2))
+            {
+                var skillTitle = skills.Where(i => i.SkillID == uSkill.SkillID).FirstOrDefault();
+                var skillDiscpline = skillDisciplines.Where(i => i.SkillID == uSkill.SkillID).FirstOrDefault();
+                var discipline = disciplines.Where(i => i.DisciplineID == skillDiscpline.DisciplineID).FirstOrDefault();
+                <p><span>@discipline.DisciplineName - </span><span>@skillTitle.SkillName</span></p>
+            }
+        </div>
+
+        <div class="desired-skills">
+
+            <h4>Desired Skills</h4>
+            <p><i>Good to have</i></p>
+
+
+            @foreach (var uSkill in postingSkills.Where(i => i.PriorityLevel == 3))
+            {
+                var skillTitle = skills.Where(i => i.SkillID == uSkill.SkillID).FirstOrDefault();
+                var skillDiscpline = skillDisciplines.Where(i => i.SkillID == uSkill.SkillID).FirstOrDefault();
+                var discipline = disciplines.Where(i => i.DisciplineID == skillDiscpline.DisciplineID).FirstOrDefault();
+                <p><span>@discipline.DisciplineName - </span><span>@skillTitle.SkillName</span></p>
+
+            }
+        </div>
+
+
+    }
+
+
 </div>
 
-
+    }
 
 
