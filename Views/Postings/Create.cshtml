@@ -46,6 +46,21 @@
                 <input asp-for="PostingFor" class="form-control" />
                 <span asp-validation-for="PostingFor" class="text-danger"></span>
             </div>
+            <!--Postings ApplicationURL-->
+            <div class="form-group">
+                <label asp-for="ApplicationURL" class="control-label"></label>
+                <input asp-for="ApplicationURL" class="form-control" />
+            </div>
+            <!--Postings ApplicationDeadline-->
+            <div class="form-group">
+                <label asp-for="ApplicationDeadline" class="control-label"></label>
+                <input asp-for="ApplicationDeadline" class="form-control" />
+            </div>
+            <!--Postings Location-->
+            <div class="form-group">
+                <label asp-for="Location" class="control-label"></label>
+                <input asp-for="Location" class="form-control" />
+            </div>
             <!--Linking to postings-->
             <div class="form-group">
                 <label asp-for="SharableToTeam" class="control-label">Allow projects, where you're a collaborator, to Link to this posting?</label>
@@ -63,29 +78,29 @@
             </div>
             <!--Type of postings with lists-->
             <div class="form-group postings-create-type">
-                    <table>
-                        <tr>
-                            @{
-                                int cnt = 0;
-                                List<ConstellationWebApp.Models.AssignedTypeData> postingTypes = ViewBag.PostingTypes;
+                <table>
+                    <tr>
+                        @{
+                            int cnt = 0;
+                            List<ConstellationWebApp.Models.AssignedTypeData> postingTypes = ViewBag.PostingTypes;
 
-                                foreach (var postingType in postingTypes)
+                            foreach (var postingType in postingTypes)
+                            {
+                                if (cnt++ % 3 == 0)
                                 {
-                                    if (cnt++ % 3 == 0)
-                                    {
-                                    @:</tr><tr>
-                                    }
-                                    @:<td>
-                                        <input type="checkbox"
-                                               name="selectedTypes"
-                                               value="@postingType.PostingTypeID"
-                                               @(Html.Raw(postingType.Assigned ? "checked=\"checked\"" : "")) />
-                                        @:  @postingType.PostingTypeName
-                                    @:</td>
+                                @:</tr><tr>
                                 }
-                            @:</tr>
+                                @:<td>
+                                    <input type="checkbox"
+                                           name="selectedTypes"
+                                           value="@postingType.PostingTypeID"
+                                           @(Html.Raw(postingType.Assigned ? "checked=\"checked\"" : "")) />
+                                    @:  @postingType.PostingTypeName
+                                @:</td>
                             }
-                        </table>
+                        @:</tr>
+                        }
+                    </table>
                 </div>
                 <div class="const-card-footer">
                     <input type="submit" value="Create" class="btn btn-md btn-primary" />

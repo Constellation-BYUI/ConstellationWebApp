@@ -26,145 +26,61 @@
             if (currentUser == Model.PostingOwner.Id)
             {
 
-                <section>
-                    <button class="tablinks" onclick="openLinkPage('EntityData', this, 'lightblue')" id="defaultLinkOpen">Posting's Basic Info</button>
-                    <button class="tablinks" onclick="openLinkPage('RelationalData', this, 'lightgray')">Posting's Skills</button>
-                    @* #######################################
-                       Section Containing  Posting Entity Property Inputs
-                      ###################################### *@
-                    <div id="EntityData" class="linktabcontent">
-                        <!-- #region Update Entity Data-->
+                <section class="posting-data-container">
+        @* #######################################
+         Section Containing  Posting Skills
+        ###################################### *@
+                    <!-- #region Relation: Posting Skills-->
+                    <div class="left-container">
+                        <section class="Skill-form">
 
-                        <form asp-action="Edit">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <input type="hidden" asp-for="PostingID" />
-                            <!--Posting Title-->
-                            <div class="form-group">
-                                <label asp-for="PostingTitle" class="control-label"></label>
-                                <input asp-for="PostingTitle" class="form-control col-md-9 col-sm-12" />
-                                <span asp-validation-for="PostingTitle" class="text-danger"></span>
-                            </div>
-                            <!--Posting Description-->
-                            <div class="form-group">
-                                <label asp-for="Description" class="control-label"></label>
-                                <textarea asp-for="Description" class="form-control"></textarea>
-                                <span asp-validation-for="Description" class="text-danger"></span>
-                            </div>
-                            <!--Postings Categories-->
-                            <div class="form-group">
-                                <label asp-for="PostingFor" class="control-label"></label>
-                                <input asp-for="PostingFor" class="form-control" />
-                                <span asp-validation-for="PostingFor" class="text-danger"></span>
-                            </div>
-                            <!--Linking to postings-->
-                            <div class="form-group">
-                                <label asp-for="SharableToTeam" class="control-label">Allow projects, where you're a collaborator, to Link to this posting?</label>
-                                <div>
-                                    @Html.CheckBoxFor(m => m.SharableToTeam) Yes
-                                </div>
-                            </div>
-                            <!--Hide Postings From People-->
-                            @* Need to say reasoning: Hold off on showing all people this posting, save it for later, or maybe reuse it next time you recuit for a similar posiiton*@
-                            <div class="form-group">
-                                <label asp-for="HidePosting" class="control-label">Do you want your Posting hidden to others?</label>
-                                <div>
-                                    @Html.CheckBoxFor(m => m.HidePosting) Yes
-                                </div>
-                            </div>
-                            <!--Type of postings with lists-->
-                            <div class="form-group">
-                                <div>
-                                    <table>
-                                        <tr>
-                                            @{
-                                                int cnt = 0;
-                                                List<ConstellationWebApp.Models.AssignedTypeData> postingTypes = ViewBag.PostingTypes;
+                            <section>
+                                <button class="tablink" onclick="openPage('AddSkills', this, 'lightblue')" id="defaultOpen">Add Skills</button>
+                                <button class="tablink" onclick="openPage('RemoveSkills', this, 'red')">Remove Skills</button>
 
-                                                foreach (var postingType in postingTypes)
-                                                {
-                                                    if (cnt++ % 3 == 0)
-                                                    {
-                                                    @:</tr><tr>
+                                @*Adding UserSKills*@
+                                <div id="AddSkills" class="tabcontent">
+                                    @* Discipline Name *@
+                                    <h3>@currentDiscipline.DisciplineName</h3>
+
+                                    @* this is to seach by a specific discipline *@
+                                    <form asp-action="Edit" asp-controller="Postings" method="get">
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-10">
+                                                <datalist id="Priority-Level-List">
+                                                    <option value=1>Required - Must have skill to be considered</option>
+                                                    <option value=2>Wanted - Skill that will be needed but can be learned</option>
+                                                    <option value=3>Desired - Skill that are not expected but will be usefull</option>
+                                                </datalist>
+
+                                                <datalist id="AreaOfDiscipline-List">
+                                                    @{
+
+                                                        foreach (var discipline in disciplines)
+                                                        {
+                                                            <option value="@discipline.DisciplineName" data-id="@discipline.DisciplineName"></option>
+                                                        }
+                                                    @:</datalist>
+                                                @:</div>
                                                     }
-                                                    @:<td>
-                                                        <input type="checkbox"
-                                                               name="selectedTypes"
-                                                               value="@postingType.PostingTypeID"
-                                                               @(Html.Raw(postingType.Assigned ? "checked=\"checked\"" : "")) />
-                                                        @:  @postingType.PostingTypeName
-                                                    @:</td>
-                                                }
-                                            @:</tr>
-                                            }
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="const-card-footer">
-                                    <input type="submit" value="Update" class="btn btn-sm btn-primary mr-1" />
-                                    <a class="btn btn-sm btn-danger mr-1" asp-action="Delete" asp-route-id="@Model.PostingID">Delete</a>
-                                    <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
-                                </div>
-                            </form>
-                            <!-- #endregion -->
-                        </div>
-
-                    <style>
-                        .postings-general-container {
-                            margin-bottom: 15em;
-                        } 
-                    </style>
-                        @* #######################################
-                            Section Containing  Posting Skills
-                           ###################################### *@
-                        <!-- #region Relation: Posting Skills-->
-                        <div id="RelationalData" class="linktabcontent">
-                            <section class="Skill-form">
-                                @* Discipline Name *@
-                                <h3>@currentDiscipline.DisciplineName</h3>
-
-                                @* this is to seach by a specific discipline *@
-                                <form asp-action="Edit" asp-controller="Postings" method="get">
-                                    <div class="form-group">
-                                        <div class="col-md-offset-2 col-md-10">
-                                            <datalist id="Priority-Level-List">
-                                                <option value=1>Required - Must have skill to be considered</option>
-                                                <option value=2>Wanted - Skill that will be needed but can be learned</option>
-                                                <option value=3>Desired - Skill that are not expected but will be usefull</option>
-                                            </datalist>
-
-                                            <datalist id="AreaOfDiscipline-List">
-                                                @{
-
-                                                    foreach (var discipline in disciplines)
-                                                    {
-                                                        <option value="@discipline.DisciplineName" data-id="@discipline.DisciplineName"></option>
-                                                    }
-                                                @:</datalist>
-                                            @:</div>
-                                                }
-                                            </div>
-
-                                            <div class="form-inline">
-                                                <label for="disciplineSearchString" class="sr-only">Search by Discipline</label><!--WORKING HERE AND ON THE HEIGHT OF THE PAGE-->
-                                                <input id="disciplineSearchString" name="disciplineSearchString" list="AreaOfDiscipline-List">
-                                                <input type="hidden" name="id">
-
-                                                <div class="form-group mx-auto mb-0">
-                                                    <input class="btn btn-md btn-primary mb-1 mx-auto" type="submit" value="Find Discipline" />
                                                 </div>
-                                            </div>
-                                        </form>
-                                        <br />
-                                        <section>
-                                            <button class="tablink" onclick="openPage('AddSkills', this, 'lightblue')" id="defaultOpen">Add Skills</button>
-                                            <button class="tablink" onclick="openPage('RemoveSkills', this, 'red')">Remove Skills</button>
 
-                                            @*Adding UserSKills*@
-                                        <div id="AddSkills" class="tabcontent">
-                                            <h3>Batch group skills for this Posting by ranking it's priority.</h3>
+                                                <div class="form-inline">
+                                                    <label for="disciplineSearchString" class="sr-only">Search by Discipline</label><!--WORKING HERE AND ON THE HEIGHT OF THE PAGE-->
+                                                    <input id="disciplineSearchString" name="disciplineSearchString" list="AreaOfDiscipline-List">
+                                                    <input type="hidden" name="id">
+
+                                                    <div class="form-group mx-auto mb-0">
+                                                        <input class="btn btn-md btn-primary mb-1 mx-auto" type="submit" value="Find Discipline" />
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <br />
+
+                                            <h3>Add skills needed by applicants</h3>
                                             <form asp-action="CreateManyPostingSkills" asp-controller="Postings">
                                                 @{
-                                                    <input id="priorityInput" name="priorityValue" list="Priority-Level-List" placeholder="Choose priority ... "  required>
+                                                    <input id="priorityInput" name="priorityValue" list="Priority-Level-List" placeholder="Choose priority ... " required>
 
                                                     foreach (var skill in skillDisciplines.Where(i => i.DisciplineID == currentDiscipline.DisciplineID))
                                                     {
@@ -181,7 +97,7 @@
                                                         else
                                                         {
                                                             var assigned = false;
-                                                            @:<div>
+                                                            @:<div class="check-boxes">
                                                                 <input type="checkbox" name="skills" value="@skill.SkillID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @skillName.SkillName;
                                                             @:</div>
                                                         }
@@ -195,26 +111,28 @@
                                                         <input type="submit" value="Link selected skills" class="btn btn-sm btn-info" />
                                                     </div>
                                                 }
-                                            </form>                          
+                                            </form>
 
                                         </div>
 
-                                            @*Removing UserSKills*@
+                                        @*Removing UserSKills*@
                                         <div id="RemoveSkills" class="tabcontent">
-                                            <h3>@currentDiscipline.DisciplineName related skills added to Project</h3>
+                                            <h3>Skills added to Posting</h3>
                                             <form asp-action="RemoveManyPostingSkills" asp-controller="Postings">
                                                 @{
-                                                    foreach (var skill in skillDisciplines.Where(i => i.DisciplineID == currentDiscipline.DisciplineID))
+
+                                                    foreach (var uSkill in postingSkills.Where(i => i.PostingID == Model.PostingID).OrderBy(i => i.PriorityLevel))
                                                     {
-                                                        Skill skillName = skills.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
-                                                        foreach (var uSkill in postingSkills.Where(i => i.PostingID == Model.PostingID && i.SkillID == skill.SkillID))
-                                                        {
-                                                            var assigned = false;
-                                                            @:<div>
-                                                                <input type="checkbox" name="skills" value="@skill.SkillID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /><span> @uSkill.PriorityLevel - </span>@skillName.SkillName;
-                                                            @:</div>
-                                                        }
+                                                        Skill skillName = skills.Where(i => i.SkillID == uSkill.SkillID).FirstOrDefault();
+                                                        SkillDiscipline skillDisc = skillDisciplines.Where(i => i.SkillID == skillName.SkillID).FirstOrDefault();
+                                                        Discipline DisciplineName = disciplines.Where(i => i.DisciplineID == skillDisc.DisciplineID).FirstOrDefault();
+
+                                                        var assigned = false;
+                                                        @:<div class="check-boxes">
+                                                            <input type="checkbox" name="skills" value="@skillName.SkillID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @uSkill.PriorityLevel<span>-</span>@DisciplineName.DisciplineName<span>-</span>@skillName.SkillName;
+                                                        @:</div>
                                                     }
+
                                                     <div class="form-group mb-0">
                                                         <input type="hidden" value="@Model.PostingID" class="form-control" name="postingID" />
                                                         <input type="hidden" value="@currentDiscipline.DisciplineID" class="form-control" name="disciplineID" />
@@ -225,13 +143,111 @@
                                                     </div>
                                                 }
                                             </form>
-                                  
+
 
                                         </div>
-                                        </section>
                                     </section>
-                                    <!-- #endregion-->
+                                </section>
+                                <!-- #endregion-->
+                            </div>
+
+                           
+                 @* #######################################
+                 Section Containing  Posting Entity Property Inputs
+                ###################################### *@
+                            <div class="right-container">
+                                <!-- #region Update Entity Data-->
+
+                                <form asp-action="Edit">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <input type="hidden" asp-for="PostingID" />
+                                    <!--Posting Title-->
+                                    <div class="form-group">
+                                        <label asp-for="PostingTitle" class="control-label"></label>
+                                        <input asp-for="PostingTitle" class="form-control col-md-9 col-sm-12" />
+                                        <span asp-validation-for="PostingTitle" class="text-danger"></span>
+                                    </div>
+                                    <!--Posting Description-->
+                                    <div class="form-group">
+                                        <label asp-for="Description" class="control-label"></label>
+                                        <textarea asp-for="Description" class="form-control"></textarea>
+                                        <span asp-validation-for="Description" class="text-danger"></span>
+                                    </div>
+                                    <!--Postings Categories-->
+                                    <div class="form-group">
+                                        <label asp-for="PostingFor" class="control-label"></label>
+                                        <input asp-for="PostingFor" class="form-control" />
+                                        <span asp-validation-for="PostingFor" class="text-danger"></span>
+                                    </div>
+                                    <!--Postings ApplicationURL-->
+                                    <div class="form-group">
+                                        <label asp-for="ApplicationURL" class="control-label"></label>
+                                        <input asp-for="ApplicationURL" class="form-control" />
+                                    </div>
+                                    <!--Postings ApplicationDeadline-->
+                                    <div class="form-group">
+                                        <label asp-for="ApplicationDeadline" class="control-label"></label>
+                                        <input asp-for="ApplicationDeadline" class="form-control" />
+                                    </div>
+                                    <!--Postings Location-->
+                                    <div class="form-group">
+                                        <label asp-for="Location" class="control-label"></label>
+                                        <input asp-for="Location" class="form-control" />
+                                    </div>
+                                    <!--Linking to postings-->
+                                    <div class="form-group">
+                                        <label asp-for="SharableToTeam" class="control-label">Allow projects, where you're a collaborator, to Link to this posting?</label>
+                                        <div>
+                                            @Html.CheckBoxFor(m => m.SharableToTeam) Yes
+                                        </div>
+                                    </div>
+                                    <!--Hide Postings From People-->
+                                    @* Need to say reasoning: Hold off on showing all people this posting, save it for later, or maybe reuse it next time you recuit for a similar posiiton*@
+                                    <div class="form-group">
+                                        <label asp-for="HidePosting" class="control-label">Do you want your Posting hidden to others?</label>
+                                        <div>
+                                            @Html.CheckBoxFor(m => m.HidePosting) Yes
+                                        </div>
+                                    </div>
+                                    <!--Type of postings with lists-->
+                                    <div class="form-group">
+                                        <div>
+                                            <table>
+                                                <tr>
+                                                    @{
+                                                        int cnt = 0;
+                                                        List<ConstellationWebApp.Models.AssignedTypeData> postingTypes = ViewBag.PostingTypes;
+
+                                                        foreach (var postingType in postingTypes)
+                                                        {
+                                                            if (cnt++ % 3 == 0)
+                                                            {
+                                                            @:</tr><tr>
+                                                            }
+                                                            @:<td>
+                                                                <input type="checkbox"
+                                                                       name="selectedTypes"
+                                                                       value="@postingType.PostingTypeID"
+                                                                       @(Html.Raw(postingType.Assigned ? "checked=\"checked\"" : "")) />
+                                                                @:  @postingType.PostingTypeName
+                                                            @:</td>
+                                                        }
+                                                    @:</tr>
+                                                    }
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="const-card-footer">
+                                            <input type="submit" value="Update" class="btn btn-sm btn-primary mr-1" />
+                                            <a class="btn btn-sm btn-danger mr-1" asp-action="Delete" asp-route-id="@Model.PostingID">Delete</a>
+                                            <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
+                                        </div>
+                                    </form>
+                                    <!-- #endregion -->
                                 </div>
+
+
+
                             </section>
                                         }
                                         else
@@ -292,7 +308,7 @@
 
 
         // Get the element with id="defaultOpen" and click on it
-        document.getElementById("defaultLinkOpen").click();
+        //document.getElementById("defaultLinkOpen").click();
         document.getElementById("defaultOpen").click();
 
     </script>
