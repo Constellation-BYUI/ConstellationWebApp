@@ -117,11 +117,11 @@ a {
 }
 
 .const-card h2 {
-    font-size: 20px;
+    font-size: 18px;
     width: 100%;
     text-align: center;
     background-color: #ebeef8;
-    padding: .5em;
+    padding: .3em;
     margin: 0;
 }
 
@@ -148,7 +148,7 @@ a {
     border-top: 1px solid rgba(0,0,0,.1);
 /*    background-color: #242b41;*/
 }
-/*The social media properties will embed implimented in the future*/
+/*The social media properties will be implimented in the future*/
 .social-media {
     width: 100%;
     list-style: none;
@@ -234,7 +234,9 @@ a {
 .project-links {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
+    overflow: hidden;
+    height: 20px;
     flex-wrap: wrap;
 }
 
@@ -242,7 +244,7 @@ a {
         text-decoration: none;
         color: #000;
         font-style: italic;
-        font-size: 1.5em;
+        font-size: 15px;
     }
 
         .project-links a:hover {
@@ -306,18 +308,20 @@ a {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    overflow: hidden;
+    height: 100px;
     flex-wrap: wrap;
 /*    padding: 5px;*/
 }
     .postings-type p {
         padding: 1px 3px;
-        margin: 5px;
+/*        margin: 1px;*/
         /*    background: rgba(0,0,0,.5);*/
         color: #555;
-        border-radius: 4px;
-        box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
-        /*        margin-bottom: 0;*/
-        font-size: 15px;
+/*        border-radius: 4px;*/
+/*        box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);*/
+        margin-bottom: 0;
+        font-size: 12px;
     }
 
 .postings-type h2, .postings-description h2 {

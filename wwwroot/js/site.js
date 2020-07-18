@@ -36,7 +36,29 @@ $(document).ready(function () {
     });
 })
 
+//Private conversation
+$(document).ready(function () {
+    $('#priv-talk').click(function () {
+        $('.members-container').toggleClass('show')
+    });
+    //$(document).on('click', function (e) {
+    //    if (!(($(e.target).closest('.private-talk-content').length > 0) || ($(e.target).closest('#priv-talk').length > 0))) {
+    //        $('.members-container').removeClass('show');
+    //    }
+    //});
+})
 
+//Group conversation
+$(document).ready(function () {
+    $('#grp-talk').click(function () {
+        $('.group-members-container').toggleClass('show')
+    });
+    //$(document).on('click', function (e) {
+    //    if (!(($(e.target).closest('.group-talk-content').length > 0) || ($(e.target).closest('#grp-talk').length > 0))) {
+    //        $('.group-members-container').removeClass('show');
+    //    }
+    //});
+})
 
 // close modal on click outside at anywhere
 $(document).on('click', function (e) {
