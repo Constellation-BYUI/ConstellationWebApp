@@ -119,6 +119,7 @@ header nav ul li {
     flex-direction: column;
     transition: .5s;
     border-radius: 5px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
 }
 
     .sub-menu-1 ul li, .sub-menu-2 ul li {
