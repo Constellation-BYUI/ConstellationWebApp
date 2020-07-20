@@ -46,8 +46,7 @@ steps:
   - 'run'
   - '2b1c6bb1-5cef-467e-b889-4a0f618e4299'
   - '--branch=master'
-  - '--substitutions'
-  - '_SHORT_SHA=$SHORT_SHA'
+  - '--tag=$SHORT_SHA'
 
 
 
