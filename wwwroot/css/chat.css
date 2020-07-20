@@ -8,7 +8,7 @@
     background-color: whitesmoke;
     color: #999;
     text-align: start;
-    margin-top: -24px;
+    margin-bottom: -10px;
     font-size: 17px;
     width: 67.5%;
 }
@@ -71,18 +71,23 @@ add-pple input {
 }
 
 /* Message Container Properties and values */
+.add-pple #update-button {
+    text-align: center !important;
+}
 .message-container {
     margin: 5px;
     padding: 5px;
     background-color: #fff;
     width: 100%;
     border-radius: 5px;
+    overflow: hidden;
 }
 .msg-inbox {
-    overflow: hidden;
+    overflow-y: auto;
     padding-bottom: 10px;
     border-radius: 5px;
     box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
+    margin-bottom: 10px;
 }
 .chats {
     padding: 5px 10px 0 10px;
@@ -90,19 +95,24 @@ add-pple input {
 
 .msg-page {
     height: 250px;
-    overflow-y: auto;
+    
     height: 60vh;
 }
 .recieved-chats-img {
     display: block;
     width: 20px;
     float: left;
+  
+}
+.senders-name {
+    padding: 0 0 0 10px;
+    font-size: 12px;
 }
 .recieved-msg {
     display: inline-block;
     padding: 0 0 0 10px;
     vertical-align: top;
-    width: 80%;
+    width: 100%;
 }
 
 .recieved-msg-inbox {
@@ -120,7 +130,7 @@ add-pple input {
     }
 
 .time {
-    color: #fff;
+    color: #999;
     display: block;
     font-size: 10px;
     margin: 0;
@@ -128,7 +138,7 @@ add-pple input {
 }
 .outgoing-chats {
     overflow: hidden;
-    margin: 10px;
+    margin: -7px;
 }
 
 .outgoing-chats-msg p {
@@ -139,12 +149,15 @@ add-pple input {
     margin: 0;
     padding: 5px 5px 3px 5px;
     width: 100%;
+
 }
 
 .outgoing-chats-msg {
-    float: left;
-    width: 60%;
+    float: right;
+    width: auto;
     margin-left: 30%;
+    height: auto;
+    overflow: auto;
 }
 
 .outgoing-chats-img {
@@ -152,9 +165,47 @@ add-pple input {
     width: 25px;
     float: right;
 }
+.msg-footer form textarea {
+    height: 35px !important;
+}
 
+@media screen and (min-width: 767px) {
+    .chat-container {
+        display: flex;
+        margin: auto;
+        magin
 
+    }
+    .chat-board {
+        padding: 4px 10px;
+        box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
+        background-color: whitesmoke;
+        color: #999;
+        text-align: center;
+        margin-bottom: -20px;
+        font-size: 22px;
+        width: 100%;
+    }
+    #message-container {
+        width: 60%;
+    }
+    .ChatUser-showcase {
+        box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
+        margin-top: 25px;
+        padding: 5px;
+    }
+    .left-chat-content {
+        box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
+        margin: 27px 15px 0 15px;
+        padding: 10px;
+    }
+    .create-chat-section {
+       margin-top: -20px !important;
+    }
 
+    
+
+}
 
 
 
