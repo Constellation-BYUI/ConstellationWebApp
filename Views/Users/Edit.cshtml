@@ -1,199 +1,197 @@
 ﻿@model ConstellationWebApp.Models.ViewModels.UserEditViewModel
 @using System.Security.Claims;
 
-@{
-    ViewData["Title"] = "Edit User";
-    var photoPath = "";
-    if (Model.PhotoPath != null)
-    {
-        photoPath = "~/image/" + Model.OldPhotoPath;
-    }
-    else
-    {
-        photoPath = "~/WebAssests/siteImages/avataricon.png";
-    }
+<link rel="stylesheet" href="~/css/users.general.css" />
 
-    var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-}
 
-@if (currentUser == Model.UserID)
-{
 
-    <!-- Page info -->
-    <section class="page-info">
-        <div class="info-button" id="button-info">View&nbsp;Page&nbsp;Info</div>
-        <article>
-            The contact link label is vital to connect with others. Add the platforms through which others can reach you. Use the label to specify what the link is for or to
-            suggest what audience the link is to be used by. Then include the URL or the address itself.
-        </article>
-    </section>
-    <!-- #endregion -->
+<!-- Page info -->
+<section class="page-info">
+    <div class="info-button" id="button-info">View&nbsp;Page&nbsp;Info</div>
+    <article>
+        The contact link label is vital to connect with others. Add the platforms through which others can reach you. Use the label to specify what the link is for or to
+        suggest what audience the link is to be used by. Then include the URL or the address itself.
+    </article>
+</section>
+<!-- #endregion -->
 
-    <div class="">
-        <div class="col-md-8 mx-auto p-0">
-            <div class="card text-black shadow-lg my-2 mt-5 padding">
-                <h3 class="titleBorder border-bottom my-0">Edit User</h3>
-                @*Note: We do not want to display the PhotoPath Path but the image itself*@
-                <img class="big-thumbnail" src=" @photoPath" alt="@Html.DisplayFor(model => model.UserName)" asp-append-version="true" />
-                <div class="card-body">
-                    <form enctype="multipart/form-data" asp-action="Edit">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input type="hidden" asp-for="UserID" />
-                        <input type="hidden" asp-for="OldPhotoPath" />
-                        <input type="hidden" asp-for="OldResumePath" />
-                        <div class="form-group">
-                            <label asp-for="UserName" class="control-label"></label>
-                            <input asp-for="UserName" class="form-control" />
-                            <span asp-validation-for="UserName" class="text-danger"></span>
+
+<div class="users-general-container">
+
+    <div class="users-header">Edit Profile Information</div>
+
+    <div class="users-general-content">
+        @{
+            ViewData["Title"] = "Edit User";
+            var photoPath = "";
+            if (Model.PhotoPath != null)
+            {
+                photoPath = "~/image/" + Model.OldPhotoPath;
+            }
+            else
+            {
+                photoPath = "~/WebAssests/siteImages/avataricon.png";
+            }
+
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        }
+
+        @if (currentUser == Model.UserID)
+        {
+            @*Note: We do not want to display the PhotoPath Path but the image itself*@
+            <img class="user-details-back-img" src="/WebAssests/siteImages/constelation_image.webp" alt="card background">
+            <img class="big-thumbnail" src=" @photoPath" alt="@Html.DisplayFor(model => model.UserName)" asp-append-version="true" />
+            <form enctype="multipart/form-data" asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="UserID" />
+                <input type="hidden" asp-for="OldPhotoPath" />
+                <input type="hidden" asp-for="OldResumePath" />
+                <div class="form-group">
+                    <label asp-for="UserName" class="control-label"></label>
+                    <input asp-for="UserName" class="form-control" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FirstName" class="control-label"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName" class="control-label"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Bio" class="control-label"></label>
+                    <textarea asp-for="Bio" class="form-control"></textarea>
+                    <span asp-validation-for="Bio" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <datalist id="AreaOfDiscipline-List">
+                            @{
+                                List<ConstellationWebApp.Models.Discipline> disciplines = Model.Disciplines.ToList();
+
+                                foreach (var discipline in disciplines)
+                                {
+                                    <option value="@discipline.DisciplineName" data-id="@discipline.DisciplineName"></option>
+                                }
+                            @:</datalist>
+                        @:</div>
+                            }
                         </div>
+
                         <div class="form-group">
-                            <label asp-for="FirstName" class="control-label"></label>
-                            <input asp-for="FirstName" class="form-control" />
-                            <span asp-validation-for="FirstName" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="LastName" class="control-label"></label>
-                            <input asp-for="LastName" class="form-control" />
-                            <span asp-validation-for="LastName" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Bio" class="control-label"></label>
-                            <textarea asp-for="Bio" class="form-control"></textarea>
-                            <span asp-validation-for="Bio" class="text-danger"></span>
+                            <label asp-for="AreaOfDiscipline" class="control-label"></label>
+                            <input asp-for="AreaOfDiscipline" list="AreaOfDiscipline-List">
+                            <span asp-validation-for="AreaOfDiscipline" class="text-danger"></span>
                         </div>
 
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
-                                <datalist id="AreaOfDiscipline-List">
+                                <datalist id="postingTypes-List">
                                     @{
-                                        List<ConstellationWebApp.Models.Discipline> disciplines = Model.Disciplines.ToList();
+                                        List<ConstellationWebApp.Models.PostingType> postingTypes = Model.PostingTypes.ToList();
 
-                                        foreach (var discipline in disciplines)
+                                        foreach (var postingType in postingTypes)
                                         {
-                                            <option value="@discipline.DisciplineName" data-id="@discipline.DisciplineName"></option>
+                                            <option value="@postingType.PostingTypeName" data-id="@postingType.PostingTypeName"></option>
                                         }
                                     @:</datalist>
                                 @:</div>
                                     }
                                 </div>
 
-               
-
-
-                                    <div class="form-group">
-                                        <label class="control-label">Area Of Discipline</label>kam18005azmurandre
-                                        <input asp-for="AreaOfDiscipline" list="AreaOfDiscipline-List">
-                                        <span asp-validation-for="AreaOfDiscipline" class="text-danger"></span>
+                                <div class="form-group">
+                                    <label asp-for="Seeking" class="control-label"></label>
+                                    <input asp-for="Seeking" list="postingTypes-List">
+                                    <span asp-validation-for="Seeking" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="displayMyProfile" class="control-label" style="color: #28a745">Do you want your Profile visible to others?</label>
+                                    @Html.CheckBoxFor(m => m.displayMyProfile)
+                                </div>
+                                <div class="form-group row">
+                                    <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
+                                    <div class="col-sm-10">
+                                        <div class="custom-file">
+                                            <input asp-for="Photo" class="form-control custom-file-input" />
+                                            <label class="custom-file-label">Choose File ...</label>
+                                        </div>
                                     </div>
-
-                                    <div class="form-group">
-                                        <div class="col-md-offset-2 col-md-10">
-                                            <datalist id="postingTypes-List">
-                                                @{
-                                                    List<ConstellationWebApp.Models.PostingType> postingTypes = Model.PostingTypes.ToList();
-
-                                                    foreach (var postingType in postingTypes)
-                                                    {
-                                                        <option value="@postingType.PostingTypeName" data-id="@postingType.PostingTypeName"></option>
-                                                    }
-                                                @:</datalist>
-                                            @:</div>
-                                                }
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label asp-for="Seeking" class="control-label"></label>
-                                                <input asp-for="Seeking" list="postingTypes-List">
-                                                <span asp-validation-for="Seeking" class="text-danger"></span>
-                                            </div>
-                                            <div class="form-group">
-                                                <label asp-for="displayMyProfile" class="control-label">Do you want your Profile visible to others?</label>
-                                                @Html.CheckBoxFor(m => m.displayMyProfile)
-                                            </div>
-                                            <div class="form-group row">
-                                                <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
-                                                <div class="col-sm-10">
-                                                    <div class="custom-file">
-                                                        <input asp-for="Photo" class="form-control custom-file-input" />
-                                                        <label class="custom-file-label">Choose File ...</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            @*Resume Upload Codes*@
-                                            <div class="form-group row">
-                                                <label asp-for="ResumeUpload" class="col-sm-2 col-form-label"></label>
-                                                <div class="col-sm-10">
-                                                    <div class="custom-file">
-                                                        <input asp-for="ResumeUpload" class="form-control custom-file-input" />
-                                                        <label class="custom-file-label">Upload Resume (pdf)...</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @* Create the Contact Links for the User *@
-
-                                            <div class="form-group">
-                                                <div id="created-links"></div>
-                                                <div class="col-md-8 p-0 small_lable">
-                                                    <p class="mb-0 mt-1">Add Link Label</p>
-                                                    <input id="link-label" class="input-group rounded border-light" list='contact-link-label' name='createdLinkLabels'>
-                                                    <p class="mb-0 mt-1">Add Url Link</p>
-                                                    <input id="link-url" class="input-group rounded border-light" list='contact-link-url' name='createdLinkUrls'>
-                                                    <div id="demo"></div>
-                                                    <input class="text-light bg-secondary border-white rounded mt-1" type="button" id="more_fields" onclick="add_fields();" value="Add Link" />
-                                                    <div id="demo"></div>
-                                                </div>
-                                            </div>
-                                            <section class="card-footer">
-                                                <button type="submit" value="Update" class="btn btn-sm btn-primary">Update</button>
-                                                <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
-                                                <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@Model.UserID">Delete</a>
-                                            </section>
-                                        </form>
-
-
-                                    @*Delete Links*@
-                                    <section style="margin-bottom: 3em;">
-                                        @foreach (var item in Model.thisUser.ContactLinks.Where((i => i.Users.Id == Model.thisUser.Id)))
-                                        {
-                                            <div class="col-sm-10 p-0">
-                                                @Html.DisplayFor(model => item.ContactLinkLabel)
-                                            </div>
-                                            <div class="col-sm-10 p-0">
-                                                @Html.DisplayFor(model => item.ContactLinkUrl)
-                                            </div>
-
-                                            if (currentUser != null)
-                                            {
-                                                <form asp-action="DeleteLink" asp-controller="Users">
-                                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                                    <div class="form-group">
-                                                        <input type="hidden" asp-for="UserID" class="form-control" value="@Model.UserID" name="userID" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <input type="hidden" asp-for="@item.ContactLinkID" class="form-control" value="@item.ContactLinkID" name="contactLinkID" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <input type="submit" value="Remove this Link" class="btn btn-sm btn-danger" />
-                                                    </div>
-                                                </form>
-                                            }
-                                        }
-                                    </section>
-
                                 </div>
 
-                            </div>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <h2>You do not own this account, Log In as this User to Edit.</h2>
-                    <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
-                }
+                                @*Resume Upload Codes*@
+                                <div class="form-group row">
+                                    <label asp-for="ResumeUpload" class="col-sm-2 col-form-label"></label>
+                                    <div class="col-sm-10">
+                                        <div class="custom-file">
+                                            <input asp-for="ResumeUpload" class="form-control custom-file-input" />
+                                            <label class="custom-file-label">Upload Resume (pdf)...</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                @* Create the Contact Links for the User *@
+
+                                <div class="form-group">
+                                    <div id="created-links"></div>
+                                    <div class="col-md-8 p-0 small_lable">
+                                        <p class="mb-0 mt-1">Add Link Label</p>
+                                        <input id="link-label" class="input-group rounded border-light" list='contact-link-label' name='createdLinkLabels'>
+                                        <p class="mb-0 mt-1">Add Url Link</p>
+                                        <input id="link-url" class="input-group rounded border-light" list='contact-link-url' name='createdLinkUrls'>
+                                        <div id="demo"></div>
+                                        <input class="text-light bg-secondary border-white rounded mt-1" type="button" id="more_fields" onclick="add_fields();" value="Add Link" />
+                                        <div id="demo"></div>
+                                    </div>
+                                </div>
+                                <section class="card-footer">
+                                    <button type="submit" value="Update" class="btn btn-sm btn-primary">Update</button>
+                                    <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
+                                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@Model.UserID">Delete</a>
+                                </section>
+                            </form>
 
 
+                            @*Delete Links*@
+                            <section style="margin-bottom: 3em;">
+                                @foreach (var item in Model.thisUser.ContactLinks.Where((i => i.Users.Id == Model.thisUser.Id)))
+                                {
+                                    <div class="col-sm-10 p-0">
+                                        @Html.DisplayFor(model => item.ContactLinkLabel)
+                                    </div>
+                                    <div class="col-sm-10 p-0">
+                                        @Html.DisplayFor(model => item.ContactLinkUrl)
+                                    </div>
+
+                                    if (currentUser != null)
+                                    {
+                                        <form asp-action="DeleteLink" asp-controller="Users">
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <div class="form-group">
+                                                <input type="hidden" asp-for="UserID" class="form-control" value="@Model.UserID" name="userID" />
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="hidden" asp-for="@item.ContactLinkID" class="form-control" value="@item.ContactLinkID" name="contactLinkID" />
+                                               </div>
+                                            <div class="form-group">
+                                                <input type="submit" value="Remove this Link" class="btn btn-sm btn-danger" />
+                                            </div>
+                                        </form>
+                                    }
+                                }
+                            </section>
+                        }
+                        else
+                        {
+                            <h2>You do not own this account, Log In as this User to Edit.</h2>
+                            <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
+                        }
+
+    </div>
+
+</div>
 
 @section Scripts {
     <script>
@@ -218,3 +216,4 @@
         }
     </script>
 }
+                              
