@@ -193,6 +193,20 @@ namespace ConstellationWebApp.Controllers
             }
             PopulateStarredPostingData(posting);
             PopulateIntrestData(posting);
+
+            List<Skill> Skills = _context.Skills.ToList();
+            ViewBag.Skills = Skills;
+
+            List<Discipline> disciplines = _context.Disciplines.ToList();
+            ViewBag.disciplines = disciplines;
+
+            List<SkillDiscipline> skillDisciplines = _context.SkillDisciplines.ToList();
+            ViewBag.skillDisciplines = skillDisciplines;
+
+            List<PostingSkills> postingSkills = _context.PostingSkills.Where(i => i.PostingID == id).ToList();
+            ViewBag.postingSkills = postingSkills;
+
+
             return View(posting);
         }
 
@@ -210,7 +224,7 @@ namespace ConstellationWebApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PostingID,Description,PostingFor,PostingTitle, HidePosting, SharableToTeam")] Posting posting, string[] selectedTypes)
+        public async Task<IActionResult> Create([Bind("PostingID,Description,PostingFor,PostingTitle, HidePosting, SharableToTeam, ApplicationURL, ApplicationDeadline, Location")] Posting posting, string[] selectedTypes)
         {
             if (selectedTypes != null)
             {
@@ -231,16 +245,25 @@ namespace ConstellationWebApp.Controllers
                 var thisUser = await _context.User
                .FirstOrDefaultAsync(m => m.Id == currentUser);
                 posting.PostingOwner = thisUser;
+
+                var postingURL = posting.ApplicationURL.ToLower();
+                if (!postingURL.Contains("constellation.citwdd.net") && !(postingURL.Contains("http://") || postingURL.Contains("https://")))
+                {
+                    posting.ApplicationURL = "http://" + posting.ApplicationURL;
+                    _context.Add(posting);
+
+                }
+
                 _context.Add(posting);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Edit", "Postings", new { id = posting.PostingID });
             }
             PopulateAssignedTypeData(posting);
-            return View(posting);
+            return RedirectToAction("Edit", "Postings", new {id = posting.PostingID });
         }
         
         // GET: Postings/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, string disciplineSearchString)
         {
             if (id == null)
             {
@@ -257,15 +280,43 @@ namespace ConstellationWebApp.Controllers
                 return NotFound();
             }
             PopulateAssignedTypeData(posting);
+
+            List<Skill> Skills = _context.Skills.ToList();
+            ViewBag.Skills = Skills;
+
+            if (disciplineSearchString != null)
+            {
+                Discipline currentDiscipline = _context.Disciplines.Where(i => i.DisciplineName == disciplineSearchString).FirstOrDefault();
+                ViewBag.currentDiscipline = currentDiscipline;
+
+            }
+            else
+            {
+                Discipline currentDiscipline = _context.Disciplines.FirstOrDefault();
+                ViewBag.currentDiscipline = currentDiscipline;
+
+            }
+
+            List<Discipline> disciplines = _context.Disciplines.ToList();
+            ViewBag.disciplines = disciplines;
+
+            List<SkillDiscipline> skillDisciplines = _context.SkillDisciplines.ToList();
+            ViewBag.skillDisciplines = skillDisciplines;
+
+            List<PostingSkills> postingSkills = _context.PostingSkills.Where(i => i.PostingID == id).ToList();
+            ViewBag.postingSkills = postingSkills;
+
+
             return View(posting);
         }
+
 
         // POST: Postings/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("PostingID,Description,PostingFor,PostingTitle, HidePosting, SharableToTeam")] Posting posting, string[] selectedTypes)
+        public async Task<IActionResult> Edit(int? id, [Bind("PostingID,Description,PostingFor,PostingTitle, HidePosting, SharableToTeam, ApplicationURL, ApplicationDeadline, Location")] Posting posting, string[] selectedTypes)
         {
             if (id != posting.PostingID)
             {
@@ -277,15 +328,25 @@ namespace ConstellationWebApp.Controllers
               .ThenInclude(i => i.PostingTypes)
              .FirstOrDefaultAsync(s => s.PostingID == id);
 
+        
+
             if (await TryUpdateModelAsync<Posting>(
                 postingToUpdate,
                 "",
-                i => i.PostingTitle, i => i.PostingFor, i => i.Description, i => i.HidePosting, i => i.SharableToTeam))
+                i => i.PostingTitle, i => i.PostingFor, i => i.Description, i => i.HidePosting, i => i.SharableToTeam, i => i.ApplicationURL, i => i.ApplicationDeadline, i => i.Location))
             {
                 UpdatePostingTypes(selectedTypes, postingToUpdate);
 
                 try
                 {
+                    await _context.SaveChangesAsync();
+
+                    var postingURL = postingToUpdate.ApplicationURL.ToLower();
+                    if (!postingURL.Contains("constellation.citwdd.net") && !(postingURL.Contains("http://") || postingURL.Contains("https://")))
+                    {
+                        postingToUpdate.ApplicationURL = "http://" + postingURL;
+                    }
+                    _context.Update(postingToUpdate);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -331,11 +392,96 @@ namespace ConstellationWebApp.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var posting = await _context.Postings.FindAsync(id);
+            await RemoveRelationalDataAsync(posting);       
             _context.Postings.Remove(posting);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
+        private async Task RemoveRelationalDataAsync(Posting posting)
+        {
+            //delete posting skill
+            IEnumerable<PostingSkills> postingSkills =  _context.PostingSkills.Where(i => i.PostingID == posting.PostingID); 
+            foreach(var ps in postingSkills)
+            {
+                _context.PostingSkills.Remove(ps);
+            }
+            await _context.SaveChangesAsync();
+
+
+            //delete intrested candidates
+            IEnumerable<IntrestedCandidate> intrestedCandidate = _context.IntrestedCandidate.Where(i => i.PostingID == posting.PostingID);
+            foreach (var ps in intrestedCandidate)
+            {
+                _context.IntrestedCandidate.Remove(ps);
+            }
+            await _context.SaveChangesAsync();
+
+            //delete recuiters pick
+            IEnumerable<RecruiterPicks> recruiterPicks = _context.RecruiterPicks.Where(i => i.PostingID == posting.PostingID);
+            foreach (var ps in recruiterPicks)
+            {
+                _context.RecruiterPicks.Remove(ps);
+            }
+            await _context.SaveChangesAsync();
+
+            //delete starred postings
+            IEnumerable<StarredPosting> starredPosting = _context.StarredPosting.Where(i => i.PostingID == posting.PostingID);
+            foreach (var ps in starredPosting)
+            {
+                _context.StarredPosting.Remove(ps);
+            }
+            await _context.SaveChangesAsync();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateManyPostingSkills(int[] skills, int postingID, string disciplineSearchString, int priorityValue)
+        {
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (currentUser != null)
+            {
+                foreach (var skill in skills)
+                {
+                    PostingSkills postingSkills = (_context.PostingSkills.Where(i => i.PostingID == postingID && i.SkillID == skill).FirstOrDefault());
+                    if (postingSkills == null)
+                    {
+                        PostingSkills thisPS = new PostingSkills();
+                        thisPS.PostingID = postingID;
+                        thisPS.SkillID = skill;
+                        thisPS.PriorityLevel = priorityValue;
+                        _context.Add(thisPS);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+            }
+
+            return RedirectToAction("Edit", "Postings", new { disciplineSearchString = disciplineSearchString, id = postingID });
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveManyPostingSkills(int[] skills, int postingID, string disciplineSearchString)
+        {
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (currentUser != null)
+            {
+                foreach (var skill in skills)
+                {
+                    PostingSkills postingSkills = (_context.PostingSkills.Where(i => i.PostingID == postingID && i.SkillID == skill).FirstOrDefault());
+                    if (postingSkills != null)
+                    {
+                        _context.Remove(postingSkills);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+            }
+
+            return RedirectToAction("Edit", "Postings", new { disciplineSearchString = disciplineSearchString, id = postingID });
+
+        }
         private bool PostingExists(int id)
         {
             return _context.Postings.Any(e => e.PostingID == id);

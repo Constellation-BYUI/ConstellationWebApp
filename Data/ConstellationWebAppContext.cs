@@ -41,6 +41,7 @@ namespace ConstellationWebApp.Data
         public DbSet<ConstellationWebApp.Models.Message> Messages { get; set; }
 
         public DbSet<ConstellationWebApp.Models.ProjectSkills> ProjectSkills { get; set; }
+        public DbSet<ConstellationWebApp.Models.PostingSkills> PostingSkills { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
