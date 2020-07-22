@@ -71,9 +71,7 @@ add-pple input {
 }
 
 /* Message Container Properties and values */
-.add-pple #update-button {
-    text-align: center !important;
-}
+
 .message-container {
     margin: 5px;
     padding: 5px;
@@ -173,7 +171,7 @@ add-pple input {
     .chat-container {
         display: flex;
         margin: auto;
-        magin
+        magin;
 
     }
     .chat-board {
@@ -202,7 +200,9 @@ add-pple input {
     .create-chat-section {
        margin-top: -20px !important;
     }
-
+    form .add-pple #update-button {
+        width: 40%;
+    }
     
 
 }

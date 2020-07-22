@@ -130,7 +130,8 @@
             </div>
             <div class="name-drop">
                 <div class="const-user-name">
-                    @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
+                    @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName) 
+                    <i class="fas fa-caret-down"></i>
                     <div class="more-info">
                         <!--Area of Discipline-->
                         @if (!(string.IsNullOrEmpty(item.AreaOfDiscipline)))
