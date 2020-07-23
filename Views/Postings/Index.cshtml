@@ -79,6 +79,7 @@
 
                     var collabMemberPath = "../Users/Details/" + (item.PostingOwner.Id);
                     var postingPath = " ../Postings/Details/" + (item.PostingID);
+
                     <!-- Job postings card -->
                     <div class="const-card-wrapper" style="cursor: pointer;" onclick="window.location='@postingPath';">
                         <div class="const-card">
@@ -89,9 +90,11 @@
                                     <a href="@collabMemberPath"><img image" style="width: 150px; height: 150px;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.PostingOwner.UserName)" asp-append-version="true" /></a>
                                 </div>
                                 <div class="job-owners-name">@Html.DisplayFor(modelItem => item.PostingOwner.UserName)</div>
-                                <div class="postins-details">
+
+                                <!--Postings Details-->
+                                <div class="postings-details">
+                                    <h2>Type of Posting</h2> 
                                     <div class="postings-type">
-                                        <h2>Type of Posting</h2>
                                         @foreach (var type in item.Posting_PostingTypes)
                                         {
                                             <p>
@@ -105,6 +108,7 @@
                                     </div>*@
                                 </div>
                             </div>
+                            <!--Card footer-->
                             <div class="const-card-footer">
                                 @if ((currentUser == item.PostingOwner.Id) && (currentUser != null))
                                 {
