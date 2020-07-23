@@ -12,14 +12,14 @@ steps:
   
   
 - name: 'gcr.io/cloud-builders/gcloud'
-id: Trigger Dev Integration Tests
-args:
-- 'beta'
-- 'builds'
-- 'triggers'
-- 'run'
-- 'a2b3e35c-62d3-479c-8385-c41d5b8e0228'
-- '--branch=master'
+  id: Trigger Stage Integration Tests
+  args:
+  - 'beta'
+  - 'builds'
+  - 'triggers'
+  - 'run'
+  - 'a2b3e35c-62d3-479c-8385-c41d5b8e0228'
+  - '--branch=master'
 
 # # This step deploys the prod application in Kubernetes
 # - name: 'gcr.io/cloud-builders/gcloud'
