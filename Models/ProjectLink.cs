@@ -19,6 +19,6 @@ namespace ConstellationWebApp.Models
         [Display(Name = "Link URL")]
         public string ProjectLinkUrl { get; set; }
 
-        public virtual Project Projects { get; set; }
+        public  Project Projects { get; set; }
     }
 }

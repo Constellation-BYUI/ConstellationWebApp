@@ -8,9 +8,9 @@ namespace ConstellationWebApp.Models
     public class ProjectSkills
     {
         public int SkillID { get; set; }
-        public Skill Skill { get; set; }
+        public  Skill Skill { get; set; }
         public int ProjectID { get; set; }
-        public Project Project { get; set; }
+        public  Project Project { get; set; }
 
     }
 }

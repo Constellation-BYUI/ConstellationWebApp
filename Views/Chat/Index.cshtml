@@ -1,11 +1,19 @@
-﻿@model ConstellationWebApp.Models.ViewModel
-@using System.Security.Claims;
+@page
+<script src="~/js/chatapi.js"></script>
 
-@{
-    ViewData["Title"] = "Chat Index";
-    var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-}
+<script src="~/js/site.js"></script>
+
+<script>
+    window.onload = function () {
+        var objDiv = document.getElementById("chat-message-container");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
+</script>
+
 <link rel="stylesheet" href="~/css/chat.css" />
+
+
+<h1>Chat</h1>
 
 <!-- #region Info button:-->
 <section class="page-info">
@@ -15,242 +23,74 @@
     </article>
 </section>
 <!-- #endregion -->
-<div class="chat-board">Constellation Chat Board</div>
-<div class="chat-container">
+<div id="datalistHolder">
+    <!--INSERT USER-LIST DATALIST HERE-->
+</div>
 
+<div class="Chat-Container">
     <div class="left-chat-content">
-        @*Button to create a new chat with one or more people*@
+        <!--  #region CREATE NEW CHAT-->
         <section class="create-chat-section">
-            <form asp-action="createChat" asp-controller="Chat">
-                <div class="form-group add-collab">
-                    <div class="col-md-offset-2 col-md-12">
-                        <datalist id="user-list">
-                            @{
-                                List<ConstellationWebApp.Models.User> usersCollab = Model.Users.ToList();
-
-                                foreach (var user in usersCollab)
-                                {
-                                    <option value="@user.UserName" data-id="@user.Id"></option>
-                                }
-                            @:</datalist>
-                        @:</div>
-                            }
-                        </div>
-                        <!--Add Member section-->
-                        <div id="userChat-display"></div>
-
-                        <div class="input-group add-pple">
-                            <input id="chatUser-input" class="form-control" list="user-list" name="selectedChatUsersInitalCreate" placeholder="Add people to a new chat..">
-                            <div class="input-group-append">
-                                <span> <input class="btn btn-sm btn-secondary" type="button" id="more_collab" onclick="add_chatUser();" value="Add member" /></span>
-                            </div>
-                        </div>
-                        <!--Add Start Conversation section-->
-                        <div id="userChat-hidden-holder"></div>
-                        <div class="input-group add-pple">
-                            <input class="form-control" name="StartingMessage" placeholder="Enter your starting message...">
-                            <div class="input-group-append">
-                                <span>  <input type="submit" class="btn btn-sm btn-primary " value="Start conversation" /></span>
-                            </div>
-                        </div>
-                    </form>
-                </section>
-
-                @*List out all the Chats the person has in none then display none*@
-                @*Left aligned chat List*@
-
-                @{
-                    if (Model.Chats.Any())
-                    {
-                        @:<div class="chat-card">
-                            foreach (var chat in Model.Chats.OrderByDescending(i => i.LastActivity))
-                            {
-                                //Need an onclick even of the show-chat-messages that will display the message body for that chat
-                                <form asp-action="Index" asp-controller="Chat">
-                                    <div class="messages-scrollable">
-                                        @foreach (var chatUser in chat.ChatUsers)
-                                        {
-                                            var chatUserPath = "";
-                                            if (chatUser.User.PhotoPath != null)
-                                            {
-                                                chatUserPath = "~/image/" + (chatUser.User.PhotoPath);
-                                            }
-                                            else
-                                            {
-                                                chatUserPath = "~/WebAssests/siteImages/avataricon.png";
-                                            }
-                                            var chatUserMemberPath = "../../Users/Details/" + (chatUser.User.Id);
-                                            <a href="@chatUserMemberPath">
-                                                <img class="message-images" src=" @chatUserPath" alt="@Html.DisplayFor(modelItem => chatUser.User.UserName)" asp-append-version="true" />
-                                            </a>
-                                        }
-                                    </div>
-                                    <p>@chat.LastActivity</p>
-                                    <input type="hidden" class="input-group rounded border-light col-md-12" name="selectedChat" value="@chat.ChatID">
-                                    <input type="submit" value="View Chat Details" class="btn btn-sm btn-outline-primary mb-1 mx-auto" />
-                                </form>
-                                @if (chat.ChatUsers.Count > 2)
-                                {
-                                    <form asp-action="DeleteChatUser" asp-controller="Chat">
-                                        <input type="hidden" class="input-group rounded border-light col-md-12" name="ChatID" value="@chat.ChatID">
-                                        <input type="hidden" class="input-group rounded border-light col-md-12" name="UserID" value="@currentUser">
-                                        <input type="submit" value="Leave Chat" class="btn btn-sm btn-outline-danger mb-1 mx-auto" />
-                                    </form>
-                                }
-                                else
-                                {
-                                    <form asp-action="DeleteChat" asp-controller="Chat">
-                                        <input type="hidden" class="input-group rounded border-light col-md-12" name="chatID" value="@chat.ChatID">
-                                        <input type="submit" value="Leave Chat" class="btn btn-sm btn-outline-danger mb-1 mx-auto" />
-                                    </form>
-                                }
-                            }
-                        @:</div>
-                    }
-                }
-            </div>
-
-
-
-
-            @*Main right aligned chat area*@
-            <div id="message-container">
-                @if (Model.SelectedChat != null)
-                {
-                    var chat = Model.SelectedChat;
-                <div class="ChatUser-showcase">
-
-                    <form asp-action="DeleteChatUser" asp-controller="Chat">
-                        <input type="hidden" class="input-group rounded border-light col-md-12" name="ChatID" value="@Model.SelectedChat.ChatID">
-                        <input type="hidden" class="input-group rounded border-light col-md-12" name="UserID" value="@currentUser">
-                        <input type="submit" value="Leave Chat" class="btn btn-sm btn-outline-danger mb-1 mx-auto" />
-                    </form>
-
-                    @foreach (var chatUser in chat.ChatUsers)
-                    {
-                        var chatUserPath = "";
-                        if (chatUser.User.PhotoPath != null)
-                        {
-                            chatUserPath = "~/image/" + (chatUser.User.PhotoPath);
-                        }
-                        else
-                        {
-                            chatUserPath = "~/WebAssests/siteImages/avataricon.png";
-                        }
-                        var chatUserMemberPath = "../../Users/Details/" + (chatUser.User.Id);
-                        <a href="@chatUserMemberPath">
-                            <img class="message-images" src=" @chatUserPath" alt="@Html.DisplayFor(modelItem => chatUser.User.UserName)" asp-append-version="true" />
-                        </a>
-                        @* Eventual admin intergration : Delete any members of this group
-            if (currentUser == chatUser.UserID)
-            {
-            <form asp-action="DeleteChatUsers" asp-controller="Chat">
-                <input type="hidden" class="input-group rounded border-light col-md-12" name="ChatID" value="@chatUser.ChatID">
-                <input type="hidden" class="input-group rounded border-light col-md-12" name="UserID" value="@chatUser.UserID">
-                <input type="submit" value="Leave Chat" class="btn btn-sm btn-outline-danger mb-1 mx-auto" />
+            <h2> Create a New Chat</h2>
+            <form action="javascript:void(0);" method="POST" onsubmit="addNewChat()">
+                <div id="userChat-display"></div>
+                <input id="chatUser-input" class="input-group rounded border-light col-md-12" list="user-list" name="selectedChatUsersInitalCreate" placeholder="Add people to a new chat...">
+                <div id="userChat-hidden-holder"></div>
+                <input class="btn btn-sm btn-outline-dark mb-1 mx-auto" type="button" id="more_collab" onclick="add_chatUser();" value="Add Chat Member" />
+                <input class="input-group rounded border-light col-md-12" name="StartingMessage" placeholder="Enter your starting message here..." id="staringMessage">
+                <input type="submit" value="Create Chat" class="btn btn-sm btn-outline-primary mb-1 mx-auto" />
             </form>
-            }*@
-                    }
-
-                    <!--Add Member section-->
-                   
-
-                    
-                    <form asp-action="AddChatUsers" asp-controller="Chat">
-                        <div id="collab-Display"></div>
-
-                        <div class="input-group add-pple">
-                            <input id="collab-input" class="form-control" list="user-list" name="selectedCollaborators" placeholder="Select new member...">
-                            <div id="userCollab-demo"></div>
-                            <div class="input-group-append">
-                                <span> <input class="btn btn-sm btn-secondary" type="button" id="more_collab" onclick="add_collab();" value="Add chat member" /></span>
-                            </div>
-                            <input type="hidden" class="form-control" name="ChatID" value="@chat.ChatID">
-                            <input type="submit" value="Update chat members" class="btn btn-sm btn-primary input-group" id="update-button" />
-                        </div>
-                    </form>
-                </div>
-
-
-
-                    <!--This section contains conversation between parties chating-->
-                    <div class="message-content">
-                        <div class="msg-inbox">
-                            <div class="chats">
-                                <div class="msg-page">
-                                    @foreach (var message in Model.Messages.OrderBy(i => i.SentTime))
-                                    {
-
-                                        var messageList = Model.ChatMessages.Where(i => i.ChatID == Model.SelectedChat.ChatID && i.MessageID == message.MessageID).FirstOrDefault();
-                                        if (messageList != null)
-                                        {
-
-                                            //make this a one color
-                                            if (message.SenderID == currentUser)
-                                            {
-                                                <!-- My chat messages -->
-                                                <div class="outgoing-chats">
-                                                    <div class="outgoing-msg">
-                                                        <div class="outgoing-chats-msg">
-                                                            <p>@message.MessageText</p>
-                                                            <span class="time">@message.SentTime</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            }
-                                            //make this a another color
-                                            else
-                                            {
-                                                <!-- Their chat message -->
-                                                <div class="recieved-chats">
-                                                    <div class="senders-name">@message.Sender.UserName</div>
-                                                    <div class="recieved-msg">
-                                                        <div class="recieved-msg-inbox">
-                                                            <p>@message.MessageText</p>
-                                                            <span class="time">@message.SentTime</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            }
-                                            <br />
-                                        }
-
-
-
-                                    }
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="msg-footer">
-                        <!--<div class="bottom-icons">
-                            <i class="fas fa-plus-square"></i>
-                            <i class="fas fa-camera"></i>
-                            <i class="fas fa-smile"></i>
-                            <i class="fas fa-paperclip"></i>
-                        </div>-->
-                        <!--this form will create the message && chatMessage-->
-                        <form asp-action="createMessage" asp-controllers="Chat" class="input-group">
-                            <input type="hidden" class="form-control" name="chatID" value="@Model.SelectedChat.ChatID">
-                            <textarea type="text" class="form-control" placeholder="Write message..." name="messageText"></textarea>
-                            <div class="input-group-append">
-                                <span><input type="submit" value="Send Message" class="btn btn-sm btn-primary" /></span>
-                            </div>
-                        </form>
-                    </div>
-
-                }
+        </section>
+        <br />
+        <br />
+        <!-- #endregion-->
+        <!-- #region DISPLAY THE CHATS -->
+        <div class="chat-card">
+            <div id="privateChatsHolder">
+                <!--INSERT PRIVATE CHATS HERE-->
+            </div>
+            <div id="groupChatsHolder">
+                <!--INSERT GROUP CHATS HERE-->
             </div>
         </div>
-        @*</div>*@
+        <!-- #endregion-->
+    </div>
 
-        <script>
-            window.onload = function () {
-                var objDiv = document.getElementById("chat-message-container");
-                objDiv.scrollTop = objDiv.scrollHeight;
-            }
-        </script>
+    <!-- #region Chat Messages area-->
+    <div id="chat-message-container">
+
+        <!-- #region Delete Group/Leave Group
+                A.Input/Preprocessing:
+                - determine what chat was selected
+                - Display option to leave the chat
+                    (DeleteChatUser form if chatusers > 3 else DeleteChat form)
+
+                B.Processing
+
+                C. Output
+                [ChatID selectedChatID]
+                [UserID currentUser]
+                ==>> Delete selected chat, closes the open chat
+                -->
+
+        <div class="ChatUser-showcase">
+            <div class="removeOrLeave">
+            </div>
+            <!-- #endregion-->
+            <!-- #endregion-->
+            <!-- #region UPDATE CHAT: ADD USERES -->
+        </div>
+        <br /> <br /> <br />
+        <!--#endregion-->
+        <!-- #region Display Messages-->
+        <div class="messages-container">
+            <div id="displayed-chat">
+
+            </div>
+
+            <!-- #endregion-->
+        </div>
+        <!-- #endregion -->
+
+    </div>
+</div>

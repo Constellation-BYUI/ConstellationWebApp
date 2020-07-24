@@ -47,11 +47,12 @@ namespace ConstellationWebApp.Models
         public ICollection<IntrestedCandidate> IntrestedCandidates { get; set; }
         public ICollection<Posting_PostingType> Posting_PostingTypes { get; set; }
 
-        public ICollection<RecruiterPicks> RecruiterPicks { get; set; }
 
-        public ICollection<ProjectPosting> ProjectPostings { get; set; }
+        public  ICollection<RecruiterPicks> RecruiterPicks { get; set; }
 
-        public ICollection<PostingSkills> PostingSkills { get; set; }
+        public  ICollection<ProjectPosting> ProjectPostings { get; set; }
+
+        public  ICollection<PostingSkills> PostingSkills { get; set; }
 
     }
 }

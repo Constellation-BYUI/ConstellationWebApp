@@ -12,8 +12,8 @@ namespace ConstellationWebApp.Models
         public int PostingTypeID { get; set; }
         //comment assigned once posting pull is made
         public bool Assigned { get; set; }
-        public Posting Postings { get; set; }
-        public PostingType PostingTypes { get; set; }
+        public  Posting Postings { get; set; }
+        public  PostingType PostingTypes { get; set; }
 
 
     }

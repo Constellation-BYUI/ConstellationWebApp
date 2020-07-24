@@ -15,9 +15,9 @@ namespace ConstellationWebApp.Models
 
         public int PostingID { get; set; }
 
-        public Posting Posting { get; set; }
+        public  Posting Posting { get; set; }
 
-        public Project Project { get; set; }
+        public  Project Project { get; set; }
 
 
     }

@@ -11,9 +11,9 @@ namespace ConstellationWebApp.Models
     {
         public int StarredPostingID { get; set; }
         public string UserID { get; set; }
-        public User User { get; set; }
+        public  User User { get; set; }
         public int PostingID { get; set; }
-        public Posting Posting { get; set; }
+        public  Posting Posting { get; set; }
 
 
     }

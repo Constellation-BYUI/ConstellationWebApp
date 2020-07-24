@@ -13,7 +13,8 @@ namespace ConstellationWebApp.Data
             public ConstellationWebAppContext (DbContextOptions<ConstellationWebAppContext> options)
                 : base(options)
             {
-            }
+            this.ChangeTracker.LazyLoadingEnabled = false;
+        }
 
         public DbSet<User> User { get; set; }
         public DbSet<Project> Projects { get; set; }

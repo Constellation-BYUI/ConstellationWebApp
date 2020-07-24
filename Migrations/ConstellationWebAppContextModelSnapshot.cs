@@ -26,6 +26,9 @@ namespace ConstellationWebApp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("ChatTitle")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
