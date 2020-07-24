@@ -1,4 +1,4 @@
-﻿
+﻿ 
 html {
     width: 100%;
 }
@@ -11,101 +11,105 @@ html {
 }
 
 .project-details-head {
-    background-color: #457b9d;
-    color: white;
+    background-color: #fff;
+    color: #999;
     width: 100%;
     text-align: center;
-    font-size: large;
-    
+    font-size: 18px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
+    padding: 3px;
+    margin-bottom: 0;
 }
 
 .project-picture {
-    width: 70%;
+    width: 100%;
     margin: auto;
+    background-color: whitesmoke;
 }
 
     .project-picture img {
         width: 100%;
-        border: 2px solid gray;
-        box-shadow: azure;
     }
 
-.project-content .project-title {
-    background-color: #457b9d;
+.project-title {
+    background-color: whitesmoke;
     width: 100%;
     text-align: center;
     padding: 3px;
-    font-size: medium;
-    color: white;
+    font-size: 15px;
+    color: #1b6ec2;
     margin: auto;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
 }
 
-.project-content h3 {
+.project-content h3, .project-content h4, .project-collaborators h4 {
     text-align: center;
     margin-bottom: 0 !important;
-    padding: 8px;
-    color: white;
-    background-color: #457b9d;
-    border-top: 1px solid #fff;
+    padding: 3px;
+    color: #1b6ec2;
+    background-color: whitesmoke;
+    font-size: 19px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
 }
 
 .project-description {
-    overflow: scroll;
-    height: 10em;
+    overflow: auto;
+    overflow-x: hidden;
+    height: 100px;
     width: 100%;
     background-color: whitesmoke;
+    color: #999;
 }
 
     .project-description p {
-        padding: 3px 10px;
+        padding: 5px;
         text-align: justify;
+        font-size: 12px;
+        margin-bottom: 0;
+
     }
 
 .project-date {
-    margin: 5px 15px;
+      padding: 5px;
 }
 
-.project-content h4 {
-    text-align: center;
-    margin: 0;
-    padding: 5px;
-    color: white;
-    background-color: gray;
+.project-date p {
+    margin-bottom: 0;
+    font-size: 15px;
+    color: #999;
 }
 
 .project-link {
-    overflow: scroll;
-    height: 4em;
+    overflow: auto;
+    overflow-x: hidden;
+    height: auto;
     width: 100%;
-    background-color: whitesmoke;
+    background-color: white;
+  
+    display: flex;
+    justify-content: flex-start;
+    padding: 5px;
 }
 
-    .project-link a {
-        margin: 5px;
-        text-decoration: none;
-    }
+.project-link a {
+    text-decoration: none;
+    color: #999;
+    font-size: 10px;
+ }
 
-        .project-link a:visited {
-            color: lightgreen;
-        }
+ .project-link a:visited {
+     color: lightgreen;
+  }
 
-        .project-link a:hover {
-            color: blue;
-        }
-        .project-link a:active {
-            color: #e63946;
-        }
+ .project-link a:hover {
+     color: blue;
+  }
+ .project-link a:active {
+     color: #e63946;
+  }
 
 .project-collaborators {
-    width: 20%;
-    border: 1px solid #1d3557;
-}
-.project-collaborators h4 {
-    text-align: center;
-    margin: 0;
-    padding: 8px;
-    color: white;
-    background-color: #457b9d;
+    width: 100%;
 }
 
 .project-collaborators-picture {
@@ -113,50 +117,183 @@ html {
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: flex-start;
+    padding: 5px;
 }
 
-    .project-collaborators-pictture a .small-pix {
-        margin: 3px;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        border: 2px solid #1d3557;
-    }
+.project-collaborators-pictture a img {
+    margin: 3px;
+    width: 25px !important;
+    height: 25px !important;
+    border-radius: 50%;
+    border: 2px solid #1d3557;
+ }
 
 .project-details-footer {
     display: flex;
     flex-wrap: nowrap;
-    border: 1px solid gray;
+    border-top: 1px solid gray;
 }
 
-    .project-details-footer a {
-        margin: 5px 2px;
-    }
+.project-details-footer a {
+    margin: 5px 2px;
+ }
 
 /* CSS for Job postings Relating to Project Details */
 .job-posting-field {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    overflow: scroll;
-    height: 20em;
+    display: block;
+    overflow: auto;
+    overflow-x: hidden;
+    height: 350px;
     width: 100%;
     margin: auto;
+    padding: 5px;
 }
+
+.const-card-wrapper {
+    font-size: 8px !important;
+    /*font-family: "Roboto", sans-serif !important;*/
+    display: flex;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+}
+
+.const-card {
+    font-size: 10px !important;
+    /*font-family: "Roboto" !important;*/
+    border: 1px solid #cbd4f1;
+    width: 80%;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.postings-title {
+    background-color: #1d3557; /* For browsers that do not support gradients */
+    background-image: linear-gradient(to right, #1d3557, #457b9d);
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    font-size: 1.7em;
+    font-weight: 600;
+}
+
+.postings-info {
+    width: 100%;
+}
+
+.position {
+    border-bottom: 1px solid #555;
+    width: 100%;
+    text-align: center;
+    padding: 3px;
+    font-size: 1.7em;
+}
+
+    .position strong {
+        color: green;
+    }
+
+.owners-box {
+    padding: 2px;
+}
+
+    .owners-box img {
+        margin-left: 50%;
+        transform: translate(-50%);
+        border-radius: 50%;
+        padding: 2px 2px 5px 2px;
+        border: 2px solid #457b9d;
+    }
+
+.job-owners-name {
+    color: #000;
+    text-align: center;
+    color: green;
+    font-size: 18px;
+}
+
+.postings-details {
+    width: 100%;
+
+}
+.postings-type {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    overflow: auto;
+    overflow-x: hidden;
+    height: 35px;
+    flex-wrap: wrap;
+}
+  .postings-details h2, .postings-description h2 {
+        background: #457b9d;
+        color: #fff;
+        font-size: 15px;
+        width: 100%;
+        text-align: center;
+        height: 20px;
+        margin: 0;
+    }
+    .postings-type p {
+        padding: 1px 3px;
+        color: #555;
+        margin-bottom: 0;
+        font-size: 12px;
+    }
+
+.postings-description p {
+    padding: 0 1rem;
+    word-spacing: -2px;
+    text-align: justify;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 15px;
+    margin-bottom: 0;  
+}
+.const-card-footer {
+    margin: 5px 0;
+}
+
+
+
+
 
 @media screen and (min-width: 767px) {
     /* CSS for Job postings Relating to Project Details */
     .job-posting-field {
-        height: 30em;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        height: 25em;
         width: 100%;
         margin: auto;
     }
 
+    .project-details-head {
+        font-size: 25px;
+        padding: 1px;
+    }
+    .project-title {
+        font-size: 20px;
+       
+    }
+    .project-content h3, .project-content h4, .project-collaborators h4 {
+        
+        margin-bottom: 2px !important;
+       
+    }
     .project-details-content {
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
         width: 100%;
+        margin-top: 2px;
     }
 
     .project-picture {
@@ -164,12 +301,12 @@ html {
         margin: 0;
     }
 
-        .project-picture img {
-            height: 100%;
-            width: 100%;
+   .project-picture img {
+        height: 100%;
+        width: 100%;
            /* border: 2px solid gray;
             box-shadow: azure;*/
-        }
+     }
 
     .project-content {
         width: 50%;
@@ -186,5 +323,12 @@ html {
     .project-collaborators {
         width: 20%;
         border: 1px solid #1d3557;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .job-posting-field {
+        grid-template-columns: 1fr 1fr 1fr;
+        height: 25em;
     }
 }

@@ -17,10 +17,14 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200706193323_RemoveDemoMessaging.cs" />
     <Compile Remove="Migrations\20200706193323_RemoveDemoMessaging.Designer.cs" />
+
     <Compile Remove="Migrations\20200720220505_VirtualUpdateProp.cs" />
     <Compile Remove="Migrations\20200720220505_VirtualUpdateProp.Designer.cs" />
     <Compile Remove="Migrations\20200720230439_No-Virtual.cs" />
     <Compile Remove="Migrations\20200720230439_No-Virtual.Designer.cs" />
+    <Compile Remove="Migrations\20200717171503_AddPostingFields.cs" />
+    <Compile Remove="Migrations\20200717171503_AddPostingFields.Designer.cs" />
+
   </ItemGroup>
 
   <ItemGroup>

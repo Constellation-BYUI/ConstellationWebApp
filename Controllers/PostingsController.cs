@@ -224,7 +224,7 @@ namespace ConstellationWebApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PostingID,Description,PostingFor,PostingTitle, HidePosting, SharableToTeam")] Posting posting, string[] selectedTypes)
+        public async Task<IActionResult> Create([Bind("PostingID,Description,PostingFor,PostingTitle, HidePosting, SharableToTeam, ApplicationURL, ApplicationDeadline, Location")] Posting posting, string[] selectedTypes)
         {
             if (selectedTypes != null)
             {
@@ -245,6 +245,15 @@ namespace ConstellationWebApp.Controllers
                 var thisUser = await _context.User
                .FirstOrDefaultAsync(m => m.Id == currentUser);
                 posting.PostingOwner = thisUser;
+
+                var postingURL = posting.ApplicationURL.ToLower();
+                if (!postingURL.Contains("constellation.citwdd.net") && !(postingURL.Contains("http://") || postingURL.Contains("https://")))
+                {
+                    posting.ApplicationURL = "http://" + posting.ApplicationURL;
+                    _context.Add(posting);
+
+                }
+
                 _context.Add(posting);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Edit", "Postings", new { id = posting.PostingID });
@@ -307,7 +316,7 @@ namespace ConstellationWebApp.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, [Bind("PostingID,Description,PostingFor,PostingTitle, HidePosting, SharableToTeam")] Posting posting, string[] selectedTypes)
+        public async Task<IActionResult> Edit(int? id, [Bind("PostingID,Description,PostingFor,PostingTitle, HidePosting, SharableToTeam, ApplicationURL, ApplicationDeadline, Location")] Posting posting, string[] selectedTypes)
         {
             if (id != posting.PostingID)
             {
@@ -319,15 +328,25 @@ namespace ConstellationWebApp.Controllers
               .ThenInclude(i => i.PostingTypes)
              .FirstOrDefaultAsync(s => s.PostingID == id);
 
+        
+
             if (await TryUpdateModelAsync<Posting>(
                 postingToUpdate,
                 "",
-                i => i.PostingTitle, i => i.PostingFor, i => i.Description, i => i.HidePosting, i => i.SharableToTeam))
+                i => i.PostingTitle, i => i.PostingFor, i => i.Description, i => i.HidePosting, i => i.SharableToTeam, i => i.ApplicationURL, i => i.ApplicationDeadline, i => i.Location))
             {
                 UpdatePostingTypes(selectedTypes, postingToUpdate);
 
                 try
                 {
+                    await _context.SaveChangesAsync();
+
+                    var postingURL = postingToUpdate.ApplicationURL.ToLower();
+                    if (!postingURL.Contains("constellation.citwdd.net") && !(postingURL.Contains("http://") || postingURL.Contains("https://")))
+                    {
+                        postingToUpdate.ApplicationURL = "http://" + postingURL;
+                    }
+                    _context.Update(postingToUpdate);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

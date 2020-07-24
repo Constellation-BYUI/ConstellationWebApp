@@ -104,10 +104,10 @@
         }
 }
 
-@media screen and (min-width: 991px) {
+@media screen and (min-width: 1024px) {
     .posting-index-content {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         column-gap: 1em;
         margin: 1em;
     }
@@ -117,9 +117,10 @@
     }
 }
 
-@media screen and (min-width: 1199px) {
+@media screen and (min-width: 1440px) {
     .posting-index-content {
         overflow: scroll;
         height: 40em;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
     }
 }

@@ -32,9 +32,21 @@ namespace ConstellationWebApp.Models
         //but want to have it for later
         public bool  HidePosting { get; set; }
 
-        public  ICollection<StarredPosting> StarredPostings { get; set; }
-        public  ICollection<IntrestedCandidate> IntrestedCandidates { get; set; }
-        public  ICollection<Posting_PostingType> Posting_PostingTypes { get; set; }
+        [Display(Name = "Application URL Link")]
+        public string ApplicationURL { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Application Deadline")]
+        public DateTime ApplicationDeadline { get; set; }
+
+        [StringLength(500, ErrorMessage = "Location cannot be longer than 500 characters.")]
+        public string Location { get; set; }
+
+        public ICollection<StarredPosting> StarredPostings { get; set; }
+        public ICollection<IntrestedCandidate> IntrestedCandidates { get; set; }
+        public ICollection<Posting_PostingType> Posting_PostingTypes { get; set; }
+
 
         public  ICollection<RecruiterPicks> RecruiterPicks { get; set; }
 
