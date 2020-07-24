@@ -30,6 +30,10 @@ header {
         text-decoration: none;
         padding: 0 5px;
     }
+    header .logo a img {
+        width: 150px;
+        height: 25px;
+    }
 
   header .logo a:hover, .avatar:hover {
             background: #e63946;

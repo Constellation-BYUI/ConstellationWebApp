@@ -12,13 +12,14 @@ html {
 
 .project-details-head {
     background-color: #fff;
-    color: #999;
+    color: green;
     width: 100%;
     text-align: center;
     font-size: 18px;
     box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
     padding: 3px;
     margin-bottom: 0;
+    font-weight: 700;
 }
 
 .project-picture {
@@ -38,7 +39,7 @@ html {
     padding: 3px;
     font-size: 15px;
     color: #1b6ec2;
-    margin: auto;
+    margin: 10px 0 -3px 0;
     box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
 }
 
@@ -284,9 +285,7 @@ html {
        
     }
     .project-content h3, .project-content h4, .project-collaborators h4 {
-        
         margin-bottom: 2px !important;
-       
     }
     .project-details-content {
         display: flex;
@@ -299,6 +298,8 @@ html {
     .project-picture {
         width: 30%;
         margin: 0;
+        box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
+        margin: 2px 0px 5px 0;
     }
 
    .project-picture img {
@@ -309,20 +310,21 @@ html {
      }
 
     .project-content {
-        width: 50%;
+        width: 48%;
+        box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
+        margin: 2px 0 5px 11px;
     }
-
-    /*.project-description h3 {
-        text-align: center;
-        margin: 0;
-        padding: 5px;
-        color: white;
-        background-color: #457b9d;
-    }*/
+    .project-description {
+        height: 140px;
+    }
+    .project-description p {
+        font-size: 14px;
+    }
 
     .project-collaborators {
         width: 20%;
-        border: 1px solid #1d3557;
+        box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
+        margin: 2px 0 5px 10px;
     }
 }
 
