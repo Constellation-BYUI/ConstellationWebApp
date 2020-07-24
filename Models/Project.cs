@@ -36,13 +36,13 @@ namespace ConstellationWebApp.Models
         [Display(Name = "Creation Date")]
         public DateTime CreationDate { get; set; }
         public string PhotoPath { get; set; }
-        public virtual ICollection<ProjectLink> ProjectLinks { get; set; }
-        public ICollection<UserProject> UserProjects { get; set; }
-        public ICollection<StarredProject> StarredProjects { get; set; }
+        public  ICollection<ProjectLink> ProjectLinks { get; set; }
+        public  ICollection<UserProject> UserProjects { get; set; }
+        public  ICollection<StarredProject> StarredProjects { get; set; }
 
-        public ICollection<ProjectPosting> ProjectPostings { get; set; }
+        public  ICollection<ProjectPosting> ProjectPostings { get; set; }
 
-        public ICollection<ProjectSkills> ProjectSkills { get; set; }
+        public  ICollection<ProjectSkills> ProjectSkills { get; set; }
 
 
     }

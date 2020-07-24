@@ -11,11 +11,11 @@ namespace ConstellationWebApp.Models
 
         public string SkillName { get; set; }
 
-        public virtual ICollection<SkillDiscipline> SkillDisciplines { get; set; }
+        public  ICollection<SkillDiscipline> SkillDisciplines { get; set; }
 
-        public ICollection<UserSkill> UserSkills { get; set; }
+        public  ICollection<UserSkill> UserSkills { get; set; }
 
-        public ICollection<ProjectSkills> ProjectSkills { get; set; }
+        public  ICollection<ProjectSkills> ProjectSkills { get; set; }
 
         public ICollection<PostingSkills> PostingSkills { get; set; }
 

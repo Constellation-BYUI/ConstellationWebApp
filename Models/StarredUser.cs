@@ -14,12 +14,12 @@ namespace ConstellationWebApp.Models
         public string UserStarredID { get; set; }
 
         //User who is being starred navigation Property
-        public User StarredPerson { get; set; }
+        public  User StarredPerson { get; set; }
 
         //User who is starring the other person
         public string StarredOwnerID { get; set; }
 
         //user who is starring the other navigation property
-        public User StarOwner { get; set; }
+        public  User StarOwner { get; set; }
     }
 }

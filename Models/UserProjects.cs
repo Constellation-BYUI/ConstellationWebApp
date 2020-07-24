@@ -9,9 +9,9 @@ namespace ConstellationWebApp.Models
     public class UserProject
     {
         public string UserID { get; set; }
-        public User User { get; set; }
+        public  User User { get; set; }
         public int ProjectID { get; set; }
-        public Project Project { get; set; }
+        public  Project Project { get; set; }
         public string CollaborationTitle { get; set; }
     }
 }

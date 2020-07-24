@@ -9,8 +9,8 @@ namespace ConstellationWebApp.Models
     {
 
         public string UserID { get; set; }
-        public User User { get; set; }
+        public  User User { get; set; }
         public int ChatID { get; set; }
-        public Chat Chat { get; set; }
+        public  Chat Chat { get; set; }
     }
 }

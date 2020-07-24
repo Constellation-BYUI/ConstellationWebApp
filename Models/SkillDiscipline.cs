@@ -11,8 +11,8 @@ namespace ConstellationWebApp.Models
 
         public int SkillID { get; set; }
 
-        public Skill Skills { get; set; }
+        public  Skill Skills { get; set; }
 
-        public Discipline Disciplines { get; set; }
+        public  Discipline Disciplines { get; set; }
     }
 }

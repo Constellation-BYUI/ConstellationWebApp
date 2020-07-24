@@ -58,16 +58,7 @@ function showRecuiterDiv() {
     }
 }
 
-//Add Collaborators or UserProjects
-function add_collab() {
-    var collabInput = document.getElementById("collab-input").value;
-    var userList = document.getElementById("user-list");
-    var hiddenCollabInput = userList.querySelector('option[value="' + collabInput + '"]').getAttribute("data-id");
-    document.getElementById("userCollab-demo").innerHTML += "<input type='hidden' name='selectedCollaborators' value='" + hiddenCollabInput +"'>";
-    document.getElementById("collab-Display").innerHTML += '<h6>' + collabInput + '</h6>';
-    document.getElementById("collab-input").value = '';
 
-}
 
 //Add a new chat with chat users
 function add_chatUser() {

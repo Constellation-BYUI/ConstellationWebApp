@@ -12,6 +12,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using ConstellationWebApp.Models.DTO;
+using Microsoft.CodeAnalysis.FlowAnalysis;
 
 namespace ConstellationWebApp.Controllers
 {
@@ -115,7 +117,7 @@ namespace ConstellationWebApp.Controllers
         #region EndPoints
         // GET: Chat
 
-        public async Task<IActionResult> Index(int selectedChat)
+/*        public async Task<IActionResult> Index(int selectedChat)
         {
             var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var viewModel = new ViewModel();
@@ -163,68 +165,248 @@ namespace ConstellationWebApp.Controllers
                 return View(viewModel);
             }
         }
+*/
+        [Route("chat")]
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return View();
+        }
 
-        // Create Chat: 
-        [HttpPost]
-        public async Task<IActionResult> CreateChat(string[] selectedChatUsersInitalCreate, string StartingMessage)
+
+        // GET: Chat
+        [Route("chat/json")]
+        [HttpGet]
+        public ActionResult<ChatPageDTO> JsonAPI(string id)
         {
             var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            User theUser = _context.User.Where(i => i.Id == currentUser).FirstOrDefault();
+            var userDTO = new UserDTO();
 
-            //ensures that the selected collab is not null/empty && that the user did not add himself to an individual chat
-            if ((string.IsNullOrEmpty(selectedChatUsersInitalCreate.First()) && selectedChatUsersInitalCreate.Count() == 1) || (selectedChatUsersInitalCreate.Count() == 1 && (selectedChatUsersInitalCreate.Contains(currentUser) || selectedChatUsersInitalCreate.Contains(theUser.UserName))))
-            {
-                return RedirectToAction(nameof(Index));
-            }
-
-            //#0 eval if there is already an existing chat with the same members
-            //A
-            //First go through list of the selected collaborators and ensure that all values are the PK ID
-            //this will ensure we can do an array comparision to determine if we should append the message to an exisiting chat
-
-            //Empty List to collect the PK ID of selected users
-            List<string> selectedChatUsers = new List<string>();
-
-            //Get the ID of all listed Members that were added to the new chat input
-            foreach (var member in selectedChatUsersInitalCreate)
-            {
-                if(member == null)
-                {
-                    continue;
-                }
-
-                User foundUser = _context.User.Where(i => i.UserName == member || i.Id == member).FirstOrDefault();
-                selectedChatUsers.Add(foundUser.Id);
-            }
-            if (!selectedChatUsers.Contains(currentUser))
-            {
-                selectedChatUsers.Add(currentUser);
-            }
-            //B
             ////Find any chats that have the current user included in the group 
-            List<Chat> myChats = _context.Chats.Where(i => i.ChatUsers.Any(u => u.UserID == currentUser)).ToList();
+            List<Chat> myChats = new List<Chat>();
+            var chatDTOList = new List<ChatDTO>();
 
-            ////Empty Lists that will populated and emptied in the foreach loop
-            List<ChatUser> chatUsers = new List<ChatUser>();
-            List<Chat> singleChat = new List<Chat>();
-            List<string> comparerChatUserList = new List<string>();
-
-            foreach (var chat in myChats)
-            {   //Find the users of the single chat
-                singleChat.Add(chat);
-                chatUsers = ChatUserLookup(singleChat);
-                foreach (var user in chatUsers)
+            if (!string.IsNullOrEmpty(id))
+            {
+                myChats = _context.Chats.Where(i => i.ChatUsers.Any(u => u.UserID == currentUser) && i.ChatID.ToString() == id).ToList();
+                foreach (var chat in myChats)
                 {
-                    User foundUser = _context.User.Where(i => i.Id == user.UserID).FirstOrDefault();
-                    comparerChatUserList.Add(foundUser.Id);
+                    chatDTOList.Add(new ChatDTO
+                    {
+                        ChatID = chat.ChatID,
+                        ChatTitle = chat.ChatTitle,
+                        LastActivity = chat.LastActivity,
+                        currentUserId = currentUser
+                    });
+
                 }
-                comparerChatUserList.Sort();
-                selectedChatUsers.Sort();
-
-                var arraysAreEqual = Enumerable.SequenceEqual(comparerChatUserList, selectedChatUsers);
-                //determine if the selected Collaborators contain all the same users
-                if (arraysAreEqual)
+            }
+            else
+            {
+                myChats = _context.Chats.Where(i => i.ChatUsers.Any(u => u.UserID == currentUser)).ToList();
+                foreach (var chat in myChats)
                 {
+                    chatDTOList.Add(new ChatDTO
+                    {
+                        ChatID = chat.ChatID,
+                        ChatTitle = chat.ChatTitle,
+                        LastActivity = chat.LastActivity,
+                        currentUserId = currentUser
+                    });
+
+                }
+            }
+
+            // ////Find all ChatMessages of those chats
+            List<ChatMessage> chatMessages = ChatMessagesLookup(myChats);
+            var chatMessageDTOList = new List<ChatMessageDTO>();
+            foreach (var chatMess in chatMessages)
+            {
+                chatMessageDTOList.Add(new ChatMessageDTO
+                {
+                    ChatID = chatMess.ChatID,
+                    MessageID = chatMess.MessageID
+                });
+
+            }
+
+            // ////Find all message of those chat messages
+            List<Message> Messages = MessagesLookup(chatMessages);
+            var messageDTOList = new List<MessageDTO>();
+            foreach (var message in Messages)
+            {
+                messageDTOList.Add(new MessageDTO
+                {
+                    MessageID = message.MessageID,
+                    MessageText = message.MessageText,
+                    SenderID = message.SenderID,
+                    SenderName = (_context.User.Where(i => i.Id == message.SenderID).FirstOrDefault()).UserName,
+                    SentTime = message.SentTime.ToShortDateString() + " " + message.SentTime.ToShortTimeString(),
+                    PhotoPath = (_context.User.Where(i => i.Id == message.SenderID).FirstOrDefault()).PhotoPath
+                });
+            }
+
+
+            // ////Find all ChatUsers of those chats
+            List<ChatUser> chatUsers = ChatUserLookup(myChats);
+            var chatUserDTOList = new List<ChatUserDTO>();
+            foreach (var chatuser in chatUsers)
+            {
+                chatUserDTOList.Add(new ChatUserDTO
+                {
+                    ChatID = chatuser.ChatID,
+                    UserID = chatuser.UserID
+                });
+
+            }
+
+
+            //gathered all users data
+            var allUsers = _context.User;
+            var userDTOList = new List<UserDTO>();
+            foreach (var user in allUsers)
+            {
+                userDTOList.Add(new UserDTO
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    PhotoPath = user.PhotoPath,
+                    Email = user.Email,
+                    UserName = user.UserName,
+                    Id = user.Id
+                });
+
+            }
+
+
+            foreach (var chatMessageDTO in chatMessageDTOList)
+            {
+                chatMessageDTO.Messages = messageDTOList.Where(i => i.MessageID == chatMessageDTO.MessageID).ToList();
+            }
+
+            foreach (var chatUserDTO in chatUserDTOList)
+            {
+                chatUserDTO.Users = userDTOList.Where(i => i.Id == chatUserDTO.UserID).ToList();
+            }
+
+            foreach (var chatDTO in chatDTOList)
+            {
+                chatDTO.ChatMessages = chatMessageDTOList.Where(i => i.ChatID == chatDTO.ChatID).ToList();
+                chatDTO.ChatUsers = chatUserDTOList.Where(i => i.ChatID == chatDTO.ChatID).ToList(); ;
+            }
+
+            var chatPageDTO = new ChatPageDTO();
+
+            chatPageDTO.Chats = chatDTOList;
+            chatPageDTO.Users = userDTOList;
+
+            return chatPageDTO;
+        }
+
+
+        [Route("chat/CreateChatJson")]
+        // Create Chat: 
+        [HttpPost]
+        public async Task<ActionResult<ChatPageDTO>> CreateChatDTOAsync([FromBody] CreateChatDataDTO createChatData) { 
+
+            string[] selectedChatUsersInitalCreate = createChatData.selectedChatUsersInitalCreate;
+            string StartingMessage = createChatData.StartingMessage;
+
+                var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                User theUser = _context.User.Where(i => i.Id == currentUser).FirstOrDefault();
+
+                //ensures that the selected collab is not null/empty && that the user did not add himself to an individual chat
+                if ((string.IsNullOrEmpty(selectedChatUsersInitalCreate.First()) && selectedChatUsersInitalCreate.Count() == 1) || (selectedChatUsersInitalCreate.Count() == 1 && (selectedChatUsersInitalCreate.Contains(currentUser) || selectedChatUsersInitalCreate.Contains(theUser.UserName))))
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+
+                //#0 eval if there is already an existing chat with the same members
+                //A
+                //First go through list of the selected collaborators and ensure that all values are the PK ID
+                //this will ensure we can do an array comparision to determine if we should append the message to an exisiting chat
+
+                //Empty List to collect the PK ID of selected users
+                List<string> selectedChatUsers = new List<string>();
+
+                //Get the ID of all listed Members that were added to the new chat input
+                foreach (var member in selectedChatUsersInitalCreate)
+                {
+                    if (member == null)
+                    {
+                        continue;
+                    }
+
+                   // User foundUser = _context.User.Where(i => i.UserName == member || i.Id == member).FirstOrDefault();
+                    selectedChatUsers.Add(member);
+                }
+                if (!selectedChatUsers.Contains(currentUser))
+                {
+                    selectedChatUsers.Add(currentUser);
+                }
+                //B
+                ////Find any chats that have the current user included in the group 
+                List<Chat> myChats = _context.Chats.Where(i => i.ChatUsers.Any(u => u.UserID == currentUser)).ToList();
+
+                ////Empty Lists that will populated and emptied in the foreach loop
+                List<ChatUser> chatUsers = new List<ChatUser>();
+                List<Chat> singleChat = new List<Chat>();
+                List<string> comparerChatUserList = new List<string>();
+
+                foreach (var chat in myChats)
+                {   //Find the users of the single chat
+                    singleChat.Add(chat);
+                    chatUsers = ChatUserLookup(singleChat);
+                    foreach (var user in chatUsers)
+                    {
+                        User foundUser = _context.User.Where(i => i.Id == user.UserID).FirstOrDefault();
+                        comparerChatUserList.Add(foundUser.Id);
+                    }
+                    comparerChatUserList.Sort();
+                    selectedChatUsers.Sort();
+
+                    var arraysAreEqual = Enumerable.SequenceEqual(comparerChatUserList, selectedChatUsers);
+                    //determine if the selected Collaborators contain all the same users
+                    if (arraysAreEqual)
+                    {
+                        if (StartingMessage != null)
+                        {
+                            Message newMessage = new Message();
+                            newMessage.MessageText = StartingMessage;
+                            newMessage.SenderID = currentUser;
+                            newMessage.SentTime = DateTime.Now;
+                            _context.Add(newMessage);
+                            await _context.SaveChangesAsync();
+
+                            ChatMessage newChatMesssage = new ChatMessage();
+                            newChatMesssage.ChatID = chat.ChatID;
+                            newChatMesssage.MessageID = newMessage.MessageID;
+                            _context.Add(newChatMesssage);
+                            await _context.SaveChangesAsync();
+                            return View(chat.ChatID);
+                        }
+                        else
+                        {
+                        }
+                    }
+                    //empty the lists
+                    comparerChatUserList.Clear();
+                    singleChat.Clear();
+                }
+
+                //#1 Create the Chat. Only when there was not chat with the specified user list OR the user chose to ignore the default
+                if (ModelState.IsValid)
+                {
+                    Chat newChat = new Chat();
+                    newChat.CreationDate = DateTime.Now;
+                    newChat.LastActivity = DateTime.Now;
+                    _context.Add(newChat);
+                    await _context.SaveChangesAsync();
+
+                    //#2 append the ChatUsers
+                    await CreateChatUsers(selectedChatUsersInitalCreate, currentUser, newChat);
+
+                    //#3 include a chat message if entered
                     if (StartingMessage != null)
                     {
                         Message newMessage = new Message();
@@ -235,54 +417,17 @@ namespace ConstellationWebApp.Controllers
                         await _context.SaveChangesAsync();
 
                         ChatMessage newChatMesssage = new ChatMessage();
-                        newChatMesssage.ChatID = chat.ChatID;
+                        newChatMesssage.ChatID = newChat.ChatID;
                         newChatMesssage.MessageID = newMessage.MessageID;
                         _context.Add(newChatMesssage);
                         await _context.SaveChangesAsync();
-                        return RedirectToAction("Index", "Chat", new { @selectedChat = chat.ChatID });
                     }
-                    else
-                    {
-                        return RedirectToAction("Index", "Chat", new { @selectedChat = chat.ChatID });
-                    }
+                return View(newChat.ChatID);
+
                 }
-                //empty the lists
-                comparerChatUserList.Clear();
-                singleChat.Clear();
-            }
-
-            //#1 Create the Chat. Only when there was not chat with the specified user list OR the user chose to ignore the default
-            if (ModelState.IsValid)
-            {
-                Chat newChat = new Chat();
-                newChat.CreationDate = DateTime.Now;
-                newChat.LastActivity = DateTime.Now;
-                _context.Add(newChat);
-                await _context.SaveChangesAsync();
-
-                //#2 append the ChatUsers
-                await CreateChatUsers(selectedChatUsersInitalCreate, currentUser, newChat);
-
-                //#3 include a chat message if entered
-                if (StartingMessage != null)
-                {
-                    Message newMessage = new Message();
-                    newMessage.MessageText = StartingMessage;
-                    newMessage.SenderID = currentUser;
-                    newMessage.SentTime = DateTime.Now;
-                    _context.Add(newMessage);
-                    await _context.SaveChangesAsync();
-
-                    ChatMessage newChatMesssage = new ChatMessage();
-                    newChatMesssage.ChatID = newChat.ChatID;
-                    newChatMesssage.MessageID = newMessage.MessageID;
-                    _context.Add(newChatMesssage);
-                    await _context.SaveChangesAsync();
-                }
-                return RedirectToAction("Index", "Chat", new { @selectedChat = newChat.ChatID });
-            }
-            return RedirectToAction(nameof(Index));
+            return View();
         }
+
 
         [HttpPost]
         public async Task<IActionResult> CreateMessage(string messageText, int chatID)
@@ -318,57 +463,44 @@ namespace ConstellationWebApp.Controllers
 
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddChatUsers(string[] selectedCollaborators, int chatID)
+        [Route("chat/UpdateChat")]
+        // Create Chat: 
+        [HttpPut]
+        public async Task<ActionResult<ExistingChatDTO>> AddChatUsers([FromBody] ExistingChatDTO updateChatDTo)
         {
+            string[] selectedChatUsers = updateChatDTo.selectedChatUsers;
+            int chatID = updateChatDTo.ChatID;
+            string chatTitleInput = updateChatDTo.ChatTitle;
+
             var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (ModelState.IsValid)
             {
                 Chat updatingChat = _context.Chats.Where(i => i.ChatID == chatID).FirstOrDefault();
-                await CreateChatUsers(selectedCollaborators, currentUser, updatingChat);
+                await CreateChatUsers(selectedChatUsers, currentUser, updatingChat);
+                if (!string.IsNullOrEmpty(chatTitleInput))
+                {
+                    updatingChat.ChatTitle = chatTitleInput;
+                    _context.Update(updatingChat);
+                    await _context.SaveChangesAsync();
+
+                }
                 return RedirectToAction("Index", "Chat", new { @selectedChat = chatID });
             }
             return RedirectToAction(nameof(Index));
         }
 
-        // POST: Message/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create()
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-
-        // POST: Chat/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-
+      
 
         // POST: Chat/Delete/5
+        [Route("chat/DeleteChat")]
+        public async Task<ActionResult<ExistingChatDTO>> DeleteChatDTOAsync([FromBody] ExistingChatDTO DeleteChatDTO)
+        {
+
+            int chatID = DeleteChatDTO.ChatID;
+            await DeleteChat(chatID);
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteChat(int chatID)

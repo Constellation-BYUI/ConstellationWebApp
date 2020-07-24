@@ -11,7 +11,7 @@ namespace ConstellationWebApp.Models
 
         public string PostingTypeName { get; set; }
 
-        public ICollection<Posting_PostingType> Posting_PostingTypes { get; set; }
+        public  ICollection<Posting_PostingType> Posting_PostingTypes { get; set; }
 
     }
 }

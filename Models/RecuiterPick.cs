@@ -17,11 +17,11 @@ namespace ConstellationWebApp.Models
 
         public int PostingID { get; set; }
 
-        public User Recuiter { get; set; }
+        public  User Recuiter { get; set; }
 
-        public Posting Posting { get; set; }
+        public  Posting Posting { get; set; }
 
-        public User Candidate { get; set; }
+        public  User Candidate { get; set; }
 
     }
 }

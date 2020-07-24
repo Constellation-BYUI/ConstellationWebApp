@@ -13,6 +13,6 @@ namespace ConstellationWebApp.Models
         [StringLength(50, ErrorMessage = "DisciplineName cannot be longer than 50 characters.")]
         [Display(Name = "Discipline Name")]
         public String DisciplineName { get; set; }
-        public virtual ICollection<SkillDiscipline> SkillDiscipline { get; set; }
+        public  ICollection<SkillDiscipline> SkillDiscipline { get; set; }
     }
 }

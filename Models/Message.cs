@@ -14,8 +14,8 @@ namespace ConstellationWebApp.Models
         public string MessageText { get; set; }
         public string SenderID { get; set; }
         public DateTime SentTime { get; set; }
-        public User Sender { get; set; }
-        public ICollection<ChatMessage> ChatMessages { get; set; }
+        public  User Sender { get; set; }
+        public  ICollection<ChatMessage> ChatMessages { get; set; }
 
     }
 }
