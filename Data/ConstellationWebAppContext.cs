@@ -13,38 +13,36 @@ namespace ConstellationWebApp.Data
             public ConstellationWebAppContext (DbContextOptions<ConstellationWebAppContext> options)
                 : base(options)
             {
-            }
+            this.ChangeTracker.LazyLoadingEnabled = false;
+        }
 
-         public DbSet<User> User { get; set; }
+        public DbSet<User> User { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<UserProject> UserProjects { get; set; }
         public DbSet<ContactLink> ContactLinks { get; set; }
         public DbSet<ProjectLink> ProjectLinks { get; set; }
         public DbSet<Posting> Postings { get; set; }
-
         public DbSet<PostingType> PostingTypes { get; set; }
-
         public DbSet<Posting_PostingType> Posting_PostingTypes { get; set; }
-
         public DbSet<ConstellationWebApp.Models.StarredPosting> StarredPosting { get; set; }
-
         public DbSet<ConstellationWebApp.Models.IntrestedCandidate> IntrestedCandidate { get; set; }
-
         public DbSet<ConstellationWebApp.Models.StarredProject> StarredProjects { get; set; }
-
         public DbSet<ConstellationWebApp.Models.StarredUser> StarredUsers { get; set; }
-
         public DbSet<ConstellationWebApp.Models.RecruiterPicks> RecruiterPicks { get; set; }
-
         public DbSet<ConstellationWebApp.Models.UserSkill> UserSkills { get; set; }
         public DbSet<ConstellationWebApp.Models.Skill> Skills { get; set; }
         public DbSet<ConstellationWebApp.Models.SkillDiscipline> SkillDisciplines { get; set; }
         public DbSet<ConstellationWebApp.Models.Discipline> Disciplines { get; set; }
-
         public DbSet<ConstellationWebApp.Models.SkillLink> SkillLinks { get; set; }
-
         public DbSet<ConstellationWebApp.Models.ProjectPosting> ProjectPosting { get; set; }
         public DbSet<ConstellationWebApp.Models.UserSkillLink> UserSkillLinks { get; set; }
+        public DbSet<ConstellationWebApp.Models.ChatUser> ChatUsers { get; set; }
+        public DbSet<ConstellationWebApp.Models.Chat> Chats { get; set; }
+        public DbSet<ConstellationWebApp.Models.ChatMessage> ChatMessages { get; set; }
+        public DbSet<ConstellationWebApp.Models.Message> Messages { get; set; }
+
+        public DbSet<ConstellationWebApp.Models.ProjectSkills> ProjectSkills { get; set; }
+        public DbSet<ConstellationWebApp.Models.PostingSkills> PostingSkills { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -205,10 +203,58 @@ namespace ConstellationWebApp.Data
             modelBuilder.Entity<Posting_PostingType>().ToTable("Posting_PostingType");
             modelBuilder.Entity<PostingType>().ToTable("PostingType");
 
-        }
+            modelBuilder.Entity<Chat>().ToTable("Chat");
+            modelBuilder.Entity<ChatUser>().ToTable("ChatUser");
+            modelBuilder.Entity<ChatUser>()
+           .HasKey(uc => new { uc.UserID, uc.ChatID });
+            modelBuilder.Entity<ChatUser>()
+                .HasOne(bc => bc.User)
+                .WithMany(b => b.ChatUser)
+                .HasForeignKey(bc => bc.UserID);
+            modelBuilder.Entity<ChatUser>()
+                .HasOne(bc => bc.Chat)
+                .WithMany(c => c.ChatUsers)
+                .HasForeignKey(bc => bc.ChatID);
 
+            modelBuilder.Entity<ProjectSkills>()
+      .HasKey(bc => new { bc.SkillID, bc.ProjectID });
+            modelBuilder.Entity<ProjectSkills>()
+                .HasOne(bc => bc.Skill)
+                .WithMany(b => b.ProjectSkills)
+                .HasForeignKey(bc => bc.SkillID);
+            modelBuilder.Entity<ProjectSkills>()
+                .HasOne(bc => bc.Project)
+                .WithMany(c => c.ProjectSkills)
+                .HasForeignKey(bc => bc.ProjectID);
 
+            modelBuilder.Entity<PostingSkills>()
+  .HasKey(bc => new { bc.SkillID, bc.PostingID });
+            modelBuilder.Entity<PostingSkills>()
+                .HasOne(bc => bc.Skill)
+                .WithMany(b => b.PostingSkills)
+                .HasForeignKey(bc => bc.SkillID);
+            modelBuilder.Entity<PostingSkills>()
+                .HasOne(bc => bc.Posting)
+                .WithMany(c => c.PostingSkills)
+                .HasForeignKey(bc => bc.PostingID);
 
-    }
-    
+            modelBuilder.Entity<ChatMessage>().ToTable("ChatMessage");
+            modelBuilder.Entity<ChatMessage>()
+            .HasKey(uc => new { uc.ChatID, uc.MessageID });
+            modelBuilder.Entity<ChatMessage>()
+                .HasOne(bc => bc.Chat)
+                .WithMany(b => b.ChatMessages)
+                .HasForeignKey(bc => bc.ChatID);
+            modelBuilder.Entity<ChatMessage>()
+                .HasOne(bc => bc.Message)
+                .WithMany(c => c.ChatMessages)
+                .HasForeignKey(bc => bc.MessageID);
+
+            modelBuilder.Entity<Message>().ToTable("Message");
+            modelBuilder.Entity<Message>()
+                .HasOne(bc => bc.Sender)
+                .WithMany(b => b.Messsages)
+                .HasForeignKey(bc => bc.SenderID);
+        }               
+    }    
 }

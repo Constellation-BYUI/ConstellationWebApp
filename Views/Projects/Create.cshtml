@@ -77,9 +77,10 @@
                     @:</div>
                         }
                     </div>
-                    <input class="input-group rounded border-light col-md-12" list="user-list" name="selectedCollaborators">
-                    <div id="demo"></div>
-                    <input class="text-light bg-secondary border-white rounded mt-1" type="button" id="more_fields" onclick="add_collab();" value="Add Collaborator" />
+                    <div id="collab-Display"></div>
+                    <input id="collab-input" class="input-group rounded border-light col-md-12" list="user-list" name="selectedCollaborators">
+                    <div id="userCollab-demo"></div>
+                    <input class="text-light bg-secondary border-white rounded mt-1" type="button" id="more_collab" onclick="add_collab();" value="Add Collaborator" />
 
                     @* Adding Contact Links*@
                     @* Create the Project Links for the User *@
@@ -126,6 +127,13 @@
                     (document.getElementById("link-url").innerHTML).value = "";
 
                 }
+            </script>
+            <script>           
+
+              
+            ////Clear fields for the user
+            //(document.getElementById("collab-input").innerHTML).value = "";
+            //}
             </script>
 
             @*@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@

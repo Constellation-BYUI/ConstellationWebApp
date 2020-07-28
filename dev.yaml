@@ -21,7 +21,7 @@ spec:
         - name: CUSTOMCONNSTR_ConstellationWebAppContext
           valueFrom:
             secretKeyRef:
-              name: prod-app-settings
+              name: dev-app-settings
               key: web-app-context
         - name: ASPNETCORE_ENVIRONMENT
           value: Development
@@ -41,8 +41,8 @@ spec:
           httpGet:
             path: /account/login
             port: 80
-          initialDelaySeconds: 3
-          periodSeconds: 3
+          initialDelaySeconds: 30
+          periodSeconds: 30
       volumes:
       - name: image
         persistentVolumeClaim:

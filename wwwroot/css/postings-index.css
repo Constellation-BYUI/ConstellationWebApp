@@ -18,7 +18,7 @@
     color: blue;
 }
 
-.search-bar1, .search-bar2, .search-bar3, .search-bar4 {
+.search-bar2, .search-bar3, .search-bar4 {
     display: none;
     margin: 3px 3px;
 }
@@ -27,38 +27,20 @@
     width: 100%;
 }
 
-.posting-index-search-bars {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 1em;
-    margin: 0 5px;
-    padding: 5px 3px;
-}
-
     .posting-index-search-bars .form-control {
         width: 50% !important;
     }
-
-.posting-index-head {
-    background-color: #1b6ec2;
-    color: white;
-    width: 100%;
-    text-align: center;
-    font-size: large;
-    font-weight: 400;
-    margin-bottom: 3px;
-    padding: 5px;
+.input-group {
+    width: 104%;
 }
-    .posting-index-head h2 {
-        margin: 0;
-    }
 
-    .posting-index-content {
-        display: grid;
-        grid-template-columns: 1fr;
-        column-gap: 1em;
-        margin: 0 1em 1em 1em;
-    }
+.posting-index-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: 1em;
+    margin: 0 1em 1em 1em;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 
 .posting-index-content {
     overflow: scroll;
@@ -93,15 +75,14 @@
         display: block;
     }
 
-    
 
     .search-bar1, .search-bar2, .search-bar3, .search-bar4 {
         display: block;
     }
 
-    .search-bar0 {
+   /* .search-bar0 {
         display: none;
-    }
+    }*/
 
     .posting-index-content {
         display: grid;
@@ -123,33 +104,12 @@
         }
 }
 
-@media screen and (min-width: 991px) {
+@media screen and (min-width: 1024px) {
     .posting-index-content {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        column-gap: 1em;
-        margin: 1em;
-    }
-
-    .posting-index-search-bars {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         column-gap: 1em;
-        margin-bottom: 6px;
-    }
-
-    .search-bar1, .search-bar2 {
-        display: block;
-    }
-
-    .search-bar4, .search-bar0, .search-bar3 {
-        display: none;
-    }
-
-    .alphabet-search a {
-        display: block;
-        padding: 2px 12px;
-        margin: auto;
+        margin: 1em;
     }
 
     .poster-image {
@@ -157,19 +117,10 @@
     }
 }
 
-@media screen and (min-width: 1199px) {
-    .alphabet-search a {
-        display: block;
-        padding: 2px 15px;
-        margin: auto;
-    }
-
-    .search-bar0 {
-        display: none;
-    }
-
+@media screen and (min-width: 1440px) {
     .posting-index-content {
         overflow: scroll;
         height: 40em;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
     }
 }

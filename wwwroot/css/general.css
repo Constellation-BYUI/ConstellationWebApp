@@ -1,10 +1,12 @@
 ﻿@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
 /*BODY*/
 body {
-    background-color: rgba(0,0,0,0.1);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    /*    background-color: rgba(0,0,0,0.1);*/
 }
 main {
-    overflow: hidden;
+    margin-top: 50px;
+    overflow:hidden;
 }
 
 .titleCard {
@@ -26,6 +28,27 @@ main {
     width: 100%;
     padding: 0.3em;
 }
+
+.general-search-bars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 15px;
+    margin: 25px 5px 0 5px;
+    padding: 5px 0;
+}
+.general-index-head {
+    background-color: #1d3557;
+    color: white;
+    width: 100%;
+    text-align: center;
+    /*margin-bottom: 3px;*/
+}
+
+    .general-index-head h2 {
+        margin: 0;
+        font-size: 1.5em;
+        padding: 5px;
+    }
 
 footer {
     background-color: #1d3557;
@@ -54,6 +77,15 @@ footer {
         background-color: #555; /* Add a dark-grey background on hover */
     }
 
+
+.big-thumbnail {
+    width: 12em;
+    height: 12em;
+    border-radius: 50%;
+    object-fit: cover;
+    border: .5em solid #ebeef8;
+    margin: 1em auto auto auto;
+}
 .small-thumbnail {
     width: 200px;
     height: 200px;
@@ -62,4 +94,35 @@ footer {
     border-radius: 3px;
 }
 
+@media screen and (min-width: 767px) {
+    main {
+        padding: 2px 5px;
+    }
+    .general-search-bars {
+        grid-template-columns: 1fr 1fr;
+        margin: 0 5px;
+    }
 
+    .general-index-head h2 {
+        font-size: 1.5em;
+        font-weight: 600;
+       
+    }
+
+    .big-thumbnail {
+        width: 30rem;
+        height: 30rem;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 1.5em solid #ebeef8;
+        margin: 1em auto auto auto;
+    }
+}
+ @media screen and (min-width: 991px) {
+    main {
+        padding: 2px 95px 100px 95px;
+    }
+    .general-search-bars {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+ }

@@ -80,7 +80,7 @@ namespace ConstellationWebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateManyUserSkills(int[] skills, string userID)
+        public async Task<IActionResult> CreateManyUserSkills(int[] skills, string userID, string disciplineSearchString)
         {
             var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -99,13 +99,14 @@ namespace ConstellationWebApp.Controllers
                     }
                 }
             }
-            var returnPath = "../UserSkills/";
-            return Redirect(returnPath);
+          
+            return RedirectToAction("Index", "UserSkills", new { @disciplineSearchString = disciplineSearchString });
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RemoveManyUserSkills(int[] skills, string userID)
+        public async Task<IActionResult> RemoveManyUserSkills(int[] skills, string userID, string disciplineSearchString)
         {
             var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (currentUser == userID)
@@ -120,13 +121,13 @@ namespace ConstellationWebApp.Controllers
                     }
                 }
             }
-            var returnPath = "../UserSkills/";
-            return Redirect(returnPath);
+            return RedirectToAction("Index", "UserSkills", new { @disciplineSearchString = disciplineSearchString });
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateSkillLink(int[] skills, string linkLabel, string linkUrl)
+        public async Task<IActionResult> CreateSkillLink(int[] skills, string linkLabel, string linkUrl, string skillString, string disciplineSearchString)
         {
             var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var slID = 0;
@@ -148,6 +149,17 @@ namespace ConstellationWebApp.Controllers
                 //create the UserSkillLink join relationship
                 slID = thisSL.SkillLinkID;
 
+                if (!string.IsNullOrEmpty(skillString))
+                {
+                    var cutString = skillString.Substring(0, skillString.LastIndexOf("-") - 1);                    
+                    UserSkill stringSkill = _context.UserSkills.Where(i => i.Skills.SkillName == cutString).FirstOrDefault();
+                    UserSkillLink ThisUSL = new UserSkillLink();
+                    ThisUSL.LinkID = slID;
+                    ThisUSL.UserSkillID = stringSkill.UserSkillID;
+                    _context.Add(ThisUSL);
+                    await _context.SaveChangesAsync();
+                }
+
                 foreach (var skill in skills)
                 {
                     try
@@ -164,13 +176,13 @@ namespace ConstellationWebApp.Controllers
                     }
                 }
             }            
-            var returnPath = "../UserSkills/";
-            return Redirect(returnPath);
+            return RedirectToAction("Index", "UserSkills", new { @disciplineSearchString = disciplineSearchString });
+
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteSkillLink(int link)
+        public async Task<IActionResult> DeleteSkillLink(int link, string disciplineSearchString)
         {
             var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (currentUser != null)
@@ -181,19 +193,20 @@ namespace ConstellationWebApp.Controllers
 
                 foreach (var usl in userSkillLinks)
                 {
-                    _context.Remove(usl);
-                    await _context.SaveChangesAsync();
+                     _context.Remove(usl);
                 }
+                await _context.SaveChangesAsync();
+
 
                 _context.Remove(skillLink);
                 await _context.SaveChangesAsync();
             }
 
-            var returnPath = "../UserSkills/";
-            return Redirect(returnPath);
+            return RedirectToAction("Index", "UserSkills", new { @disciplineSearchString = disciplineSearchString });
+
         }
 
-            private bool UserSkillExists(string id)
+        private bool UserSkillExists(string id)
         {
             return _context.UserSkills.Any(e => e.UserID == id);
         }

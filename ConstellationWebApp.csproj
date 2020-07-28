@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>feeb4be1-4f6a-4cc6-bb8e-e6a7b6d579af</UserSecretsId>
+    <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+    <DockerfileContext>.</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,12 +15,29 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200706193323_RemoveDemoMessaging.cs" />
+    <Compile Remove="Migrations\20200706193323_RemoveDemoMessaging.Designer.cs" />
+
+    <Compile Remove="Migrations\20200720220505_VirtualUpdateProp.cs" />
+    <Compile Remove="Migrations\20200720220505_VirtualUpdateProp.Designer.cs" />
+    <Compile Remove="Migrations\20200720230439_No-Virtual.cs" />
+    <Compile Remove="Migrations\20200720230439_No-Virtual.Designer.cs" />
+    <Compile Remove="Migrations\20200717171503_AddPostingFields.cs" />
+    <Compile Remove="Migrations\20200717171503_AddPostingFields.Designer.cs" />
+
+  </ItemGroup>
+
+  <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\css\cards.css" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
     <PackageReference Include="Google.Cloud.Storage.V1" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
@@ -26,6 +46,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="3.1.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
     <PackageReference Include="NuGet.CommandLine" Version="4.4.1">
       <PrivateAssets>all</PrivateAssets>

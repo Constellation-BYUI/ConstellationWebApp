@@ -15,7 +15,7 @@ header {
     top: 0;
     width: 100%;
     background: #1d3557;
-    padding: 0 5px;
+    padding: 0 100px;
     box-sizing: border-box;
     z-index: 1020;
 }
@@ -29,6 +29,10 @@ header {
         font-weight: bold;
         text-decoration: none;
         padding: 0 5px;
+    }
+    header .logo a img {
+        width: 150px;
+        height: 25px;
     }
 
   header .logo a:hover, .avatar:hover {
@@ -48,13 +52,13 @@ header nav ul {
 
 header nav ul li {
                 list-style: none;
-                font-size: 16px;
+                font-size: 15px;
             }
 
     header nav ul li a {
         height: 50px;
         line-height: 50px;
-        padding: 0 14px;
+        padding: 0 8px;
         color: #fff !important;
         text-decoration: none !important;
     }
@@ -92,7 +96,7 @@ header nav ul li {
     display: none;
 }
 
-.avatar {
+#drop-down-avatar {
     vertical-align: middle;
     width: 50px;
     height: 50px;
@@ -114,11 +118,12 @@ header nav ul li {
     height: calc(0vh - 10px);
     position: absolute;
     top: -800%;
-    right: 5px;
+    right: 100px;
     display: flex;
     flex-direction: column;
     transition: .5s;
     border-radius: 5px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
 }
 
     .sub-menu-1 ul li, .sub-menu-2 ul li {
@@ -128,16 +133,17 @@ header nav ul li {
 
     .sub-menu-1 ul.show {
         top: 50px;
+        right: 95px;
         z-index: 99;
     }
 
     .sub-menu-2 ul.show {
         top: 50px;
-        right: 10px;
+        right: 95px;
         z-index: 99;
     }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 576px) {
     header {
         padding: 0 20px;
     }
@@ -159,12 +165,17 @@ header nav ul li {
             left: 0;
             z-index: 99;
         }
-
+  /*  header .logo a {
+        font-size: 20px !important;
+    }*/
         header nav ul {
             background-color: rgba(0,0,0,.8);
             display: block;
             text-align: center;
         }
+      /*  header nav ul li {
+                font-size: 13px;
+            }*/
 
             header nav ul li a {
                 border-bottom: 1px solid whitesmoke;
@@ -211,7 +222,12 @@ header nav ul li {
         font-size: 18px;
     }
 
-    .avatar {
+    #drop-down-avatar {
         display: none;
+    }
+}
+@media screen and (max-width: 768px) {
+    header {
+        padding: 0 20px;
     }
 }

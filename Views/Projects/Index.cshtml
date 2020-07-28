@@ -7,6 +7,7 @@
 }
 
 <link rel="stylesheet" href="/css/project-index.css" />
+<link rel="stylesheet" href="~/css/cards.css" />
 <!-- The project index container -->
 <!-- #region Info button:-->
 <section class="page-info">
@@ -18,29 +19,14 @@
         experience. Create your own projects to increase your marketability.
     </article>
 </section>
-
-@*<div>
-    <button id="btn1"><i class="fa fa-info-circle" style="font-size:24px"></i></button>
-    <p id="hidden-info-blip">
-        
-    </p>
-</div>*@
 <!-- #endregion -->
-<br>
 <div class="project-index-container">
     <div class="project-index-bread-crumb">Home > Projects</div>
     <!-- search Bars -->
-    <div class="project-index-search-bars">
+    <div class="general-search-bars">
         <!-- Create project button -->
         <a asp-action="Create"><div class="create-project btn btn-md btn-success">Create&nbsp;Project</div></a>
-        <form action="" class="search-bar0">
-            <div class="input-group">
-                <input type="search" placeholder="Search.." aria-describedby="button-addon5" class="form-control" style="width: 100px">
-                <div class="input-group-append">
-                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                </div>
-            </div>
-        </form>
+            <!--Sort Button-->
         <form asp-action="Index" asp-controller="Projects" class="">
             <input value="filterByNew" type="hidden" name="sortOrderNew">
             <button type="submit" class="btn btn-primary sort-button1">Sort&nbsp;by&nbsp;Newest&nbsp;Projects</button>
@@ -60,7 +46,7 @@
     </div>
 
     <!-- Project contents goes in here -->
-    <div class="project-index-head"><h2>Projects</h2></div>
+    <div class="general-index-head"><h2>Projects</h2></div>
     <div class="project-index-content">
         @foreach (var item in Model.Projects)
         {
@@ -74,95 +60,79 @@
                 photoPath = "~/WebAssests/siteImages/projectsicon.png";
 
             }
-
             @*CSS RULES FOR INDIVIDUAL CARDS*@
-            <div class="card shadow-lg border-primary mt-1 mb-3 ml-2 mr-2">
+            <!-- Constellation Project Card -->
+            var projUrl = "../Projects/Details/" + (item.ProjectID);
+            @*CSS RULES FOR INDIVIDUAL CARDS*@
+                <div class="const-card-wrapper" style="cursor: pointer;" onclick="window.location='@projUrl';">>
+                    <div class="const-card">
+                        <div class="project-title">@Html.DisplayFor(modelItem => item.Title)</div>
+                        @*<img style="height: 300px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.Title)" asp-append-version="true" />*@
+                        <h2>Collaborators</h2>
+                        <div class="collaborators">
+                            @{
+                                bool isLoggedIn = false;
+                                foreach (var collab in item.UserProjects)
 
-                @*Project Title*@
-                <h4 class="card-header bg-primary py-1 text-white text-center m-0">
-                    @*@Html.DisplayNameFor(modelItem => item.Title) :*@
-                    @Html.DisplayFor(modelItem => item.Title)
-                </h4>
-                @*<img style="height: 300px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.Title)" asp-append-version="true" />*@
+                                {
+                                    var collabPath = "";
+                                    if (collab.User.PhotoPath != null)
+                                    {
+                                        collabPath = "~/image/" + (collab.User.PhotoPath);
+                                    }
+                                    else
+                                    {
+                                        collabPath = "~/WebAssests/siteImages/avataricon.png";
+                                    }
+                                    var collabMemberPath = "../Users/Details/" + (collab.User.Id);
 
-                @*COLLABORATORS*@
-                <h5 class="card-header bg-light py-1 text-black text-center m-0">Collaborators</h5>
-                <section class="d-flex flex-wrap justify-content-center">
-                    @{
-                        bool isLoggedIn = false;
-                        foreach (var collab in item.UserProjects)
+                                    <a href="@collabMemberPath"><img style="width: 50px; height: 50px;" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
 
-                        {
-                            var collabPath = "";
-                            if (collab.User.PhotoPath != null)
-                            {
-                                collabPath = "~/image/" + (collab.User.PhotoPath);
+                                    if (collab.UserID == currentUser)
+                                    {
+                                        isLoggedIn = true;
+                                    }
+                                }
                             }
-                            else
-                            {
-                                collabPath = "~/WebAssests/siteImages/avataricon.png";
-                            }
-                            var collabMemberPath = "../Users/Details/" + (collab.User.Id);
+                        </div>
+                        @*Description*@
+                        <H2>@Html.DisplayNameFor(modelItem => item.Description)</H2>
+                        <div class="description">@Html.DisplayFor(modelItem => item.Description)</div>
+                        @*Project Dates*@
+                        @* <h2>Project Dates</h2>
+                       <div class="project-date">
+                            <p><strong>@Html.DisplayNameFor(modelItem => item.CreationDate) : </strong>@Html.DisplayFor(modelItem => item.CreationDate)</p>
+                            <p><strong>@Html.DisplayNameFor(modelItem => item.StartDate) : </strong>@Html.DisplayFor(modelItem => item.StartDate)</p>
+                            <p><strong>@Html.DisplayNameFor(modelItem => item.EndDate) : </strong>@Html.DisplayFor(modelItem => item.EndDate)</p>
+                        </div>*@
 
-                            <a href="@collabMemberPath"><img src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
-
-                            if (collab.UserID == currentUser)
+                        @*Project Links*@
+                        <h2>Project Links</h2>
+                        <div class="project-links">
+                            @foreach (var link in item.ProjectLinks)
                             {
-                                isLoggedIn = true;
+                                <a href=" @link.ProjectLinkUrl" target="_blank">@link.ProjectLinkLabel</a>
                             }
-                        }
-                    }
-                </section>
-                @*Project Desccription*@
-                <div class="bg-light border-dark">
-                    <h6 class="card-header bg-light py-1 text-black text-center m-0">@Html.DisplayNameFor(modelItem => item.Description)</h6>
-                    <p class="description-text">@Html.DisplayFor(modelItem => item.Description)</p>
+                        </div>
+
+                        <div class="const-card-footer">
+                            @{
+
+                                if (isLoggedIn == true)
+                                {
+                                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@item.ProjectID">Edit</a>
+                                    <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.ProjectID">Details</a>
+                                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.ProjectID">Delete</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.ProjectID">Details</a>
+                                }
+                            }
+                        </div>
+                    </div>
                 </div>
 
-                @*Project Dates*@
-                <div class="px-2">
-                    <p class="m-0">
-                        <strong class="text-black">@Html.DisplayNameFor(modelItem => item.StartDate) : </strong>
-                        @Html.DisplayFor(modelItem => item.StartDate)
-                    </p>
-                    <p class="m-0">
-                        <strong class="text-black">@Html.DisplayNameFor(modelItem => item.EndDate) : </strong>
-                        @Html.DisplayFor(modelItem => item.EndDate)
-                    </p>
-                    <p class="m-0">
-                        <strong class="text-black">@Html.DisplayNameFor(modelItem => item.CreationDate) : </strong>
-                        @Html.DisplayFor(modelItem => item.CreationDate)
-                    </p>
-                </div>
-
-                @*Project Links*@
-                <div class="bg-light">
-                    <h5 class="card-header bg-light py-1 text-black text-center m-0">Project Links</h5>
-                    @foreach (var link in item.ProjectLinks)
-                    {
-                        <a class="text-primary px-2" href=" @link.ProjectLinkUrl" target="_blank">@link.ProjectLinkLabel</a>
-                    }
-                </div>
-
-                @*Card Footer*@
-                <section class="card-footer align-text-bottom px-2 py-2">
-                    @{
-
-                        if (isLoggedIn == true)
-                        {
-                            <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@item.ProjectID">Edit</a>
-                            <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.ProjectID">Details</a>
-                            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@item.ProjectID">Delete</a>
-                        }
-                        else
-                        {
-                            <a class="btn btn-sm btn-secondary" asp-action="Details" asp-route-id="@item.ProjectID">Details</a>
-                        }
-                    }
-                </section>
+                }
             </div>
-
-        }
-        <div class="project-index-cards"></div>
-    </div>
-</div>
+        </div>

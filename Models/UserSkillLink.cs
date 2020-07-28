@@ -11,8 +11,8 @@ namespace ConstellationWebApp.Models
         public int LinkID { get; set; }
         public int UserSkillID { get; set; }
        
-        public UserSkill UserSkills { get; set; }
-        public SkillLink SkillLinks { get; set; }
+        public  UserSkill UserSkills { get; set; }
+        public  SkillLink SkillLinks { get; set; }
 
     }
 }

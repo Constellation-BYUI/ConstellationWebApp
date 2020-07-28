@@ -20,6 +20,6 @@ namespace ConstellationWebApp.Models
         [RegularExpression(@"\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*")]
         public string ContactLinkUrl { get; set; }
 
-        public virtual User Users { get; set; }
+        public  User Users { get; set; }
     }
 }

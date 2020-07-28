@@ -1,12 +1,73 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿
+//BurgarMenu Control on Small screeens
+//NavBar, MyVolt, and avatar 
+$(function () {
+    'use strict';
+    $('.menu-toggle').click(function () {
+        $('nav').toggleClass('active')
+    })
 
+    $('#my-volt').click(function () {
+        $('.volt-down').toggleClass('show')
+    });
+
+    $('#drop-down-avatar').click(function () {
+        $('.avatar-down').toggleClass('show')
+    });
+
+    $(document).on('click', function (e) {
+        if (!(($(e.target).closest('.sub-menu-1').length > 0) || ($(e.target).closest('.sub-menu-2').length > 0) || ($(e.target).closest('#drop-down-avatar').length > 0) || ($(e.target).closest('#my-volt').length > 0))) {
+            $('.volt-down').removeClass('show');
+            $('.avatar-down').removeClass('show');
+        }
+    });
+})
+
+ 
 //Hide or show page information
 $(document).ready(function () {
     $('#button-info').click(function () {
         $('article').toggleClass('display')
-    })
+    });
+    $(document).on('click', function (e) {
+        if (!(($(e.target).closest('.page-info').length > 0) || ($(e.target).closest('#button-info').length > 0))) {
+            $('article').removeClass('display');
+        }
+    });
 })
+
+//Private conversation
+$(document).ready(function () {
+    $('#priv-talk').click(function () {
+        $('.members-container').toggleClass('show')
+    });
+    //$(document).on('click', function (e) {
+    //    if (!(($(e.target).closest('.private-talk-content').length > 0) || ($(e.target).closest('#priv-talk').length > 0))) {
+    //        $('.members-container').removeClass('show');
+    //    }
+    //});
+})
+
+//Group conversation
+$(document).ready(function () {
+    $('#grp-talk').click(function () {
+        $('.group-members-container').toggleClass('show')
+    });
+    //$(document).on('click', function (e) {
+    //    if (!(($(e.target).closest('.group-talk-content').length > 0) || ($(e.target).closest('#grp-talk').length > 0))) {
+    //        $('.group-members-container').removeClass('show');
+    //    }
+    //});
+})
+
+// close modal on click outside at anywhere
+$(document).on('click', function (e) {
+    if (!(($(e.target).closest("#modalBox").length > 0) || ($(e.target).closest("#modal-btn").length > 0))) {
+        $("#modalBox").hide();
+    }
+});
+
+
 
 
 //Posting adding show/hide
@@ -21,13 +82,36 @@ function showRecuiterDiv() {
 
 
 
-//Info button on all pages javascript
-var btn = document.getElementById('btn1');
-var p = document.getElementById('hidden-info-blip');
+//Add a new chat with chat users
+function add_chatUser() {
+    var chatuserInput = document.getElementById("chatUser-input").value;
+    var userList = document.getElementById("user-list");
+    var hiddenChatUserInput = userList.querySelector('option[value="' + chatuserInput + '"]').getAttribute("data-id");
+    document.getElementById("userChat-hidden-holder").innerHTML += "<input type='hidden' name='selectedChatUsersInitalCreate' value='" + hiddenChatUserInput + "'>";
+    document.getElementById("userChat-display").innerHTML += '<h6>' + chatuserInput + '</h6>';
+    document.getElementById("chatUser-input").value = '';
 
-btn.addEventListener('click', evt => {
-    p.classList.toggle('show-info');
-});
+}
+
+function add_fields() {
+    var skillInputLabel = document.getElementById("skillInputLabel").value;
+    var userSkills = document.getElementById("userSkills");
+    var hiddenSkillInput = userSkills.querySelector('option[value="' + skillInputLabel + '"]').getAttribute("data-id");
+    document.getElementById("linkDemo").innerHTML += "<input type='hidden' name='skills' value='" + hiddenSkillInput + "'>";
+    document.getElementById("enteredSkills").innerHTML += '<h6>' + skillInputLabel + '</h6>';
+    document.getElementById("skillInputLabel").value = '';
+}
+
+//adding new chat users to existing chat
+function add_chatUser_append() {
+    var chatuserInput = document.getElementById("chatUser-appended-input").value;
+    var userList = document.getElementById("user-list");
+    var hiddenAppendingInput = userList.querySelector('option[value="' + chatuserInput + '"]').getAttribute("data-id");
+    document.getElementById("userChat-append-hidden-holder").innerHTML += "<input type='hidden' name='selectedAppendingChatUsers' value='" + hiddenAppendingInput + "'>";
+    document.getElementById("userChat-append-display").innerHTML += '<h6>' + chatuserInput + '</h6>';
+    document.getElementById("chatUser-appended-input").value = '';
+
+}
 
 //JavaScript to control the Scroll-To-Top Button
 //Get the button:
@@ -48,59 +132,4 @@ function scrollFunction() {
 function topFunction() {
     document.body.scrollTop = 0; // For Safari
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-}
-
-
-// Slideshows
-var slideIndex = 1;
-
-function plusDivs(n) {
-    slideIndex = slideIndex + n;
-    showDivs(slideIndex);
-}
-
-function showDivs(n) {
-    var x = document.getElementsByClassName("mySlides");
-    if (n > x.length) { slideIndex = 1 }
-    if (n < 1) { slideIndex = x.length };
-    for (i = 0; i < x.length; i++) {
-        x[i].style.display = "none";
-    }
-    x[slideIndex - 1].style.display = "block";
-}
-
-showDivs(1);
-
-
-// Accordion
-function myFunction(id) {
-    var x = document.getElementById(id);
-    if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-        x.previousElementSibling.className += " w3-theme-d1";
-    } else {
-        x.className = x.className.replace("w3-show", "");
-        x.previousElementSibling.className =
-            x.previousElementSibling.className.replace(" w3-theme-d1", "");
-    }
-}
-
-// Used to toggle the menu on smaller screens when clicking on the menu button
-function openNav() {
-    var x = document.getElementById("navDemo");
-    if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-    } else {
-        x.className = x.className.replace(" w3-show", "");
-    }
-}
-
-
-function openUser() {
-    var x = document.getElementById("navSetting");
-    if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-    } else {
-        x.className = x.className.replace(" w3-show", "");
-    }
 }

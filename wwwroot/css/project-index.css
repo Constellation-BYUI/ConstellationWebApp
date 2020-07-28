@@ -13,9 +13,6 @@
     text-align: left;
     color: blue;
 }
-.search-bar1 {
-    display: none;
-}
 .sort-button1, .sort-button2, .create-project {
     margin: 1px 0;
     width: 100%;
@@ -24,13 +21,7 @@
     font-size: .9em;
     padding: 8px 1.5px;
 }
-.project-index-search-bars {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 1em;
-    margin: 0 5px;
-    padding: 5px 0;
-}
+
 /*.project-index-search-bars {
     display: flex;
     justify-content: space-between;
@@ -41,16 +32,7 @@
         width: 70% !important;
     }*/
 
-.project-index-head {
-    background-color: #1b6ec2;
-    color: white;
-    width: 100%;
-    text-align: center;
-    font-size: large;
-    font-weight: 400;
-    margin-bottom: 10px;
-    padding: 5px;
-}
+
 .description-text {
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -68,6 +50,7 @@
     grid-template-columns: 1fr;
     column-gap: 1em;
     margin: 0 1em 1em 1em;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .project-index-content {
@@ -107,6 +90,7 @@
     .project-index-bread-crumb {
         display: block;
     }
+   
     .sort-button1, .sort-button2 {
         font-size: 1em;
         padding: 7px;
@@ -114,10 +98,6 @@
     .search-bar1 {
         margin: 1px 0;
         display: block;
-    }
-
-    .search-bar0 {
-        display: none;
     }
     .project-index-content {
         display: grid;
@@ -138,10 +118,10 @@
         }
 }
 
-@media screen and (min-width: 991px) {
+@media screen and (min-width: 1024px) {
     .project-index-content {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         column-gap: 1em;
         margin: 1em;
     }
@@ -168,7 +148,7 @@
     }
 }
 
-@media screen and (min-width: 1199px) {
+@media screen and (min-width: 1440px) {
     .alphabet-search a {
         display: block;
         padding: 2px 15px;
@@ -181,6 +161,7 @@
 
     .project-index-content {
         overflow: scroll;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
         height: 40em;
     }
 }

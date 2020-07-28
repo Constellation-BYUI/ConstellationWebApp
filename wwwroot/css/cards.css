@@ -6,8 +6,8 @@ a {
 }
 
 .const-card-wrapper {
-    font-size: 10px !important;
-    font-family: "Roboto", sans-serif !important;
+    font-size: 8px !important;
+    /*font-family: "Roboto", sans-serif !important;*/
     display: flex;
     align-items: center;
     align-content: center;
@@ -16,7 +16,7 @@ a {
 
 .const-card {
     font-size: 10px !important;
-    font-family: "Roboto", sans-serif !important;
+    /*font-family: "Roboto" !important;*/
     border: 1px solid #cbd4f1;
     width: 80%;
     background-color: #fff;
@@ -24,9 +24,72 @@ a {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 1rem;
-    box-shadow: .5em .3em .5em rgba(0,0,0,0.2);
+    margin: 0 auto 1rem auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+/*Hovering over User cards, these html elements and events takes place*/
+.name-drop {
+    position: absolute;
+    top: 0;
+    visibility: hidden;
+    transition: visibility 0s, opacity .5s linear;
+    opacity: 0;
+    width: 100%;
+/*    height: 150px;*/
+    background: rgba(0,0,0,0.4);
+    color: #fff;
+    text-align: center;
+    z-index: 888 !important;
+}
+.name-drop .const-user-name {
+    background-color: #fff;
+    color: green;
+    font-size: 18px;
+    padding: 5px;
+}
+
+.more-info {
+    visibility: hidden;
+    transition: visibility 0s, opacity .5s linear;
+    opacity: 0;
+    width: 200px;
+    position: absolute;
+    top: 35px;
+    left: 5px;
+    z-index: 1000;
+    background: #fff;
+    color: #555;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
+}
+.more-info h2:hover {
+    background: #333;
+    color: #fff;
+}
+.more-info h2 {
+   background-color: #fff !important;
+   color: #1d3557 !important;
+   font-size: 17px !important;
+   padding: 3px;
+}
+.more-info .description {
+    font-size: 15px;
+/*    color: #777;*/
+    text-align: center;
+    background-color: #fff;
+/*    padding: .5em;*/
+}
+   .more-info .description .a-link {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: space-around !important;
+       
+    }
+    .more-info .description a {
+        color: #333;
+        text-decoration: none;
+    }
+
 
     .const-card .const-card-image {
         width: 100%;
@@ -54,35 +117,28 @@ a {
 }
 
 .const-card h2 {
-    font-size: 1.5em;
+    font-size: 18px;
     width: 100%;
     text-align: center;
     background-color: #ebeef8;
-    padding: .5em;
+    padding: .3em;
     margin: 0;
 }
 
 .const-card h3 {
-    font-size: 1.2em;
+    font-size: 1.5em;
     margin: .3em 0 1em 0;
 }
 
-.discipline {
-    font-size: 1.5em;
-    color: #777;
-    font-weight: 300;
-    width: 100%;
-    text-align: center;
-    background-color: #fff;
-    padding: .5em;
-}
-    .discipline a {
-        color: #333;
-        text-decoration: none;
-    }
+
+
+
+
+
+
     .const-card .const-btn:hover {
         transform: translateY(-2px);
-        box-shadow: .5rem .5em .2em rgba(0,0,0,.2);
+        
     }
 
 .const-card-footer {
@@ -90,9 +146,9 @@ a {
     text-align: left;
     padding: .5em;
     border-top: 1px solid rgba(0,0,0,.1);
-    background-color: #242b41;
+/*    background-color: #242b41;*/
 }
-
+/*The social media properties will be implimented in the future*/
 .social-media {
     width: 100%;
     list-style: none;
@@ -130,11 +186,194 @@ a {
         color: #869790;
     }
 
+
+/* constellation project card css */
+.project-title {
+    background-color: #1d3557; /* For browsers that do not support gradients */
+    background-image: linear-gradient(to right, #1d3557, #457b9d);
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    padding: .3em;
+    font-size: 1.8em;
+    font-weight: 500;
+}
+
+.collaborators {
+/*    padding: .3em 0;*/
+}
+
+    .collaborators img {
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #ebeef8;
+    }
+
+.description {
+    padding: .3em .5em;
+    font-size: 1.7em;
+    line-height: 1.3em;
+    word-spacing: -2px;
+    text-align: justify;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.project-date {
+    width: 100%;
+}
+
+    .project-date p {
+        margin: 0;
+        padding: .2rem 1rem;
+        font-size: 1.5em;
+    }
+
+.project-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    overflow: hidden;
+    height: 20px;
+    flex-wrap: wrap;
+}
+
+    .project-links a {
+        text-decoration: none;
+        color: #000;
+        font-style: italic;
+        font-size: 15px;
+    }
+
+        .project-links a:hover {
+            color: blue;
+        }
+
+        .project-links a:visited {
+            color: green;
+        }
+
+        .project-links a:active {
+            color: #e63946;
+        }
+
+/* Constellation Job Postings Cards Css */
+.postings-title {
+    background-color: #1d3557; /* For browsers that do not support gradients */
+    background-image: linear-gradient(to right, #1d3557, #457b9d);
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    font-size: 1.7em;
+    font-weight: 600;
+}
+
+.postings-info {
+    width: 100%;
+}
+.position {
+    border-bottom: 1px solid #555;
+    width: 100%;
+    text-align: center;
+    padding: 3px;
+    font-size: 1.7em;
+}
+
+    .position strong {
+        color: green;
+    }
+
+.owners-box {
+    padding: 2px;
+}
+
+    .owners-box img {
+        margin-left: 50%;
+        transform: translate(-50%);
+        border-radius: 50%;
+        padding: 2px 2px 5px 2px;
+        border: 2px solid #457b9d;
+    }
+
+.job-owners-name {
+    color: #000;
+    text-align: center;
+    color: green;
+    font-size: 18px;
+}
+.postings-details {
+    width: 100%;
+}
+
+.postings-type {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    overflow: auto;
+    overflow-x: hidden;
+    height: 50px;
+    flex-wrap: wrap;
+}
+
+.postings-details h2, .postings-description h2 {
+    background: #457b9d;
+    color: #fff;
+    font-size: 15px;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+}
+
+.postings-type p {
+    padding: 1px 3px;
+    color: #555;
+    margin-bottom: 0;
+    font-size: 12px;
+}
+
+.postings-description p {
+    padding: 0 1rem;
+    word-spacing: -2px;
+    text-align: justify;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 15px;
+    margin-bottom: 0;
+}
+
+.const-card-footer {
+    margin: 5px 0;
+}
+
 @media screen and (min-width: 767px) {
     .const-card {
         width: 95%;
-        margin: 1em 0 ;
+        margin: 1em 0;
         transition: transform .5s;
+       
+    }
+/*    css form project cards*/
+    .project-title {
+        
+    }
+
+    .const-card:hover {
+        transform: scale(1.05);
+       /* transition: transform .5s;*/
+    }
+        /*Hovering over User cards, these html elements and events takes place*/
+    .const-card:hover .name-drop {
+        visibility: visible;
+        opacity: 1;
+    }
+    .name-drop .const-user-name:hover .more-info {
+        visibility: visible;
+        opacity: 1;
     }
 
     @keyframes fadeIn {
@@ -147,23 +386,39 @@ a {
         }
     }
 
-    .const-card:nth-child(1) {
-        animation: fadeIn .5s .5s backwards;
+    .const-card-wrapper:nth-child(1) {
+        animation: fadeIn 0.5s 0.5s backwards;
     }
 
-    .const-card:nth-child(2) {
-        animation: fadeIn .5s .1s backwards;
+    .const-card-wrapper:nth-child(2) {
+        animation: fadeIn .5s 1s backwards;
     }
 
-    .const-card:nth-child(3) {
+    .const-card-wrapper:nth-child(3) {
         animation: fadeIn .5s 1.5s backwards;
     }
 
-    .const-card:nth-child(4) {
+    .const-card-wrapper:nth-child(4) {
         animation: fadeIn .5s 2s backwards;
     }
-
-    .const-card:hover {
-        transform: scale(1.05);
+    .const-card-wrapper:nth-child(5) {
+        animation: fadeIn .5s 2.5s backwards;
     }
+    .const-card-wrapper:nth-child(6) {
+        animation: fadeIn .5s 3s backwards;
+    }
+    .const-card-wrapper:nth-child(7) {
+        animation: fadeIn .5s 3.5s backwards;
+    }
+    .const-card-wrapperd:nth-child(8) {
+        animation: fadeIn .5s 4s backwards;
+    }
+    .const-card-wrapper:nth-child(9) {
+        animation: fadeIn .5s 4.5s backwards;
+    }
+
+  
+}
+@media screen and (min-width: 991px) {
+
 }

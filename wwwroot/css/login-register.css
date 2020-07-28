@@ -1,59 +1,66 @@
 ﻿
 /*CSS form Login Page*/
 .login-card {
-    margin: 0 2em 6em 2em;
+    width: 100%;
+    display: block;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    padding: 15px 15px 100px 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-.login-card h2 {
-    text-align: center;
-}
+    .login-card h2 {
+        text-align: center;
+        word-wrap: break-word;
+        font-size: 20px;
+        
+    }
 
-.login-card h3 {
-    text-align:center;
-    margin: 0;
-}
+    .login-card h3 {
+        text-align: center;
+        margin: 0;
+        font-size: 20px;
+        color: #28a745;
+    }
 
 @media screen and (min-width: 767px) {
     .login-card {
-        margin: 10em;
-        padding: 1.5em;
-        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+        width: 30%;
+        margin: 100px auto;
     }
    
 }
 
 @media screen and (min-width: 991px) {
     .login-card {
-        margin: 10em 15em 10em 15em;
-        padding: 1.5em;
-        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+
     }
 
 }
 
 
 @media screen and (min-width: 1199px) {
-    .login-card {
-        margin: 10em 35em 10em 35em;
-        padding: 1.5em;
-        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
-    }
+    
 }
 @media screen and (min-width: 2000px) {
-    .login-card {
-        margin: 10em 40em 10em 40em;
-        padding: 1.5em;
-        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
-    }
+   
 }
 
 /*CSS for Register page*/
 .register-card {
-    margin: 0 2em 10em 2em;
+    width: 100%;
+    display: block;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    padding: 15px 15px 100px 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
     .register-card h3 {
         text-align: center;
         margin: 0;
+        color: #1b6ec2;
     }
 .register-card .hr1 {
     display: block;
@@ -61,9 +68,8 @@
 
 @media screen and (min-width: 767px) {
     .register-card {
-        margin: 10em;
-        padding: 1.5em;
-        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+        width: 30%;
+        margin: 100px auto;
     }
     .register-card .hr1 {
         display: none;
@@ -74,24 +80,20 @@
 
 @media screen and (min-width: 991px) {
     .register-card {
-        margin: 10em 15em 10em 15em;
-        padding: 1.5em;
-        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+        
+       
     }
 }
 
 @media screen and (min-width: 1199px) {
     .register-card {
-        margin: 10em 35em 10em 35em;
-        padding: 1.5em;
-        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+       
+       
     }
 }
 
 @media screen and (min-width: 2000px) {
     .register-card {
-        margin: 10em 40em 10em 40em;
-        padding: 1.5em;
-        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+        
     }
 }

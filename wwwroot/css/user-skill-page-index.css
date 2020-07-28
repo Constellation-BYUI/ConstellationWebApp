@@ -51,8 +51,8 @@ html {
 /* Style tab links */
 
 .tablink {
-    background-color: #555;
-    color: white;
+    background-color: lightgray;
+    color: black;
     float: left;
     border: none;
     outline: none;
@@ -63,40 +63,40 @@ html {
 }
 
 .tablink:hover {
-    background-color: #777;
+    background-color: gray;
 }
 
 
 /* Style the tab content (and add height:100% for full page content) */
 
 .tabcontent {
-    color: white;
+    color: black;
     display: none;
     padding: 100px 20px;
     max-height: 1000px;
 }
 
 .linktabcontent {
-    color: white;
+    color: black;
     display: none;
     padding: 100px 20px;
     max-height: 500px;
 }
 
 #AddSkills {
-    background-color: lightblue;
+    background-color: white;
 }
 
 #RemoveSkills {
-    background-color: red;
+    background-color: white;
 }
 
 #AddSkillLink {
-    background-color: rgba(26, 110, 193, 0.19);
+    background-color: white;
 }
 
 #RemoveSkillLink {
-    background-color: red;
+    background-color: white;
 }
 
 @media only screen and (max-width: 800px) {

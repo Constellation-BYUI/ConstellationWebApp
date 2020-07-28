@@ -1,4 +1,7 @@
 ﻿/* page information button */
+section {
+    margin-top: 0 !important;
+}
 .page-info {
     position: relative;
     margin-top: 3.5rem;
@@ -6,10 +9,10 @@
 
 .info-button {
     position: absolute;
-    right: -68px;
+    right: -160px;
     transition: 0.3s;
     font-size: .9rem;
-    padding: .5rem 2px;
+    padding: .5rem 4px;
     text-align: center;
     color: white;
     border: 0 solid transparent;
@@ -17,10 +20,11 @@
     cursor: pointer;
     border-radius: 3px;
     background-color: #fd7e14;
+    margin-bottom: 25px !important;
     z-index: 999;
 }
     .info-button:hover {
-        right: 0;
+        right: -95px;
     }
 
     .info-button:hover {
@@ -30,7 +34,7 @@
 section article {
     position: absolute;
     top: 2.2rem;
-    left: -100%;
+    left: -120%;
     color: rgb(223, 178, 29);
     background-color: rgba(0,0,0,.8);
     text-align: justify;
@@ -47,3 +51,17 @@ section article {
         transition: .5s;
     }
 /*Ends here*/
+@media screen and (max-width: 768px) {
+    .info-button {
+        top: 0;
+        right: 0;
+        padding: 5px;
+    }
+}
+/*@media screen and (max-width: 768px) {
+    .info-button {
+        top: 0;
+        right: -69px;
+        padding: 5px;
+    }
+}*/

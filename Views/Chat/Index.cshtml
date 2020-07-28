@@ -1,0 +1,96 @@
+@page
+<script src="~/js/chatapi.js"></script>
+
+<script src="~/js/site.js"></script>
+
+<script>
+    window.onload = function () {
+        var objDiv = document.getElementById("chat-message-container");
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
+</script>
+
+<link rel="stylesheet" href="~/css/chat.css" />
+
+
+<h1>Chat</h1>
+
+<!-- #region Info button:-->
+<section class="page-info">
+    <div class="info-button" id="button-info">View&nbsp;Page&nbsp;Info</div>
+    <article>
+        Message others here!
+    </article>
+</section>
+<!-- #endregion -->
+<div id="datalistHolder">
+    <!--INSERT USER-LIST DATALIST HERE-->
+</div>
+
+<div class="Chat-Container">
+    <div class="left-chat-content">
+        <!--  #region CREATE NEW CHAT-->
+        <section class="create-chat-section">
+            <h2> Create a New Chat</h2>
+            <form action="javascript:void(0);" method="POST" onsubmit="addNewChat()">
+                <div id="userChat-display"></div>
+                <input id="chatUser-input" class="input-group rounded border-light col-md-12" list="user-list" name="selectedChatUsersInitalCreate" placeholder="Add people to a new chat...">
+                <div id="userChat-hidden-holder"></div>
+                <input class="btn btn-sm btn-outline-dark mb-1 mx-auto" type="button" id="more_collab" onclick="add_chatUser();" value="Add Chat Member" />
+                <input class="input-group rounded border-light col-md-12" name="StartingMessage" placeholder="Enter your starting message here..." id="staringMessage">
+                <input type="submit" value="Create Chat" class="btn btn-sm btn-outline-primary mb-1 mx-auto" />
+            </form>
+        </section>
+        <br />
+        <br />
+        <!-- #endregion-->
+        <!-- #region DISPLAY THE CHATS -->
+        <div class="chat-card">
+            <div id="privateChatsHolder">
+                <!--INSERT PRIVATE CHATS HERE-->
+            </div>
+            <div id="groupChatsHolder">
+                <!--INSERT GROUP CHATS HERE-->
+            </div>
+        </div>
+        <!-- #endregion-->
+    </div>
+
+    <!-- #region Chat Messages area-->
+    <div id="chat-message-container">
+
+        <!-- #region Delete Group/Leave Group
+                A.Input/Preprocessing:
+                - determine what chat was selected
+                - Display option to leave the chat
+                    (DeleteChatUser form if chatusers > 3 else DeleteChat form)
+
+                B.Processing
+
+                C. Output
+                [ChatID selectedChatID]
+                [UserID currentUser]
+                ==>> Delete selected chat, closes the open chat
+                -->
+
+        <div class="ChatUser-showcase">
+            <div class="removeOrLeave">
+            </div>
+            <!-- #endregion-->
+            <!-- #endregion-->
+            <!-- #region UPDATE CHAT: ADD USERES -->
+        </div>
+        <br /> <br /> <br />
+        <!--#endregion-->
+        <!-- #region Display Messages-->
+        <div class="messages-container">
+            <div id="displayed-chat">
+
+            </div>
+
+            <!-- #endregion-->
+        </div>
+        <!-- #endregion -->
+
+    </div>
+</div>

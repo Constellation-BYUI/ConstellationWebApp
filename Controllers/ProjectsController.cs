@@ -176,7 +176,7 @@ namespace ConstellationWebApp.Controllers
         }
 
 
-        // POST: UserProjects/Delete/5
+        // UserProjects/Delete/5
         [HttpPost, ActionName("DeleteLink")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteLink(int projectID, int projectLinkID)
@@ -187,16 +187,57 @@ namespace ConstellationWebApp.Controllers
             return RedirectToAction("Index", "Projects");
         }
 
+        private async Task CreateCollaborators(string[] selectedCollaborators, string currentUser, Project newProject)
+        {
+            if (selectedCollaborators != null)
+            {
+                foreach (var user in selectedCollaborators)
+                {
+                    if (string.IsNullOrEmpty(user))
+                    {
+                        continue;
+                    }
+                    try
+                    {
+                        User foundUser = _context.User.Where(i => i.UserName == user || i.Id == user).FirstOrDefault();
+                        UserProject userProjects = new UserProject
+                        {
+                            ProjectID = newProject.ProjectID,
+                            UserID = foundUser.Id
+                        };
+                        _context.Add(userProjects);
+                        await _context.SaveChangesAsync();
+                    }
+                    catch
+                    {
+                        continue;
+                    }
+                }
+            }
+            //Add the current user to the list if they did not add themselves
+            UserProject currentUserProject = _context.UserProjects.Where(i => i.UserID == currentUser && i.ProjectID == newProject.ProjectID).FirstOrDefault();
+            if (currentUserProject == null)
+            {
+                UserProject loggedInuserProject = new UserProject
+                {
+                    ProjectID = newProject.ProjectID,
+                    UserID = currentUser
+                };
+                _context.Add(loggedInuserProject);
+                await _context.SaveChangesAsync();
+            }
+
+
+        }
+
         #endregion
 
-        #region ProjectGets&PostsFunctions
+        #region ProjectEndPoints
         // GET: Projects/Index
         [AllowAnonymous]
         public async Task<IActionResult> Index(string titleSearch, string personSearch, string sortOrderOld, string sortOrderNew)
         {         
-
             var viewModel = new ViewModel();
-
             if (titleSearch != null)
             {
                 viewModel.Projects = await _context.Projects.Where(i => i.Title.Contains(titleSearch))
@@ -207,7 +248,6 @@ namespace ConstellationWebApp.Controllers
                  .OrderBy(i => i.CreationDate)
                  .ToListAsync();
                 return View(viewModel);
-
             }
             else if(sortOrderOld != null)
             {
@@ -219,7 +259,6 @@ namespace ConstellationWebApp.Controllers
                        .OrderBy(i => i.CreationDate)
                        .ToListAsync();
                 return View(viewModel);
-
             }
             else if (sortOrderNew != null)
             {
@@ -231,7 +270,6 @@ namespace ConstellationWebApp.Controllers
                        .OrderByDescending(i => i.CreationDate)
                        .ToListAsync();
                 return View(viewModel);
-
             }
             else {
                     viewModel.Projects = await _context.Projects
@@ -315,54 +353,22 @@ namespace ConstellationWebApp.Controllers
                     newProject = projectViewModelToProject(model);
                     await _context.SaveChangesAsync();
                 }
-                
-                if (selectedCollaborators != null)
+
+                await CreateCollaborators(selectedCollaborators, currentUser, newProject);
+
+                if (!createdLinkLabels.Any() && !createdLinkUrls.Any())
                 {
-                    //Add the current user to the list if they did not add themselves
-                    if (!(selectedCollaborators.Contains(currentUser)))
-                    {
-                        UserProject loggedInuserProject = new UserProject
-                        {
-                            ProjectID = newProject.ProjectID,
-                            UserID = currentUser
-                        };
-                        _context.Add(loggedInuserProject);
-                    }
-
-                    model.UserProjects = new List<UserProject>();
-                    foreach (var user in selectedCollaborators)
-                    {
-                        try
-                        {
-                            var userid = (from a in _context.User
-                                          where a.UserName == user
-                                          select a).First<User>().Id;
-
-                            UserProject userProjects = new UserProject
-                            {
-                                ProjectID = newProject.ProjectID,
-                                UserID = userid
-                            };
-
-                            _context.Add(userProjects);
-                        }
-                        catch
-                        {
-                            continue;
-                        }
-                    }
-                    CreateProjectLinks(createdLinkLabels, createdLinkUrls, newProject);
-
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                 CreateProjectLinks(createdLinkLabels, createdLinkUrls, newProject);
                 }
-                PopulateAssignedProjectData(newProject);
+                return RedirectToAction(nameof(Index));
             }
             return View();
         }
 
+      
+
         // GET: Projects/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, string disciplineSearchString)
         {
             if (id == null)
             {
@@ -380,10 +386,23 @@ namespace ConstellationWebApp.Controllers
                 return NotFound();
             }
             PopulateAssignedProjectData(entityProjectModel);
-            ProjectCreateViewModel viewModel = projectToViewModel(entityProjectModel);
+            ProjectEditViewModel viewModel = projectToViewModel(entityProjectModel);
             viewModel.Postings = _context.Postings.Where(i => i.SharableToTeam == true).ToList();
             viewModel.ProjectPostings = _context.ProjectPosting.Where(i => i.ProjectID == id).ToList();
+            viewModel.Disciplines = _context.Disciplines.ToList();
+            viewModel.Skills = _context.Skills.ToList();
+            if (disciplineSearchString != null)
+            {
+                viewModel.currentDiscipline = _context.Disciplines.Where(i => i.DisciplineName == disciplineSearchString).FirstOrDefault();
 
+            }
+            else
+            {
+             viewModel.currentDiscipline = _context.Disciplines.FirstOrDefault();
+            }
+
+            viewModel.SkillDisciplines = _context.SkillDisciplines.ToList();
+            viewModel.ProjectSkills = _context.ProjectSkills.Where(i => i.ProjectID == id).ToList();
             return View(viewModel);
         }
 
@@ -394,6 +413,7 @@ namespace ConstellationWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, ProjectEditViewModel model, string[] selectedCollaborators, string[] createdLinkLabels, string[] createdLinkUrls, string OldPhotoPath)
         {
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var project = await _context.Projects.FindAsync(id);
 
             if (id != model.ProjectID)
@@ -418,30 +438,7 @@ namespace ConstellationWebApp.Controllers
                 _context.Update(project);
                 await _context.SaveChangesAsync();
 
-                if (selectedCollaborators != null)
-                {
-                    model.UserProjects = new List<UserProject>();
-                    foreach (var user in selectedCollaborators)
-                    {
-                        try
-                        {
-                            var userid = (from a in _context.User
-                                          where a.UserName == user
-                                          select a).First<User>().Id;
-
-                            UserProject userProjects = new UserProject
-                            {
-                                ProjectID = project.ProjectID,
-                                UserID = userid
-                            };
-
-                            _context.Add(userProjects);
-                        }
-                        catch (InvalidOperationException e)
-                        {
-                            Console.WriteLine($"The user was not found: '{e}'");
-                        }
-                    }
+                await CreateCollaborators(selectedCollaborators, currentUser, project);               
 
                     if (!(createdLinkLabels[0] == null))
                     {
@@ -450,8 +447,6 @@ namespace ConstellationWebApp.Controllers
 
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
-                }
-                PopulateAssignedProjectData(project);
             }
             return View();
         }
@@ -492,7 +487,52 @@ namespace ConstellationWebApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateManyProjectSkills(int[] skills, int projectID, string disciplineSearchString)
+        {
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+            if (currentUser != null)
+            {
+                foreach (var skill in skills)
+                {
+                    ProjectSkills userSkill = (_context.ProjectSkills.Where(i => i.ProjectID == projectID && i.SkillID == skill).FirstOrDefault());
+                    if (userSkill == null)
+                    {
+                        ProjectSkills thisPS = new ProjectSkills();
+                        thisPS.ProjectID = projectID;
+                        thisPS.SkillID = skill;
+                        _context.Add(thisPS);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+            }
+
+            return RedirectToAction("Edit", "Projects", new { disciplineSearchString = disciplineSearchString, id = projectID });
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveManyProjectSkills(int[] skills, int projectID, string disciplineSearchString)
+        {
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (currentUser != null)
+            {
+                foreach (var skill in skills)
+                {
+                    ProjectSkills projectSkills = (_context.ProjectSkills.Where(i => i.ProjectID == projectID && i.SkillID == skill).FirstOrDefault());
+                    if (projectSkills != null)
+                    {
+                        _context.Remove(projectSkills);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+            }
+            return RedirectToAction("Edit", "Projects", new { disciplineSearchString = disciplineSearchString, id = projectID });
+
+        }
 
         private bool ProjectExists(int id)
         {

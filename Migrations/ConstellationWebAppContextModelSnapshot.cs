@@ -19,6 +19,57 @@ namespace ConstellationWebApp.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("ConstellationWebApp.Models.Chat", b =>
+                {
+                    b.Property<int>("ChatID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ChatTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("LastActivity")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ChatID");
+
+                    b.ToTable("Chat");
+                });
+
+            modelBuilder.Entity("ConstellationWebApp.Models.ChatMessage", b =>
+                {
+                    b.Property<int>("ChatID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MessageID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ChatID", "MessageID");
+
+                    b.HasIndex("MessageID");
+
+                    b.ToTable("ChatMessage");
+                });
+
+            modelBuilder.Entity("ConstellationWebApp.Models.ChatUser", b =>
+                {
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ChatID")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserID", "ChatID");
+
+                    b.HasIndex("ChatID");
+
+                    b.ToTable("ChatUser");
+                });
+
             modelBuilder.Entity("ConstellationWebApp.Models.ContactLink", b =>
                 {
                     b.Property<int>("ContactLinkID")
@@ -81,6 +132,30 @@ namespace ConstellationWebApp.Migrations
                     b.ToTable("IntrestedCandidate");
                 });
 
+            modelBuilder.Entity("ConstellationWebApp.Models.Message", b =>
+                {
+                    b.Property<int>("MessageID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("MessageText")
+                        .HasColumnType("nvarchar(550)")
+                        .HasMaxLength(550);
+
+                    b.Property<string>("SenderID")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("SentTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("MessageID");
+
+                    b.HasIndex("SenderID");
+
+                    b.ToTable("Message");
+                });
+
             modelBuilder.Entity("ConstellationWebApp.Models.Posting", b =>
                 {
                     b.Property<int>("PostingID")
@@ -88,12 +163,22 @@ namespace ConstellationWebApp.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("ApplicationDeadline")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ApplicationURL")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("HidePosting")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
 
                     b.Property<string>("PostingFor")
                         .IsRequired()
@@ -114,6 +199,24 @@ namespace ConstellationWebApp.Migrations
                     b.HasIndex("PostingOwnerId");
 
                     b.ToTable("Posting");
+                });
+
+            modelBuilder.Entity("ConstellationWebApp.Models.PostingSkills", b =>
+                {
+                    b.Property<int>("SkillID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PostingID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PriorityLevel")
+                        .HasColumnType("int");
+
+                    b.HasKey("SkillID", "PostingID");
+
+                    b.HasIndex("PostingID");
+
+                    b.ToTable("PostingSkills");
                 });
 
             modelBuilder.Entity("ConstellationWebApp.Models.PostingType", b =>
@@ -234,6 +337,21 @@ namespace ConstellationWebApp.Migrations
                     b.HasIndex("ProjectID");
 
                     b.ToTable("ProjectPosting");
+                });
+
+            modelBuilder.Entity("ConstellationWebApp.Models.ProjectSkills", b =>
+                {
+                    b.Property<int>("SkillID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProjectID")
+                        .HasColumnType("int");
+
+                    b.HasKey("SkillID", "ProjectID");
+
+                    b.HasIndex("ProjectID");
+
+                    b.ToTable("ProjectSkills");
                 });
 
             modelBuilder.Entity("ConstellationWebApp.Models.RecruiterPicks", b =>
@@ -390,6 +508,9 @@ namespace ConstellationWebApp.Migrations
 
                     b.Property<int>("ProjectID")
                         .HasColumnType("int");
+
+                    b.Property<string>("CollaborationTitle")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserID", "ProjectID");
 
@@ -683,6 +804,36 @@ namespace ConstellationWebApp.Migrations
                     b.HasDiscriminator().HasValue("User");
                 });
 
+            modelBuilder.Entity("ConstellationWebApp.Models.ChatMessage", b =>
+                {
+                    b.HasOne("ConstellationWebApp.Models.Chat", "Chat")
+                        .WithMany("ChatMessages")
+                        .HasForeignKey("ChatID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ConstellationWebApp.Models.Message", "Message")
+                        .WithMany("ChatMessages")
+                        .HasForeignKey("MessageID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ConstellationWebApp.Models.ChatUser", b =>
+                {
+                    b.HasOne("ConstellationWebApp.Models.Chat", "Chat")
+                        .WithMany("ChatUsers")
+                        .HasForeignKey("ChatID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ConstellationWebApp.Models.User", "User")
+                        .WithMany("ChatUser")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ConstellationWebApp.Models.ContactLink", b =>
                 {
                     b.HasOne("ConstellationWebApp.Models.User", "Users")
@@ -703,11 +854,33 @@ namespace ConstellationWebApp.Migrations
                         .HasForeignKey("UserID");
                 });
 
+            modelBuilder.Entity("ConstellationWebApp.Models.Message", b =>
+                {
+                    b.HasOne("ConstellationWebApp.Models.User", "Sender")
+                        .WithMany("Messsages")
+                        .HasForeignKey("SenderID");
+                });
+
             modelBuilder.Entity("ConstellationWebApp.Models.Posting", b =>
                 {
                     b.HasOne("ConstellationWebApp.Models.User", "PostingOwner")
                         .WithMany("Postings")
                         .HasForeignKey("PostingOwnerId");
+                });
+
+            modelBuilder.Entity("ConstellationWebApp.Models.PostingSkills", b =>
+                {
+                    b.HasOne("ConstellationWebApp.Models.Posting", "Posting")
+                        .WithMany("PostingSkills")
+                        .HasForeignKey("PostingID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ConstellationWebApp.Models.Skill", "Skill")
+                        .WithMany("PostingSkills")
+                        .HasForeignKey("SkillID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ConstellationWebApp.Models.Posting_PostingType", b =>
@@ -743,6 +916,21 @@ namespace ConstellationWebApp.Migrations
                     b.HasOne("ConstellationWebApp.Models.Project", "Project")
                         .WithMany("ProjectPostings")
                         .HasForeignKey("ProjectID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ConstellationWebApp.Models.ProjectSkills", b =>
+                {
+                    b.HasOne("ConstellationWebApp.Models.Project", "Project")
+                        .WithMany("ProjectSkills")
+                        .HasForeignKey("ProjectID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ConstellationWebApp.Models.Skill", "Skill")
+                        .WithMany("ProjectSkills")
+                        .HasForeignKey("SkillID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
