@@ -9,10 +9,13 @@ section {
 
 .info-button {
     position: absolute;
-    right: -160px;
-    transition: 0.3s;
+    top: 240px;
+    right: -50px;
+    padding: 15px 5px 0 5px;
+    transform: rotate(-270deg);
+    transition: right .2s;
+    transition: padding .2s;
     font-size: .9rem;
-    padding: .5rem 4px;
     text-align: center;
     color: white;
     border: 0 solid transparent;
@@ -24,12 +27,12 @@ section {
     z-index: 999;
 }
     .info-button:hover {
-        right: -95px;
-    }
-
-    .info-button:hover {
+        right: -38px;
+        padding: 3px;
+        font-weight: 500;
         background: #9b4c0b;
     }
+
 
 section article {
     position: absolute;
@@ -51,12 +54,20 @@ section article {
         transition: .5s;
     }
 /*Ends here*/
-@media screen and (max-width: 768px) {
+@media screen and (min-width: 767px) {
     .info-button {
-        top: 0;
+        top: -14px;
         right: 0;
-        padding: 5px;
+        padding: 9px 5px 0px 5px;
+        transform: rotate(0);
+        transition: top .2s;
+        transition: padding .2s;
     }
+        .info-button:hover {
+            top: -5px;
+            right: 0;
+            padding: 5px;
+        }
 }
 /*@media screen and (max-width: 768px) {
     .info-button {
