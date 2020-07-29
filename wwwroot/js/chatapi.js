@@ -428,7 +428,7 @@ fetch(uri)
         // #region DISPLAY THE CHATS
         const chats = jsonObject['chats'];
         let privateChatContainer = document.createElement('div');
-        privateChatContainer.id = "privateChatContainer";
+        privateChatContainer.id = " ";
 
         let groupChatContainer = document.createElement('div');
         groupChatContainer.id = "groupChatContainer";
@@ -449,14 +449,14 @@ fetch(uri)
                 let chatUser = chats[i].chatUsers[chatUserId];
 
                 let privateChat = document.createElement('div');
-                privateChat.className = "private-talk";
+                privateChat.className = "chat-members";
 
                 let chatDetailsButton = document.createElement('div');
                 chatDetailsButton.onclick = function () { displayChat(chats[i].chatID) };
                 chatDetailsButton.className = 'chat-display';
                 chatDetailsButton.Id = chats[i].chatID + 'button';
 
-                let chatName = document.createElement('h2');
+                let chatName = document.createElement('p');
 
                 if (chatUser.users[0].firstName !== null && chatUser.users[0].lastName !== null) {
                     chatName.textContent = chatUser.users[0].firstName + " " + chatUser.users[0].lastName;
@@ -473,13 +473,13 @@ fetch(uri)
              //#region GroupConvos
             else {
                 let groupChat = document.createElement('div');
-                groupChat.className = "group-talk";
+                groupChat.className = "chat-members";
 
                 let chatDetailsButton = document.createElement('div');
                 chatDetailsButton.onclick = function () { displayChat(chats[i].chatID)};
                 chatDetailsButton.className = 'chat-display';
                 chatDetailsButton.Id = chats[i].chatID;
-                let chatName = document.createElement('h2');
+                let chatName = document.createElement('p');
 
                 if (chats[i].chatTitle == null) {
                     chatName.textContent = "New Group";
