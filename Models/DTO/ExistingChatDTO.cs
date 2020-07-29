@@ -10,6 +10,8 @@ namespace ConstellationWebApp.Models.DTO
         public int ChatID { get; set; }
         public string[] selectedChatUsers { get; set; }
         public string ChatTitle { get; set; }
+        public string chatMessage { get; set; }
+
 
     }
 }

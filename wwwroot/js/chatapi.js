@@ -1,7 +1,7 @@
 ﻿function leaveOrDeleteChat(id) {
     const DeleteChatDTO = {
         'ChatID': id
-    }; 
+    };
     let body = JSON.stringify(DeleteChatDTO)
     let parsed = JSON.parse(body);
 
@@ -41,7 +41,7 @@ function updateChat(id) {
     }
 
     const ExistingChatDTO = {
-        'ChatID' : id,
+        'ChatID': id,
         selectedChatUsers,
         ChatTitle
     };
@@ -66,6 +66,34 @@ function updateChat(id) {
         .catch(error => console.error('Unable to add chat.', error));
 }
 
+function addMessage(id) {
+
+    let chatMessage = document.querySelector("#newChatMessageText").value;
+
+    const ExistingChatDTO = {
+        'ChatID': id,
+        chatMessage,
+    };
+    let body = JSON.stringify(ExistingChatDTO)
+    let parsed = JSON.parse(body);
+
+    var uri = "../chat/CreateMessage";
+
+    fetch(uri, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body
+    })
+        .then(() => {
+            alert('Sent message');
+            location.reload();
+        })
+        .catch(error => console.error('Unable to add chat.', error));
+}
+
 function addNewChat() {
     let hiddenSelections = document.querySelector("#userChat-hidden-holder");
     var collabInput = document.querySelector("#chatUser-input").value;
@@ -84,8 +112,8 @@ function addNewChat() {
     }
 
     const CreateChatDataDTO = {
-          selectedChatUsersInitalCreate,
-         StartingMessage
+        selectedChatUsersInitalCreate,
+        StartingMessage
     };
     let body = JSON.stringify(CreateChatDataDTO)
     let parsed = JSON.parse(body);
@@ -102,7 +130,7 @@ function addNewChat() {
         body
     })
         .then(() => {
-            alert('Sucessfully created Chat!'); 
+            alert('Sucessfully created Chat!');
             location.reload();
         })
         .catch(error => console.error('Unable to add chat.', error));
@@ -133,7 +161,7 @@ function displayChat(id) {
             let userList = document.querySelector('#datalistHolder');
 
             const users = jsonObject['users'];
-           const chats = jsonObject['chats'];
+            const chats = jsonObject['chats'];
             // #region OVERARCHING SECTION CONTAINING ALL BUILD CHATS
             let displayableChats = document.createElement('section');
             displayableChats.id = "displayableChats";
@@ -168,7 +196,7 @@ function displayChat(id) {
                 chatMessagesContainer.appendChild(removeOrLeaveButton);
 
                 // #endregion
-                
+
                 // #region UPDATE CHAT FORM
                 // <form action="javascript:void(0);" method="post" onsubmit="leaveOrDeleteChat()">
                 let updateChatDiv = document.createElement('div');
@@ -188,7 +216,7 @@ function displayChat(id) {
                 collabInput.setAttribute('list', 'user-list');
                 updateChatDiv.appendChild(collabInput);
 
-               // <div id="userCollab-demo"></div>
+                // <div id="userCollab-demo"></div>
                 let userCollabDemo = document.createElement('div');
                 userCollabDemo.id = 'userCollab-demo';
                 updateChatDiv.appendChild(userCollabDemo);
@@ -198,7 +226,7 @@ function displayChat(id) {
                 addChatUser.type = "button"
                 addChatUser.class = "btn btn-sm btn-outline-dark mb-1 mx-auto"
                 addChatUser.id = "more_collab"
-                addChatUser.onclick = function () { add_collab() }; 
+                addChatUser.onclick = function () { add_collab() };
                 addChatUser.value = "Pick Another Chat Member"
                 updateChatDiv.appendChild(addChatUser);
 
@@ -363,41 +391,30 @@ function displayChat(id) {
                 }
 
                 // #region CREATE NEW MESSAGE FORM
-                    // <form action="javascript:void(0);" method="post" onsubmit="createNewMessage()">
-                    let createNewMessage = document.createElement('form');
-                    createNewMessage.method = 'post';
-                    createNewMessage.action = 'javascript:void(0);';
-                    createNewMessage.onsubmit = "updateChat";
+                let createNewMessage = document.createElement('section');
+                createNewMessage.id = "createNewMessage";
 
-                   // <input type="hidden" class="input-group rounded border-light col-md-12" name="chatID" value="Model.SelectedChat.ChatID">            
-                    let hiddenCreadMessageIdInput = document.createElement('input');
-                    hiddenCreadMessageIdInput.type = 'hidden';
-                    hiddenCreadMessageIdInput.class = "input-group rounded border-light col-md-12";
-                    hiddenCreadMessageIdInput.name = "chatID";
-                    hiddenCreadMessageIdInput.value = id;
-                    createNewMessage.appendChild(hiddenCreadMessageIdInput);
-
-                    // <div id="userCollab-demo"></div>
-                    let messageText = document.createElement('input');
-                    messageText.class = "input-group rounded border-light col-md-12";
-                    messageText.name = "messageText";
-                    createNewMessage.appendChild(messageText);
+                // <div id="userCollab-demo"></div>
+                let newChatMessageText = document.createElement('input');
+                newChatMessageText.class = "input-group rounded border-light col-md-12";
+                newChatMessageText.id = "newChatMessageText";
+                createNewMessage.appendChild(newChatMessageText);
 
 
-                    //<input type="submit" value="Update Chat Members" class="btn btn-sm btn-outline-primary mb-1 mx-auto" />
-                    let submitMessageInput = document.createElement('input');
-                    submitMessageInput.type = 'submit';
-                    submitMessageInput.value = 'Send Message';
-                    submitMessageInput.className = "btn btn-sm btn-outline-primary mb-1 mx-auto";
-                    createNewMessage.appendChild(submitMessageInput);
+                //<input type="submit" value="Update Chat Members" class="btn btn-sm btn-outline-primary mb-1 mx-auto" />
+                let submitMessageInput = document.createElement('button');
+                submitMessageInput.onclick = function () { addMessage(id) };
+                submitMessageInput.textContent = 'Send Message!';
+                submitMessageInput.className = "btn btn-sm btn-outline-primary mb-1 mx-auto";
+                createNewMessage.appendChild(submitMessageInput);
 
 
-                    chatMessagesContainer.appendChild(createNewMessage);
-                    // #endregion
+                chatMessagesContainer.appendChild(createNewMessage);
+                // #endregion
 
-                    displayableChats.appendChild(chatMessagesContainer);
+                displayableChats.appendChild(chatMessagesContainer);
                 //#endregion
-                
+
                 document.querySelector('#displayed-chat').appendChild(displayableChats);
             }
         });
@@ -437,7 +454,7 @@ fetch(uri)
             //find chats with 2 people and name it the name of the person that is not 
             //currently logged in
             var count = chats[i].chatUsers.length;
-             //#region PrivateCovos
+            //#region PrivateCovos
             if (count <= 2) {
                 let chatUserId;
                 for (j in chats[i].chatUsers) {
@@ -470,13 +487,13 @@ fetch(uri)
                 privateChatContainer.appendChild(privateChat);
             }
             //#endregion
-             //#region GroupConvos
+            //#region GroupConvos
             else {
                 let groupChat = document.createElement('div');
                 groupChat.className = "group-talk";
 
                 let chatDetailsButton = document.createElement('div');
-                chatDetailsButton.onclick = function () { displayChat(chats[i].chatID)};
+                chatDetailsButton.onclick = function () { displayChat(chats[i].chatID) };
                 chatDetailsButton.className = 'chat-display';
                 chatDetailsButton.Id = chats[i].chatID;
                 let chatName = document.createElement('h2');
@@ -496,7 +513,7 @@ fetch(uri)
         };
         document.querySelector('#privateChatsHolder').appendChild(privateChatContainer);
         document.querySelector('#groupChatsHolder').appendChild(groupChatContainer);
-            //#endregion
+        //#endregion
     });
 //#endregion
 //#endregion

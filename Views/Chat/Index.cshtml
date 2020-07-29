@@ -56,41 +56,17 @@
         <!-- #endregion-->
     </div>
 
-    <!-- #region Chat Messages area-->
     <div id="chat-message-container">
 
-        <!-- #region Delete Group/Leave Group
-                A.Input/Preprocessing:
-                - determine what chat was selected
-                - Display option to leave the chat
-                    (DeleteChatUser form if chatusers > 3 else DeleteChat form)
-
-                B.Processing
-
-                C. Output
-                [ChatID selectedChatID]
-                [UserID currentUser]
-                ==>> Delete selected chat, closes the open chat
-                -->
-
+        @*Leave*@
         <div class="ChatUser-showcase">
-            <div class="removeOrLeave">
-            </div>
-            <!-- #endregion-->
-            <!-- #endregion-->
-            <!-- #region UPDATE CHAT: ADD USERES -->
+            <div class="removeOrLeave"></div>
         </div>
-        <br /> <br /> <br />
-        <!--#endregion-->
-        <!-- #region Display Messages-->
+        
+        @*displayed chat [Add chat useers / add message]*@
         <div class="messages-container">
-            <div id="displayed-chat">
+            <div id="displayed-chat"></div>
 
-            </div>
-
-            <!-- #endregion-->
         </div>
-        <!-- #endregion -->
-
     </div>
 </div>
