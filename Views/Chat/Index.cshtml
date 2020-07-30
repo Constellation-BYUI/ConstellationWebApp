@@ -30,18 +30,13 @@
                 <!--Add chat memeber section-->
                 <div class="input-group">
                     <input class="form-control" id="chatUser-input" list="user-list" name="selectedChatUsersInitalCreate" placeholder="Add people to a new chat...">
-                    <div class="input-group-append">
-                        <input class="btn btn-sm btn-secondary" type="button" id="more_collab" onclick="add_chatUser();" value="Add Chat Member" />
-                    </div>
+                    <input class="btn btn-sm btn-secondary input-group-append" type="button" id="more_collab" onclick="add_chatUser();" value="Add Chat Member" />
                 </div>
                 <!--Create chat section-->
                 <div class="input-group">
                     <input class="form-control" name="StartingMessage" placeholder="Enter your starting message here..." id="staringMessage">
-                    <div class="input-group-append">
-                        <input type="submit" value="Create Chat" class="btn btn-sm btn-primary" />
-                    </div>
+                    <input type="submit" value="Create Chat" class="btn btn-sm btn-primary input-group-append" />
                 </div>
-
             </form>
         </div>
         <!-- #endregion-->
@@ -72,20 +67,23 @@
     <!-- #endregion-->
 
 
-    <div id="chat-message-container">
-
+    <!--container for chat messages-->
+   <div id="">
         @*Leave*@
-        <div class="ChatUser-showcase">
+        @*<div class="ChatUser-showcase">
             <div class="removeOrLeave"></div>
-        </div>
+        </div>*@
         
         @*displayed chat [Add chat useers / add message]*@
-        <div class="messages-container">
-            <div id="displayed-chat"></div>
-
-        </div>
+        @*<div class="msg-inbox">*@
+            @*<div class="chat">*@
+                <div id="displayed-chat"></div>
+            @*</div>*@
+        @*</div>*@
     </div>
 </div>
+
+
 
 <script src="~/js/chatapi.js"></script>
 

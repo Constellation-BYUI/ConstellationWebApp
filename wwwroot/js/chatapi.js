@@ -163,18 +163,18 @@ function displayChat(id) {
             const users = jsonObject['users'];
             const chats = jsonObject['chats'];
             // #region OVERARCHING SECTION CONTAINING ALL BUILD CHATS
-            let displayableChats = document.createElement('section');
+            let displayableChats = document.createElement('div');
             displayableChats.id = "displayableChats";
 
             //CREATE EACH CHAT MESSAGE BOARD
             for (let i = 0; i < chats.length; i++) {
 
                 // #region ITERATED SECTION CONTAINTER FOR MESSAGES & CHAT USERS
-                let chatMessagesContainer = document.createElement('section');
-                chatMessagesContainer.className = 'chat-board-section';
+                let chatMessagesContainer = document.createElement('div');
+                chatMessagesContainer.className = "message-container";
                 chatMessagesContainer.id = chats[i].chatID;
 
-                let chatTitle = document.createElement('h2');
+                let chatTitle = document.createElement('h4');
                 if (chats[i].chatTitle == null) {
                     chatTitle.textContent = "New Group";
                 }
@@ -188,29 +188,31 @@ function displayChat(id) {
                 // #region LEAVE/DELETE BUTTON
                 let removeOrLeave = document.createElement('div');
                 removeOrLeave.className = 'removeOrLeave';
+                
 
                 let removeOrLeaveButton = document.createElement('button');
                 removeOrLeaveButton.onclick = function () { leaveOrDeleteChat(id) };
                 removeOrLeaveButton.textContent = "Leave Chat";
-                removeOrLeaveButton.class = "btn btn-sm btn-outline-danger mb-1 mx-auto";
+                removeOrLeaveButton.class = "btn btn-sm btn-secondary";
                 chatMessagesContainer.appendChild(removeOrLeaveButton);
 
                 // #endregion
 
                 // #region UPDATE CHAT FORM
+
                 // <form action="javascript:void(0);" method="post" onsubmit="leaveOrDeleteChat()">
                 let updateChatDiv = document.createElement('div');
-                updateChatDiv.id = "updateChat";
+                updateChatDiv.className = "input-group";
 
                 //<div id="collab-Display"></div>                
                 let collabDisplay = document.createElement('div');
                 collabDisplay.id = 'collab-Display';
-                updateChatDiv.appendChild(collabDisplay);
+                chatMessagesContainer.appendChild(collabDisplay);
 
                 //<input id="collab-input" class="input-group rounded border-light col-md-12" list="user-list" name="selectedCollaborators" placeholder="Select a new chat member...">
                 let collabInput = document.createElement('input');
                 collabInput.id = 'collab-input';
-                collabInput.class = 'input-group rounded border-light col-md-12';
+                collabInput.className = 'form-control';
                 collabInput.name = "selectedCollaborators";
                 collabInput.placeholder = "Select a new chat member...";
                 collabInput.setAttribute('list', 'user-list');
@@ -223,68 +225,75 @@ function displayChat(id) {
 
                 //<input class="btn btn-sm btn-outline-dark mb-1 mx-auto" type="button" id="more_collab" onclick="add_collab();" value="Add Another Chat Member" />                
                 let addChatUser = document.createElement('input');
-                addChatUser.type = "button"
-                addChatUser.class = "btn btn-sm btn-outline-dark mb-1 mx-auto"
-                addChatUser.id = "more_collab"
+                addChatUser.type = "button";
+                addChatUser.class = "btn btn-sm btn-primary input-group-append";
+                addChatUser.id = "more_collab";
                 addChatUser.onclick = function () { add_collab() };
-                addChatUser.value = "Pick Another Chat Member"
+                addChatUser.value = "Add Member";
                 updateChatDiv.appendChild(addChatUser);
+
+
+
+                //Input Group for Updating Group Chat informaton
+                let updateChatDivTwo = document.createElement('div');
+                updateChatDivTwo.className = "input-group";
 
                 //<input type="hidden" class="input-group rounded border-light col-md-12" name="ChatID" value="chat.ChatID">                
                 let hiddenIdInput = document.createElement('input');
                 hiddenIdInput.type = 'hidden';
-                hiddenIdInput.class = "input-group rounded border-light col-md-12"
+                hiddenIdInput.class = "form-control";
                 hiddenIdInput.name = 'ChatID';
                 hiddenIdInput.value = id;
-                updateChatDiv.appendChild(hiddenIdInput);
+                updateChatDivTwo.appendChild(hiddenIdInput);
 
                 //<input id="collab-input" class="input-group rounded border-light col-md-12" list="user-list" name="selectedCollaborators" placeholder="Select a new chat member...">
                 let chatTitleInput = document.createElement('input');
                 chatTitleInput.id = 'chatTitleInput';
-                chatTitleInput.class = 'input-group rounded border-light col-md-12';
+                chatTitleInput.class = 'form-control';
                 chatTitleInput.name = "chatTitleInput";
                 chatTitleInput.placeholder = "Add unique Chat Title...";
-                updateChatDiv.appendChild(chatTitleInput);
+                updateChatDivTwo.appendChild(chatTitleInput);
 
                 //<input type="submit" value="Update Chat Members" class="btn btn-sm btn-outline-primary mb-1 mx-auto" />
                 let updateButton = document.createElement('button');
                 updateButton.onclick = function () { updateChat(id) };
-                updateButton.textContent = 'Update Chat Member';
-                updateButton.className = "btn btn-sm btn-outline-primary mb-1 mx-auto";
-                updateChatDiv.appendChild(updateButton);
+                updateButton.textContent = 'Update Group';
+                updateButton.className = "btn btn-sm btn-primary input-group-append";
+                updateChatDivTwo.appendChild(updateButton);
 
 
                 chatMessagesContainer.appendChild(updateChatDiv);
+                chatMessagesContainer.appendChild(updateChatDivTwo);
 
                 // #endregion
 
 
                 //#region DISPLAY ALL CHAT USER OF BOARD
-                for (k in chats[i].chatUsers) {
-                    let ChatUserDisplay = document.createElement('div');
-                    ChatUserDisplay.className = 'chatUserDisplay';
+                //for (k in chats[i].chatUsers) {
+                //    let ChatUserDisplay = document.createElement('div');
+                //    ChatUserDisplay.className = 'chatUserDisplay';
 
-                    let aTag = document.createElement('a');
-                    aTag.setAttribute('href', "../../../users/details/" + chats[i].chatUsers[k].userID);
-                    aTag.innerHTML = chats[i].chatUsers[k].users[0].userName;
+                //    let aTag = document.createElement('a');
+                //    aTag.setAttribute('href', "../../../users/details/" + chats[i].chatUsers[k].userID);
+                //    aTag.innerHTML = chats[i].chatUsers[k].users[0].userName;
 
-                    let photoPath;
-                    if (chats[i].chatUsers[k].users.photoPath != null) {
-                        photoPath = "../../../images" + chats[i].chatUsers[k].users.photoPath;
-                    }
-                    else {
-                        photoPath = "../../../WebAssests/siteImages/avataricon.png"
-                    }
+                //    let photoPath;
+                //    if (chats[i].chatUsers[k].users.photoPath != null) {
+                //        photoPath = "../../../images" + chats[i].chatUsers[k].users.photoPath;
+                //    }
+                //    else {
+                //        photoPath = "../../../WebAssests/siteImages/avataricon.png"
+                //    }
 
-                    let userPicture = document.createElement('img');
-                    userPicture.className = "message-images-inline";
-                    userPicture.src = photoPath;
-                    userPicture.alt = chats[i].chatUsers[k].userName;
+                //    let userPicture = document.createElement('img');
+                //    userPicture.className = "message-images";
+                //    userPicture.src = photoPath;
+                //    userPicture.alt = chats[i].chatUsers[k].userName;
 
-                    aTag.appendChild(userPicture);
-                    ChatUserDisplay.appendChild(aTag);
-                    chatMessagesContainer.appendChild(ChatUserDisplay);
-                }
+                //    aTag.appendChild(userPicture);
+                //    ChatUserDisplay.appendChild(aTag);
+                //    chatMessagesContainer.appendChild(ChatUserDisplay);
+                //}
                 // #endregion
 
 
@@ -335,6 +344,8 @@ function displayChat(id) {
                         chatMessagesContainer.appendChild(messageCard);
                     }
                     //#endregion
+
+
                     // #region MESSAGE FROM OTHERS
                     else {
                         let messageCard = document.createElement('div');

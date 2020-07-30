@@ -100,8 +100,19 @@ add-pple input {
         border-radius: 5px;
     }
 
+/*    This contains list of people in the chat*/
+.chatUserDisplay {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    
+}
+.chatUserDisplay {
+    color: #888;
+    font-size: 10px;
+}
+    
 /* Message Container Properties and values */
-
 .message-container {
     margin: 5px;
     padding: 5px;
