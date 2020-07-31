@@ -88,7 +88,7 @@ function addMessage(id) {
         body
     })
         .then(() => {
-            alert('Sent message');
+            //alert('Sent message');
             location.reload();
         })
         .catch(error => console.error('Unable to add chat.', error));
@@ -163,54 +163,42 @@ function displayChat(id) {
             const users = jsonObject['users'];
             const chats = jsonObject['chats'];
             // #region OVERARCHING SECTION CONTAINING ALL BUILD CHATS
-            let displayableChats = document.createElement('section');
-            displayableChats.id = "displayableChats";
+
 
             //CREATE EACH CHAT MESSAGE BOARD
             for (let i = 0; i < chats.length; i++) {
 
                 // #region ITERATED SECTION CONTAINTER FOR MESSAGES & CHAT USERS
-                let chatMessagesContainer = document.createElement('section');
-                chatMessagesContainer.className = 'chat-board-section';
+                let chatMessagesContainer = document.createElement('div');
+                chatMessagesContainer.className = "msg-inbox";
                 chatMessagesContainer.id = chats[i].chatID;
 
-                let chatTitle = document.createElement('h2');
+                let chatTitle = document.createElement('h4');
                 if (chats[i].chatTitle == null) {
                     chatTitle.textContent = "New Group";
                 }
                 else {
                     chatTitle.textContent = chats[i].chatTitle;
                 }
-                chatMessagesContainer.appendChild(chatTitle);
+                document.querySelector('#displayed-chat').appendChild(chatTitle);
                 // #endregion
 
-
-                // #region LEAVE/DELETE BUTTON
-                let removeOrLeave = document.createElement('div');
-                removeOrLeave.className = 'removeOrLeave';
-
-                let removeOrLeaveButton = document.createElement('button');
-                removeOrLeaveButton.onclick = function () { leaveOrDeleteChat(id) };
-                removeOrLeaveButton.textContent = "Leave Chat";
-                removeOrLeaveButton.class = "btn btn-sm btn-outline-danger mb-1 mx-auto";
-                chatMessagesContainer.appendChild(removeOrLeaveButton);
-
-                // #endregion
 
                 // #region UPDATE CHAT FORM
+
                 // <form action="javascript:void(0);" method="post" onsubmit="leaveOrDeleteChat()">
                 let updateChatDiv = document.createElement('div');
-                updateChatDiv.id = "updateChat";
+                updateChatDiv.className = "input-group";
 
                 //<div id="collab-Display"></div>                
                 let collabDisplay = document.createElement('div');
                 collabDisplay.id = 'collab-Display';
-                updateChatDiv.appendChild(collabDisplay);
+                document.querySelector('#displayed-chat').appendChild(collabDisplay);
 
                 //<input id="collab-input" class="input-group rounded border-light col-md-12" list="user-list" name="selectedCollaborators" placeholder="Select a new chat member...">
                 let collabInput = document.createElement('input');
                 collabInput.id = 'collab-input';
-                collabInput.class = 'input-group rounded border-light col-md-12';
+                collabInput.className = 'form-control';
                 collabInput.name = "selectedCollaborators";
                 collabInput.placeholder = "Select a new chat member...";
                 collabInput.setAttribute('list', 'user-list');
@@ -223,73 +211,99 @@ function displayChat(id) {
 
                 //<input class="btn btn-sm btn-outline-dark mb-1 mx-auto" type="button" id="more_collab" onclick="add_collab();" value="Add Another Chat Member" />                
                 let addChatUser = document.createElement('input');
-                addChatUser.type = "button"
-                addChatUser.class = "btn btn-sm btn-outline-dark mb-1 mx-auto"
-                addChatUser.id = "more_collab"
+                addChatUser.type = "button";
+                addChatUser.className = "btn btn-sm btn-secondary input-group-append";
+                addChatUser.id = "more_collab";
                 addChatUser.onclick = function () { add_collab() };
-                addChatUser.value = "Pick Another Chat Member"
+                addChatUser.value = "Add Member";
                 updateChatDiv.appendChild(addChatUser);
+
+                // #region LEAVE/DELETE BUTTON
+                let removeOrLeave = document.createElement('div');
+                removeOrLeave.className = 'removeOrLeave';
+
+
+                let removeOrLeaveButton = document.createElement('button');
+                removeOrLeaveButton.onclick = function () { leaveOrDeleteChat(id) };
+                removeOrLeaveButton.textContent = "Leave Chat";
+                removeOrLeaveButton.className = "btn btn-sm btn-warning";
+                updateChatDiv.appendChild(removeOrLeaveButton);
+
+
+                document.querySelector('#displayed-chat').appendChild(updateChatDiv);
+
+                //Input Group for Updating Group Chat informaton
+                let updateChatDivTwo = document.createElement('div');
+                updateChatDivTwo.className = "input-group";
 
                 //<input type="hidden" class="input-group rounded border-light col-md-12" name="ChatID" value="chat.ChatID">                
                 let hiddenIdInput = document.createElement('input');
                 hiddenIdInput.type = 'hidden';
-                hiddenIdInput.class = "input-group rounded border-light col-md-12"
+                hiddenIdInput.class = "form-control";
                 hiddenIdInput.name = 'ChatID';
                 hiddenIdInput.value = id;
-                updateChatDiv.appendChild(hiddenIdInput);
+                updateChatDivTwo.appendChild(hiddenIdInput);
 
                 //<input id="collab-input" class="input-group rounded border-light col-md-12" list="user-list" name="selectedCollaborators" placeholder="Select a new chat member...">
                 let chatTitleInput = document.createElement('input');
                 chatTitleInput.id = 'chatTitleInput';
-                chatTitleInput.class = 'input-group rounded border-light col-md-12';
+                chatTitleInput.className = 'form-control';
                 chatTitleInput.name = "chatTitleInput";
                 chatTitleInput.placeholder = "Add unique Chat Title...";
-                updateChatDiv.appendChild(chatTitleInput);
+                updateChatDivTwo.appendChild(chatTitleInput);
 
                 //<input type="submit" value="Update Chat Members" class="btn btn-sm btn-outline-primary mb-1 mx-auto" />
                 let updateButton = document.createElement('button');
                 updateButton.onclick = function () { updateChat(id) };
-                updateButton.textContent = 'Update Chat Member';
-                updateButton.className = "btn btn-sm btn-outline-primary mb-1 mx-auto";
-                updateChatDiv.appendChild(updateButton);
+                updateButton.textContent = 'Update Group';
+                updateButton.className = "btn btn-sm btn-primary input-group-append";
+                updateChatDivTwo.appendChild(updateButton);
 
 
-                chatMessagesContainer.appendChild(updateChatDiv);
+
+                document.querySelector('#displayed-chat').appendChild(updateChatDivTwo);
 
                 // #endregion
 
 
                 //#region DISPLAY ALL CHAT USER OF BOARD
-                for (k in chats[i].chatUsers) {
-                    let ChatUserDisplay = document.createElement('div');
-                    ChatUserDisplay.className = 'chatUserDisplay';
+                //for (k in chats[i].chatUsers) {
+                //    let ChatUserDisplay = document.createElement('div');
+                //    ChatUserDisplay.className = 'chatUserDisplay';
 
-                    let aTag = document.createElement('a');
-                    aTag.setAttribute('href', "../../../users/details/" + chats[i].chatUsers[k].userID);
-                    aTag.innerHTML = chats[i].chatUsers[k].users[0].userName;
+                //    let aTag = document.createElement('a');
+                //    aTag.setAttribute('href', "../../../users/details/" + chats[i].chatUsers[k].userID);
+                //    aTag.innerHTML = chats[i].chatUsers[k].users[0].userName;
 
-                    let photoPath;
-                    if (chats[i].chatUsers[k].users.photoPath != null) {
-                        photoPath = "../../../images" + chats[i].chatUsers[k].users.photoPath;
-                    }
-                    else {
-                        photoPath = "../../../WebAssests/siteImages/avataricon.png"
-                    }
+                //    let photoPath;
+                //    if (chats[i].chatUsers[k].users.photoPath != null) {
+                //        photoPath = "../../../images" + chats[i].chatUsers[k].users.photoPath;
+                //    }
+                //    else {
+                //        photoPath = "../../../WebAssests/siteImages/avataricon.png"
+                //    }
 
-                    let userPicture = document.createElement('img');
-                    userPicture.className = "message-images-inline";
-                    userPicture.src = photoPath;
-                    userPicture.alt = chats[i].chatUsers[k].userName;
+                //    let userPicture = document.createElement('img');
+                //    userPicture.className = "message-images";
+                //    userPicture.src = photoPath;
+                //    userPicture.alt = chats[i].chatUsers[k].userName;
 
-                    aTag.appendChild(userPicture);
-                    ChatUserDisplay.appendChild(aTag);
-                    chatMessagesContainer.appendChild(ChatUserDisplay);
-                }
+                //    aTag.appendChild(userPicture);
+                //    ChatUserDisplay.appendChild(aTag);
+                //    chatMessagesContainer.appendChild(ChatUserDisplay);
+                //}
                 // #endregion
 
 
                 // #region DISPLAY ALL MESSAGES
                 for (let j = 0; j < chats[i].chatMessages.length; j++) {
+
+
+                    var displayableChats = document.createElement('div');
+                    displayableChats.className = "msg-inbox";
+
+
+                    document.querySelector('#displayed-chat').appendChild(displayableChats);
 
 
                     let senderID = chats[i].chatMessages[j].messages.senderID;
@@ -307,14 +321,15 @@ function displayChat(id) {
 
                         let messageText = document.createElement('p');
                         messageText.textContent = chats[i].chatMessages[j].messages.messageText;
+                        messageText.className = "outgoing-chats-msg p";
 
                         let timeSpan = document.createElement('span');
-                        timeSpan.class = "time";
+                        timeSpan.className = "time";
                         timeSpan.textContent = chats[i].chatMessages[j].messages.sentTime;
 
 
                         let userPicture = document.createElement('img');
-                        userPicture.className = "message-images";
+                        userPicture.className = "outgoing-chats-img";
                         userPicture.alt = chats[i].chatMessages[j].sendersName;
 
                         if (chats[i].chatMessages[j].photoPath != null) {
@@ -332,9 +347,11 @@ function displayChat(id) {
                         messageCard.appendChild(fromYou);
                         //messageCard.appendChild(userPicture);
 
-                        chatMessagesContainer.appendChild(messageCard);
+                        displayableChats.appendChild(messageCard);
                     }
                     //#endregion
+
+
                     // #region MESSAGE FROM OTHERS
                     else {
                         let messageCard = document.createElement('div');
@@ -342,9 +359,10 @@ function displayChat(id) {
 
                         let aTag = document.createElement('a');
                         aTag.setAttribute('href', "../../../users/details/" + chats[i].chatMessages[j].messages[0].senderID);
+                        aTag.className = ""
 
                         let userPicture = document.createElement('img');
-                        userPicture.className = "message-images";
+                        userPicture.className = "recieved-chats-img";
                         userPicture.alt = chats[i].chatMessages[j].sendersName + chats[i].chatMessages[j].sendTime + 'message';
 
                         if (chats[i].chatMessages[j].photoPath != null) {
@@ -369,9 +387,10 @@ function displayChat(id) {
 
                         let messageText = document.createElement('p');
                         messageText.textContent = chats[i].chatMessages[j].messages[0].messageText;
+                        messageText.className = "recieved-msg-inbox p";
 
                         let timeSpan = document.createElement('span');
-                        timeSpan.class = "time";
+                        timeSpan.className = "time";
                         timeSpan.textContent = (chats[i].chatMessages[j].messages[0].sentTime);
 
                         outgoingChatmsg.appendChild(timeSpan);
@@ -379,24 +398,25 @@ function displayChat(id) {
 
                         fromOthers.appendChild(outgoingChatmsg);
 
-                        messageCard.appendChild(sendersName);
+                        aTag.appendChild(sendersName);
 
                         messageCard.appendChild(fromOthers);
 
-                        chatMessagesContainer.appendChild(messageCard);
+                        displayableChats.appendChild(messageCard);
 
                     }
+
                     // #endregion
                     // #endregion
                 }
 
                 // #region CREATE NEW MESSAGE FORM
-                let createNewMessage = document.createElement('section');
-                createNewMessage.id = "createNewMessage";
+                let createNewMessage = document.createElement('div');
+                createNewMessage.className = "input-group";
 
                 // <div id="userCollab-demo"></div>
                 let newChatMessageText = document.createElement('input');
-                newChatMessageText.class = "input-group rounded border-light col-md-12";
+                newChatMessageText.className = "form-control";
                 newChatMessageText.id = "newChatMessageText";
                 createNewMessage.appendChild(newChatMessageText);
 
@@ -404,18 +424,18 @@ function displayChat(id) {
                 //<input type="submit" value="Update Chat Members" class="btn btn-sm btn-outline-primary mb-1 mx-auto" />
                 let submitMessageInput = document.createElement('button');
                 submitMessageInput.onclick = function () { addMessage(id) };
-                submitMessageInput.textContent = 'Send Message!';
-                submitMessageInput.className = "btn btn-sm btn-outline-primary mb-1 mx-auto";
+                submitMessageInput.textContent = "Send Message";
+                submitMessageInput.className = "input-group-append btn btn-sm btn-primary";
                 createNewMessage.appendChild(submitMessageInput);
 
 
-                chatMessagesContainer.appendChild(createNewMessage);
+                document.querySelector('#displayed-chat').appendChild(createNewMessage);
                 // #endregion
 
-                displayableChats.appendChild(chatMessagesContainer);
+                //displayableChats.appendChild(chatMessagesContainer);
                 //#endregion
 
-                document.querySelector('#displayed-chat').appendChild(displayableChats);
+                //document.querySelector('#displayed-chat').appendChild(chatMessagesContainer);
             }
         });
 }
