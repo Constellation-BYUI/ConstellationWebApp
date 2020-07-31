@@ -7,8 +7,10 @@
     var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
 }
+    <link rel="stylesheet" href="~/css/starredProject.css" />
+    <link rel="stylesheet" href="~/css/cards.css" />
+    <link rel="stylesheet" href="/css/project-index.css" />
 
-<h1>My Starred Projects</h1>
 
 <!-- Page info -->
 <section class="page-info">
@@ -20,96 +22,105 @@
 </section>
 <!-- #endregion -->
 
-<div id="projectDisplay">
-    @foreach (var starredProject in Model.StarredProjects.Where(i => i.UserID == currentUser))
-    {
-        @foreach (var item in Model.Projects.Where(i => i.ProjectID == starredProject.ProjectID))
+<div class="general-index-head"><h2>Starred Projects</h2></div>
+<div class="project-index-content">
+
+    <div id="projectDisplay">
+        @foreach (var starredProject in Model.StarredProjects.Where(i => i.UserID == currentUser))
         {
-            var projUrl = "../Projects/Details/" + (item.ProjectID);
-            @*CSS RULES FOR INDIVIDUAL CARDS*@
-            <div class="card shadow-lg border-primary mt-1 mb-3 ml-2 mr-2" style="cursor: pointer;" onclick="window.location='@projUrl';">
+            @foreach (var item in Model.Projects.Where(i => i.ProjectID == starredProject.ProjectID))
+            {
+                var projUrl = "../Projects/Details/" + (item.ProjectID);
+                @*CSS RULES FOR INDIVIDUAL CARDS*@
+                <div class="card shadow-lg border-primary mt-1 mb-3 ml-2 mr-2 star-card" style="cursor: pointer;" onclick="window.location='@projUrl';">
 
-                @*Project Title*@
-                <h4 class="card-header bg-primary py-1 text-white text-center m-0">
-                    @*@Html.DisplayNameFor(modelItem => item.Title) :*@
-                    @Html.DisplayFor(modelItem => item.Title)
-                </h4>
-                @*<img style="height: 300px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.Title)" asp-append-version="true" />*@
+                    @*Project Title*@
+                    <h4 class="card-header bg-primary py-1 text-white text-center m-0">
+                        @*@Html.DisplayNameFor(modelItem => item.Title) :*@
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </h4>
+                    @*<img style="height: 300px; width: 100%; display: block;" src=" @photoPath" alt="@Html.DisplayFor(modelItem => item.Title)" asp-append-version="true" />*@
 
-                @*COLLABORATORS*@
-                <h5 class="card-header bg-light py-1 text-black text-center m-0">Collaborators</h5>
-                <section class="d-flex flex-wrap justify-content-center">
-                    @{
-                        bool isLoggedIn = false;
-                        foreach (var collab in item.UserProjects)
+                    @*COLLABORATORS*@
+                    <h5 class="card-header bg-light py-1 text-black text-center m-0">Collaborators</h5>
+                    <section class="d-flex flex-wrap justify-content-center">
+                        @{
+                            bool isLoggedIn = false;
+                            foreach (var collab in item.UserProjects)
 
-                        {
-                            var collabPath = "";
-                            if (collab.User.PhotoPath != null)
                             {
-                                collabPath = "~/image/" + "~/image/" + (collab.User.PhotoPath);
-                            }
-                            else
-                            {
-                                collabPath = "~/WebAssests/siteImages/avataricon.png";
-                            }
+                                var collabPath = "";
+                                if (collab.User.PhotoPath != null)
+                                {
+                                    collabPath = "~/image/" + "~/image/" + (collab.User.PhotoPath);
+                                }
+                                else
+                                {
+                                    collabPath = "~/WebAssests/siteImages/avataricon.png";
+                                }
 
-                            var collabMemberPath = "../Users/Details/" + (collab.User.Id);
+                                var collabMemberPath = "../Users/Details/" + (collab.User.Id);
 
-                            <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
+                                <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
 
-                            if (collab.UserID == currentUser)
-                            {
-                                isLoggedIn = true;
+                                if (collab.UserID == currentUser)
+                                {
+                                    isLoggedIn = true;
+                                }
                             }
                         }
+                    </section>
+                    @*Project Desccription*@
+                    <div class="bg-light border-dark">
+                        <h6 class="card-header bg-light py-1 text-black text-center m-0">@Html.DisplayNameFor(modelItem => item.Description)</h6>
+                        <p class="text-black text-justify mb-1 text-truncate px-2 text-center">@Html.DisplayFor(modelItem => item.Description)</p>
+                    </div>
+
+                    @*Project Dates*@
+                    <div class="px-2 text-center">
+                        <p class="m-0">
+                            <strong class="text-black">@Html.DisplayNameFor(modelItem => item.StartDate) : </strong>
+                            @Html.DisplayFor(modelItem => item.StartDate)
+                        </p>
+                        <p class="m-0">
+                            <strong class="text-black">@Html.DisplayNameFor(modelItem => item.EndDate) : </strong>
+                            @Html.DisplayFor(modelItem => item.EndDate)
+                        </p>
+                        <p class="m-0">
+                            <strong class="text-black">@Html.DisplayNameFor(modelItem => item.CreationDate) : </strong>
+                            @Html.DisplayFor(modelItem => item.CreationDate)
+                        </p>
+                    </div>
+
+                    <h4 class="star-link">Project Links</h4>
+                    @foreach (var link in item.ProjectLinks)
+                    {
+                        <a class="card-link text-black" href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
+                        <br />
                     }
-                </section>
-                @*Project Desccription*@
-                <div class="bg-light border-dark">
-                    <h6 class="card-header bg-light py-1 text-black text-center m-0">@Html.DisplayNameFor(modelItem => item.Description)</h6>
-                    <p class="text-black text-justify mb-1 text-truncate px-2">@Html.DisplayFor(modelItem => item.Description)</p>
-                </div>
 
-                @*Project Dates*@
-                <div class="px-2">
-                    <p class="m-0">
-                        <strong class="text-black">@Html.DisplayNameFor(modelItem => item.StartDate) : </strong>
-                        @Html.DisplayFor(modelItem => item.StartDate)
-                    </p>
-                    <p class="m-0">
-                        <strong class="text-black">@Html.DisplayNameFor(modelItem => item.EndDate) : </strong>
-                        @Html.DisplayFor(modelItem => item.EndDate)
-                    </p>
-                    <p class="m-0">
-                        <strong class="text-black">@Html.DisplayNameFor(modelItem => item.CreationDate) : </strong>
-                        @Html.DisplayFor(modelItem => item.CreationDate)
-                    </p>
-                </div>
+                    <form asp-action="Delete" asp-controller="StarredProjects" class="text-center">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <input type="hidden" asp-for="@item.ProjectID" class="form-control" value="@item.ProjectID" name="projectID" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Remove Project" class="btn btn-primary" />
+                        </div>
+                    </form>
 
-                <h4>Project Links</h4>
-                @foreach (var link in item.ProjectLinks)
-                {
-                    <a class="card-link" href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
-                    <br />
-                }
-
-                <form asp-action="Delete" asp-controller="StarredProjects">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <input type="hidden" asp-for="@item.ProjectID" class="form-control" value="@item.ProjectID" name="projectID" />
+                    <div class="card-footer text-center">
+                        <a class="btn btn-md btn-secondary" asp-controller="Projects" asp-action="Details" asp-route-id="@item.ProjectID">Details</a>
                     </div>
-                    <div class="form-group">
-                        <input type="submit" value="Remove from MyStarred Projects" class="btn btn-primary" />
-                    </div>
-                </form>
 
-                <div class="card-footer">
-                    <a class="btn btn-md btn-secondary" asp-controller="Projects" asp-action="Details" asp-route-id="@item.ProjectID">Details</a>
                 </div>
-            </div>
+                
+            }
         }
-    }
+    </div>
+
 </div>
+
+
 
 
