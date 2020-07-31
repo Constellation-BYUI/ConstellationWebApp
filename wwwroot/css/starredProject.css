@@ -1,0 +1,22 @@
+﻿#projectDisplay {
+    display: grid;
+    grid-template-columns:repeat(3 ,1fr);
+    margin: 10px;
+    padding: 5px;
+}
+.star-card {
+    overflow-x:hidden;
+    overflow: auto;
+    transition: transform 450ms;
+    width:300px;
+}
+.star-card:hover {
+    transform:scale(1.08);
+}
+.star-link {
+    text-align:center;
+}
+.banner--fadeBottom {
+    height: 7.5rem;
+    background-image: linear-gradient( 180deg, transparent, rgba(37, 37, 37, 0.61), #111 );
+}
