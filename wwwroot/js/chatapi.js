@@ -294,60 +294,65 @@ function displayChat(id) {
                 //}
                 // #endregion
 
+                var msgInbox = document.createElement('div');
+                msgInbox.className = "msg-inbox";
+                document.querySelector('#displayed-chat').appendChild(msgInbox);
+
+
 
                 // #region DISPLAY ALL MESSAGES
                 for (let j = 0; j < chats[i].chatMessages.length; j++) {
 
-
                     var displayableChats = document.createElement('div');
-                    displayableChats.className = "msg-inbox";
+                    displayableChats.className = "chats";
 
 
-                    document.querySelector('#displayed-chat').appendChild(displayableChats);
+                    msgInbox.appendChild(displayableChats);
 
 
                     let senderID = chats[i].chatMessages[j].messages.senderID;
 
                     // #region MESSAGE FROM LOGGED IN USER
                     if (senderID === chats[i].currentUserId) {
-                        let messageCard = document.createElement('div');
-                        messageCard.className = 'outgoing-chats';
 
-                        let fromYou = document.createElement('div');
-                        fromYou.className = "outgoing-msg";
+                        let messageCardOne = document.createElement('div');
+                        messageCardOne.className = 'outgoing-chats';
 
-                        let outgoingChatmsg = document.createElement('div');
-                        outgoingChatmsg.className = "outgoing-chats-msg";
+                        let fromYouOne = document.createElement('div');
+                        fromYouOne.className = "outgoing-msg";
 
-                        let messageText = document.createElement('p');
-                        messageText.textContent = chats[i].chatMessages[j].messages.messageText;
-                        messageText.className = "outgoing-chats-msg p";
+                        let outgoingChatmsgOne = document.createElement('div');
+                        outgoingChatmsgOne.className = "outgoing-chats-msg";
 
-                        let timeSpan = document.createElement('span');
-                        timeSpan.className = "time";
-                        timeSpan.textContent = chats[i].chatMessages[j].messages.sentTime;
+                        let messageTextOne = document.createElement('p');
+                        messageTextOne.textContent = chats[i].chatMessages[j].messages.messageText;
+                        messageTextOne.className = "outgoing-chats-msg p";
+
+                        let timeSpanOne = document.createElement('span');
+                        timeSpanOne.className = "time";
+                        timeSpanOne.textContent = chats[i].chatMessages[j].messages.sentTime;
 
 
-                        let userPicture = document.createElement('img');
-                        userPicture.className = "outgoing-chats-img";
+                        let userPictureOne = document.createElement('img');
+                        userPictureOne.className = "outgoing-chats-img";
                         userPicture.alt = chats[i].chatMessages[j].sendersName;
 
                         if (chats[i].chatMessages[j].photoPath != null) {
-                            userPicture.src = chats[i].chatMessages[j].photoPath;
+                            userPictureOne.src = chats[i].chatMessages[j].photoPath;
                         }
                         else {
-                            userPicture.src = "~/WebAssests/siteImages/avataricon.png"
+                            userPictureOne.src = "~/WebAssests/siteImages/avataricon.png"
                         }
 
-                        outgoingChatmsg.appendChild(timeSpan);
-                        outgoingChatmsg.appendChild(messageText);
+                        outgoingChatmsgOne.appendChild(timeSpanOne);
+                        outgoingChatmsgOne.appendChild(messageTextOne);
 
-                        fromYou.appendChild(outgoingChatmsg);
+                        fromYouOne.appendChild(outgoingChatmsgOne);
 
-                        messageCard.appendChild(fromYou);
-                        //messageCard.appendChild(userPicture);
+                        messageCardOne.appendChild(fromYouOne);
+                        //messageCardOne.appendChild(userPictureOne);
 
-                        displayableChats.appendChild(messageCard);
+                        displayableChats.appendChild(messageCardOne);
                     }
                     //#endregion
 
