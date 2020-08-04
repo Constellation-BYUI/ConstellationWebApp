@@ -304,7 +304,7 @@ namespace ConstellationWebApp.Controllers
         }
 
 
-        [Route("chat/CreateChatJson")]
+        [Route("chat/CreateNewChat")]
         // Create Chat: 
         [HttpPost]
         public async Task<ActionResult<ChatPageDTO>> CreateChatDTOAsync([FromBody] CreateChatDataDTO createChatData)
@@ -384,7 +384,8 @@ namespace ConstellationWebApp.Controllers
                         newChatMesssage.MessageID = newMessage.MessageID;
                         _context.Add(newChatMesssage);
                         await _context.SaveChangesAsync();
-                        return View(chat.ChatID);
+                        return Json(new { id = chat.ChatID });
+
                     }
                     else
                     {
@@ -423,7 +424,7 @@ namespace ConstellationWebApp.Controllers
                     _context.Add(newChatMesssage);
                     await _context.SaveChangesAsync();
                 }
-                return View(newChat.ChatID);
+                return Json(new { id = newChat.ChatID });
 
             }
             return View();

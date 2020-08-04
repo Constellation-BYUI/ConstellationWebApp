@@ -60,8 +60,7 @@ function updateChat(id) {
         body
     })
         .then(() => {
-            alert('Sucessfully updated Chat!');
-            location.reload();
+            displayChat(id);
         })
         .catch(error => console.error('Unable to add chat.', error));
 }
@@ -88,8 +87,7 @@ function addMessage(id) {
         body
     })
         .then(() => {
-            //alert('Sent message');
-            location.reload();
+            displayChat(id);
         })
         .catch(error => console.error('Unable to add chat.', error));
 }
@@ -118,8 +116,8 @@ function addNewChat() {
     let body = JSON.stringify(CreateChatDataDTO)
     let parsed = JSON.parse(body);
 
-    var uri = "../chat/CreateChatJson";
-
+    var uri = "../chat/CreateNewChat";
+    let jsondata;   
 
     fetch(uri, {
         method: 'POST',
@@ -129,9 +127,9 @@ function addNewChat() {
         },
         body
     })
-        .then(() => {
-            alert('Sucessfully created Chat!');
-            location.reload();
+        .then(response => response.json())
+        .then(data => {
+            displayChat(data.id) // Prints result from `response.json()`
         })
         .catch(error => console.error('Unable to add chat.', error));
 }
