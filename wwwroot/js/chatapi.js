@@ -308,49 +308,49 @@ function displayChat(id) {
                     msgInbox.appendChild(displayableChats);
 
 
-                    let senderID = chats[i].chatMessages[j].messages.senderID;
+                    let senderID = chats[i].chatMessages[j].messages[0].senderID;
 
                     // #region MESSAGE FROM LOGGED IN USER
                     if (senderID === chats[i].currentUserId) {
 
-                        let messageCardOne = document.createElement('div');
-                        messageCardOne.className = 'outgoing-chats';
+                        let messageCard = document.createElement('div');
+                        messageCard.className = 'outgoing-chats';
 
-                        let fromYouOne = document.createElement('div');
-                        fromYouOne.className = "outgoing-msg";
+                        let fromYou = document.createElement('div');
+                        fromYou.className = "outgoing-msg";
 
-                        let outgoingChatmsgOne = document.createElement('div');
-                        outgoingChatmsgOne.className = "outgoing-chats-msg";
+                        let outgoingChatmsg = document.createElement('div');
+                        outgoingChatmsg.className = "outgoing-chats-msg";
 
-                        let messageTextOne = document.createElement('p');
-                        messageTextOne.textContent = chats[i].chatMessages[j].messages.messageText;
-                        messageTextOne.className = "outgoing-chats-msg p";
+                        let messageText = document.createElement('p');
+                        messageText.textContent = chats[i].chatMessages[j].messages[0].messageText;
+                        messageText.className = "outgoing-chats-msg p";
 
-                        let timeSpanOne = document.createElement('span');
-                        timeSpanOne.className = "time";
-                        timeSpanOne.textContent = chats[i].chatMessages[j].messages.sentTime;
+                        let timeSpan = document.createElement('span');
+                        timeSpan.className = "time";
+                        timeSpan.textContent = chats[i].chatMessages[j].messages[0].sentTime;
 
 
-                        let userPictureOne = document.createElement('img');
-                        userPictureOne.className = "outgoing-chats-img";
+                        let userPicture = document.createElement('img');
+                        userPicture.className = "outgoing-chats-img";
                         userPicture.alt = chats[i].chatMessages[j].sendersName;
 
                         if (chats[i].chatMessages[j].photoPath != null) {
-                            userPictureOne.src = chats[i].chatMessages[j].photoPath;
+                            userPicture.src = chats[i].chatMessages[j].photoPath;
                         }
                         else {
-                            userPictureOne.src = "~/WebAssests/siteImages/avataricon.png"
+                            userPicture.src = "~/WebAssests/siteImages/avataricon.png"
                         }
 
-                        outgoingChatmsgOne.appendChild(timeSpanOne);
-                        outgoingChatmsgOne.appendChild(messageTextOne);
+                        outgoingChatmsg.appendChild(timeSpan);
+                        outgoingChatmsg.appendChild(messageText);
 
-                        fromYouOne.appendChild(outgoingChatmsgOne);
+                        fromYou.appendChild(outgoingChatmsg);
 
-                        messageCardOne.appendChild(fromYouOne);
-                        //messageCardOne.appendChild(userPictureOne);
+                        messageCard.appendChild(fromYou);
+                        //messageCard.appendChild(userPicture);
 
-                        displayableChats.appendChild(messageCardOne);
+                        displayableChats.appendChild(messageCard);
                     }
                     //#endregion
 
@@ -379,18 +379,18 @@ function displayChat(id) {
                         messageCard.appendChild(aTag);
 
                         let fromOthers = document.createElement('div');
-                        fromOthers.className = "recieved-msg";
+                        fromOthers.className = " ";
 
                         let sendersName = document.createElement('div');
                         sendersName.className = "senders-name";
                         sendersName.textContent = chats[i].chatMessages[j].messages[0].senderName;
 
                         let outgoingChatmsg = document.createElement('div');
-                        outgoingChatmsg.className = "recieved-msg-inbox";
+                        outgoingChatmsg.className = "recieved-chats-msg";
 
                         let messageText = document.createElement('p');
                         messageText.textContent = chats[i].chatMessages[j].messages[0].messageText;
-                        messageText.className = "recieved-msg-inbox p";
+                        messageText.className = "recieved-chats-msg p";
 
                         let timeSpan = document.createElement('span');
                         timeSpan.className = "time";

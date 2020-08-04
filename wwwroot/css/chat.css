@@ -166,9 +166,8 @@ add-pple input {
     height: 250px;
 }
 .recieved-chats {
-    width: auto;
-    margin: 5px;
-    height: auto;
+    overflow: hidden;
+    margin: 5px 7px -22px 5px;
 }
 .recieved-chats-img {
     display: block;
@@ -182,26 +181,25 @@ add-pple input {
     font-size: 12px;
 }
 .recieved-msg {
-    display: block;
-    padding: 0 0 0 40px;
-    vertical-align: top;
+   
+}
+
+.recieved-chats-msg {
+    float: left;
     width: auto;
-    margin-bottom: -20px;
-}
-}
-
-.recieved-msg-inbox {
-    width: 60%;
+    margin-right: 30%;
+    height: auto;
+    overflow: auto;
 }
 
-    .recieved-msg-inbox p {
-        background: #efefef none repeat scroll 0 0;
-        border-radius: 10px;
-        color: #646464;
+    .recieved-chats-msg p {
+        background-color: rgb(194, 187, 187);
+        color: #000;
         font-size: 14px;
         margin: 0;
-        padding: 0 0 5px 10px;
-        width: auto;
+        padding: 5px 5px 3px 5px;
+        width: 100%;
+        border-radius: 5px;
     }
 
 .time {
@@ -213,7 +211,7 @@ add-pple input {
 }
 .outgoing-chats {
     overflow: hidden;
-    margin: 5px -7px -20px -7px;
+    margin: 5px 7px -22px -7px;
 }
 
 .outgoing-chats-msg p {
