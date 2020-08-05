@@ -8,8 +8,6 @@
 
 }
     <link rel="stylesheet" href="~/css/starredProject.css" />
-    <link rel="stylesheet" href="~/css/cards.css" />
-    <link rel="stylesheet" href="/css/project-index.css" />
 
 
 <!-- Page info -->
@@ -25,7 +23,6 @@
 <div class="general-index-head"><h2>Starred Projects</h2></div>
 <div class="project-index-content">
 
-    <div id="projectDisplay">
         @foreach (var starredProject in Model.StarredProjects.Where(i => i.UserID == currentUser))
         {
             @foreach (var item in Model.Projects.Where(i => i.ProjectID == starredProject.ProjectID))
@@ -72,12 +69,12 @@
                     </section>
                     @*Project Desccription*@
                     <div class="bg-light border-dark">
-                        <h6 class="card-header bg-light py-1 text-black text-center m-0">@Html.DisplayNameFor(modelItem => item.Description)</h6>
-                        <p class="text-black text-justify mb-1 text-truncate px-2 text-center">@Html.DisplayFor(modelItem => item.Description)</p>
+                        <h6 class="card-header bg-light py-1 text-black text-center m-0 text-phone">@Html.DisplayNameFor(modelItem => item.Description)</h6>
+                        <p class="text-black text-justify mb-1 text-truncate px-2 text-center text-phone">@Html.DisplayFor(modelItem => item.Description)</p>
                     </div>
 
                     @*Project Dates*@
-                    <div class="px-2 text-center">
+                    <div class="px-2 text-center text-phone">
                         <p class="m-0">
                             <strong class="text-black">@Html.DisplayNameFor(modelItem => item.StartDate) : </strong>
                             @Html.DisplayFor(modelItem => item.StartDate)
@@ -92,7 +89,7 @@
                         </p>
                     </div>
 
-                    <h4 class="star-link">Project Links</h4>
+                    <h4 class="starred-link">Project Links</h4>
                     @foreach (var link in item.ProjectLinks)
                     {
                         <a class="card-link text-black" href=" @Html.DisplayFor(modelItem => link.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(modelItem => link.ProjectLinkLabel)</a>
@@ -117,7 +114,7 @@
                 
             }
         }
-    </div>
+    
 
 </div>
 
