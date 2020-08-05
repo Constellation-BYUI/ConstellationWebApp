@@ -1,22 +1,129 @@
-﻿#projectDisplay {
-    display: grid;
-    grid-template-columns:repeat(3 ,1fr);
-    margin: 10px;
+﻿
+.project-index-content {
+    display: flex;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.project-index-content {
+    overflow: scroll;
+    height: 30em;
+    background-color: whitesmoke;
+    margin: auto !important;
+}
+
+    .project-index-content img {
+        height: 20em;
+        width: 100%;
+    }
+
+.project-collaborators h4 {
+    text-align: center;
+    margin: 0;
     padding: 5px;
+    color: white;
+    background-color: #1b6ec2;
 }
-.star-card {
-    overflow-x:hidden;
-    overflow: auto;
-    transition: transform 450ms;
-    width:300px;
+
+.project-collaborators-pictture {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
 }
-.star-card:hover {
-    transform:scale(1.08);
+
+section a img {
+    margin: 3px;
+    width: 4em !important;
+    height: 4em !important;
+    border: 2px solid whitesmoke;
 }
-.star-link {
+.card {
+    display: flex;
+    flex-direction: column;
+    min-width: 100%;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    margin: 1em .5em;
+}
+.card-header {
+    text-align: center;
+    padding: .5rem 1.25rem;
+    margin-bottom:0;
+    background-color:#1B6ec2;
+    color:#fff;
+}
+section {
+    margin: 0 auto;
+}
+.form-group {
     text-align:center;
 }
-.banner--fadeBottom {
-    height: 7.5rem;
-    background-image: linear-gradient( 180deg, transparent, rgba(37, 37, 37, 0.61), #111 );
+.text-phone {
+    text-align:center;
+    margin:0;
+}
+.starred-link {
+    text-align:center;
+}
+.card-footer {
+    text-align:center;
+}
+p.m-0 {
+    margin:0;
+}
+
+@media screen and (min-width: 767px) {
+  
+
+    .project-index-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 1em;
+    }
+
+    .project-index-content {
+        overflow: scroll;
+        height: 35em;
+        background-color: whitesmoke;
+        margin: auto !important;
+    }
+
+        .project-index-content img {
+            height: 30em;
+        }
+
+    .card-header {
+      
+        color: #212529;
+    }
+    
+}
+
+@media screen and (min-width: 1024px) {
+    .project-index-content {
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        column-gap: 1em;
+        margin: 1em;
+    } 
+
+    .project-index-content img {
+        height: 35em;
+    }
+    .card-header {
+        color: #212529;
+    }
+}
+
+@media screen and (min-width: 1440px) {
+  
+    .project-index-content {
+        overflow: scroll;
+        grid-template-columns: repeat(4,1fr);
+        height: 40em;
+    }
+    .card-header {
+        color: #212529;
+    }
 }
