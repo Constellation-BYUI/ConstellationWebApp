@@ -471,7 +471,7 @@ fetch(uri)
         privateChatContainer.id = " ";
 
         let groupChatContainer = document.createElement('div');
-        groupChatContainer.id = "groupChatContainer";
+        groupChatContainer.id = "";
 
         for (let i = 0; i < chats.length; i++) {
             //find chats with 2 people and name it the name of the person that is not 
@@ -536,6 +536,9 @@ fetch(uri)
         };
         document.querySelector('#privateChatsHolder').appendChild(privateChatContainer);
         document.querySelector('#groupChatsHolder').appendChild(groupChatContainer);
+
+
+        document.querySelector('#displayed-chat').appendChild(privateChat);
         //#endregion
     });
 //#endregion

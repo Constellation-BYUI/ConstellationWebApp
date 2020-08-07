@@ -87,8 +87,8 @@ footer {
     margin: 1em auto auto auto;
 }
 .small-thumbnail {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
     object-fit:cover;
     border: 1px solid white;
     border-radius: 3px;

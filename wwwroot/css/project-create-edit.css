@@ -9,10 +9,11 @@
     margin-bottom: 0 !important;
     width: 100%;
 }
- 
+
 .card {
     margin-bottom: .5em;
     padding: .5em 1.5em;
+    background-color: rgba(245, 245, 245, 1);
 }
 .card-footer {
     padding: .5em .5em;
@@ -59,8 +60,28 @@
 }
 
 
-
 /*CSS for edit project page*/
+.project-general-container {
+    padding: 5px;
+}
+
+.project-header {
+    text-align: center;
+    color: #555;
+    text-transform: uppercase;
+    padding: 17px 10px 10px;
+    font-size: 1.5rem;
+}
+/*
+.project-general-content {
+    background-color: rgba(245, 245, 245, 1);
+    margin: 0 0rem 2rem;
+    padding: 0.5rem;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
+}*/
+
+
+
 @media screen and (min-width: 767px) {
     .edit-heading {
         padding: 0 1em;
@@ -68,12 +89,13 @@
     .project-edit-container {
         display: flex;
         width: 100%;
-        padding: 0 1em;
+/*        padding: 0 1em;*/
     }
 
     .first-half, second-half {
         width: 100%;
         margin: 0 2px;
+        background-color: rgba(245, 245, 245, 1);
     }
 }
 @media screen and (min-width: 991px) {

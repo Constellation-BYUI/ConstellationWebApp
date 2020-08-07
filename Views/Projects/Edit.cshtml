@@ -1,4 +1,5 @@
-﻿@* Create Project Page should be accesible from each user page and should be itegrated into thenavigation bar - it should automatically create a collaborator from the current user ID *@
+﻿@* Create Project Page should be accesible from each user page and should be itegrated into thenavigation
+    bar - it should automatically create a collaborator from the current user ID *@
 @model ConstellationWebApp.Models.ViewModels.ProjectEditViewModel
 @using System.Security.Claims;
 
@@ -25,7 +26,6 @@
 <link rel="stylesheet" href="~/css/project-create-edit.css" />
 <link rel="stylesheet" href="~/css/user-skill-page-index.css">
 
-
 <!-- Page info -->
 <section class="page-info">
     <div class="info-button" id="button-info">View&nbsp;Page&nbsp;Info</div>
@@ -36,407 +36,415 @@
     </article>
 </section>
 <!-- #endregion -->
-@*Detemines if curretn user is a collaborator of Project*@
-@foreach (var collaborator in Model.currentProject.UserProjects)
-{
-    if (collaborator.UserID == currentUser)
-    {
-        canView = true;
-    }
-}
+<div class="project-general-container">
 
-@if (canView == true)
-{
-    <div class="edit-heading"><h3 class="titleBorder">Edit Project</h3></div>
-    <div class="project-edit-container">
-        <!-- #region Is a collaborator : intro-->
-        <div class="first-half card shadow">
-            <div class="">
-                @*Displays the Project Photo*@
-                <div>
-                    <img style="height: 450px; width: 100%; display: block" class="mx-auto d-block image" src=" @photoPath" alt="@Html.DisplayFor(model => model.Title)" asp-append-version="true" />
-                </div>
-                <div class="card-body">
-                    <!-- #endregion -->
-                    @*Edit Project Entity Data*@
-                    <!-- #region Entity Project Property Edit Form -->
-                    <form asp-action="Edit" asp-controller="Projects" enctype="multipart/form-data">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <input type="hidden" asp-for="ProjectID" />
-                        <input type="hidden" asp-for="OldPhotoPath" />
-                        @*Project Title*@
-                        <div class="form-group">
-                            <label asp-for="Title" class="control-label"></label>
-                            <input asp-for="Title" class="form-control" />
-                            <span asp-validation-for="Title" class="text-danger"></span>
-                        </div>
-                        @*Project Description*@
-                        <div class="form-group">
-                            <label asp-for="Description" class="control-label"></label>
-                            <textarea asp-for="Description" class="form-control"></textarea>
-                            <span asp-validation-for="Description" class="text-danger"></span>
-                        </div>
-                        @*Start and End dates*@
-                        <div class="form-group">
-                            <label asp-for="StartDate" class="control-label"></label>
-                            <input asp-for="StartDate" class="form-control" />
-                            <span asp-validation-for="StartDate" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="EndDate" class="control-label"></label>
-                            <input asp-for="EndDate" class="form-control" />
-                            <span asp-validation-for="EndDate" class="text-danger"></span>
-                        </div>
-                        @*Adding photo*@
-                        <div class="form-group row">
-                            <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
-                            <div class="col-sm-10">
-                                <div class="custom-file">
-                                    <input asp-for="Photo" class="form-control custom-file-input" />
-                                    <label class="custom-file-label">Replace Project Photo ...</label>
-                                </div>
-                            </div>
-                        </div>
-                        @*Adding collaborators*@
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <datalist id="user-list">
-                                    @{
-                                        List<ConstellationWebApp.Models.AssignedProjectData> usersCollab = ViewBag.UsersOfConstellation;
+    <div class="project-header">Edit Project</div>
 
-                                        foreach (var user in usersCollab)
-                                        {
-                                            <option value="@user.UserName" data-id="@user.UserID"></option>
-                                        }
-                                    @:</datalist>
-                                @:</div>
-                                    }
-                                </div>
-                                <div id="collab-Display"></div>
-                                <input id="collab-input" class="input-group rounded border-light col-md-12" list="user-list" name="selectedCollaborators">
-                                <div id="userCollab-demo"></div>
-                                <input class="text-light bg-secondary border-white rounded mt-1" type="button" id="more_collab" onclick="add_collab();" value="Add Collaborator" />
-                                @* Create the Project Links for the User *@
+    <div class="project-general-content">
+        @*Detemines if curretn user is a collaborator of Project*@
+        @foreach (var collaborator in Model.currentProject.UserProjects)
+        {
+            if (collaborator.UserID == currentUser)
+            {
+                canView = true;
+            }
+        }
+
+        @if (canView == true)
+        {
+            <div class="project-edit-container">
+                <!-- #region Is a collaborator : intro-->
+                <div class="first-half card shadow">
+                    <div class="">
+                        @*Displays the Project Photo*@
+                        <div>
+                            <img style="height: 450px; width: 100%; display: block" class="mx-auto d-block image" src=" @photoPath" alt="@Html.DisplayFor(model => model.Title)" asp-append-version="true" />
+                        </div>
+                        <div class="card-body">
+                            <!-- #endregion -->
+                            @*Edit Project Entity Data*@
+                            <!-- #region Entity Project Property Edit Form -->
+                            <form asp-action="Edit" asp-controller="Projects" enctype="multipart/form-data">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="ProjectID" />
+                                <input type="hidden" asp-for="OldPhotoPath" />
+                                @*Project Title*@
                                 <div class="form-group">
-                                    <div id="created-links"></div>
-                                    <div class="col-md-8 p-0 small_lable">
-                                        <p class="mb-0 mt-1">Add Link Label</p>
-                                        <input id="link-label" class="input-group rounded border-light" list='contact-link-label' name='createdLinkLabels'>
-                                        <p class="mb-0 mt-1">Add Url Link</p>
-                                        <input id="link-url" class="input-group rounded border-light" list='contact-link-url' name='createdLinkUrls'>
-                                        <div id="demo"></div>
-                                        <input class="text-light bg-secondary border-white rounded mt-1" type="button" id="more_fields" onclick="add_fields();" value="Add Link" />
+                                    <label asp-for="Title" class="control-label"></label>
+                                    <input asp-for="Title" class="form-control" />
+                                    <span asp-validation-for="Title" class="text-danger"></span>
+                                </div>
+                                @*Project Description*@
+                                <div class="form-group">
+                                    <label asp-for="Description" class="control-label"></label>
+                                    <textarea asp-for="Description" class="form-control"></textarea>
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+                                @*Start and End dates*@
+                                <div class="form-group">
+                                    <label asp-for="StartDate" class="control-label"></label>
+                                    <input asp-for="StartDate" class="form-control" />
+                                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="EndDate" class="control-label"></label>
+                                    <input asp-for="EndDate" class="form-control" />
+                                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                                </div>
+                                @*Adding photo*@
+                                <div class="form-group row">
+                                    <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
+                                    <div class="col-sm-10">
+                                        <div class="custom-file">
+                                            <input asp-for="Photo" class="form-control custom-file-input" />
+                                            <label class="custom-file-label">Replace Project Photo ...</label>
+                                        </div>
                                     </div>
                                 </div>
-                                <section class="card-footer">
-                                    <button type="submit" value="Update" class="btn btn-sm btn-primary">Update</button>
-                                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@Model.ProjectID">Delete</a>
-                                    <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
-                                </section>
-                            </form>
-                            <!-- #endregion -->
-                        </div>
-                    </div>
-                </div>
-                <div class="second-half card shadow">
-                    @*SECOND HALF OF THE EDIT CARD*@
-                    <div class="project-edit-bottom">
-                        @*Edit Relation Data: ProjectLinks, Collaborators(UserProjects), ProjectPostings*@
-                        <!-- #region Relation Project Link Add/Remove Buttons -->
-                        <section class="">
-                            <h5 class="bg-info text-white mx-0 p-2 mb-0">Project Links</h5>
-                            @{
-                                foreach (var person in Model.currentProject.UserProjects)
-                                {
-                                    if (person.UserID == currentUser)
-                                    {
-                                        loggedOn = true;
-                                    }
-                                }
-
-                                foreach (var item in Model.currentProject.ProjectLinks.Where((i => i.Projects.ProjectID == Model.ProjectID)))
-                                {
-                                    if (loggedOn == true)
-                                    {
-                                        <form class="mt-0" asp-action="DeleteLink" asp-controller="Projects">
-                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                            <div class="form-group">
-                                                <input type="hidden" asp-for="ProjectID" class="form-control" value="@Model.ProjectID" name="projectID" />
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="hidden" asp-for="@item.ProjectLinkID" class="form-control" value="@item.ProjectLinkID" name="projectLinkID" />
-                                            </div>
-                                            <p class="mb-0">
-                                                <strong>@Html.DisplayFor(model => item.ProjectLinkLabel) : </strong> <span>@Html.DisplayFor(model => item.ProjectLinkUrl)</span>
-                                                <div class="form-group"><input type="submit" value="Remove Link" class="btn btn-sm btn-danger" /></div>
-                                            </p>
-                                        </form>
-                                    }
-
-                                }
-                            }
-                        </section>
-                        <!-- #endregion -->
-                        <!-- #region Relation Collaborators: UserProjecct Add/Remove Buttons-->
-                        <section class="mb-2">
-                            <h3 class="bg-info text-white text-center mx-0 py-2 mb-0">Collaborators</h3>
-                            <div class="d-flex justify-content-start">
-                                @foreach (var collab in Model.currentProject.UserProjects)
-                                {
-                                    var collabPath = "";
-                                    if (collab.User.PhotoPath != null)
-                                    {
-                                        collabPath = "~/image/" + (collab.User.PhotoPath);
-                                    }
-                                    else
-                                    {
-                                        collabPath = "~/WebAssests/siteImages/avataricon.png";
-                                    }
-                                    var collabMemberPath = "../../Users/Details/" + (collab.User.Id);
-
-                                    @*@collab.User.UserName<br />*@
-
-                                    if (loggedOn == true)
-                                    {
-                                        <form class="mt-0 mx-1" asp-action="Delete" asp-controller="UserProjects">
-                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                            <div class="form-group">
-                                                <input type="hidden" asp-for="ProjectID" class="form-control" value="@Model.ProjectID" name="projectID" />
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="hidden" asp-for="@collab.UserID" class="form-control" value="@collab.UserID" name="collabId" />
-                                            </div>
-                                            <div class="form-group">
-                                                <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
-                                                <input type="submit" value="Remove" class="btn btn-sm btn-danger" />
-                                            </div>
-                                        </form>
-                                    }
-                                }
-                            </div>
-                        </section>
-                        <!-- #endregion -->
-                        <!--#region Relation ProjectPostings-->
-                        <section class="mt-1">
-                            @{ //if the collaborator has postings and others want to add that posting to the project
-                                @foreach (var collaborator in Model.currentProject.UserProjects)
-                                {
-                                    //if user has no postings do not create an empty form
-                                    var postingListholder = Model.Postings.Where(i => i.PostingOwner.Id == collaborator.UserID);
-                                    if (!(postingListholder.Any()))
-                                    {
-                                        continue;
-                                    }
-                                    <p class="mb-0">Select postings owned by Collaborator <strong>@collaborator.User.UserName</strong> to be added to this Project</p>
-                                    <form asp-action="CreateManyProjectPostings" asp-controller="ProjectPostings">
-                                        @foreach (var posting in postingListholder)
-                                        {
-                                            //If the posting is already in the Project Posting it will not display for checkbox choices
-                                            kickOut = false;
-                                            foreach (var projPost in Model.ProjectPostings.Where(i => i.PostingID == posting.PostingID && i.ProjectID == Model.ProjectID))
-                                            {
-                                                kickOut = true;
-                                            }
-                                            if (kickOut == true)
-                                            {
-                                                continue;
-                                            }
-                                            @*Shows all postings that a collaborator has which are not added to the Project and displays checkboxes so that many postings can be added to a project at once*@
-                                            assigned = false;
-                                            @:<div>
-                                                <input type="checkbox" name="postings" value="@posting.PostingID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @posting.PostingTitle
-                                            @:</div>
-                                        }
-                                        <div class="form-group mb-0">
-                                            <input type="hidden" value="@Model.ProjectID" class="form-control" name="projectID" />
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="submit" value="Link selected Posting" class="btn btn-sm btn-info" />
-                                        </div>
-                                    </form>
-                                }
-                            }
-
-                            @{ //if the collaborator has postings and others want to add that posting to the project
-                                @foreach (var collaborator in Model.currentProject.UserProjects)
-                                {
-                                    //if user has no postings do not create an empty form
-                                    var postingListholder = Model.Postings.Where(i => i.PostingOwner.Id == collaborator.UserID);
-                                    if (!(postingListholder.Any()))
-                                    {
-                                        continue;
-                                    }
-                                    <p class="mb-0">Select postings owned by Collaborator <strong>@collaborator.User.UserName</strong> to be added to this Project</p>
-                                    <form asp-action="RemoveManyPostings" asp-controller="ProjectPostings">
-                                        @foreach (var posting in postingListholder)
-                                        {
-                                            //If the posting is already in the Project Posting it will not display for checkbox choices
-                                            kickOut = true;
-                                            foreach (var projPost in Model.ProjectPostings.Where(i => i.PostingID == posting.PostingID && i.ProjectID == Model.ProjectID))
-                                            {
-                                                kickOut = false;
-                                            }
-                                            if (kickOut == true)
-                                            {
-                                                continue;
-                                            }
-                                            @*Shows all postings that a collaborator has which are not added to the Project and displays checkboxes so that many postings can be added to a project at once*@
-                                            assigned = false;
-                                            @:<div>
-                                                <input type="checkbox" name="postings" value="@posting.PostingID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @posting.PostingTitle
-                                            @:</div>
-                                        }
-                                        <div class="form-group mb-0">
-                                            <input type="hidden" value="@Model.ProjectID" class="form-control" name="projectID" />
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="submit" value="Remove selected Posting" class="btn btn-sm btn-danger" />
-                                        </div>
-                                    </form>
-                                }
-                            }
-                        </section>
-
-                        <!--#endregion-->
-                        <!-- #region Relation: Project Skills-->
-                        <section class="Skill-form">
-                            @* Discipline Name *@
-                            <h3>@Model.currentDiscipline.DisciplineName</h3>
-
-                            @* this is to seach by a specific discipline *@
-                            <form asp-action="Edit" asp-controller="Projects" method="get">
+                                @*Adding collaborators*@
                                 <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-10">
-                                        <datalist id="AreaOfDiscipline-List">
+                                    <div class="col-md-12">
+                                        <datalist id="user-list">
                                             @{
-                                                List<ConstellationWebApp.Models.Discipline> disciplines = Model.Disciplines.ToList();
+                                                List<ConstellationWebApp.Models.AssignedProjectData> usersCollab = ViewBag.UsersOfConstellation;
 
-                                                foreach (var discipline in disciplines)
+                                                foreach (var user in usersCollab)
                                                 {
-                                                    <option value="@discipline.DisciplineName" data-id="@discipline.DisciplineName"></option>
+                                                    <option value="@user.UserName" data-id="@user.UserID"></option>
                                                 }
                                             @:</datalist>
                                         @:</div>
                                             }
                                         </div>
-
-                                <div class="form-inline">
-                                    <label for="disciplineSearchString" class="sr-only">Search by Discipline</label><!--WORKING HERE AND ON THE HEIGHT OF THE PAGE-->
-                                    <input id="disciplineSearchString" name="disciplineSearchString" list="AreaOfDiscipline-List">
-                                    <input type="hidden" name="id">
-
-                                    <div class="form-group mx-auto mb-0">
-                                        <input class="btn btn-md btn-primary mb-1 mx-auto" type="submit" value="Find Discipline" />
-                                    </div>
-                                </div>
+                                        <div id="collab-Display"></div>
+                                        <input id="collab-input" class="input-group rounded border-light col-md-12" list="user-list" name="selectedCollaborators">
+                                        <div id="userCollab-demo"></div>
+                                        <input class="text-light bg-secondary border-white rounded mt-1" type="button" id="more_collab" onclick="add_collab();" value="Add Collaborator" />
+                                        @* Create the Project Links for the User *@
+                                        <div class="form-group">
+                                            <div id="created-links"></div>
+                                            <div class="col-md-8 p-0 small_lable">
+                                                <p class="mb-0 mt-1">Add Link Label</p>
+                                                <input id="link-label" class="input-group rounded border-light" list='contact-link-label' name='createdLinkLabels'>
+                                                <p class="mb-0 mt-1">Add Url Link</p>
+                                                <input id="link-url" class="input-group rounded border-light" list='contact-link-url' name='createdLinkUrls'>
+                                                <div id="demo"></div>
+                                                <input class="text-light bg-secondary border-white rounded mt-1" type="button" id="more_fields" onclick="add_fields();" value="Add Link" />
+                                            </div>
+                                        </div>
+                                        <section class="card-footer">
+                                            <button type="submit" value="Update" class="btn btn-sm btn-primary">Update</button>
+                                            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@Model.ProjectID">Delete</a>
+                                            <a class="btn btn-sm btn-secondary" asp-action="Index">Back to List</a>
+                                        </section>
                                     </form>
-                                    <br />
-                                    <section>
-                                        <button class="tablink" onclick="openPage('AddSkills', this, 'lightblue')" id="defaultOpen">Add Skills</button>
-                                        <button class="tablink" onclick="openPage('RemoveSkills', this, 'red')">Remove Skills</button>
-
-                                        @*Adding UserSKills*@
-                                        <div id="AddSkills" class="tabcontent">
-                                            <h3>@Model.currentDiscipline.DisciplineName related skills not added to Project</h3>
-                                            <form asp-action="CreateManyProjectSkills" asp-controller="Projects">
-                                                @{
-                                                    foreach (var skill in Model.SkillDisciplines.Where(i => i.DisciplineID == Model.currentDiscipline.DisciplineID))
-                                                    {
-                                                        Skill skillName = Model.Skills.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
-                                                        var kickout = false;
-                                                        foreach (var uSkill in Model.ProjectSkills.Where(i => i.SkillID == skill.SkillID))
-                                                        {
-                                                            kickout = true;
-                                                        }
-                                                        if (kickout == true)
-                                                        {
-                                                            continue;
-                                                        }
-                                                        else
-                                                        {
-                                                            assigned = false;
-                                                            @:<div>
-                                                                <input type="checkbox" name="skills" value="@skill.SkillID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @skillName.SkillName;
-                                                            @:</div>
-                                                        }
-                                                    }
-                                                    <div class="form-group mb-0">
-                                                        <input type="hidden" value="@currentUser" name="userID" />
-                                                        <input type="hidden" value="@Model.ProjectID" name="ProjectID" />
-
-                                                    </div>
-                                                    <input type="hidden" name="disciplineSearchString" value="@Model.currentDiscipline.DisciplineName">
-                                                    <div class="form-group">
-                                                        <input type="submit" value="Link selected skills" class="btn btn-sm btn-info" />
-                                                    </div>
-                                                }
-                                            </form>
-                                        </div>
-
-                                        @*Removing UserSKills*@
-                                        <div id="RemoveSkills" class="tabcontent">
-                                            <h3>@Model.currentDiscipline.DisciplineName related skills added to Project</h3>
-                                            <form asp-action="RemoveManyProjectSkills" asp-controller="Projects">
-                                                @{
-                                                    foreach (var skill in Model.SkillDisciplines.Where(i => i.DisciplineID == Model.currentDiscipline.DisciplineID))
-                                                    {
-                                                        Skill skillName = Model.Skills.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
-                                                        foreach (var uSkill in Model.ProjectSkills.Where(i => i.ProjectID == Model.ProjectID && i.SkillID == skill.SkillID))
-                                                        {
-                                                            assigned = false;
-                                                            @:<div>
-                                                                <input type="checkbox" name="skills" value="@skill.SkillID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @skillName.SkillName;
-                                                            @:</div>
-                                                        }
-                                                    }
-                                                    <div class="form-group mb-0">
-                                                        <input type="hidden" value="@Model.ProjectID" class="form-control" name="projectID" />
-                                                        <input type="hidden" value="@Model.currentDiscipline.DisciplineID" class="form-control" name="disciplineID" />
-                                                        <input type="hidden" name="disciplineSearchString" value="@Model.currentDiscipline.DisciplineName">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <input type="submit" value="Remove selected skills" class="btn btn-sm btn-info" />
-                                                    </div>
-                                                }
-                                            </form>
-                                        </div>
-                                    </section>
-                                </section>
-                                <!-- #endregion-->
-                            </div>
-                        </div>
-                    </div>
-                }
-                @*CSS CODE FOR INDIVISUAL CARDS ENDS HERE*@
-                else
-                {
-                    <!-- #region not a collaborator-->
-                    <div class="container padding">
-                        <div class="col-md-8 mx-auto p-0">
-                            <div class="card text-black shadow-lg my-2 mt-0 padding">
-                                <h6 class="titleBorder border-bottom my-0">
-                                    You are not part of this
-                                    project and do not have permission to Edit it. Connect with the
-                                    members of the project if you want to be part of it.
-                                </h6>
-
-                                @foreach (var collab in Model.currentProject.UserProjects)
-                                {
-                                    var collabPath = "~/image/" + (collab.User.PhotoPath);
-                                    var collabMemberPath = "../../Users/Details/" + (collab.User.Id);
-                                    <div>
-                                        <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
-                                        <a href="@collabMemberPath">@Html.DisplayFor(modelItem => collab.User.FirstName)  @Html.DisplayFor(modelItem => collab.User.LastName)  : @Html.DisplayFor(modelItem => collab.User.UserName)</a>
-                                    </div>
-                                }
-                                <div class="card-footer">
-                                    <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
+                                    <!-- #endregion -->
                                 </div>
-                                <!-- #endregion -->
                             </div>
                         </div>
-                    </div>
-                }
+                        <div class="second-half card shadow">
+                            @*SECOND HALF OF THE EDIT CARD*@
+                            <div class="project-edit-bottom">
+                                @*Edit Relation Data: ProjectLinks, Collaborators(UserProjects), ProjectPostings*@
+                                <!-- #region Relation Project Link Add/Remove Buttons -->
+                                <section class="">
+                                    <h5 class="bg-info text-white mx-0 p-2 mb-0">Project Links</h5>
+                                    @{
+                                        foreach (var person in Model.currentProject.UserProjects)
+                                        {
+                                            if (person.UserID == currentUser)
+                                            {
+                                                loggedOn = true;
+                                            }
+                                        }
+
+                                        foreach (var item in Model.currentProject.ProjectLinks.Where((i => i.Projects.ProjectID == Model.ProjectID)))
+                                        {
+                                            if (loggedOn == true)
+                                            {
+                                                <form class="mt-0" asp-action="DeleteLink" asp-controller="Projects">
+                                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                                    <div class="form-group">
+                                                        <input type="hidden" asp-for="ProjectID" class="form-control" value="@Model.ProjectID" name="projectID" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="hidden" asp-for="@item.ProjectLinkID" class="form-control" value="@item.ProjectLinkID" name="projectLinkID" />
+                                                    </div>
+                                                    <p class="mb-0">
+                                                        <strong>@Html.DisplayFor(model => item.ProjectLinkLabel) : </strong> <span>@Html.DisplayFor(model => item.ProjectLinkUrl)</span>
+                                                        <div class="form-group"><input type="submit" value="Remove Link" class="btn btn-sm btn-danger" /></div>
+                                                    </p>
+                                                </form>
+                                            }
+
+                                        }
+                                    }
+                                </section>
+                                <!-- #endregion -->
+                                <!-- #region Relation Collaborators: UserProjecct Add/Remove Buttons-->
+                                <section class="mb-2">
+                                    <h3 class="bg-info text-white text-center mx-0 py-2 mb-0">Collaborators</h3>
+                                    <div class="d-flex justify-content-start">
+                                        @foreach (var collab in Model.currentProject.UserProjects)
+                                        {
+                                            var collabPath = "";
+                                            if (collab.User.PhotoPath != null)
+                                            {
+                                                collabPath = "~/image/" + (collab.User.PhotoPath);
+                                            }
+                                            else
+                                            {
+                                                collabPath = "~/WebAssests/siteImages/avataricon.png";
+                                            }
+                                            var collabMemberPath = "../../Users/Details/" + (collab.User.Id);
+
+                                            @*@collab.User.UserName<br />*@
+
+                                            if (loggedOn == true)
+                                            {
+                                                <form class="mt-0 mx-1" asp-action="Delete" asp-controller="UserProjects">
+                                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                                    <div class="form-group">
+                                                        <input type="hidden" asp-for="ProjectID" class="form-control" value="@Model.ProjectID" name="projectID" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="hidden" asp-for="@collab.UserID" class="form-control" value="@collab.UserID" name="collabId" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
+                                                        <input type="submit" value="Remove" class="btn btn-sm btn-danger" />
+                                                    </div>
+                                                </form>
+                                            }
+                                        }
+                                    </div>
+                                </section>
+                                <!-- #endregion -->
+                                <!--#region Relation ProjectPostings-->
+                                <section class="mt-1">
+                                    @{ //if the collaborator has postings and others want to add that posting to the project
+                                        @foreach (var collaborator in Model.currentProject.UserProjects)
+                                        {
+                                            //if user has no postings do not create an empty form
+                                            var postingListholder = Model.Postings.Where(i => i.PostingOwner.Id == collaborator.UserID);
+                                            if (!(postingListholder.Any()))
+                                            {
+                                                continue;
+                                            }
+                                            <p class="mb-0">Select postings owned by Collaborator <strong>@collaborator.User.UserName</strong> to be added to this Project</p>
+                                            <form asp-action="CreateManyProjectPostings" asp-controller="ProjectPostings">
+                                                @foreach (var posting in postingListholder)
+                                                {
+                                                    //If the posting is already in the Project Posting it will not display for checkbox choices
+                                                    kickOut = false;
+                                                    foreach (var projPost in Model.ProjectPostings.Where(i => i.PostingID == posting.PostingID && i.ProjectID == Model.ProjectID))
+                                                    {
+                                                        kickOut = true;
+                                                    }
+                                                    if (kickOut == true)
+                                                    {
+                                                        continue;
+                                                    }
+                                                    @*Shows all postings that a collaborator has which are not added to the Project and displays checkboxes so that many postings can be added to a project at once*@
+                                                    assigned = false;
+                                                    @:<div>
+                                                        <input type="checkbox" name="postings" value="@posting.PostingID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @posting.PostingTitle
+                                                    @:</div>
+                                                }
+                                                <div class="form-group mb-0">
+                                                    <input type="hidden" value="@Model.ProjectID" class="form-control" name="projectID" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="submit" value="Link selected Posting" class="btn btn-sm btn-info" />
+                                                </div>
+                                            </form>
+                                        }
+                                    }
+
+                                    @{ //if the collaborator has postings and others want to add that posting to the project
+                                        @foreach (var collaborator in Model.currentProject.UserProjects)
+                                        {
+                                            //if user has no postings do not create an empty form
+                                            var postingListholder = Model.Postings.Where(i => i.PostingOwner.Id == collaborator.UserID);
+                                            if (!(postingListholder.Any()))
+                                            {
+                                                continue;
+                                            }
+                                            <p class="mb-0">Select postings owned by Collaborator <strong>@collaborator.User.UserName</strong> to be added to this Project</p>
+                                            <form asp-action="RemoveManyPostings" asp-controller="ProjectPostings">
+                                                @foreach (var posting in postingListholder)
+                                                {
+                                                    //If the posting is already in the Project Posting it will not display for checkbox choices
+                                                    kickOut = true;
+                                                    foreach (var projPost in Model.ProjectPostings.Where(i => i.PostingID == posting.PostingID && i.ProjectID == Model.ProjectID))
+                                                    {
+                                                        kickOut = false;
+                                                    }
+                                                    if (kickOut == true)
+                                                    {
+                                                        continue;
+                                                    }
+                                                    @*Shows all postings that a collaborator has which are not added to the Project and displays checkboxes so that many postings can be added to a project at once*@
+                                                    assigned = false;
+                                                    @:<div>
+                                                        <input type="checkbox" name="postings" value="@posting.PostingID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @posting.PostingTitle
+                                                    @:</div>
+                                                }
+                                                <div class="form-group mb-0">
+                                                    <input type="hidden" value="@Model.ProjectID" class="form-control" name="projectID" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="submit" value="Remove selected Posting" class="btn btn-sm btn-danger" />
+                                                </div>
+                                            </form>
+                                        }
+                                    }
+                                </section>
+
+                                <!--#endregion-->
+                                <!-- #region Relation: Project Skills-->
+                                <section class="Skill-form">
+                                    @* Discipline Name *@
+                                    <h3>@Model.currentDiscipline.DisciplineName</h3>
+
+                                    @* this is to seach by a specific discipline *@
+                                    <form asp-action="Edit" asp-controller="Projects" method="get">
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-10">
+                                                <datalist id="AreaOfDiscipline-List">
+                                                    @{
+                                                        List<ConstellationWebApp.Models.Discipline> disciplines = Model.Disciplines.ToList();
+
+                                                        foreach (var discipline in disciplines)
+                                                        {
+                                                            <option value="@discipline.DisciplineName" data-id="@discipline.DisciplineName"></option>
+                                                        }
+                                                    @:</datalist>
+                                                @:</div>
+                                                    }
+                                                </div>
+
+                                                <div class="form-inline">
+                                                    <label for="disciplineSearchString" class="sr-only">Search by Discipline</label><!--WORKING HERE AND ON THE HEIGHT OF THE PAGE-->
+                                                    <input id="disciplineSearchString" name="disciplineSearchString" list="AreaOfDiscipline-List">
+                                                    <input type="hidden" name="id">
+
+                                                    <div class="form-group mx-auto mb-0">
+                                                        <input class="btn btn-md btn-primary mb-1 mx-auto" type="submit" value="Find Discipline" />
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <br />
+                                            <section>
+                                                <button class="tablink" onclick="openPage('AddSkills', this, 'lightblue')" id="defaultOpen">Add Skills</button>
+                                                <button class="tablink" onclick="openPage('RemoveSkills', this, 'red')">Remove Skills</button>
+
+                                                @*Adding UserSKills*@
+                                                <div id="AddSkills" class="tabcontent">
+                                                    <h3>@Model.currentDiscipline.DisciplineName related skills not added to Project</h3>
+                                                    <form asp-action="CreateManyProjectSkills" asp-controller="Projects">
+                                                        @{
+                                                            foreach (var skill in Model.SkillDisciplines.Where(i => i.DisciplineID == Model.currentDiscipline.DisciplineID))
+                                                            {
+                                                                Skill skillName = Model.Skills.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
+                                                                var kickout = false;
+                                                                foreach (var uSkill in Model.ProjectSkills.Where(i => i.SkillID == skill.SkillID))
+                                                                {
+                                                                    kickout = true;
+                                                                }
+                                                                if (kickout == true)
+                                                                {
+                                                                    continue;
+                                                                }
+                                                                else
+                                                                {
+                                                                    assigned = false;
+                                                                    @:<div>
+                                                                        <input type="checkbox" name="skills" value="@skill.SkillID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @skillName.SkillName;
+                                                                    @:</div>
+                                                                }
+                                                            }
+                                                            <div class="form-group mb-0">
+                                                                <input type="hidden" value="@currentUser" name="userID" />
+                                                                <input type="hidden" value="@Model.ProjectID" name="ProjectID" />
+
+                                                            </div>
+                                                            <input type="hidden" name="disciplineSearchString" value="@Model.currentDiscipline.DisciplineName">
+                                                            <div class="form-group">
+                                                                <input type="submit" value="Link selected skills" class="btn btn-sm btn-info" />
+                                                            </div>
+                                                        }
+                                                    </form>
+                                                </div>
+
+                                                @*Removing UserSKills*@
+                                                <div id="RemoveSkills" class="tabcontent">
+                                                    <h3>@Model.currentDiscipline.DisciplineName related skills added to Project</h3>
+                                                    <form asp-action="RemoveManyProjectSkills" asp-controller="Projects">
+                                                        @{
+                                                            foreach (var skill in Model.SkillDisciplines.Where(i => i.DisciplineID == Model.currentDiscipline.DisciplineID))
+                                                            {
+                                                                Skill skillName = Model.Skills.Where(i => i.SkillID == skill.SkillID).FirstOrDefault();
+                                                                foreach (var uSkill in Model.ProjectSkills.Where(i => i.ProjectID == Model.ProjectID && i.SkillID == skill.SkillID))
+                                                                {
+                                                                    assigned = false;
+                                                                    @:<div>
+                                                                        <input type="checkbox" name="skills" value="@skill.SkillID" @(Html.Raw((assigned) ? "checked=\"checked\"" : "")) /> @skillName.SkillName;
+                                                                    @:</div>
+                                                                }
+                                                            }
+                                                            <div class="form-group mb-0">
+                                                                <input type="hidden" value="@Model.ProjectID" class="form-control" name="projectID" />
+                                                                <input type="hidden" value="@Model.currentDiscipline.DisciplineID" class="form-control" name="disciplineID" />
+                                                                <input type="hidden" name="disciplineSearchString" value="@Model.currentDiscipline.DisciplineName">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="submit" value="Remove selected skills" class="btn btn-sm btn-info" />
+                                                            </div>
+                                                        }
+                                                    </form>
+                                                </div>
+                                            </section>
+                                        </section>
+                                        <!-- #endregion-->
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @*CSS CODE FOR INDIVISUAL CARDS ENDS HERE*@
+                        else
+                        {
+                            <!-- #region not a collaborator-->
+                            <div class="container padding">
+                                <div class="col-md-8 mx-auto p-0">
+                                    <div class="card text-black shadow-lg my-2 mt-0 padding">
+                                        <h6 class="titleBorder border-bottom my-0">
+                                            You are not part of this
+                                            project and do not have permission to Edit it. Connect with the
+                                            members of the project if you want to be part of it.
+                                        </h6>
+
+                                        @foreach (var collab in Model.currentProject.UserProjects)
+                                        {
+                                            var collabPath = "~/image/" + (collab.User.PhotoPath);
+                                            var collabMemberPath = "../../Users/Details/" + (collab.User.Id);
+                                            <div>
+                                                <a href="@collabMemberPath"><img class="small-thumbnail" src=" @collabPath" alt="@Html.DisplayFor(modelItem => collab.User.UserName)" asp-append-version="true" /></a>
+                                                <a href="@collabMemberPath">@Html.DisplayFor(modelItem => collab.User.FirstName)  @Html.DisplayFor(modelItem => collab.User.LastName)  : @Html.DisplayFor(modelItem => collab.User.UserName)</a>
+                                            </div>
+                                        }
+                                        <div class="card-footer">
+                                            <a class="btn btn-md btn-secondary" asp-action="Index">Back to List</a>
+                                        </div>
+                                        <!-- #endregion -->
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+    </div>
+</div>
+
 
 <!--#region Javascript-->
 @section Scripts {
