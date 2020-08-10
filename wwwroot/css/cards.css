@@ -376,7 +376,7 @@ a {
         opacity: 1;
     }
 
-    @keyframes fadeIn {
+    /*@keyframes fadeIn {
         from {
             opacity: 0;
         }
@@ -415,7 +415,7 @@ a {
     }
     .const-card-wrapper:nth-child(9) {
         animation: fadeIn .5s 4.5s backwards;
-    }
+    }*/
 
   
 }
