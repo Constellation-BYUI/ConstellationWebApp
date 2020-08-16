@@ -1,0 +1,132 @@
+﻿* {
+    font-family: 'Noto Sans JP', sans-serif;
+    /* color: #fff; */
+}
+
+main {
+    padding: 0 !important;
+}
+
+.validate ul {
+    list-style-type: none;
+    text-align: center;
+    color: #dc3545;
+    box-shadow: #fff;
+    padding: 0;
+    font-weight: 600;
+}
+
+.log-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url('/WebAssests/siteImages/workstation.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.login {
+    text-align: center;
+    position: relative;
+    width: 300px;
+}
+
+input, .btnn {
+    width: 100%;
+    border: 0;
+    border-radius: 20px;
+}
+
+input {
+    border-bottom: 2px solid rgb(40, 155, 46);
+    padding: 12px 40px 12px 20px;
+}
+
+input, .group i {
+    font-size: 13.333px;
+    font-weight: 600;
+}
+
+.group {
+    margin-top: 10px;
+    position: relative;
+}
+
+    .group i {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+    }
+
+.btnn {
+    margin: 10px 0;
+    font-size: 18px;
+    padding: 8px;
+    border-bottom: none;
+    background-color: #28a745;
+    color: #fff;
+    cursor: pointer;
+}
+
+    .btnn:hover {
+        background-color: #1f8537;
+    }
+
+p {
+    margin-bottom: 5px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    text-shadow: 1px 1px rgb(31, 25, 25)
+}
+
+a {
+    color: #ffc107;
+    text-decoration: none;
+}
+
+.userImage {
+    border-radius: 50%;
+    object-fit: cover;
+    width: 70px;
+    height: 70px;
+    margin-bottom: 10px;
+    border: 2px solid #e63946;
+}
+
+.login h2 {
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+input:focus, input:focus::placeholder, input:focus + i {
+    color: #e63946;
+}
+
+input:focus, .btnn:focus {
+    outline: 0;
+}
+
+@media screen and (min-width: 768px) {
+    .login {
+        width: 350px;
+        height: 450px;
+        background-color: rgba(202, 192, 192, 0.336);
+        padding: 20px 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 0 1px rgb(230, 219, 219), 0 2px 3px rgba(236, 223, 223, 0.966);
+    }
+
+    p {
+        margin-bottom: 20px
+    }
+
+    a:hover {
+        color: #ffd905;
+        text-decoration: none;
+    }
+}
+
