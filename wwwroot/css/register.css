@@ -7,7 +7,7 @@ main {
     padding: 0 !important;
 }
 
-.validate ul {
+.validate ul, #Email-error {
     list-style-type: none;
     text-align: center;
     color: #dc3545;
