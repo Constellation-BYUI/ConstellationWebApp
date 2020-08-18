@@ -8,107 +8,110 @@
 
 <link rel="stylesheet" href="/css/homepage.css" />
 
-<!-- Welcome Note to users and employers -->
-<div class="jumbo">
-    <div class="welcome1">
-        <h4>Constellation Platform : </h4>
-        <p>
-            Show your qualities, competence, and projects all in one location
-            and make them accessible to potential employers.
-        </p>
-        <a asp-controller="Account" asp-action="Register" ><div class="button1">SignUp Now</div></a>
+<div class="home-container">
+
+    <div class="section1">
+        <div class="users">
+            <div class="user-view">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, nam sunt commodi accusamus sequi optio voluptatibus non temporibus atque! Temporibus ab commodi odio, totam at accusamus labore sequi magnam voluptatem.</p>
+
+                <a asp-controller="Users" asp-action="Index">View Users</a>
+            </div>
+        </div>
+        <div class="projects">
+            <div class="project-view">
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, nam sunt commodi accusamus sequi optio voluptatibus non temporibus atque! Temporibus ab commodi odio, totam at accusamus labore sequi magnam voluptatem.</p>
+
+                <a asp-controller="Projects" asp-action="Index">View Projects</a>
+            </div>
+        </div>
     </div>
-    <div class="welcome2">
-        <h4>You have a Job Opening and you are looking to fill it up with the right <span style="font-style: italic;">CANDIDATE</span></h4>
-        <a asp-controller="Postings" asp-action="Create"><div class="button2">Post Jobs</div></a>
+
+    <div class="section2">
+        <div class="slideshow-container">
+
+            <div class="mySlides fade">
+                <div class="numbertext">1 / 3</div>
+                <img src="/WebAssests/siteImages/slide1.webp" style="width:100%">
+            </div>
+
+            <div class="mySlides fade">
+                <div class="numbertext">2 / 3</div>
+                <img src="/WebAssests/siteImages/slide2.jpg" style="width:100%">
+            </div>
+
+            <div class="mySlides fade">
+                <div class="numbertext">3 / 3</div>
+                <img src="/WebAssests/siteImages/slide3.jpg" style="width:100%">
+            </div>
+
+        </div>
+        <!-- <br> -->
+
+        <div style="text-align:center; margin-top: 5px">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
     </div>
+
+    <!-- <div class="section3">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+      </div>  -->
+
 </div>
 
-
-
-
-
-
-
-<!-- Welcome note  -->
-<!-- 3 -->
-<!-- Go to Users, Project and Postings Page  -->
-@*Note from Ryan: Include this text into the div of users
-    " See the current people using this platform. Check out their projects and resume, see who they work with,
-    and get their contact information by visiting their profiles. "
-*@
-@*<section class="section3">*@
-@*<a asp-controller="Users" asp-action="Index">
-        <div class="view user btn-primary bg-primary">
-            <img class="avatarcircle" src="/WebAssests/siteImages/avataricon.png" alt="AvatarIcon">
-            <h6 class="icon6"><strong>View&nbsp;Members</strong></h6>
-        </div>
-    </a>*@
-
-@*Note from Ryan: Include this text into the div of Postings
-    " The roles and positions needing to be filled are available in the job postings section. Create your own
-    posting if you are a recruiter or looking for someone to join your project. Specify what kind of job, a
-    short description, the position or role available, and the company or project that it is made for. Those
-    who are interested and those who you think are a good fit can be saved so they can be easily viewed later.  "
-*@
-@*<a asp-controller="Postings" asp-action="Index">
-        <div class="view job btn-success bg-success">
-            <img class="avatarcircle" src="/WebAssests/siteImages/jobsicon.pn.png" alt="AvatarIcon">
-            <h6 class="icon6"><strong>View&nbsp;Jobs</strong></h6>
-
-        </div>
-    </a>*@
-@*Note from Ryan: Include this text into the div of Projects
-    " Whether users are working in teams or learning independently, the projects page allows you to view the
-    projects that others are currently working on or have completed. Users can include all they did to complete
-    the project and showcase what they gained from the experience. Create your own projects to increase your marketability.  "
-*@
-@*<a asp-controller="Projects" asp-action="Index">
-        <div class="view project btn-info bg-info">
-            <img class="avatarcircle" src="/WebAssests/siteImages/projectsicon.png" alt="AvatarIcon">
-            <h6 class="icon6"><strong>View&nbsp;Projects</strong></h6>
-        </div>
-    </a>*@
-@*</section>*@
-
-<!-- 4 -->
-<!-- Inspiration quote and pictures -->
 <section class="section4">
-    <div class="imageholder">
-        <img class="mySlides w3-animate-zoom" src="/WebAssests/siteImages/rev1.png" alt="Inspiration and Life">
-        <img class="mySlides w3-animate-zoom" src="/WebAssests/siteImages/rev2.png" alt="Inspiration and Life">
-        <img class="mySlides w3-animate-zoom" src="/WebAssests/siteImages/rev3.png" alt="Inspiration and Life">
-        <img class="mySlides w3-animate-zoom" src="/WebAssests/siteImages/rev4.png" alt="Inspiration and Life">
-    </div>
-</section>
-
-<!-- 5 -->
-<!-- Connect with us -->
-<section class="section5">
     <a href="#"><i class="fab fa-facebook"></i></a>
     <a href="#"><i class="fab fa-github"></i></a>
     <a href="#"><i class="fab fa-twitter"></i></a>
     <a href="https://www.youtube.com/channel/UCqjlMoAhtY9RH-R_pOITY1g?view_as=subscriber" target="_blank"><i class="fab fa-youtube"></i></a>
 </section>
 
-<!--This script is in harge of chaging the pictures on this page -->
+<script>
+    var slideIndex = 0;
+    showSlides();
 
-<script type="text/javascript">
-    
-
-    var myIndex = 0;
-    carousel();
-
-    function carousel() {
+    function showSlides() {
         var i;
-        var x = document.getElementsByClassName("mySlides");
-        for (i = 0; i < x.length; i++) {
-            x[i].style.display = "none";
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
         }
-        myIndex++;
-        if (myIndex > x.length) { myIndex = 1 }
-        x[myIndex - 1].style.display = "block";
-        setTimeout(carousel, 5000);
+        slideIndex++;
+        if (slideIndex > slides.length) { slideIndex = 1 }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+        setTimeout(showSlides, 5000); // Change image every 7 seconds
     }
 </script>
+
+
+
+
+
+
+
+<!-- Welcome Note to users and employers -->
+@*<div class="jumbo">
+        <div class="welcome1">
+            <h4>Constellation Platform : </h4>
+            <p>
+                Show your qualities, competence, and projects all in one location
+                and make them accessible to potential employers.
+            </p>
+            <a asp-controller="Account" asp-action="Register"><div class="button1">SignUp Now</div></a>
+        </div>
+        <div class="welcome2">
+            <h4>You have a Job Opening and you are looking to fill it up with the right <span style="font-style: italic;">CANDIDATE</span></h4>
+            <a asp-controller="Postings" asp-action="Create"><div class="button2">Post Jobs</div></a>
+        </div>
+    </div>*@
 
