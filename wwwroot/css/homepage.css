@@ -1,131 +1,237 @@
-﻿
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans JP', sans-serif;
+}
 
+main {
+    padding: 0;
+}
 
-/* Welcome Note to users and employers */
-.jumbo {
-/*    margin-top: 50px;*/
-    margin-bottom: 10rem;
+.home-container {
+    width: 100vw;
+    height: 100%;
+}
+
+.section1 {
+    display: block;
+    border-bottom: 2px solid #fff;
     width: 100%;
-    height: 22rem;
-    background-image: url(/WebAssests/siteImages/tech-background.jpg);
+    height: 400px;
+}
+
+.users {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url('/WebAssests/siteImages/view-user.webp');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    padding: .1rem;
+    border: 2px solid #fff;
 }
 
-.welcome1 {
-    background-color: rgba(15, 12, 12, 0.5);
-    height: 10rem;
-    width: 90%;
-    margin: auto;
-    margin-bottom: 1rem;
-    border-radius: 5px;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    color: white;
-}
-
-.welcome2 {
-    background-color: rgba(15, 12, 12, 0.5);
-    height: 9rem;
-    width: 90%;
-    margin: auto;
-    margin-bottom: 1rem;
-    border-radius: 5px;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    color: white;
-}
-
-.welcome1 h4 {
-    font-size: 1.3rem;
-    padding: .2rem .5rem;
-    margin: 0;
-}
-
-.welcome1 p {
-    padding: .4rem;
-    margin: 0;
-    font-size: .9rem;
-    text-align: justify;
-    font-style: italic;
-    font-weight: 400;
-    color: whitesmoke;
-}
-
-.button1, .button2 {
-    transform: translate(-50%, -7px);
-    width: inherit;
+.user-view {
+    color: #fff;
     text-align: center;
-    padding: 5px;
-    border-radius: 4px;
-    margin-left: 50%;
-    cursor: pointer;
+    word-wrap: break-word;
+    width: 300px;
+    height: 300px;
+    margin: 10px 0 15px 0;
+    background-color: rgba(47, 95, 65, 0.8);
+    padding: 20px 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 0 1px rgb(230, 219, 219), 0 3px 10px rgba(26, 156, 37, 0.966);
+}
+
+    .user-view p, .project-view p {
+        margin-bottom: 40px;
+    }
+
+    .user-view a {
+        text-decoration: none;
+        color: #fff;
+        padding: 10px 15px;
+        background-color: #28a745;
+        border: 1px solid #fff;
+        border-radius: 5px;
+        transition: .2s;
+        font-size: 15px;
+    }
+
+.user-view a:hover {
     font-size: 18px;
 }
 
-.welcome1 a, .welcome2 a {
-    text-decoration: none;
-    color: #fff;
+.projects {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url('/WebAssests/siteImages/view-projects.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #fff;
 }
 
-.welcome2 h4 {
-    font-size: 1.1rem;
-    font-weight: 300;
-    padding: .8rem .5rem 1.2rem .5rem;
-    margin: 0;
+.project-view a {
+    text-decoration: none;
+    color: #fff;
+    padding: 10px 15px;
+    background-color: #1b6ec2;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    transition: .2s;
+    font-size: 15px;
+}
+
+.project-view a:hover {
+ /* padding: 10px 15px; */
+    font-size: 18px;
+}
+
+.project-view {
+    color: #fff;
+    text-align: center;
+    word-wrap: break-word;
+    margin: 10px 0 15px 0;
+    width: 300px;
+    height: 300px;
+    background-color: rgba(56, 48, 100, 0.8);
+    padding: 20px 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 0 1px rgb(230, 219, 219), 0 3px 10px rgba(35, 52, 211, 0.966);
+}
+
+.section2 {
+    width: 100%;
+    height: 300px;
+    margin-top: 260px;
+    margin-bottom: 35px;
+    border-bottom: 2px solid #fff;
+}
+
+.section2 img {
+    width: 100%;
+    height: 320px;
+    border-bottom: 2px solid #fff;
+ }
+
+.mySlides {
+    display: none;
+}
+
+img {
+    vertical-align: middle;
+}
+
+/* Slideshow container */
+.slideshow-container {
+    /* max-width: 1000px; */
+    position: relative;
+    margin: auto;
+}
+
+/* Caption text */
+.text {
+    color: #f2f2f2;
+    font-size: 15px;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
     text-align: center;
 }
 
-.button2 {
-    background-color: #1b6ec2;
-    margin-top: 3px;
+/* Number text (1/3 etc) */
+.numbertext {
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
 }
 
-.button1 {
-    background-color: #28a745;
-    margin-top: 5px;
-}
-/*Ends here*/
-
-
-
-/* Image holder for inspiration */
-.section4 {
-    background-color: #f1faee;
-    min-height: 5em;
-    width: 100%;
-    border-top: 1px solid orange;
-    border-bottom: 1px solid #1b6ec2;
+/* The dots/bullets/indicators */
+.dot {
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
 }
 
-    .section4 img {
-        width: 100%;
-        height: 15em;
+.active {
+    background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 5s;
+    animation-name: fade;
+    animation-duration: 5s;
+}
+
+@-webkit-keyframes fade {
+    from {
+        opacity: .7
     }
 
-/* Social media links */
-.section5 {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    background-color: white;
-    border-bottom: 1px solid green;
-    min-height: 2em;
-    width: 100%;
+    to {
+        opacity: 1
+    }
 }
 
-    .section5 a {
+@keyframes fade {
+    from {
+        opacity: .7
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+    .text {
+        font-size: 11px
+    }
+}
+
+
+
+
+.section3 {
+    margin-top: 30px;
+    width: 100%;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.box {
+    height: 100px;
+    width: 100px;
+    background: #999;
+    margin: auto;
+}
+
+.section4 {
+    display: flex;
+    justify-content: space-around;
+
+}
+
+    .section4 a {
         font-size: 1.5em;
     }
-
-.fa-facebook:hover,
-.fa-github:hover,
-.fa-twitter:hover,
-.fa-youtube:hover {
-    color: #888888;
-}
 
 .fa-facebook {
     color: #1d75f0;
@@ -143,123 +249,36 @@
     color: rgb(174, 11, 11);
 }
 
-@media screen and (min-width: 767px) {
-    /* Welcome Note to users and employers */
-    .jumbo {
-        height: 15rem;
-        display: flex;
-        padding: 1rem;
-    }
-
-    .welcome1 {
-        height: 11rem;
-        margin: 1rem;
-    }
-
-    .welcome2 {
-        height: 10rem;
-        margin: 1rem;
-    }
-
-    .welcome1 h4 {
-        font-size: 1.7rem;
-        padding: .3rem .5rem;
-    }
-
-    .welcome1 p {
-        font-size: 1rem;
-    }
-
-    .welcome2 h4 {
-        margin: 5px;
-    }
-
-    .button2 {
-        margin-top: 10px;
-    }
-
-    .button1:hover {
-        background-color: #0f7126;
-    }
-
-    .button2:hover {
-        background-color: #105191;
-    }
-/*        Ends here*/
-
-
-    .section4 img {
-        width: 100%;
-        height: 20em;
-    }
-    .section5 a {
-        font-size: 2em;
-    }
+.fa-facebook:hover,
+.fa-github:hover,
+.fa-twitter:hover,
+.fa-youtube:hover {
+    color: #888888;
 }
 
-@media screen and (min-width: 991px) {
-    /* Welcome Note to users and employers */
-    .jumbo {
+@media screen and (min-width: 768px) {
+    .section1 {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-column-gap: 2rem;
+        border-bottom: 2px solid #fff;
+        width: 100%;
+        height: 400px;
     }
 
-    .welcome1 {
-        width: 90%;
-        margin: auto;
+    .section2 {
+        margin: 0 0 35px 0;
     }
 
-    .welcome2 {
-        width: 80%;
-        height: 10rem;
-        margin: auto;
-    }
-    .welcome1 h4 {
-        font-size: 1.5rem;
-        padding: .2rem 1rem;
-    }
-
-    .welcome1 p {
-        padding: .5rem .7rem;
-        font-size: 1rem;
-    }
-    .welcome2 h4 {
-        font-size: 1.3rem;
-        font-weight: 600;
-        padding: .8rem .5rem 1rem .5rem;
-        text-align: left;
-    }
-
-    .button2 {
-        transform: translate(-50%, 0);
-    }
-
-    .button1 {
-        transform: translate(-50%, -5px);
-        margin-top: 12px;
-    }
-/*    Ends here*/
-
-    .section5 {
+    .section4 {
         justify-content: flex-end;
-        background-color: white;
-        min-height: 2em;
     }
 
-        .section5 a {
-            margin: auto 20px;
-        }
+    .section4 a {
+        font-size: 2em;
+        margin: 0 5px 0 15px;
+    }
+
+    .
 }
 
-@media screen and (min-width: 1024px) {
-/*    Welcome note form users and employers*/
-    .jumbo {
-        grid-column-gap: 0;
-    }
-
-    .welcome2 {
-        width: 70%;
-    }
-}
 
