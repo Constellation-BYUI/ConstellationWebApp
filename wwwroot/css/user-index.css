@@ -7,7 +7,7 @@
 
 main {
     padding: 0;
-    height: 100vh;
+    height: 100%;
 }
 .users-container {
     padding: 3px 10px;
@@ -200,6 +200,10 @@ button i {
 
 
 @media only screen and (min-width: 768px) {
+    main {
+        height: 100vh;
+    }
+
     .flex-container {
         position: relative;
         margin-left: 5%;
