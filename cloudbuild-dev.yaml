@@ -46,6 +46,9 @@ steps:
   args:
   - 'run'
   - 'gcr.io/$PROJECT_ID/constellationautotest:latest'
+  - 'npm'
+  - 'run'
+  - 'test-dev'
 
 
 # # This step deploys the stage application in Kubernetes
