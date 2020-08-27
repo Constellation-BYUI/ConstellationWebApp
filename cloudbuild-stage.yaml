@@ -23,7 +23,7 @@ steps:
   - 'gcr.io/$PROJECT_ID/constellationautotest:latest'
   - 'npm'
   - 'run'
-  - 'test-dev'
+  - 'test-test'
 
 # This step deploys the prod application in Kubernetes
  - name: 'gcr.io/cloud-builders/gcloud'
