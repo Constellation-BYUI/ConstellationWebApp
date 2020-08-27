@@ -1,6 +1,6 @@
 steps:
 
-# This step deploys the dev application in Kubernetes
+# This step deploys the prod application in Kubernetes
 - name: 'gcr.io/cloud-builders/gke-deploy'
   args:
   - run

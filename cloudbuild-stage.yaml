@@ -11,24 +11,28 @@ steps:
   - --cluster=cluster-1 
   
   
-- name: 'gcr.io/cloud-builders/gcloud'
-  id: Trigger Stage Integration Tests
+# This step runs the ConstellationTests Image 
+# The PROJECT_ID variable is automatically
+# replaced by Cloud Build.
+- name: 'gcr.io/cloud-builders/docker'
+  id: run
+  env:
+  - 'NODE_ENV=stage'
   args:
-  - 'beta'
-  - 'builds'
-  - 'triggers'
   - 'run'
-  - 'a2b3e35c-62d3-479c-8385-c41d5b8e0228'
-  - '--branch=master'
+  - 'gcr.io/$PROJECT_ID/constellationautotest:latest'
+  - 'npm'
+  - 'run'
+  - 'test-dev'
 
-# # This step deploys the prod application in Kubernetes
-# - name: 'gcr.io/cloud-builders/gcloud'
-#   args:
-#   - builds
-#   - submit
-#   - --config
-#   - cloudbuild-prod.yaml
-#   - --substitutions
-#   - _SHORT_SHA=$_SHORT_SHA
-#   - .
+# This step deploys the prod application in Kubernetes
+ - name: 'gcr.io/cloud-builders/gcloud'
+   args:
+   - builds
+   - submit
+   - --config
+   - cloudbuild-prod.yaml
+   - --substitutions
+   - _SHORT_SHA=$_SHORT_SHA
+   - .
  
