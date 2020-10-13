@@ -75,7 +75,7 @@ namespace ConstellationWebApp.Controllers
                 _context.StarredProjects.Remove(thisSP);
                 await _context.SaveChangesAsync();
             }
-            var returnPath = "../StarredProjects/";
+            var returnPath = "../Projects/Details/" + projectID.ToString();
             return Redirect(returnPath);
         }
         private bool StarredProjectExists(int id)

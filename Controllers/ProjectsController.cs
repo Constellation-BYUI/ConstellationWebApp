@@ -304,13 +304,18 @@ namespace ConstellationWebApp.Controllers
             {
                 return NotFound();
             }
+            var currentUser = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            ProjectCreateViewModel viewModel = projectToViewModel(entityProjectModel);
             PopulateStarredProjectData(entityProjectModel);
             PopulateAssignedProjectData(entityProjectModel);
-            ProjectCreateViewModel viewModel = projectToViewModel(entityProjectModel);
-            viewModel.Postings = _context.Postings.Where(i => i.SharableToTeam == true).ToList();
-            viewModel.Posting_PostingType = _context.Posting_PostingTypes.ToList();
-            viewModel.PostingTypes = _context.PostingTypes.ToList();            
-            viewModel.ProjectPostings = _context.ProjectPosting.Where(i => i.ProjectID == id).ToList();
+            viewModel.UserProjects = await _context.UserProjects.Where(i => i.UserID == currentUser && i.ProjectID == id).ToListAsync();
+            viewModel.StarredProjects = await _context.StarredProjects.Where(i => i.UserID == currentUser && i.ProjectID == id).ToListAsync();
+            viewModel.Postings = await _context.Postings.Where(i => i.SharableToTeam == true).ToListAsync();
+            viewModel.Posting_PostingType = await _context.Posting_PostingTypes.ToListAsync();
+            viewModel.PostingTypes = await _context.PostingTypes.ToListAsync();            
+            viewModel.ProjectPostings = await _context.ProjectPosting.Where(i => i.ProjectID == id).ToListAsync();
+            viewModel.ProjectLinks = await _context.ProjectLinks.Where(i => i.Projects.ProjectID == id).ToListAsync();
             return View(viewModel);
         }
 

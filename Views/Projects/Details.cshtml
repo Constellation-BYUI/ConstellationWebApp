@@ -32,15 +32,13 @@
 </section>
 <!-- #endregion -->
 
-@*Button for adding projects to stardProject*@
+@*Button for adding projects to starredProject*@
 @if (currentUser != null)
 {
-
-
     List<ConstellationWebApp.Models.AssignedStarredProjectsData> starredData = ViewBag.StarredProjects;
-    foreach (var starred in starredData)
+    foreach (var starred in Model.StarredProjects)
     {
-        if (starred.UserID == currentUser && starred.Starred == true)
+        if (starred.UserID == currentUser && starred.ProjectID == Model.ProjectID)
         {
             <form asp-action="Delete" asp-controller="StarredProjects">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -107,13 +105,16 @@
                             }
                         }
 
-                        foreach (var item in Model.ProjectLinks.Where((i => i.Projects.ProjectID == Model.ProjectID)))
+                        if (Model.ProjectLinks != null)
                         {
+                            foreach (var item in Model.ProjectLinks.Where((i => i.Projects.ProjectID == Model.ProjectID)))
+                            {
                             <a href="@Html.DisplayFor(model => item.ProjectLinkUrl)" target="_blank">@Html.DisplayFor(model => item.ProjectLinkLabel)</a>
 
+                                }
+                            }
                         }
                     }
-                }
             </div>
         </div>
         <div class="project-collaborators">
