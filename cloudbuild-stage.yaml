@@ -26,8 +26,8 @@ steps:
   - 'test-test'
 
 # This step deploys the prod application in Kubernetes
- - name: 'gcr.io/cloud-builders/gcloud'
-   args:
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
    - builds
    - submit
    - --config
@@ -35,4 +35,3 @@ steps:
    - --substitutions
    - _SHORT_SHA=$_SHORT_SHA
    - .
- 
