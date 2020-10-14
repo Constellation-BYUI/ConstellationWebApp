@@ -49,6 +49,11 @@ namespace ConstellationWebApp.ViewModels
 
         public ICollection<PostingType> PostingTypes { get; set; }
 
+        public ICollection<StarredProject> StarredProjects { get; set; }
+
+
+
+
         public Project currentProject { get; set; }
 
         public string SearchString { get; set; }
