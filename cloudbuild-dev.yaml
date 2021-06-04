@@ -31,9 +31,9 @@ steps:
   - run
   - --filename=dev.yaml
   - --image=gcr.io/$PROJECT_ID/constellationweb:$SHORT_SHA
-  - --location=us-east1-b
+  - --location=us-central1-c
   - --output=/tmp/outputdev
-  - --location=us-east1-b
+  - --location=us-central1-c
   - --cluster=cluster-1  
 
 # This step runs the ConstellationTests Image 
