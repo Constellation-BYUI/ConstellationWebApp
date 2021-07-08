@@ -91,7 +91,7 @@ spec:
    - nfsvers=4.1
   nfs:
     path: /images
-    server: 10.12.9.14
+    server: 10.8.12.180
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -108,7 +108,7 @@ spec:
     - hard
     - nfsvers=4.1
   nfs:
-    server: 10.12.9.14
+    server: 10.8.12.180
     path: /resumes
 ---
 apiVersion: v1
