@@ -31,9 +31,8 @@ steps:
   - run
   - --filename=dev.yaml
   - --image=gcr.io/$PROJECT_ID/constellationweb:latest
-  - --location=us-central1-c
+  - --location=us-east1-b
   - --output=/tmp/outputdev
-  - --location=us-central1-c
   - --cluster=cluster-1  
 
 # This step runs the ConstellationTests Image 
