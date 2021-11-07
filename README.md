@@ -1,3 +1,9 @@
+[![GitHub issues](https://img.shields.io/github/issues/Constellation-BYUI/ConstellationWebApp?logo=GitHub)](https://github.com/Constellation-BYUI/ConstellationWebApp/issues)
+[![GitHub forks](https://img.shields.io/github/forks/Constellation-BYUI/ConstellationWebApp?logo=GItHub)](https://github.com/Constellation-BYUI/ConstellationWebApp/network)
+[![GitHub stars](https://img.shields.io/github/stars/Constellation-BYUI/ConstellationWebApp?logo=GitHub)](https://github.com/Constellation-BYUI/ConstellationWebApp/stargazers)
+[![GitHub license](https://img.shields.io/github/license/Constellation-BYUI/ConstellationWebApp?logo=Github)](https://github.com/Constellation-BYUI/ConstellationWebApp)
+
+
 To control what type of environment the application is running in (defaults to development):
 
 Use the environment variable:
