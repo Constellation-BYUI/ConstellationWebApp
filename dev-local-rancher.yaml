@@ -1,0 +1,98 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: constellationweb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: constellationweb
+  template:
+    metadata:
+      labels:
+        app: constellationweb
+    spec:
+      containers:
+      - name: constellationweb
+        image: gcr.io/constellation-275522/constellationweb
+        ports:
+        - containerPort: 80
+        env:
+        - name: CUSTOMCONNSTR_ConstellationWebAppContext
+          valueFrom:
+            secretKeyRef:
+              name: dev-app-settings
+              key: web-app-context
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Development
+        resources:
+          limits:
+            cpu: "1"
+            memory: "1000Mi"
+          requests:
+            cpu: ".25"
+            memory: "250Mi"
+        volumeMounts:
+        - name: image
+          mountPath: /app/wwwroot/image
+        - name: resumes
+          mountPath: /app/wwwroot/Resumes
+        livenessProbe:
+          httpGet:
+            path: /account/login
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 30
+      volumes:
+      - name: image
+        persistentVolumeClaim:
+          claimName: constellationweb-image-claim
+      - name: resumes
+        persistentVolumeClaim:
+          claimName: constellationweb-resumes-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: constellationweb
+spec:
+  selector:
+    app: constellationweb
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: constellationweb-loadbalancer
+spec:
+  selector:
+    app: constellationweb
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 80
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: constellationweb-resumes-claim
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: constellationweb-image-claim
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
